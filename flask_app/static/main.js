@@ -260,37 +260,81 @@ function displayRecommendationResults(data) {
 
 // ========== HÀM HỖ TRỢ ==========
 
-function renderAlgorithmExplanation(data) {
+function renderAlgorithmExplanation(result) {
     const section = document.getElementById('algorithmDetailsSection');
-    const content = document.getElementById('algorithmDetailsContent');
-
-    if (!section || !content) {
+    if (!section) {
         return;
     }
 
-    const parts = [];
+    const dashboard = document.getElementById('reasonsDashboardContent');
+    if (dashboard && result && Array.isArray(result.recommended_courses)) {
+        if (result.recommended_courses.length === 0) {
+            dashboard.innerHTML = '<div class="no-courses-warning">Không có môn học đề xuất nào.</div>';
+        } else {
+            dashboard.innerHTML = result.recommended_courses.map(course => {
+                const recSem = course.recommended_semester;
+                const nextSem = result.next_semester;
+                
+                let statusBadge = '';
+                let extraReasons = [];
+                
+                if (course.is_retake) {
+                    statusBadge = '<span class="badge badge-danger">Học lại</span>';
+                    extraReasons.push('học lại (môn chưa đạt)');
+                } else if (recSem && recSem < 99) {
+                    if (recSem > nextSem) {
+                        statusBadge = `<span class="badge badge-info">Học vượt (Khuyến nghị: Kỳ ${recSem})</span>`;
+                        extraReasons.push(`học vượt lộ trình (khuyến nghị Kỳ ${recSem})`);
+                    } else if (recSem < nextSem) {
+                        statusBadge = `<span class="badge badge-warning">Học trễ (Khuyến nghị: Kỳ ${recSem})</span>`;
+                        extraReasons.push(`chưa học đúng học kỳ khuyến nghị (khuyến nghị Kỳ ${recSem})`);
+                    } else {
+                        statusBadge = `<span class="badge badge-success">Đúng tiến độ (Kỳ ${recSem})</span>`;
+                        extraReasons.push('đúng học kỳ khuyến nghị');
+                    }
+                } else {
+                    statusBadge = '<span class="badge badge-secondary">Tự do / Môn chung</span>';
+                }
 
-    if (data && data.explanation) {
-        parts.push(data.explanation);
-    } else {
-        if (data && data.beam_search_details) {
-            parts.push(`Chi tiết chùm: ${data.beam_search_details}`);
-        }
-        if (data && data.heuristic_formula) {
-            parts.push(`Công thức heuristic: ${data.heuristic_formula}`);
-        }
-        if (data && Array.isArray(data.warnings) && data.warnings.length) {
-            parts.push(`Cảnh báo:\n- ${data.warnings.join('\n- ')}`);
+                // Hợp nhất lý do nguyên bản từ backend và lý do chi tiết học vượt/học lại/học trễ
+                const allReasons = [];
+                if (Array.isArray(course.reasons)) {
+                    course.reasons.forEach(r => {
+                        const normR = r.toLowerCase().trim();
+                        if (normR && !normR.includes('học kỳ khuyến nghị') && !normR.includes('học lại')) {
+                            allReasons.push(r);
+                        }
+                    });
+                }
+                extraReasons.forEach(r => {
+                    allReasons.push(r);
+                });
+
+                const reasonsList = allReasons.map(r => `<span class="reason-badge">${escapeHtml(r)}</span>`).join('');
+                
+                return `
+                    <div class="reasons-card">
+                        <div class="reasons-card-header">
+                            <span class="course-code-tag">${escapeHtml(course.code)}</span>
+                            <span class="course-name-text" title="${escapeHtml(course.name)}">${escapeHtml(course.name)}</span>
+                            <span class="course-credits-tag">${course.credits} TC</span>
+                        </div>
+                        <div class="reasons-card-body">
+                            <div class="reasons-meta">
+                                ${statusBadge}
+                                <span class="priority-score-tag">Điểm ưu tiên: <strong>${Math.round(course.total_priority_score || course.heuristic_score)}</strong></span>
+                            </div>
+                            <div class="reasons-list-container">
+                                <strong>Lý do chọn:</strong>
+                                <div class="reasons-badges">${reasonsList}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
     }
 
-    if (!parts.length) {
-        section.style.display = 'none';
-        content.innerHTML = '';
-        return;
-    }
-
-    content.innerHTML = `<pre>${escapeHtml(parts.join('\n\n'))}</pre>`;
     section.style.display = 'block';
 }
 
@@ -305,13 +349,14 @@ function displayResultWarnings(result) {
     if (result?.specialization_warning) {
         warnings.push(result.specialization_warning);
     }
-    if (Array.isArray(result?.prerequisite_warnings)) {
-        warnings.push(...result.prerequisite_warnings);
-    }
+    // Skip adding prerequisite_warnings explicitly to hide them from the UI
     if (Array.isArray(result?.warnings)) {
         result.warnings.forEach(item => {
             if (item && !warnings.includes(item)) {
-                warnings.push(item);
+                // Filter out prerequisite warnings
+                if (!item.includes('đang thiếu tiên quyết:')) {
+                    warnings.push(item);
+                }
             }
         });
     }

@@ -1,4 +1,4 @@
-﻿"""
+"""
 Dịch vụ bộ máy gợi ý
 Tách từ legacy/recommend_source.py để dùng lại trong Flask app
 """
@@ -667,6 +667,20 @@ class RecommendationEngine:
         valid_codes = {course.code for course in valid_courses}
         for code, info in self.course_data.items():
             if code in passed_courses or code in valid_codes:
+                continue
+
+            # Lọc theo chuyên ngành để tránh cảnh báo môn không thuộc chuyên ngành của sinh viên
+            spec_ok = True
+            specs = info.get('specializations', [])
+            if student_spec:
+                normalized_specs = [self._normalize_text(s) for s in specs if isinstance(s, str)]
+                if specs and normalized_spec not in normalized_specs:
+                    spec_ok = False
+            else:
+                if specs and not info.get('is_required_specialization', False):
+                    spec_ok = False
+
+            if not spec_ok:
                 continue
 
             prereqs = info.get('prereqs', [])
