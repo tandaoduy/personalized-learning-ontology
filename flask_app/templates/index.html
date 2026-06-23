@@ -3,43 +3,117 @@
 {% block title %}Trang Chủ - Gợi Ý Kế Hoạch Học Tập{% endblock %}
 
 {% block content %}
-<div class="hero">
-    <h2>Hệ Thống Gợi Ý Kế Hoạch Học Tập Cá Nhân Hóa</h2>
-    <p>Dựa trên Ontology Chương Trình Đào Tạo & Hồ Sơ Sinh Viên</p>
-</div>
+<div class="dashboard-landing">
+    <!-- Hero section -->
+    <div class="hero-section">
+        <div class="hero-badge">Ontology-Driven Engine</div>
+        <h1>Hệ Thống Gợi Ý Kế Hoạch Học Tập <span class="highlight-text">Cá Nhân Hóa</span></h1>
+        <p>Hỗ trợ tối ưu hóa tiến trình học tập của sinh viên dựa trên cơ sở tri thức Ontology chương trình đào tạo và thuật toán tìm kiếm Beam Search.</p>
+        <div class="hero-actions">
+            <a href="/students" class="btn btn-premium-action">Bắt Đầu Trải Nghiệm <span class="arrow-icon">→</span></a>
+        </div>
+        <div class="hero-decorative-circle circle-1"></div>
+        <div class="hero-decorative-circle circle-2"></div>
+    </div>
 
-<div class="home-content">
-    <section class="info-section">
-        <h3>Các Tính Năng Chính</h3>
-        <div class="features">
+    <!-- Features -->
+    <section class="features-section">
+        <div class="section-title-wrapper">
+            <span class="sub-title">Năng lực hệ thống</span>
+            <h2>Các Tính Năng Cốt Lõi</h2>
+        </div>
+        <div class="features-grid">
             <div class="feature-card">
-                <h4>Phân Tích Dữ Liệu</h4>
-                <p>Phân tích hồ sơ sinh viên: môn đã học, môn chưa đạt, điểm số</p>
+                <div class="feature-icon-wrapper blue-grad">
+                    <!-- Icon Data Analysis -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                </div>
+                <h3>Phân Tích Dữ Liệu</h3>
+                <p>Khảo sát toàn diện hồ sơ học tập: các môn đã tích lũy, các môn chưa đạt (F), và điểm số trung bình để đưa ra lộ trình phù hợp.</p>
             </div>
+
             <div class="feature-card">
-                <h4>Xử Lý Logic</h4>
-                <p>Kiểm tra tiên quyết, song hành, kỳ mở, kỳ khuyến nghị</p>
+                <div class="feature-icon-wrapper green-grad">
+                    <!-- Icon Gears/Ontology network -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+                <h3>Xử Lý Logic Ràng Buộc</h3>
+                <p>Kiểm tra chéo điều kiện tiên quyết, môn song hành, học kỳ khuyến nghị và kỳ mở môn (Kỳ chẵn/Kỳ lẻ) từ Ontology đào tạo khoa học.</p>
             </div>
+
             <div class="feature-card">
-                <h4>Tối Ưu Tổ Hợp</h4>
-                <p>Dùng tìm kiếm chùm (Beam Search) để tìm kế hoạch tốt nhất trong ràng buộc</p>
+                <div class="feature-icon-wrapper purple-grad">
+                    <!-- Icon Beam search tree / branches -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
+                    </svg>
+                </div>
+                <h3>Tối Ưu Tổ Hợp</h3>
+                <p>Tìm kiếm chùm (Beam Search) dò tìm các tổ hợp môn đề xuất tốt nhất trong giới hạn tín chỉ đăng ký tối đa, tối ưu hóa điểm ưu tiên heuristic.</p>
             </div>
+
             <div class="feature-card">
-                <h4>Giải Thích Quyết Định</h4>
-                <p>Hiểu rõ tại sao môn được chọn, công thức heuristic</p>
+                <div class="feature-icon-wrapper orange-grad">
+                    <!-- Icon explanation / lightbulb -->
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .5 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                        <line x1="9" y1="18" x2="15" y2="18"></line>
+                        <line x1="10" y1="22" x2="14" y2="22"></line>
+                    </svg>
+                </div>
+                <h3>Giải Thích Minh Bạch</h3>
+                <p>Cung cấp giải thích trực quan về lý do chọn môn học, cảnh báo học vượt, học trễ lộ trình hoặc học lại môn chưa đạt để sinh viên tự đánh giá.</p>
             </div>
         </div>
     </section>
 
-    <section class="quick-start">
-        <h3>Bắt Đầu Nhanh</h3>
-        <ol>
-            <li>Chọn sinh viên từ danh sách hoặc nhập mã SV</li>
-            <li>Kiểm tra thông tin hồ sơ (năm vào học, mục tiêu, kỳ hiện tại)</li>
-            <li>Nhấn nút "Tạo Kế Hoạch Học Tập"</li>
-            <li>Xem kết quả: danh sách môn, tơ hợp đề xuất, giải thích</li>
-        </ol>
-        <a href="/students" class="btn btn-primary">Bắt Đầu →</a>
+    <!-- Quick Start Flow -->
+    <section class="quickstart-section">
+        <div class="section-title-wrapper text-center">
+            <span class="sub-title">Bắt đầu dễ dàng</span>
+            <h2>Quy Trình 4 Bước Thực Hiện</h2>
+        </div>
+        <div class="steps-timeline">
+            <div class="timeline-step">
+                <div class="step-badge">01</div>
+                <h4>Chọn sinh viên</h4>
+                <p>Tìm kiếm mã số sinh viên hoặc chọn nhanh từ danh sách đổ xuống.</p>
+            </div>
+            <div class="timeline-divider">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="timeline-step">
+                <div class="step-badge">02</div>
+                <h4>Xem hồ sơ</h4>
+                <p>Hệ thống nạp nhanh thông tin tín chỉ tích lũy, các môn học đạt và chưa đạt.</p>
+            </div>
+            <div class="timeline-divider">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="timeline-step">
+                <div class="step-badge">03</div>
+                <h4>Duyệt môn hợp lệ</h4>
+                <p>Môn đủ điều kiện được tính toán tự động và hiển thị ngay trên bảng hồ sơ.</p>
+            </div>
+            <div class="timeline-divider">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="timeline-step">
+                <div class="step-badge">04</div>
+                <h4>Tạo kế hoạch</h4>
+                <p>Click nút tạo để nhận ngay tổ hợp đề xuất và biểu đồ giải thích trực quan.</p>
+            </div>
+        </div>
+        <div class="quickstart-action">
+            <a href="/students" class="btn btn-premium-action-large">Lập kế hoạch ngay <span class="arrow-icon">→</span></a>
+        </div>
     </section>
 </div>
 {% endblock %}

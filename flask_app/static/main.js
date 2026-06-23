@@ -16,8 +16,20 @@ document.addEventListener('DOMContentLoaded', function () {
         loadAllStudents();
     }
     initNavbarScroll();
+    initNavbarActiveLink();
     initFlashToasts();
 });
+
+// ========== MENU LINK ACTIVE STATE ==========
+function initNavbarActiveLink() {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
+            link.classList.add('active');
+        }
+    });
+}
 
 // ========== HIỆU ỨNG CUỘN NAVBAR ==========
 function initNavbarScroll() {
