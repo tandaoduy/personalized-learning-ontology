@@ -6,6 +6,7 @@
 // ========== BIẾN TOÀN CỤC ==========
 let allStudents = [];
 let selectedStudent = null;
+let currentRecommendation = null;
 
 // ========== KHỞI TẠO ==========
 document.addEventListener('DOMContentLoaded', function () {
@@ -127,6 +128,9 @@ async function onStudentSelected() {
             if (eligibleSection) {
                 eligibleSection.style.display = 'none';
             }
+
+            // Tải tự động danh sách môn đủ điều kiện học
+            fetchEligibleCourses(studentId);
         } else {
             showError('Không thể tải thông tin sinh viên');
         }
@@ -173,46 +177,80 @@ function displayStudentProfile(student) {
     });
 }
 
-// ========== BƯỚC 3: TẠO GỢI Ý KẾ HOẠCH HỌC TẬP ==========
-async function generateRecommendation() {
-    if (!selectedStudent) {
-        showError('Vui lòng chọn sinh viên', 'warning');
-        return;
-    }
-
+// ========== TẢI DANH SÁCH MÔN ĐỦ ĐIỀU KIỆN =========
+async function fetchEligibleCourses(studentId) {
+    const eligibleSpinner = document.getElementById('eligibleLoadingSpinner');
+    const eligibleSection = document.getElementById('eligibleCoursesSection');
     const generateBtn = document.getElementById('generateBtn');
-    const spinnerDiv = document.getElementById('loadingSpinner');
+    const resultsSection = document.getElementById('resultsSection');
+
+    if (eligibleSpinner) eligibleSpinner.style.display = 'block';
+    if (eligibleSection) eligibleSection.style.display = 'none';
+    if (generateBtn) {
+        generateBtn.disabled = true;
+    }
+    if (resultsSection) resultsSection.style.display = 'none';
 
     try {
-        generateBtn.disabled = true;
-        spinnerDiv.style.display = 'block';
-
         const response = await fetch('/api/recommendations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                student_id: selectedStudent.student_id
+                student_id: studentId
             })
         });
+        const data = await response.json();
+        if (eligibleSpinner) eligibleSpinner.style.display = 'none';
 
-        const result = await response.json();
-
-        if (result.success) {
-            displayRecommendationResults(result.data);
-            document.getElementById('resultsSection').style.display = 'block';
+        if (data.success) {
+            currentRecommendation = data.data;
+            displayEligibleCourses(currentRecommendation.eligible_courses || []);
+            if (eligibleSection) eligibleSection.style.display = 'block';
+            if (generateBtn) {
+                generateBtn.disabled = false;
+            }
+            hideError();
+            if (typeof saveState === 'function') {
+                saveState();
+            }
         } else {
-            const errorMsg = result.details ? result.details.join(', ') : result.error;
-            showError(`Lỗi: ${errorMsg}`);
+            showError(data.error || 'Lỗi tải danh sách môn đủ điều kiện', 'error');
         }
     } catch (error) {
+        if (eligibleSpinner) eligibleSpinner.style.display = 'none';
+        showError('Lỗi tải danh sách môn đủ điều kiện: ' + error, 'error');
         console.error('Lỗi:', error);
-        showError(`Lỗi kế nối: ${error.message}`);
-    } finally {
-        generateBtn.disabled = false;
-        spinnerDiv.style.display = 'none';
     }
+}
+
+// ========== BƯỚC 3: TẠO GỢI Ý KẾ HOẠCH HỌC TẬP ==========
+async function generateRecommendation() {
+    if (!currentRecommendation) {
+        showError('Không có dữ liệu gợi ý sẵn sàng', 'warning');
+        return;
+    }
+
+    const generateBtn = document.getElementById('generateBtn');
+    const spinnerDiv = document.getElementById('loadingSpinner');
+
+    if (spinnerDiv) spinnerDiv.style.display = 'block';
+    if (generateBtn) generateBtn.disabled = true;
+
+    // Cho một khoảng trễ cực nhỏ để tạo cảm giác xử lý mượt mà trên UI trước khi hiển thị kết quả tức thì
+    setTimeout(() => {
+        if (spinnerDiv) spinnerDiv.style.display = 'none';
+        if (generateBtn) generateBtn.disabled = false;
+        displayRecommendationResults(currentRecommendation);
+        document.getElementById('resultsSection').style.display = 'block';
+        
+        // Cuộn mượt đến phần kết quả gợi ý
+        const resultsSection = document.getElementById('resultsSection');
+        if (resultsSection) {
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 100);
 }
 
 // ========== BƯỚC 4: HIỂN THỊ KẾT QUẢ GỢI Ý ==========
@@ -447,16 +485,16 @@ function displayEligibleCourses(courses) {
     empty.style.display = 'none';
     list.forEach((course, index) => {
         const row = document.createElement('tr');
-        const reasonsText = (course.reasons && Array.isArray(course.reasons))
-            ? course.reasons.join(', ')
-            : '-';
-
+        const statusLabel = course.is_retake
+            ? 'Học lại'
+            : `Kỳ ${course.recommended_semester || '-'}`;
         row.innerHTML = `
             <td>${index + 1}</td>
             <td>${course.code || '-'}</td>
             <td>${course.name || '-'}</td>
             <td>${course.credits ?? 0}</td>
-            <td>${reasonsText}</td>
+            <td>${course.is_retake ? '<span class="status-badge status-retake">Học lại</span>' : `<span class="status-badge status-normal">${statusLabel}</span>`}</td>
+            <td>${course.reasons?.join(', ') || '-'}</td>
         `;
         tbody.appendChild(row);
     });

@@ -9,9 +9,9 @@
         <a href="/students/new" onclick="saveState(true)" class="btn btn-primary">Thêm sinh viên</a>
     </div>
 
-    <!-- Bước 1: Chọn hoặc tìm sinh viên -->
+    <!-- Chọn hoặc tìm sinh viên -->
     <section class="student-selection" style="min-height: 250px;">
-        <h3>Bước 1: Chọn hoặc tìm sinh viên</h3>
+        <h3>Chọn hoặc tìm sinh viên</h3>
         <div class="selection-form">
             <div class="form-group">
                 <label>Tìm kiếm mã sinh viên:</label>
@@ -30,9 +30,9 @@
         </div>
     </section>
 
-    <!-- Bước 2: Thông tin sinh viên -->
+    <!-- Thông tin sinh viên -->
     <section class="student-profile" id="studentProfileSection" style="display: none;">
-        <h3>Bước 2: Thông tin sinh viên</h3>
+        <h3>Thông tin sinh viên</h3>
         <div class="profile-card">
             <div class="profile-grid">
                 <div class="profile-item">
@@ -90,18 +90,15 @@
         </div>
     </section>
 
-    <!-- Bước 3: Tạo kế hoạch học tập -->
+    <!-- Danh sách môn đủ điều kiện học -->
     <section class="recommendation-action" id="recommendationActionSection" style="display: none;">
-        <h3>Bước 3: Tạo kế hoạch học tập</h3>
-        <button onclick="generateRecommendation()" class="btn btn-primary" id="generateBtn">
-            Tạo kế hoạch học tập
-        </button>
-        <div id="loadingSpinner" style="display: none;" class="loading-spinner">
-            <p>⏳ Đang xử lý... Vui lòng chờ...</p>
+        <h3>Danh sách môn đủ điều kiện học</h3>
+        
+        <div id="eligibleLoadingSpinner" style="display: none;" class="loading-spinner">
+            <p>⏳ Đang nạp danh sách môn đủ điều kiện... Vui lòng chờ...</p>
         </div>
 
         <div class="eligible-courses" id="eligibleCoursesSection" style="display: none;">
-            <h4>Danh sách môn đủ điều kiện học</h4>
             <p class="eligible-hint">Đây là tập môn hợp lệ (đầu vào) sau khi hệ thống kiểm tra điều kiện tiên quyết, kỳ mở, chuyên ngành và các ràng buộc nghiệp vụ.</p>
             <div class="eligible-summary">
                 <span>Tổng số: </span><strong id="eligibleCoursesCount">0</strong><span> môn</span>
@@ -122,11 +119,20 @@
             </table>
             <div class="eligible-empty" id="eligibleEmptyState" style="display:none;">Không có môn học nào đủ điều kiện ở kỳ này.</div>
         </div>
+
+        <div class="generation-trigger" style="margin-top: 24px; text-align: center;">
+            <button onclick="generateRecommendation()" class="btn btn-primary" id="generateBtn" disabled>
+                Tạo kế hoạch học tập
+            </button>
+            <div id="loadingSpinner" style="display: none;" class="loading-spinner" style="margin-top: 12px;">
+                <p>⏳ Đang tạo kế hoạch học tập... Vui lòng chờ...</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Bước 4: Kết quả gợi ý kế hoạch -->
+    <!-- Kết quả gợi ý kế hoạch -->
     <section class="recommendation-results" id="resultsSection" style="display: none;">
-        <h3>Bước 4: Kết quả gợi ý kế hoạch</h3>
+        <h3>Kết quả gợi ý kế hoạch</h3>
 
         <div class="result-warnings" id="resultWarningsSection" style="display: none;">
             <h4>Cảnh báo cần chú ý</h4>
@@ -169,7 +175,7 @@
         </div>
 
         <div class="algorithm-details" id="algorithmDetailsSection" style="display: none;">
-            <h3>🔍 Giải thích cơ chế gợi ý & Lý do chọn môn</h3>
+            <h3>Giải thích cơ chế gợi ý & Lý do chọn môn</h3>
             <div class="reasons-dashboard-container" style="background: #ffffff; border-radius: 12px; border: 1px solid rgba(0, 0, 0, 0.06); padding: 24px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);">
                 <div class="reasons-dashboard" id="reasonsDashboardContent"></div>
             </div>
@@ -188,7 +194,7 @@
 
     // Đặt vào window để main.js nhận biết và không chạy logic load đè
     window.currentStudent = null; 
-    let currentRecommendation = null;
+    currentRecommendation = null;
 
     // ========== LƯU / KHÔI PHỤC STATE ==========
     function saveState(shouldRestore = false) {
@@ -339,7 +345,7 @@
                     window.currentStudent = data.data;
                     displayStudentProfile(window.currentStudent);
                     hideError();
-                    saveState();
+                    fetchEligibleCourses(studentId);
                 } else {
                     showError(data.error || 'Không tìm thấy sinh viên', 'warning');
                 }
@@ -348,6 +354,52 @@
                 showError('Lỗi tải thông tin sinh viên: ' + error, 'error');
                 console.error('Lỗi:', error);
             });
+    }
+
+    // Tải danh sách môn đủ điều kiện học (gọi API recommendations)
+    async function fetchEligibleCourses(studentId) {
+        const eligibleSpinner = document.getElementById('eligibleLoadingSpinner');
+        const eligibleSection = document.getElementById('eligibleCoursesSection');
+        const generateBtn = document.getElementById('generateBtn');
+        const resultsSection = document.getElementById('resultsSection');
+
+        if (eligibleSpinner) eligibleSpinner.style.display = 'block';
+        if (eligibleSection) eligibleSection.style.display = 'none';
+        if (generateBtn) {
+            generateBtn.disabled = true;
+        }
+        if (resultsSection) resultsSection.style.display = 'none';
+
+        try {
+            const response = await fetch('/api/recommendations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    student_id: studentId
+                })
+            });
+            const data = await response.json();
+            if (eligibleSpinner) eligibleSpinner.style.display = 'none';
+
+            if (data.success) {
+                currentRecommendation = data.data;
+                displayEligibleCourses(currentRecommendation.eligible_courses || []);
+                if (eligibleSection) eligibleSection.style.display = 'block';
+                if (generateBtn) {
+                    generateBtn.disabled = false;
+                }
+                hideError();
+                saveState();
+            } else {
+                showError(data.error || 'Lỗi tải danh sách môn đủ điều kiện', 'error');
+            }
+        } catch (error) {
+            if (eligibleSpinner) eligibleSpinner.style.display = 'none';
+            showError('Lỗi tải danh sách môn đủ điều kiện: ' + error, 'error');
+            console.error('Lỗi:', error);
+        }
     }
 
     // Hiển thị hồ sơ sinh viên
@@ -419,43 +471,29 @@
 
     // Tạo gợi ý kế hoạch học tập
     function generateRecommendation() {
-        if (!window.currentStudent) {
-            showError('Vui lòng chọn sinh viên', 'warning');
+        if (!currentRecommendation) {
+            showError('Không có dữ liệu gợi ý sẵn sàng', 'warning');
             return;
         }
 
-        document.getElementById('generateBtn').disabled = true;
-        document.getElementById('loadingSpinner').style.display = 'block';
+        const spinner = document.getElementById('loadingSpinner');
+        const generateBtn = document.getElementById('generateBtn');
 
-        fetch('/api/recommendations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                student_id: window.currentStudent.student_id
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('loadingSpinner').style.display = 'none';
-                document.getElementById('generateBtn').disabled = false;
+        if (spinner) spinner.style.display = 'block';
+        if (generateBtn) generateBtn.disabled = true;
 
-                if (data.success) {
-                    currentRecommendation = data.data;
-                    displayRecommendationResults(currentRecommendation);
-                    hideError();
-                    saveState();
-                } else {
-                    showError(data.error || 'Lỗi tạo kế hoạch học tập', 'error');
-                }
-            })
-            .catch(error => {
-                document.getElementById('loadingSpinner').style.display = 'none';
-                document.getElementById('generateBtn').disabled = false;
-                showError('Lỗi: ' + error, 'error');
-                console.error('Lỗi:', error);
-            });
+        // Cho một khoảng trễ cực nhỏ để tạo cảm giác xử lý mượt mà trên UI trước khi hiển thị kết quả tức thì
+        setTimeout(() => {
+            if (spinner) spinner.style.display = 'none';
+            if (generateBtn) generateBtn.disabled = false;
+            displayRecommendationResults(currentRecommendation);
+            
+            // Cuộn mượt đến phần kết quả gợi ý
+            const resultsSection = document.getElementById('resultsSection');
+            if (resultsSection) {
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 100);
     }
 
     // Hiển thị kết quả gợi ý
