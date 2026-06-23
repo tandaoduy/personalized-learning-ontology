@@ -224,7 +224,7 @@ class StudentDataService:
         student: StudentProfile,
         course_catalog: Dict[str, Dict[str, Any]],
     ) -> Dict[str, Any]:
-        """Chuyển `StudentProfile` về đúng cấu trúc JSON gốc của dự án."""
+        """Chuyển `StudentProfile` về đúng cấu trúc JSON gốc của dự án sử dụng các trường tiếng Anh."""
         studied_courses: Dict[str, str] = {}
         grade_entries: List[Dict[str, Any]] = []
         failed_entries: List[Dict[str, str]] = []
@@ -236,88 +236,71 @@ class StudentDataService:
 
             studied_courses[code] = course_name
             grade_entries.append({
-                "mã môn học": code,
-                "Tên môn học": course_name,
-                "điểm": grade,
-                "Trạng thái": "Đạt" if is_passed else "Chưa đạt",
+                "course_code": code,
+                "course_name": course_name,
+                "grade": grade,
+                "status": "Đạt" if is_passed else "Chưa đạt",
             })
 
             if not is_passed:
                 failed_entries.append({
-                    "mã môn học": code,
-                    "Tên môn học": course_name,
+                    "course_code": code,
+                    "course_name": course_name,
                 })
 
         return {
-            "mã sinh viên": student.student_id,
-            "tên sinh viên": student.name,
-            "năm vào học": student.year_admitted,
-            "ngành": student.major,
-            "chuyên ngành": student.specialization,
-            "mục tiêu học tập": self._display_study_goal(student.study_goal),
-            "số tín chỉ đã tích lũy": student.total_credits_accumulated,
-            "số tín chỉ đăng ký tối đa": 27,
-            "học kỳ hiện tại": student.current_semester,
-            "học kỳ dự kiến đăng ký tiếp theo": student.next_semester(),
-            "danh sách môn đã học": studied_courses,
-            "điểm từng môn": grade_entries,
-            "danh sách môn chưa đạt": failed_entries,
+            "student_id": student.student_id,
+            "name": student.name,
+            "year_admitted": student.year_admitted,
+            "major": student.major,
+            "specialization": student.specialization,
+            "study_goal": student.study_goal,
+            "total_credits_accumulated": student.total_credits_accumulated,
+            "max_credits_to_register": 27,
+            "current_semester": student.current_semester,
+            "next_semester": student.next_semester(),
+            "passed_courses": studied_courses,
+            "course_grades": grade_entries,
+            "failed_courses": failed_entries,
         }
 
     def _parse_student_dict(self, data: Dict[str, Any]) -> Optional[StudentProfile]:
         """Phân tích một từ điển thô thành `StudentProfile`."""
-        student_id = None
-        for key in [
-            "mã sinh viên",
-            "mã sinh vien",
-            "ma sinh vien",
-            "student_id",
-            "id",
-            self._legacy_mojibake("mã sinh viên"),
-        ]:
-            value = data.get(key)
-            if value and str(value).strip():
-                student_id = str(value).strip()
-                break
-
-        if not student_id:
+        def get_val(keys):
+            for k in keys:
+                if k in data:
+                    return data[k]
+                try:
+                    mojibake_k = k.encode("utf-8").decode("latin1")
+                    if mojibake_k in data:
+                        return data[mojibake_k]
+                except Exception:
+                    pass
             return None
 
-        name = (
-            str(data.get("tên sinh viên", "")).strip()
-            or str(data.get("name", "")).strip()
-            or str(data.get(self._legacy_mojibake("tên sinh viên"), "")).strip()
-        )
-        year_admitted = self._safe_int(
-            data.get("năm vào học", data.get(self._legacy_mojibake("năm vào học"), 2023)), 2023
-        )
-        major = str(data.get("ngành", data.get(self._legacy_mojibake("ngành"), "Công Nghệ Thông Tin"))).strip()
-        specialization = str(
-            data.get("chuyên ngành", data.get(self._legacy_mojibake("chuyên ngành"), "Chưa chọn chuyên ngành"))
-        ).strip()
-        study_goal = self._normalize_study_goal(
-            data.get("mục tiêu học tập", data.get(self._legacy_mojibake("mục tiêu học tập"), "đúng hạn"))
-        )
-        current_semester = self._safe_int(
-            data.get("học kỳ hiện tại", data.get(self._legacy_mojibake("học kỳ hiện tại"), 1)), 1
-        )
-        total_credits = self._safe_int(
-            data.get("số tín chỉ đã tích lũy", data.get(self._legacy_mojibake("số tín chỉ đã tích lũy"), 0)), 0
-        )
-        max_credits = self._safe_int(
-            data.get("số tín chỉ đăng ký tối đa", data.get(self._legacy_mojibake("số tín chỉ đăng ký tối đa"), 27)),
-            27,
-        )
+        student_id = get_val(["student_id", "mã sinh viên", "mã sinh vien", "ma sinh vien", "id"])
+        if not student_id:
+            return None
+        student_id = str(student_id).strip()
 
-        passed_courses = self._parse_course_list(
-            data.get("danh sách môn đã học", data.get(self._legacy_mojibake("danh sách môn đã học"), []))
-        )
-        failed_courses = self._parse_course_list(
-            data.get("danh sách môn chưa đạt", data.get(self._legacy_mojibake("danh sách môn chưa đạt"), []))
-        )
-        grades = self._parse_grades(
-            data.get("điểm từng môn", data.get(self._legacy_mojibake("điểm từng môn"), []))
-        )
+        name = str(get_val(["name", "tên sinh viên", "ten sinh vien"]) or "").strip()
+        year_admitted = self._safe_int(get_val(["year_admitted", "năm vào học", "nam vao hoc"]), 2023)
+        major = str(get_val(["major", "ngành", "nganh"]) or "Công Nghệ Thông Tin").strip()
+        specialization = str(get_val(["specialization", "chuyên ngành", "chuyen nganh"]) or "Chưa chọn chuyên ngành").strip()
+        study_goal = self._normalize_study_goal(get_val(["study_goal", "mục tiêu học tập", "muc tieu hoc tap"]))
+        current_semester = self._safe_int(get_val(["current_semester", "học kỳ hiện tại", "hoc ky hien tai"]), 1)
+        total_credits = self._safe_int(get_val(["total_credits_accumulated", "số tín chỉ đã tích lũy", "so tin chi da tich luy"]), 0)
+        max_credits = self._safe_int(get_val(["max_credits_to_register", "số tín chỉ đăng ký tối đa", "so tin chi dang ky toi da"]), 27)
+
+        passed_courses_raw = get_val(["passed_courses", "danh sách môn đã học", "danh sach mon da hoc", []])
+        passed_courses = self._parse_course_list(passed_courses_raw)
+
+        failed_courses_raw = get_val(["failed_courses", "danh sách môn chưa đạt", "danh sach mon chua dat", []])
+        failed_courses = self._parse_course_list(failed_courses_raw)
+
+        grades_raw = get_val(["course_grades", "điểm từng môn", "diem tung mon", []])
+        grades = self._parse_grades(grades_raw)
+        
         passed_courses -= failed_courses
 
         return StudentProfile(
@@ -346,7 +329,7 @@ class StudentDataService:
         elif isinstance(data, list):
             for item in data:
                 if isinstance(item, dict):
-                    code = item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), ""))
+                    code = item.get("course_code", item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), "")))
                 elif isinstance(item, str):
                     code = item
                 else:
@@ -367,8 +350,8 @@ class StudentDataService:
             if not isinstance(item, dict):
                 continue
 
-            code = item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), ""))
-            grade = item.get("điểm", item.get(self._legacy_mojibake("điểm"), 0))
+            code = item.get("course_code", item.get("mã môn học", item.get(self._legacy_mojibake("mã môn học"), "")))
+            grade = item.get("grade", item.get("điểm", item.get(self._legacy_mojibake("điểm"), 0)))
             if code and str(code).strip():
                 try:
                     grades[str(code).strip().upper()] = float(grade)
