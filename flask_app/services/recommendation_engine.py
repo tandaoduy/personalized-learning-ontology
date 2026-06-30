@@ -128,6 +128,27 @@ class RecommendationEngine:
                 val = self.graph.value(spec, PROP_specializationName)
                 if val is not None:
                     self.specializations_map[str(spec)] = str(val)
+
+        # Trích xuất ngành học
+        self.majors_map = {}
+        PROP_majorName = URIRef(BASE_URI + "majorName")
+        for s, o in self.graph.subject_objects(PROP_majorName):
+            self.majors_map[str(s)] = str(o)
+
+        # Trích xuất bản đồ ngành học - chuyên ngành
+        self.major_specializations_map = {}
+        PROP_hasSpecialization = URIRef(BASE_URI + "hasSpecialization")
+        CLASS_Major = URIRef(BASE_URI + "Major")
+        for m in self.graph.subjects(RDF.type, CLASS_Major):
+            major_name = self.graph.value(m, PROP_majorName)
+            if major_name is not None:
+                major_name_str = str(major_name).strip()
+                self.major_specializations_map[major_name_str] = []
+                for spec in self.graph.objects(m, PROP_hasSpecialization):
+                    spec_name = self.graph.value(spec, PROP_specializationName)
+                    if spec_name is not None:
+                        self.major_specializations_map[major_name_str].append(str(spec_name).strip())
+                self.major_specializations_map[major_name_str].sort()
         
         # Trích xuất thông tin môn học
         for course in self.graph.subjects(PROP_courseCode, None):

@@ -76,7 +76,7 @@ def resolve_path(path: Optional[str] = None) -> str:
     if env:
         return env
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(root, "owl", "current", "ontology_v18.rdf")
+    return os.path.join(root, "owl", "current", "ontology_v19.rdf")
 
 
 def load_graph(path: Optional[str] = None) -> Tuple[RDFGraph, str]:

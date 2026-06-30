@@ -15,7 +15,7 @@ class Config:
     # Đường dẫn - Tạo động theo vị trí file hiện tại
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
-    ONTOLOGY_PATH = os.path.join(BASE_DIR, 'owl', 'current', 'ontology_v18.rdf')
+    ONTOLOGY_PATH = os.path.join(BASE_DIR, 'owl', 'current', 'ontology_v19.rdf')
     STUDENT_DATA_JSON = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.json')
     STUDENT_DATA_CSV = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.csv')
     

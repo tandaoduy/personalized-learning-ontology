@@ -1,4 +1,4 @@
-﻿# Bảng mô tả quy tắc chọn môn & Beam Search (chi tiết)
+# Bảng mô tả quy tắc chọn môn & Beam Search (chi tiết)
 
 Tài liệu này mô tả logic của script CLI legacy `legacy/recommend_source.py`. Luồng web Flask hiện tại dùng `RecommendationEngine` và API JSON, không phụ thuộc TXT làm đầu ra chính.
 
@@ -8,7 +8,7 @@ Tài liệu này mô tả logic của script CLI legacy `legacy/recommend_source
 
 | Bước | Mục tiêu | Đầu vào chính | Đầu ra |
 |---|---|---|---|
-| 1. Nạp dữ liệu | Đọc hồ sơ SV + ontology môn học | `data/DanhSachSinhVien.json`, `owl/current/ontology_v18.rdf` | `target_student`, `course_data` |
+| 1. Nạp dữ liệu | Đọc hồ sơ SV + ontology môn học | `data/DanhSachSinhVien.json`, `owl/current/ontology_v19.rdf` | `target_student`, `course_data` |
 | 2. Chuẩn hóa trạng thái học | Xác định môn đã đạt/chưa đạt | `điểm từng môn`, `danh sách môn đã học`, `danh sách môn chưa đạt` | `passed_courses`, `failed_courses` |
 | 3. Lọc môn đủ điều kiện | Giữ môn có thể đăng ký | tiên quyết, kỳ mở, kỳ khuyến nghị, chuyên ngành, ràng buộc cứng | `valid_courses` |
 | 4. Gắn điểm heuristic | Chấm điểm ưu tiên từng môn | debt, phụ thuộc, trễ kỳ, kỳ mở, mục tiêu học | `điểm ưu tiên`, `điểm tổng ưu tiên` |

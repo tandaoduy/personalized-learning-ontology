@@ -89,7 +89,7 @@ def resolve_default_paths() -> Dict[str, str]:
     return {
         'json': os.path.join(workspace_root, 'data', 'DanhSachSinhVien.json'),
         'csv': os.path.join(workspace_root, 'data', 'DanhSachSinhVien.csv'),
-        'rdf': os.path.join(workspace_root, 'owl', 'current', 'ontology_v18.rdf'),
+        'rdf': os.path.join(workspace_root, 'owl', 'current', 'ontology_v19.rdf'),
         'output_dir': os.path.join(script_dir, 'outputs'),
     }
 

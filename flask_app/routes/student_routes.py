@@ -138,6 +138,36 @@ def list_courses():
         }), 500
 
 
+@bp.route("/majors", methods=["GET"])
+def list_majors():
+    """Trả về danh sách ngành học trích xuất từ ontology."""
+    try:
+        engine = current_app.recommendation_engine
+        if engine is None:
+            return jsonify({
+                "success": False,
+                "error": "Bộ máy gợi ý chưa khởi tạo được",
+            }), 500
+
+        options = sorted({
+            name.strip()
+            for name in engine.majors_map.values()
+            if isinstance(name, str) and name.strip()
+        })
+        current_app.logger.info("Đã yêu cầu danh sách ngành học: %s lựa chọn", len(options))
+        return jsonify({
+            "success": True,
+            "data": options,
+            "total": len(options),
+        })
+    except Exception as exc:
+        current_app.logger.exception("Không thể lấy danh sách ngành học")
+        return jsonify({
+            "success": False,
+            "error": str(exc),
+        }), 500
+
+
 @bp.route("/specializations", methods=["GET"])
 def list_specializations():
     """Trả về danh sách chuyên ngành trích xuất từ ontology."""
@@ -149,7 +179,12 @@ def list_specializations():
                 "error": "Bộ máy gợi ý chưa khởi tạo được",
             }), 500
 
-        options = _get_specializations(engine)
+        major = request.args.get("major", "").strip()
+        if major:
+            options = engine.major_specializations_map.get(major, [])
+        else:
+            options = _get_specializations(engine)
+
         current_app.logger.info("Đã yêu cầu danh sách chuyên ngành: %s lựa chọn", len(options))
         return jsonify({
             "success": True,
@@ -184,6 +219,33 @@ def get_student(student_id: str):
         })
     except Exception as exc:
         current_app.logger.exception("Không thể lấy chi tiết sinh viên: %s", student_id)
+        return jsonify({
+            "success": False,
+            "error": str(exc),
+        }), 500
+
+
+@bp.route("/<student_id>", methods=["DELETE"])
+def delete_student(student_id: str):
+    """Xóa hồ sơ của một sinh viên."""
+    try:
+        current_app.logger.info("Yêu cầu xóa sinh viên: %s", student_id)
+        service = current_app.student_data_service
+        student = service.get_student(student_id)
+
+        if not student:
+            return jsonify({
+                "success": False,
+                "error": f"Không tìm thấy sinh viên {student_id}",
+            }), 404
+
+        service.delete_student(student_id)
+        return jsonify({
+            "success": True,
+            "message": f"Đã xóa sinh viên {student_id} thành công",
+        })
+    except Exception as exc:
+        current_app.logger.exception("Không thể xóa sinh viên: %s", student_id)
         return jsonify({
             "success": False,
             "error": str(exc),

@@ -17,7 +17,7 @@
             <div class="add-student-grid">
                 <div class="form-group">
                     <label for="studentId">Mã sinh viên</label>
-                    <input id="studentId" name="student_id" type="text" placeholder="VD: SV0100" required readonly aria-readonly="true">
+                    <input id="studentId" name="student_id" type="text" placeholder="VD: 0100" required>
                     <small class="field-error" id="studentIdError"></small>
                 </div>
                 <div class="form-group">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="major">Ngành học</label>
-                    <input id="major" name="major" type="text" value="Công Nghệ Thông Tin" required readonly aria-readonly="true">
+                    <select id="major" name="major" required></select>
                     <small class="field-error" id="majorError"></small>
                 </div>
                 <div class="form-group">
@@ -381,6 +381,7 @@
 <script>
 const courseCatalog = [];
 const specializationOptions = [];
+const majorOptions = [];
 let displayedCourses = [];
 let studentCourses = [];
 
@@ -394,6 +395,7 @@ const tableWrap = document.getElementById('studentCoursesTableWrap');
 const tableBody = document.getElementById('studentCoursesTableBody');
 const emptyState = document.getElementById('emptyCourseState');
 const specializationSelect = document.getElementById('specialization');
+const majorSelect = document.getElementById('major');
 const specializationHint = document.getElementById('specializationHint');
 const currentSemesterInput = document.getElementById('currentSemester');
 const formFieldIds = [
@@ -407,10 +409,32 @@ const formFieldIds = [
 ];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await Promise.all([loadCourseCatalog(), loadSpecializations(), populateNextStudentId()]);
+    // Tải ngành học, danh mục môn học
+    await Promise.all([loadCourseCatalog(), loadMajors()]);
+
+    // Sau khi đã tải xong ngành học, dùng ngành học được chọn mặc định để tải chuyên ngành
+    const selectedMajor = majorSelect.value;
+    await loadSpecializations(selectedMajor);
+
     bindEvents();
     renderCourseTable();
     updateSpecializationState();
+
+    // Ràng buộc chỉ nhập số cho các ô nhập mã sinh viên, năm vào học, học kỳ hiện tại
+    const numberFields = ['studentId', 'yearAdmitted', 'currentSemester'];
+    numberFields.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (!/[0-9]/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
+            input.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        }
+    });
 });
 
 async function populateNextStudentId() {
@@ -418,10 +442,6 @@ async function populateNextStudentId() {
     if (!studentIdInput) {
         return;
     }
-
-    // Mặc định: chỉ cho xem (không cho sửa)
-    studentIdInput.readOnly = true;
-    studentIdInput.setAttribute('aria-readonly', 'true');
 
     try {
         const response = await fetch('/api/students/next-id');
@@ -436,7 +456,7 @@ async function populateNextStudentId() {
             throw new Error('Không lấy được mã sinh viên tự động');
         }
 
-        studentIdInput.value = String(nextId).trim().toUpperCase();
+        studentIdInput.value = String(nextId).replace(/[^0-9]/g, '');
     } catch (error) {
         // Dự phòng: tính từ danh sách sinh viên hiện có
         try {
@@ -460,7 +480,7 @@ async function populateNextStudentId() {
                 }
             });
 
-            studentIdInput.value = `SV${String(maxNum + 1).padStart(4, '0')}`;
+            studentIdInput.value = String(maxNum + 1).padStart(4, '0');
         } catch (fallbackError) {
             showToast('Không thể tự động tạo mã sinh viên. Vui lòng tải lại trang.', 'warning');
         }
@@ -477,6 +497,14 @@ function bindEvents() {
     courseSelect.addEventListener('change', updateSelectedCourseInfo);
     currentSemesterInput.addEventListener('input', updateSpecializationState);
     createForm.addEventListener('submit', submitCreateStudentForm);
+
+    // Khi thay đổi ngành học, tải lại danh sách chuyên ngành tương ứng
+    majorSelect.addEventListener('change', async () => {
+        const selectedMajor = majorSelect.value;
+        await loadSpecializations(selectedMajor);
+        updateSpecializationState();
+    });
+
     formFieldIds.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (field) {
@@ -508,35 +536,84 @@ async function loadCourseCatalog() {
     }
 }
 
-async function loadSpecializations() {
+async function loadSpecializations(major = '') {
     try {
-        const response = await fetch('/api/students/specializations');
+        const url = major ? `/api/students/specializations?major=${encodeURIComponent(major)}` : '/api/students/specializations';
+        const response = await fetch(url);
         const result = await response.json();
 
         if (!result.success) {
             throw new Error(result.error || 'Không tải được chuyên ngành');
         }
 
+        specializationOptions.length = 0; // Xóa danh sách cũ
         specializationOptions.push(...(result.data || []));
-        renderSpecializationOptions();
+        renderSpecializationOptions(Boolean(major));
     } catch (error) {
         showCreateError('Không thể tải danh sách chuyên ngành: ' + error.message);
     }
 }
 
-function renderSpecializationOptions() {
+function renderSpecializationOptions(majorSelected = false) {
     specializationSelect.innerHTML = '';
 
+    if (!majorSelected) {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = '-- Vui lòng chọn ngành học trước --';
+        specializationSelect.appendChild(defaultOption);
+        return;
+    }
+
     const defaultOption = document.createElement('option');
-    defaultOption.value = 'Chưa chọn chuyên ngành';
-    defaultOption.textContent = 'Chưa chọn chuyên ngành';
+    defaultOption.value = '';
+    defaultOption.textContent = '-- Chọn chuyên ngành --';
     specializationSelect.appendChild(defaultOption);
 
+    const noSpecOption = document.createElement('option');
+    noSpecOption.value = 'Chưa chọn chuyên ngành';
+    noSpecOption.textContent = 'Chưa chọn chuyên ngành';
+    specializationSelect.appendChild(noSpecOption);
+
     specializationOptions.forEach(optionValue => {
+        if (optionValue !== 'Chưa chọn chuyên ngành') {
+            const option = document.createElement('option');
+            option.value = optionValue;
+            option.textContent = optionValue;
+            specializationSelect.appendChild(option);
+        }
+    });
+}
+
+async function loadMajors() {
+    try {
+        const response = await fetch('/api/students/majors');
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.error || 'Không tải được ngành học');
+        }
+
+        majorOptions.push(...(result.data || []));
+        renderMajorOptions();
+    } catch (error) {
+        showCreateError('Không thể tải danh sách ngành học: ' + error.message);
+    }
+}
+
+function renderMajorOptions() {
+    majorSelect.innerHTML = '';
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = '-- Chọn ngành học --';
+    majorSelect.appendChild(defaultOption);
+
+    majorOptions.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
         option.textContent = optionValue;
-        specializationSelect.appendChild(option);
+        majorSelect.appendChild(option);
     });
 }
 
@@ -545,12 +622,22 @@ function updateSpecializationState() {
     const locked = semester < 4;
 
     if (locked) {
+        let option = specializationSelect.querySelector('option[value="Chưa chọn chuyên ngành"]');
+        if (!option) {
+            option = document.createElement('option');
+            option.value = 'Chưa chọn chuyên ngành';
+            option.textContent = 'Chưa chọn chuyên ngành';
+            specializationSelect.appendChild(option);
+        }
         specializationSelect.value = 'Chưa chọn chuyên ngành';
         specializationSelect.disabled = true;
         specializationHint.textContent = 'Sinh viên học kỳ 1 đến 3 chưa được chọn chuyên ngành.';
     } else {
         specializationSelect.disabled = false;
         specializationHint.textContent = 'Sinh viên từ học kỳ 4 trở đi có thể chọn chuyên ngành từ danh sách có sẵn.';
+        if (!majorSelect.value) {
+            specializationSelect.value = '';
+        }
     }
 }
 
@@ -702,7 +789,7 @@ async function submitCreateStudentForm(event) {
     }
 
     const payload = {
-        student_id: document.getElementById('studentId').value.trim().toUpperCase(),
+        student_id: 'SV' + document.getElementById('studentId').value.trim().padStart(4, '0'),
         name: document.getElementById('studentName').value.trim(),
         year_admitted: Number(document.getElementById('yearAdmitted').value),
         current_semester: Number(document.getElementById('currentSemester').value),
@@ -738,13 +825,12 @@ function resetCreateStudentForm(clearSuccess = true) {
     document.getElementById('studyGoal').value = 'đúng hạn';
     document.getElementById('yearAdmitted').value = '2023';
     document.getElementById('currentSemester').value = '1';
-    document.getElementById('major').value = 'Công Nghệ Thông Tin';
-    specializationSelect.value = 'Chưa chọn chuyên ngành';
+    document.getElementById('major').value = '';
+    loadSpecializations('');
     studentCourses = [];
     renderCourseTable();
     updateSpecializationState();
     clearAllFieldErrors();
-    populateNextStudentId();
 }
 
 function hideCreateMessages() {
@@ -793,7 +879,7 @@ function validateCreateStudentForm() {
         {
             fieldId: 'major',
             valid: Boolean(major),
-            message: 'Vui lòng nhập ngành học.',
+            message: 'Vui lòng chọn ngành học.',
         },
         {
             fieldId: 'specialization',

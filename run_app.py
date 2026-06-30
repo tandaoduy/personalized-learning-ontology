@@ -8,11 +8,22 @@ import sys
 from pathlib import Path
 
 
+import io
+
+# Fix UTF-8 output trên Windows terminal
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+else:
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+else:
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
+
 def setup_environment():
     """Chuẩn bị môi trường chạy trên Windows và UTF-8."""
-    if sys.platform == "win32":
-        os.environ["PYTHONIOENCODING"] = "utf-8"
-
     project_root = Path(__file__).parent
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
@@ -67,7 +78,7 @@ def main():
 
     try:
         from flask_app.app import app
-        app.run(debug=True, port=5000, use_reloader=False)
+        app.run(debug=True, port=5000, use_reloader=True)
     except KeyboardInterrupt:
         print("\nMáy chủ đã dừng")
     except Exception as exc:

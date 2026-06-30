@@ -1,4 +1,4 @@
-﻿# Đề tài gợi ý kế hoạch học tập dựa trên Ontology
+# Đề tài gợi ý kế hoạch học tập dựa trên Ontology
 
 Tài liệu này là nguồn mô tả chính của project. Phần kiến trúc và hướng dẫn triển khai đã được gộp vào đây để tránh trùng lặp.
 
@@ -26,9 +26,9 @@ Hệ thống trả về:
 Code/
 ├─ owl/
 │  ├─ current/
-│  │  ├─ ontology_v18.rdf
-│  │  ├─ ontology_v18.properties
-│  │  └─ TrainingProgramOntology_v18.owl
+│  │  ├─ ontology_v19.rdf
+│  │  ├─ ontology_v19.properties
+│  │  └─ TrainingProgramOntology_v19.owl
 │  └─ archive/
 │     └─ ... (các version ontology cũ hơn)
 │
@@ -48,7 +48,7 @@ Code/
 
 Các thành phần quan trọng:
 
-- Ontology chính đang dùng: [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf)
+- Ontology chính đang dùng: [owl/current/ontology_v19.rdf](owl/current/ontology_v19.rdf)
 - Bộ máy gợi ý đang chạy trong web app: [flask_app/services/recommendation_engine.py](flask_app/services/recommendation_engine.py)
 - Script CLI cũ chỉ còn giữ lại để tham khảo/offline: [legacy/recommend_source.py](legacy/recommend_source.py)
 - Script kiểm tra SPARQL: [legacy/test_sparql.py](legacy/test_sparql.py)
@@ -96,7 +96,7 @@ Nếu không tìm thấy sinh viên trong JSON, hệ thống mới dùng CSV fal
 
 ### Bước 2: Nạp ontology và dựng dữ liệu môn học
 
-Từ [owl/current/ontology_v18.rdf](owl/current/ontology_v18.rdf), hệ thống dựng course_data gồm:
+Từ [owl/current/ontology_v19.rdf](owl/current/ontology_v19.rdf), hệ thống dựng course_data gồm:
 
 - Prerequisite, corequisite
 - Kỳ mở, kỳ khuyến nghị
@@ -254,7 +254,7 @@ python legacy/recommend_source.py --student-id SV0016
 Chạy kiểm tra SPARQL:
 
 ```bash
-python legacy/test_sparql.py --ontology owl/current/ontology_v18.rdf
+python legacy/test_sparql.py --ontology owl/current/ontology_v19.rdf
 ```
 
 ---

@@ -164,6 +164,35 @@ class StudentDataService:
         self.logger.info("Đã lưu sinh viên: %s", student.student_id)
         return self.get_student(student.student_id) or student
 
+    def delete_student(self, student_id: str) -> None:
+        """Xóa sinh viên theo mã."""
+        normalized_id = self._normalize_student_id(student_id)
+        existing_data: List[Dict[str, Any]] = []
+
+        if os.path.exists(self.json_path):
+            with open(self.json_path, "r", encoding="utf-8") as file:
+                loaded = json.load(file)
+                if isinstance(loaded, list):
+                    existing_data = loaded
+
+        filtered_data = []
+        deleted = False
+        for item in existing_data:
+            item_id = item.get("student_id", item.get("mã sinh viên", item.get("ma sinh vien", item.get("id"))))
+            if item_id and self._normalize_student_id(str(item_id)) == normalized_id:
+                deleted = True
+                continue
+            filtered_data.append(item)
+
+        if not deleted:
+            raise ValueError(f"Không tìm thấy sinh viên {student_id} để xóa")
+
+        with open(self.json_path, "w", encoding="utf-8") as file:
+            json.dump(filtered_data, file, ensure_ascii=False, indent=4)
+
+        self._students_cache = None
+        self.logger.info("Đã xóa sinh viên %s và làm mới cache", student_id)
+
     def _load_from_json(self) -> List[StudentProfile]:
         """Nạp dữ liệu sinh viên từ JSON."""
         with open(self.json_path, "r", encoding="utf-8") as file:

@@ -1,4 +1,4 @@
-﻿# Flask App (Web) - Gợi Ý Kế Hoạch Học Tập
+# Flask App (Web) - Gợi Ý Kế Hoạch Học Tập
 
 Ứng dụng Flask cung cấp giao diện web và API cho hệ thống gợi ý kế hoạch học tập (dựa trên ontology).
 
@@ -48,5 +48,5 @@ curl http://localhost:5000/api/students
 
 Các đường dẫn quan trọng nằm trong [config.py](./config.py):
 
-- `owl/current/ontology_v18.rdf`
+- `owl/current/ontology_v19.rdf`
 - `data/DanhSachSinhVien.json`

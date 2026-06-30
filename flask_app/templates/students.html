@@ -86,6 +86,7 @@
 
             <div class="action-buttons profile-actions">
                 <button onclick="openCourseHistory()" class="btn btn-secondary" type="button">Chi tiết danh sách</button>
+                <button onclick="confirmDeleteStudent()" class="btn btn-danger" type="button">Xóa sinh viên</button>
             </div>
         </div>
     </section>
@@ -467,6 +468,41 @@
         // Lưu state trước khi điều hướng để khôi phục khi quay lại
         saveState(true);
         window.location.href = `/students/${encodeURIComponent(studentId)}/course-history`;
+     }
+
+    function confirmDeleteStudent() {
+        const student = window.currentStudent || window.selectedStudent;
+        if (!student || !student.student_id) {
+            showError('Không tìm thấy thông tin sinh viên để xóa', 'warning');
+            return;
+        }
+
+        const confirmMsg = `Bạn có chắc chắn muốn xóa sinh viên ${student.name} (${student.student_id}) không? Hành động này không thể hoàn tác.`;
+        if (confirm(confirmMsg)) {
+            deleteStudent(student.student_id);
+        }
+    }
+
+    async function deleteStudent(studentId) {
+        try {
+            const response = await fetch(`/api/students/${studentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const data = await response.json();
+            if (data.success) {
+                showToast(data.message || `Đã xóa sinh viên ${studentId} thành công`, 'success');
+                resetForm();
+                await loadStudentList();
+            } else {
+                showError(data.error || 'Có lỗi xảy ra khi xóa sinh viên', 'error');
+            }
+        } catch (error) {
+            showError('Lỗi kết nối khi xóa sinh viên: ' + error, 'error');
+            console.error('Lỗi:', error);
+        }
     }
 
     // Tạo gợi ý kế hoạch học tập
