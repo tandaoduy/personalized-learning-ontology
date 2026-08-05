@@ -1,0 +1,76 @@
+/* --- TRANG BÁO CÁO & ĐÁNH GIÁ --- */
+/* --- Reports & Evaluation Section --- */
+.reports-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+}
+
+.report-section-card {
+    background: #ffffff;
+    border: 1px solid var(--adv-border);
+    border-radius: var(--adv-radius);
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.bg-light-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+    border-color: #fde68a;
+}
+
+.report-section-card h3 {
+    margin: 0 0 8px;
+    color: var(--adv-dark);
+    font-size: 1.25rem;
+}
+
+/* Trang này chỉ phục vụ đánh giá chất lượng hệ thống. */
+.system-evaluation-card {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #fde68a;
+    border-radius: var(--adv-radius);
+    box-shadow: 0 8px 28px rgba(148, 101, 0, 0.08);
+}
+
+.system-evaluation-card__intro {
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #fde68a;
+}
+
+.system-evaluation-card__intro h2 {
+    margin: 0 0 8px;
+    color: var(--adv-dark);
+    font-size: 1.35rem;
+}
+
+.system-evaluation-card__intro p {
+    margin: 0;
+    color: var(--adv-muted);
+    line-height: 1.6;
+}
+
+.eval-group label span {
+    color: var(--adv-muted);
+    font-weight: 400;
+}
+
+.selected-sv-box {
+    background: var(--adv-bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--adv-primary);
+    font-size: 0.95rem;
+}
+
+.btn-row-action {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+

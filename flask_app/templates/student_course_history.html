@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Chi tiết danh sách môn{% endblock %}
+
+{% block content %}
+<div class="course-history-page">
+    <div class="course-history-header">
+        <h2>Chi tiết danh sách môn</h2>
+        <div style="display: flex; gap: 10px;">
+            {% if student %}
+            <a href="/students/{{ student.student_id }}/edit" class="btn btn-primary">Chỉnh sửa</a>
+            {% endif %}
+            <a href="/students" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        {% if student %}
+            <div class="ch-profile-card" aria-label="Thông tin sinh viên">
+                <div class="ch-profile-top">
+                    <div class="ch-avatar" aria-hidden="true">
+                        {% if student.name %}{{ student.name[:1] | upper }}{% else %}SV{% endif %}
+                    </div>
+                    <div class="ch-profile-identity">
+                        <div class="ch-profile-id">{{ student.student_id }}</div>
+                        <div class="ch-profile-name">{{ student.name }}</div>
+                    </div>
+                </div>
+                <div class="ch-profile-details">
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Ngành học</span>
+                        <span class="ch-detail-value">{{ student.major }}</span>
+                    </div>
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Chuyên ngành</span>
+                        <span class="ch-detail-value">{{ student.specialization }}</span>
+                    </div>
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Lớp</span>
+                        <span class="ch-detail-value">{{ student.academic_class }}</span>
+                    </div>
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Học kỳ hiện tại</span>
+                        <span class="ch-detail-value"><span class="ch-semester-pill">Kỳ {{ student.current_semester }}</span></span>
+                    </div>
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Năm vào học</span>
+                        <span class="ch-detail-value">{{ student.year_admitted }}</span>
+                    </div>
+                    <div class="ch-detail-item">
+                        <span class="ch-detail-label">Mục tiêu</span>
+                        <span class="ch-detail-value">
+                            <span class="ch-goal-pill ch-goal-{{ 'ontime' if student.study_goal == 'đúng hạn' else 'fast' }}">
+                                {% if student.study_goal == 'đúng hạn' %}Đúng hạn{% else %}Học vượt{% endif %}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="ch-detail-item ch-detail-highlight">
+                        <span class="ch-detail-label">Tín chỉ tích lũy</span>
+                        <span class="ch-detail-value ch-credits-value">{{ student.total_credits_accumulated }}</span>
+                    </div>
+                    <div class="ch-detail-item ch-detail-highlight">
+                        <span class="ch-detail-label">Điểm TB tích lũy</span>
+                        <span class="ch-detail-value ch-gpa-value" style="color: #2e7d32; font-weight: 700;">{{ "%.2f"|format(student.gpa_accumulated) if student.gpa_accumulated is not none else "0.00" }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <section class="ch-section">
+            <div class="ch-section-head">
+                <div>
+                    <h3>Danh sách môn</h3>
+                    <p class="ch-muted">Đạt: {{ passed_rows | length }} | Chưa đạt: {{ failed_rows | length }} | Tổng: {{ total_rows }}</p>
+                </div>
+            </div>
+
+            {% if paged_rows and (paged_rows | length) > 0 %}
+                <div class="ch-table-wrap" role="region" aria-label="Bảng danh sách môn" tabindex="0">
+                    <table class="ch-table" data-pagination="off">
+                        <thead>
+                            <tr>
+                                <th class="ch-col-stt">STT</th>
+                                <th class="ch-col-code">Mã môn học</th>
+                                <th>Tên môn học</th>
+                                <th class="ch-col-credit">Số tín chỉ</th>
+                                <th class="ch-col-attempt">Lần</th>
+                                <th class="ch-col-grade">Điểm số</th>
+                                <th class="ch-col-status">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in paged_rows %}
+                                <tr>
+                                    <td class="ch-col-stt">{{ start_index + loop.index }}</td>
+                                    <td class="ch-col-code">{{ row.code }}</td>
+                                    <td class="ch-col-name">{{ row.name }}</td>
+                                    <td class="ch-col-credit">
+                                        {% if row.credits is not none %}{{ row.credits }}{% else %}-{% endif %}
+                                    </td>
+                                    <td class="ch-col-attempt">{{ row.attempt_number if row.attempt_number else 1 }}</td>
+                                    <td class="ch-col-grade">
+                                        {% if row.status in ('Miễn', 'Không tính điểm') %}
+                                            {{ row.status }}
+                                        {% elif row.status == 'Đạt' and (not row.grade_specified or row.grade == 0 or row.grade == 0.0) %}
+                                            Điểm đạt
+                                        {% elif row.grade is not none %}
+                                            {{ row.grade }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="ch-col-status">
+                                        {% if row.status in ('Đạt', 'Miễn', 'Không tính điểm') %}
+                                            <span class="ch-pill ch-pill-success">{{ row.status }}</span>
+                                        {% elif row.status == 'Chưa đạt' %}
+                                            <span class="ch-pill ch-pill-danger">{{ row.status }}</span>
+                                        {% else %}
+                                            <span class="ch-pill ch-pill-danger">{{ row.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ch-pagination" role="navigation" aria-label="Phân trang">
+                    <div class="ch-pagination-info">
+                        Hiển thị {{ display_from }} đến {{ display_to }} của {{ total_rows }} môn học
+                    </div>
+
+                    <div class="ch-pagination-controls">
+                        <div class="ch-pages" aria-label="Chọn trang">
+                            {% if page > 1 %}
+                                <a class="ch-page-link" href="{{ base_url }}?page={{ page - 1 }}&per_page={{ page_size }}">Trước</a>
+                            {% else %}
+                                <span class="ch-page-link is-disabled" aria-disabled="true">Trước</span>
+                            {% endif %}
+
+                            {% for p in page_numbers %}
+                                {% if p is none %}
+                                    <span class="ch-page-ellipsis" aria-hidden="true">…</span>
+                                {% else %}
+                                    {% if p == page %}
+                                        <span class="ch-page-link is-active" aria-current="page">{{ p }}</span>
+                                    {% else %}
+                                        <a class="ch-page-link" href="{{ base_url }}?page={{ p }}&per_page={{ page_size }}">{{ p }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page < total_pages %}
+                                <a class="ch-page-link" href="{{ base_url }}?page={{ page + 1 }}&per_page={{ page_size }}">Sau</a>
+                            {% else %}
+                                <span class="ch-page-link is-disabled" aria-disabled="true">Sau</span>
+                            {% endif %}
+                        </div>
+
+                        <form class="ch-perpage" method="get" action="{{ base_url }}" aria-label="Chọn số dòng mỗi trang">
+                            <input type="hidden" name="page" value="1">
+                            <select name="per_page" class="ch-perpage-select" onchange="this.form.submit()">
+                                <option value="10" {% if page_size == 10 and per_page_value != 'all' %}selected{% endif %}>10 / trang</option>
+                                <option value="20" {% if page_size == 20 and per_page_value != 'all' %}selected{% endif %}>20 / trang</option>
+                                <option value="50" {% if page_size == 50 and per_page_value != 'all' %}selected{% endif %}>50 / trang</option>
+                                <option value="100" {% if page_size == 100 and per_page_value != 'all' %}selected{% endif %}>100 / trang</option>
+                                <option value="all" {% if per_page_value == 'all' %}selected{% endif %}>Tất cả</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="ch-empty" role="status" aria-label="Không có dữ liệu môn học">
+                    <div class="ch-empty-icon" aria-hidden="true">
+                        <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 14h20l8 8v28a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M38 14v10h10" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M22 34h20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M22 42h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="ch-empty-body">
+                        <div class="ch-empty-title">Chưa có dữ liệu</div>
+                        <div class="ch-empty-sub">Danh sách môn hiện đang trống.</div>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+    {% endif %}
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student_course_history.css') }}">
+{% endblock %}

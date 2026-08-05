@@ -1,0 +1,118 @@
+.ui-auth-card {
+    width: min(620px, 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 20px 48px rgba(24, 54, 95, 0.14);
+    padding: 2rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] {
+    padding: 1.25rem 2rem;
+}
+
+.ui-auth-card__header {
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__header {
+    margin-bottom: 1rem;
+}
+
+.ui-auth-card__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.ui-auth-card__title {
+    color: #111827;
+    font-size: clamp(2rem, 3vw, 2.45rem);
+    font-weight: 800;
+    line-height: 1.12;
+    text-wrap: balance;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__title {
+    font-size: clamp(1.5rem, 2.1vw, 1.9rem);
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__badge {
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__description {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.ui-auth-card__description {
+    margin-top: 0.5rem;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.ui-auth-card__form {
+    display: grid;
+    gap: 1rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__form {
+    gap: 0.65rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-field {
+    gap: 0.3rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-field label {
+    font-size: 0.9rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-field input,
+.ui-auth-card[data-auth-mode="register"] .ui-field select,
+.ui-auth-card[data-auth-mode="register"] .ui-field textarea {
+    min-height: 2.9rem;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-btn {
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+.ui-auth-card[data-auth-mode="register"] .ui-auth-card__footer {
+    margin-top: 0.85rem;
+    font-size: 0.9rem;
+}
+
+.ui-auth-card__footer {
+    margin-top: 1.15rem;
+    color: #64748b;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.ui-auth-card__footer a,
+.ui-auth-card__footer button {
+    border: 0;
+    background: transparent;
+    color: #2563eb;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,0 +1,46 @@
+.ui-sidebar {
+    display: flex;
+    min-height: 100vh;
+    width: 20rem;
+    flex-direction: column;
+    border-right: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.ui-sidebar__brand {
+    padding: 1.25rem;
+    color: #111827;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.ui-sidebar__nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+}
+
+.ui-sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 1rem;
+    border-radius: 0.7rem;
+    color: #475467;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.ui-sidebar__link:hover,
+.ui-sidebar__link.is-active {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.ui-sidebar__footer {
+    padding: 1rem;
+    border-top: 1px solid #eef2f7;
+}

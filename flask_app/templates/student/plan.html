@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block title %}Tạo kế hoạch học tập{% endblock %}
+
+{% block content %}
+<section class="plan-page" id="planPageContainer"
+         data-student-id="{{ username }}"
+         data-account-name="{{ display_name }}">
+         
+    <!-- Print Header (Hidden on screen) -->
+    <div class="print-only print-header">
+        <div class="print-header-left">
+            <div class="print-university">TRƯỜNG ĐẠI HỌC NHA TRANG</div>
+            <div class="print-department">PHÒNG ĐÀO TẠO ĐẠI HỌC</div>
+        </div>
+        <div class="print-header-right">
+            <div class="print-title">KẾ HOẠCH VÀ LỘ TRÌNH HỌC TẬP</div>
+        </div>
+    </div>
+    
+    <div class="print-only print-student-info">
+        <div class="print-info-row">
+            Họ tên: <strong>{{ display_name }} - {{ username }}</strong>
+        </div>
+    </div>
+
+    <!-- Screen Header -->
+    <header class="plan-header no-print">
+        <div class="plan-header-title">
+            <h1>Sinh kế hoạch học tập</h1>
+        </div>
+        <div class="plan-actions">
+            <button id="btnGeneratePlan" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                Sinh kế hoạch
+            </button>
+            <button id="btnGenerateAlternative" class="btn btn-outline" title="Tạo phương án khác (Ngẫu nhiên hóa)" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
+                Tạo phương án khác
+            </button>
+            <button id="btnPrintPlan" class="btn btn-outline" style="display: inline-flex;" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                In/Xuất PDF
+            </button>
+            <button id="btnFeedback" class="btn btn-outline" title="Đánh giá chương trình">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                Phản hồi
+            </button>
+        </div>
+    </header>
+
+    <!-- State Views -->
+    <div id="planInitialState" class="plan-state-view">
+        <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h3>Chưa có kế hoạch nào</h3>
+            <p>Nhấn nút "Sinh kế hoạch" để hệ thống phân tích dữ liệu và đề xuất lộ trình tối ưu cho bạn.</p>
+        </div>
+    </div>
+
+    <div id="planLoadingState" class="plan-state-view hidden">
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <h3>Đang phân tích lộ trình...</h3>
+            <p>AI đang xử lý các ràng buộc học phần, điều kiện tiên quyết và lịch sử học tập của bạn.</p>
+        </div>
+    </div>
+
+    <div id="planErrorState" class="plan-state-view hidden">
+        <div class="error-state">
+            <div class="error-icon">⚠️</div>
+            <h3 id="planErrorMessage">Có lỗi xảy ra</h3>
+            <button id="btnRetryPlan" class="btn btn-primary mt-3">Thử lại</button>
+        </div>
+    </div>
+
+    <!-- Main Content (Result) -->
+    <div id="planResultContainer" class="plan-result-container hidden" style="position: relative;">
+        <!-- Overlay Loader -->
+        <div id="planOverlayLoader" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); z-index: 50; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px;">
+            <div class="spinner" style="width: 40px; height: 40px; border-width: 4px;"></div>
+            <h4 style="margin-top: 16px; color: #1d4ed8;">Đang tạo phương án khác...</h4>
+        </div>
+        <!-- Khối 1: Kết quả gợi ý kế hoạch -->
+        <div class="plan-section" id="planDetailSection">
+            <h3 class="section-title mb-4">Kết quả gợi ý kế hoạch</h3>
+            <div class="summary-cards-grid no-print">
+                <div class="summary-card">
+                    <div class="summary-value" id="summaryCount">0</div>
+                    <div class="summary-label">Số môn gợi ý</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="summaryCredits">0</div>
+                    <div class="summary-label">Tổng số tín chỉ</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="summarySemester">0</div>
+                    <div class="summary-label">Học kì đề xuất KHHT</div>
+                </div>
+            </div>
+            <div class="print-only" id="printSummaryText" style="margin-bottom: 20px; font-size: 15px; line-height: 1.6;">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+
+        <!-- Khối 2: Danh sách được gợi ý -->
+        <div class="plan-section">
+            <h3 class="section-title mb-3">Danh sách được gợi ý</h3>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>
+                            <th width="12%" style="text-align: center; vertical-align: middle;">Mã môn học</th>
+                            <th width="28%" style="vertical-align: middle;">Tên môn học</th>
+                            <th width="8%" style="text-align: center; vertical-align: middle;">Tín chỉ</th>
+                            <th width="12%" style="white-space: nowrap; text-align: center; vertical-align: middle;">Học kì khuyến nghị</th>
+                            <th width="35%" style="vertical-align: middle;">Lý do</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recommendedTableBody">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Khối 2.5: Phân tích độ khó phương án -->
+        <div id="difficultyAnalysisContainer" class="difficulty-analysis" style="display: none; margin-top: 24px;">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Khối 3: Giải thích cơ chế gợi ý & Lý do chọn môn -->
+        <div class="plan-section no-print">
+            <h3 class="section-title mb-4 text-blue">Giải thích cơ chế gợi ý & Lý do chọn môn</h3>
+            <div id="warningsContainer" style="margin-bottom: 20px; display: none;"></div>
+            <div class="explanation-grid" id="explanationGrid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Khối 4: Danh sách môn đủ điều kiện học -->
+        <div class="plan-section bg-gray-light">
+            <h3 class="section-title mb-2">Danh sách môn đủ điều kiện học</h3>
+            <p class="section-desc mb-2">Đây là tập môn hợp lệ (đầu vào) sau khi hệ thống kiểm tra điều kiện tiên quyết, kỳ mở, chuyên ngành và các ràng buộc nghiệp vụ.</p>
+            <p class="section-desc mb-3 text-dark">Tổng số: <strong id="eligibleCountText">0</strong> môn</p>
+            <div class="table-responsive">
+                <table class="data-table table-white">
+                    <thead>
+                        <tr>
+                            <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>
+                            <th width="12%" style="text-align: center; vertical-align: middle;">Mã môn học</th>
+                            <th width="28%" style="vertical-align: middle;">Tên môn học</th>
+                            <th width="8%" style="text-align: center; vertical-align: middle;">Tín chỉ</th>
+                            <th width="12%" style="white-space: nowrap; text-align: center; vertical-align: middle;">Học kì khuyến nghị</th>
+                            <th width="35%" style="vertical-align: middle;">Lý do</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eligibleTableBody">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Khối 5: Danh sách môn bị loại -->
+        <div class="plan-section bg-gray-light no-print" id="excludedCoursesSection" style="display: none;">
+            <h3 class="section-title mb-2" style="color: #dc2626;">Tóm tắt các môn bị loại</h3>
+            <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                <div>
+                    <p class="section-desc mb-1" style="font-size: 13px; color: #6b7280;">Các môn không đủ điều kiện xếp vào kế hoạch học tập theo cấu trúc chương trình đào tạo.</p>
+                    <p class="section-desc text-dark mb-0" style="font-weight: 500;">Tổng số: <strong id="excludedCoursesCount" style="color: #dc2626; font-size: 16px;">0</strong> môn bị loại</p>
+                </div>
+                <button type="button" class="btn" id="toggleExcludedCoursesBtn" onclick="toggleExcludedCoursesDetail()" style="padding: 6px 14px; font-size: 13px; font-weight: 500; border-radius: 6px; border: 1px solid #d1d5db; background: #f3f4f6; color: #374151; white-space: nowrap;">Xem chi tiết</button>
+            </div>
+            
+            <div class="chip-container mb-4" id="excludedSummaryGrid" style="display: flex; gap: 8px; flex-wrap: wrap; padding: 4px 0;"></div>
+            
+            <p class="section-desc text-muted" id="excludedDetailHint" style="display: none; font-size: 13px; margin-bottom: 12px;">Chi tiết bên dưới chỉ hiển thị các trường hợp cần lưu ý kiểm tra học vụ (ẩn các môn đã học, ngoài phạm vi,...).</p>
+            <div class="table-responsive" id="excludedCoursesDetail" style="display: none;">
+                <table class="data-table table-white">
+                    <thead>
+                        <tr>
+                            <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>
+                            <th width="15%" style="text-align: center; vertical-align: middle;">Mã môn học</th>
+                            <th width="40%" style="vertical-align: middle;">Tên môn học</th>
+                            <th width="40%" style="vertical-align: middle;">Lý do bị loại</th>
+                        </tr>
+                    </thead>
+                    <tbody id="excludedCoursesList">
+                    </tbody>
+                </table>
+                <div class="text-center text-muted" id="excludedEmptyState" style="display:none; padding: 16px 0;">Không có học phần nào bị loại.</div>
+            </div>
+        </div>
+        
+        <!-- Print Footer removed as requested -->
+    </div>
+</section>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="modal-overlay hidden no-print">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Đánh giá chương trình gợi ý</h2>
+            <button class="modal-close" id="btnCloseFeedback">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Đánh giá mức độ hài lòng về kết quả gợi ý:</label>
+                <div class="rating-stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="feedbackComment">Ý kiến đóng góp (tùy chọn):</label>
+                <textarea id="feedbackComment" rows="4" class="form-control" placeholder="Bạn thấy lộ trình này có hợp lý không?..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" id="btnCancelFeedback">Hủy</button>
+            <button class="btn btn-primary" id="btnSubmitFeedback">Gửi đánh giá</button>
+        </div>
+    </div>
+</div>
+
+<!-- Compare Mock Modal -->
+<div id="compareModal" class="modal-overlay hidden no-print">
+    <div class="modal-content modal-lg">
+        <div class="modal-header">
+            <h2>So sánh các phương án lộ trình</h2>
+            <button class="modal-close" id="btnCloseCompare">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="compare-grid">
+                <div class="compare-card active">
+                    <div class="compare-badge">Khuyến nghị (Tối ưu)</div>
+                    <h3>Phương án 1</h3>
+                    <ul>
+                        <li>Tín chỉ: <strong id="opt1Credits">--</strong></li>
+                        <li>Trọng tâm: Môn bắt buộc & Tiên quyết</li>
+                        <li>Độ khó dự kiến: <strong>Trung bình</strong></li>
+                    </ul>
+                    <button class="btn btn-outline btn-sm w-100 mt-2">Đang chọn</button>
+                </div>
+                <div class="compare-card">
+                    <div class="compare-badge bg-secondary">Mở rộng</div>
+                    <h3>Phương án 2 (Mô phỏng)</h3>
+                    <ul>
+                        <li>Tín chỉ: <strong>+3</strong> so với PA1</li>
+                        <li>Trọng tâm: Đẩy nhanh tiến độ (Thêm môn tự chọn)</li>
+                        <li>Độ khó dự kiến: <strong>Cao</strong></li>
+                    </ul>
+                    <button class="btn btn-primary btn-sm w-100 mt-2">Áp dụng phương án này</button>
+                </div>
+            </div>
+            <p class="text-muted mt-3 text-sm"><i>Lưu ý: Tính năng so sánh đa phương án hiện đang ở phiên bản thử nghiệm (Mockup). Hệ thống AI hiện tại tự động chọn ra 1 phương án có điểm Heuristic cao nhất.</i></p>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student/plan.css') }}">
+<script src="{{ url_for('static', filename='js/student/plan.js') }}" defer></script>
+{% endblock %}
+
+{% block modal_layer %}
+<!-- Modal Chuỗi Tiên Quyết: đặt ngoài main để position: fixed luôn bám theo viewport. -->
+<div id="prerequisiteModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Phân tích Chuỗi Tiên quyết</h3>
+            <button type="button" class="modal-close" onclick="closePrerequisiteModal()" aria-label="Đóng">&times;</button>
+        </div>
+        <div class="modal-body" id="prerequisiteModalBody">
+            <div class="text-center text-muted">Đang tải dữ liệu...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

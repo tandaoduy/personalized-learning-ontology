@@ -1,0 +1,110 @@
+/* --- TRANG SINH VIÊN CHẬM TIẾN ĐỘ --- */
+/* --- At-Risk Section --- */
+.at-risk-section {
+    background: #ffffff;
+    border: 1px solid #fecaca;
+    border-radius: var(--adv-radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.05);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #991b1b;
+    font-weight: 800;
+}
+
+.section-subtitle {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    color: var(--adv-muted);
+}
+
+.at-risk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.risk-card {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s ease;
+}
+
+.risk-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.12);
+}
+
+.risk-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.risk-card__name {
+    font-weight: 700;
+    color: #7f1d1d;
+    font-size: 1.05rem;
+}
+
+.risk-card__id {
+    font-size: 0.82rem;
+    color: #991b1b;
+    font-weight: 600;
+}
+
+.risk-badge {
+    background: var(--adv-danger);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.risk-card__stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.88rem;
+    color: #7f1d1d;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #fee2e2;
+}
+
+.risk-card__btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #dc2626;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.risk-card__btn:hover {
+    background: #b91c1c;
+}
+

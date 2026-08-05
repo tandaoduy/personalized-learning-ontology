@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Tìm Kiếm & Lọc Sinh Viên - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="advisor-workspace" data-role="advisor">
+    <div class="page-top-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <nav class="ui-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label": "Trang chủ Cố vấn", "href": "/advisor", "icon": "home"}, {"label": "Tìm kiếm & Lọc sinh viên", "icon": "filter"}]'>
+            <ol class="ui-breadcrumb__list">
+                <li class="ui-breadcrumb__item">
+                    <a href="/advisor" class="ui-breadcrumb__link">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Trang chủ Cố vấn</span>
+                    </a>
+                </li>
+                <li class="ui-breadcrumb__separator" aria-hidden="true">/</li>
+                <li class="ui-breadcrumb__item">
+                    <span class="ui-breadcrumb__current" aria-current="page">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                        <span>Tìm kiếm & Lọc sinh viên</span>
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="filter-panel">
+        <div class="filter-row">
+            <div class="filter-group">
+                <label for="filterSearch">Tìm kiếm từ khóa:</label>
+                <input type="text" id="filterSearch" class="form-input" placeholder="Mã SV hoặc Họ tên..." oninput="AdvisorWorkspace.applyFilters()">
+            </div>
+
+            <div class="filter-group">
+                <label for="filterClass">Lớp hành chính:</label>
+                <select id="filterClass" class="form-select" onchange="AdvisorWorkspace.applyFilters()">
+                    <option value="">-- Tất cả lớp --</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterSpec">Chuyên ngành:</label>
+                <select id="filterSpec" class="form-select" onchange="AdvisorWorkspace.applyFilters()">
+                    <option value="">-- Tất cả chuyên ngành --</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterStatus">Tình trạng học tập:</label>
+                <select id="filterStatus" class="form-select" onchange="AdvisorWorkspace.applyFilters()">
+                    <option value="">-- Tất cả tình trạng --</option>
+                    <option value="normal">Đúng tiến độ</option>
+                    <option value="at_risk">Sinh viên có nguy cơ chậm tiến độ</option>
+                    <option value="behind">Sinh viên chậm tiến độ</option>
+                    <option value="debt">Có học phần nợ</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-summary">
+            <span>Hiển thị <strong id="filterResultCount">0</strong> / <span id="filterTotalCount">0</span> sinh viên.</span>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="table-responsive">
+        <table class="advisor-table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã SV</th>
+                    <th>Họ và tên</th>
+                    <th>Lớp / Khóa</th>
+                    <th>Chuyên ngành</th>
+                    <th>GPA</th>
+                    <th>Tín chỉ</th>
+                    <th>Tình trạng</th>
+                    <th class="text-center">Thao tác tư vấn</th>
+                </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+                <tr><td colspan="9" class="text-center">⏳ Đang nạp danh sách sinh viên...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hệ thống gợi ý kế hoạch học tập{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        #toastContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: auto;
+            bottom: auto;
+            margin: 0;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        #toastContainer > * {
+            pointer-events: auto;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='components/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/table-pagination.css') }}">
+    <script defer src="{{ url_for('static', filename='vendor/js/alpine.min.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='vendor/js/htmx.min.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='vendor/js/chart.umd.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='vendor/js/lucide.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/index.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/alert/alert.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/toggle/toggle.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/table/table.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/button/button.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/card/card.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/avatar/avatar.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/dropdown/dropdown.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/sidebar/sidebar.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/tabs/tabs.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/form-layout/form-layout.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/radio-group/radio-group.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/navbar/navbar.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/modal-dialog/modal-dialog.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/sign-in-registration/sign-in-registration.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/badge/badge.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/breadcrumb/breadcrumb.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='components/loading/loading.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/table-pagination.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/form-drafts.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/instant-api-cache.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='main.js') }}"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/Logo_NTU.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-slate-50 font-sans text-slate-900" data-cache-user="{{ session.get('username', 'guest') }}">
+    {% if session.get("role") %}
+    <nav class="app-navbar" aria-label="Điều hướng chính">
+        <div class="app-navbar__inner">
+            <a class="app-navbar__brand" href="{{ url_for('student_role.dashboard') if session.get('role') == 'student' else url_for('advisor_role.dashboard') }}">
+                <img src="{{ url_for('static', filename='images/Logo_NTU.png') }}" alt="NTU">
+                <span class="app-navbar__brand-copy">
+                    <strong>Hệ thống gợi ý kế hoạch học tập</strong>
+                    <small>Học đúng định hướng - Đạt mục tiêu - Phát triển tương lai</small>
+                </span>
+            </a>
+
+
+
+            <div class="app-navbar__account ui-dropdown" x-data="{ open: false }" @click.outside="open = false">
+                <button class="app-navbar__user-btn" type="button" @click="open = !open">
+                    <span class="ui-avatar ui-avatar--sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </span>
+                    <span class="app-navbar__user">Xin chào, {{ session.get("display_name", session.get("username")) }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="ui-dropdown__menu ui-dropdown__menu--right" x-show="open" style="display: none;">
+                    <a class="ui-dropdown__item" href="/account" @click="open = false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                        Hồ sơ cá nhân
+                    </a>
+                    <button class="ui-dropdown__item" style="color: #dc2626;" type="button" data-logout>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        Đăng xuất
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% endif %}
+
+    <main class="{% block main_class %}mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8{% endblock %}">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message" data-message="{{ message | e }}" data-type="info" hidden></div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            document.querySelector("[data-logout]")?.addEventListener("click", async (e) => {
+                e.preventDefault();
+                if (window.UIComponents && window.UIComponents.showModalDialog) {
+                    const modal = window.UIComponents.showModalDialog({
+                        title: "Xác nhận đăng xuất",
+                        description: "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?",
+                        size: "sm",
+                        actions: [
+                            { label: "Hủy", variant: "outline", close: true },
+                            { 
+                                label: "Đăng xuất", 
+                                variant: "danger", 
+                                onClick: async () => {
+                                    await fetch("/api/auth/logout", { method: "POST" });
+                                    window.location.href = "{{ url_for('index') }}";
+                                } 
+                            }
+                        ]
+                    });
+                } else {
+                    if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+                        await fetch("/api/auth/logout", { method: "POST" });
+                        window.location.href = "{{ url_for('index') }}";
+                    }
+                }
+            });
+        });
+    </script>
+    
+    {% if session.get("role") %}
+    <script>
+        (function() {
+            let lastActivity = Date.now();
+            let warningModalOpen = false;
+            let countdownInterval = null;
+            let remainingTime = 60;
+            
+            function resetIdleTime() {
+                if (!warningModalOpen) {
+                    lastActivity = Date.now();
+                }
+            }
+
+            ['mousemove', 'keypress', 'click', 'scroll', 'touchstart'].forEach(evt => {
+                window.addEventListener(evt, resetIdleTime, { passive: true });
+            });
+
+            setInterval(() => {
+                if (warningModalOpen) return;
+                let idleDuration = Date.now() - lastActivity;
+                if (idleDuration >= 3540000) { // 59 phút
+                    showWarningModal();
+                }
+            }, 5000);
+
+            function showWarningModal() {
+                warningModalOpen = true;
+                remainingTime = 60;
+
+                const content = document.createElement("div");
+                content.innerHTML = `
+                    <div style="display:flex; align-items:start; gap:12px;">
+                        <svg style="flex-shrink:0; margin-top:2px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                            <path d="M12 9v4"></path>
+                            <path d="M12 17h.01"></path>
+                        </svg>
+                        <p style="margin:0; font-size:1rem;">Phiên làm việc của bạn sẽ tự động kết thúc sau <strong id="session-countdown" style="color:#ef4444; font-size:1.15em;">60</strong> giây do không có hoạt động.</p>
+                    </div>
+                `;
+
+                if (window.UIComponents && window.UIComponents.showModalDialog) {
+                    const backdrop = window.UIComponents.showModalDialog({
+                        title: "Cảnh báo hết hạn phiên",
+                        content: content,
+                        size: "sm",
+                        actions: [
+                            {
+                                label: "Đăng xuất",
+                                variant: "outline",
+                                close: true,
+                                onClick: logoutUser
+                            },
+                            {
+                                label: "Mở rộng",
+                                variant: "primary",
+                                close: true,
+                                onClick: extendSession
+                            }
+                        ]
+                    });
+
+                    // Đổi màu modal và nút thành màu vàng cảnh báo
+                    const modalSection = backdrop.querySelector('.ui-modal');
+                    if (modalSection) {
+                        modalSection.style.borderTop = "5px solid #f59e0b";
+                    }
+                    
+                    const buttons = backdrop.querySelectorAll('.ui-modal__footer button');
+                    if (buttons.length > 1) {
+                        buttons[1].style.backgroundColor = "#f59e0b";
+                        buttons[1].style.borderColor = "#f59e0b";
+                        buttons[1].style.color = "#fff";
+                        buttons[1].style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.3)";
+                    }
+
+                    countdownInterval = setInterval(() => {
+                        const countEl = document.getElementById("session-countdown");
+                        if (!countEl && warningModalOpen) {
+                            // Hộp thoại bị đóng bởi nút X hoặc click ra ngoài
+                            extendSession();
+                            return;
+                        }
+
+                        remainingTime -= 1;
+                        if (countEl) countEl.innerText = remainingTime;
+
+                        if (remainingTime <= 0) {
+                            clearInterval(countdownInterval);
+                            logoutUser();
+                        }
+                    }, 1000);
+                } else {
+                    if (confirm("Phiên làm việc sắp hết hạn. Bấm OK để tiếp tục làm việc, Cancel để đăng xuất.")) {
+                        extendSession();
+                    } else {
+                        logoutUser();
+                    }
+                }
+            }
+
+            async function extendSession() {
+                warningModalOpen = false;
+                lastActivity = Date.now();
+                if (countdownInterval) clearInterval(countdownInterval);
+                try {
+                    await fetch("/api/auth/refresh", { method: "POST" });
+                } catch(e) {}
+            }
+
+            async function logoutUser() {
+                if (countdownInterval) clearInterval(countdownInterval);
+                try {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                } catch(e) {}
+                window.location.href = "{{ url_for('index') }}";
+            }
+        })();
+    </script>
+    {% endif %}
+
+    {% if session.get("role") and request.path in [url_for("student_role.dashboard"), url_for("advisor_role.dashboard")] %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dashboardUrl = window.location.href;
+            const accountName = `{{ session.get("display_name") or session.get("username") or "tài khoản hiện tại" }}`;
+            let logoutPromptOpen = false;
+
+            // Create an in-page history entry so Back cannot silently reveal a cached login page.
+            window.history.pushState({ dashboardLogoutGuard: true }, "", dashboardUrl);
+
+            window.addEventListener("popstate", () => {
+                window.history.pushState({ dashboardLogoutGuard: true }, "", dashboardUrl);
+                if (logoutPromptOpen) return;
+                logoutPromptOpen = true;
+
+                const stayOnDashboard = () => { logoutPromptOpen = false; };
+                const logout = async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.replace("{{ url_for('index') }}");
+                };
+
+                if (window.UIComponents?.showModalDialog) {
+                    const modal = window.UIComponents.showModalDialog({
+                        title: "Xác nhận",
+                        description: `Bạn đã đăng nhập với tên ${accountName}, cần đăng xuất trước khi đăng nhập làm người dùng khác.`,
+                        size: "sm",
+                        actions: [
+                            { label: "Hủy bỏ", variant: "danger", onClick: stayOnDashboard },
+                            { label: "Thoát", variant: "primary", onClick: logout },
+                        ],
+                    });
+                    modal.querySelector(".ui-modal__title")?.style.setProperty("color", "#dc2626");
+                    modal.querySelector(".ui-modal__close")?.addEventListener("click", stayOnDashboard);
+                    modal.addEventListener("click", (event) => {
+                        if (event.target === modal) stayOnDashboard();
+                    });
+                } else if (window.confirm("Bạn có muốn đăng xuất để quay về trang đăng nhập không?")) {
+                    logout();
+                } else {
+                    stayOnDashboard();
+                }
+            });
+        });
+    </script>
+    {% endif %}
+
+    {% block extra_scripts %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hover-overrides.css') }}">
+    {% block modal_layer %}{% endblock %}
+</body>
+</html>

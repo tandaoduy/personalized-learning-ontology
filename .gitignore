@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Test and build caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment
+.venv/
+venv/
+
+# Generated or temporary artifacts
+tmptq0ti21_/
+StudentDataStandardization/reports/
+legacy/outputs/
+legacy/reports/
+
+# Frontend dependencies
+node_modules/

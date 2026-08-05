@@ -1,0 +1,99 @@
+{
+  "consultations": [
+    {
+      "id": "CONS_DEMO_001",
+      "student_id": "SV001",
+      "student_name": "Sinh viên 01",
+      "advisor_username": "CV001",
+      "advisor_name": "Cố vấn 01",
+      "notes": "Ghi chú tư vấn mẫu.",
+      "recommended_courses": [
+        {
+          "code": "INT6900",
+          "name": "Thực tập ngành nghề",
+          "credits": 3,
+          "is_retake": false,
+          "recommended_semester": 7,
+          "heuristic_score": 0,
+          "total_priority_score": 20500,
+          "reasons": [
+            "môn bắt buộc",
+            "mở đúng học kỳ hiện tại",
+            "đúng học kỳ khuyến nghị"
+          ],
+          "corequisites": [],
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "reason": "môn bắt buộc; mở đúng học kỳ hiện tại; đúng học kỳ khuyến nghị"
+        },
+        {
+          "code": "NEC326",
+          "name": "An toàn và bảo mật thông tin",
+          "credits": 3,
+          "is_retake": false,
+          "recommended_semester": 7,
+          "heuristic_score": 0,
+          "total_priority_score": 20500,
+          "reasons": [
+            "môn bắt buộc",
+            "mở đúng học kỳ hiện tại",
+            "đúng học kỳ khuyến nghị",
+            "phù hợp chuyên ngành"
+          ],
+          "corequisites": [],
+          "course_code": "NEC326",
+          "course_name": "An toàn và bảo mật thông tin",
+          "reason": "môn bắt buộc; mở đúng học kỳ hiện tại; đúng học kỳ khuyến nghị; phù hợp chuyên ngành"
+        },
+        {
+          "code": "SOT344",
+          "name": "Trí tuệ nhân tạo",
+          "credits": 3,
+          "is_retake": false,
+          "recommended_semester": 7,
+          "heuristic_score": 0,
+          "total_priority_score": 20500,
+          "reasons": [
+            "môn bắt buộc",
+            "mở đúng học kỳ hiện tại",
+            "đúng học kỳ khuyến nghị",
+            "phù hợp chuyên ngành"
+          ],
+          "corequisites": [],
+          "course_code": "SOT344",
+          "course_name": "Trí tuệ nhân tạo",
+          "reason": "môn bắt buộc; mở đúng học kỳ hiện tại; đúng học kỳ khuyến nghị; phù hợp chuyên ngành"
+        },
+        {
+          "code": "SOT357",
+          "name": "Kiểm thử phần mềm",
+          "credits": 3,
+          "is_retake": false,
+          "recommended_semester": 7,
+          "heuristic_score": 0,
+          "total_priority_score": 20500,
+          "reasons": [
+            "môn bắt buộc",
+            "mở đúng học kỳ hiện tại",
+            "đúng học kỳ khuyến nghị",
+            "phù hợp chuyên ngành"
+          ],
+          "corequisites": [],
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "reason": "môn bắt buộc; mở đúng học kỳ hiện tại; đúng học kỳ khuyến nghị; phù hợp chuyên ngành"
+        },
+        {
+          "course_code": "SOT366",
+          "course_name": "Phát triển phần mềm mã nguồn mở",
+          "credits": 3,
+          "course_type": "Điều chỉnh bởi CVHT",
+          "reason": "Bổ sung thủ công bởi Cố vấn học tập",
+          "manually_added": true
+        }
+      ],
+      "scenario_used": "standard",
+      "total_credits": 15
+    }
+  ]
+}

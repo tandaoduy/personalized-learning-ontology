@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập - Gợi ý kế hoạch học tập{% endblock %}
+{% block main_class %}min-h-screen{% endblock %}
+
+{% block content %}
+<section id="authPage" class="relative grid min-h-screen overflow-hidden bg-white lg:grid-cols-2">
+    <div class="auth-enter-visual absolute inset-0 flex items-center justify-center bg-white px-4 lg:static lg:min-h-screen lg:px-10 lg:py-8">
+        <img class="animate-auth-float max-h-[calc(100vh-2rem)] w-full object-contain opacity-25 lg:max-h-[calc(100vh-4rem)] lg:opacity-100" src="{{ url_for('static', filename='images/auth-illustration.svg') }}" alt="Minh họa kế hoạch học tập">
+    </div>
+
+    <aside class="auth-enter-panel relative z-10 flex min-h-screen items-center justify-center border-l border-slate-100 bg-transparent px-6 py-8 lg:bg-white">
+        <div class="w-full max-w-xl">
+            <div id="loginAuthCard" class="animate-auth-fade-up animate-auth-soft-pulse transition duration-300 hover:-translate-y-1"></div>
+        </div>
+    </aside>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const mount = document.getElementById("loginAuthCard");
+        const page = document.getElementById("authPage");
+        let attempts = 0;
+
+        function reveal() {
+            page?.classList.add("auth-page-ready");
+        }
+
+        function mountAuthCard() {
+            attempts += 1;
+            if (!window.UIComponents?.createAuthCard || !window.UIComponents?.createField || !mount) {
+                if (attempts < 30) {
+                    window.setTimeout(mountAuthCard, 50);
+                    return;
+                }
+                reveal();
+                return;
+            }
+
+            mount.appendChild(UIComponents.createAuthCard({
+                mode: "login",
+                badge: "Đăng nhập hệ thống",
+                title: "Chào mừng trở lại",
+                description: "Nhập mã số đăng nhập và mật khẩu để tiếp tục.",
+                fields: [
+                    { label: "Mã số đăng nhập", name: "username", placeholder: "Nhập mã sinh viên hoặc mã cố vấn" },
+                    { label: "Mật khẩu", name: "password", type: "password", placeholder: "Nhập mật khẩu" },
+                ],
+                submitLabel: "Đăng nhập",
+                footerText: "Bạn chưa có tài khoản?",
+                footerActionLabel: "Đăng ký",
+                onFooterAction: () => {
+                    window.location.href = "{{ url_for('register_page') }}";
+                },
+                onSubmit: async (form, formEl, helpers) => {
+                    const response = await fetch("/api/auth/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(form),
+                    });
+                    const result = await response.json();
+                    if (!response.ok || !result.success) {
+                        const message = result.error || "Không thể đăng nhập.";
+                        helpers.showFieldError("password", message);
+                        window.UIComponents?.showAlert(message, { type: "error", duration: 3200 });
+                        return;
+                    }
+                    helpers.clearError();
+                    window.location.href = result.data.redirect_url;
+                },
+            }));
+            reveal();
+        }
+
+        mountAuthCard();
+    });
+</script>
+<script>
+    window.addEventListener("pageshow", async () => {
+        try {
+            const response = await fetch("/api/auth/me", { cache: "no-store" });
+            const result = await response.json();
+            if (!response.ok || !result.authenticated) return;
+
+            const dashboardUrl = result.data.role === "advisor" ? "/advisor/dashboard" : "/student/dashboard";
+            const accountName = result.data.display_name || result.data.username || "tài khoản hiện tại";
+            const returnToDashboard = () => window.location.replace(dashboardUrl);
+            const logout = async () => {
+                await fetch("/api/auth/logout", { method: "POST" });
+                window.location.replace("/");
+            };
+
+            if (window.UIComponents?.showModalDialog) {
+                const modal = window.UIComponents.showModalDialog({
+                    title: "Xác nhận",
+                    description: `Bạn đã đăng nhập với tên ${accountName}, cần đăng xuất trước khi đăng nhập làm người dùng khác.`,
+                    size: "sm",
+                    actions: [
+                        { label: "Hủy bỏ", variant: "danger", onClick: returnToDashboard },
+                        { label: "Thoát", variant: "primary", onClick: logout },
+                    ],
+                });
+                modal.querySelector(".ui-modal__title")?.style.setProperty("color", "#dc2626");
+                modal.querySelector(".ui-modal__close")?.addEventListener("click", returnToDashboard);
+                modal.addEventListener("click", (event) => {
+                    if (event.target === modal) returnToDashboard();
+                });
+            } else if (window.confirm("Bạn có muốn đăng xuất để ở lại trang đăng nhập không?")) {
+                logout();
+            } else {
+                returnToDashboard();
+            }
+        } catch (error) {
+            console.warn("Unable to verify the current session:", error);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+@import url("./alert/alert.css");
+@import url("./toggle/toggle.css");
+@import url("./table/table.css");
+@import url("./button/button.css");
+@import url("./card/card.css");
+@import url("./avatar/avatar.css");
+@import url("./dropdown/dropdown.css");
+@import url("./sidebar/sidebar.css");
+@import url("./tabs/tabs.css");
+@import url("./form-layout/form-layout.css");
+@import url("./radio-group/radio-group.css");
+@import url("./navbar/navbar.css");
+@import url("./modal-dialog/modal-dialog.css");
+@import url("./sign-in-registration/sign-in-registration.css");
+@import url("./badge/badge.css");
+@import url("./breadcrumb/breadcrumb.css");
+@import url("./loading/loading.css");
+
+:root {
+    --ui-primary: #2563eb;
+    --ui-success: #16a34a;
+    --ui-danger: #dc2626;
+    --ui-warning: #d97706;
+    --ui-info: #0284c7;
+    --ui-border: #e5e7eb;
+    --ui-text: #111827;
+    --ui-muted: #64748b;
+}
+
+/* Scroll Reveal Effect */
+.reveal-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.reveal-up.revealed { opacity: 1; transform: translateY(0); }
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }

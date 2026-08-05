@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Xác Nhận & Điều Chỉnh KHHT - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="advisor-workspace" data-role="advisor">
+    <div class="page-top-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <nav class="ui-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label": "Chọn sinh viên", "href": "/advisor/students", "icon": "filter"}, {"label": "Hồ sơ & Lịch sử", "href": "/advisor/profile", "icon": "user"}, {"label": "Sinh kế hoạch", "href": "/advisor/scenarios", "icon": "file"}, {"label": "Xác nhận kế hoạch", "icon": "check"}]'>
+            <ol class="ui-breadcrumb__list">
+                <li class="ui-breadcrumb__item">
+                    <a href="/advisor" class="ui-breadcrumb__link">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Trang chủ Cố vấn</span>
+                    </a>
+                </li>
+                <li class="ui-breadcrumb__separator" aria-hidden="true">/</li>
+                <li class="ui-breadcrumb__item">
+                    <span class="ui-breadcrumb__current" aria-current="page">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Xác nhận & Điều chỉnh KHHT</span>
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Student selection dropdown -->
+    <div class="filter-panel" style="margin-bottom: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <label for="standaloneConsSelect" style="font-weight: 700;">✅ Chọn sinh viên để chốt kế hoạch:</label>
+        <div style="flex: 1; min-width: 300px;">
+            <select id="standaloneConsSelect" class="form-select" onchange="if(this.value) AdvisorWorkspace.selectStudent(this.value);">
+                <option value="">-- Vui lòng chọn sinh viên từ danh sách --</option>
+            </select>
+        </div>
+        <a href="/advisor/scenarios" class="btn-sm btn-warning" onclick="AdvisorWorkspace.goToScenarios(); return false;" style="text-decoration: none;">Sinh kế hoạch học tập trước</a>
+    </div>
+
+    <div class="plan-confirm-box" style="margin-top: 0;">
+        <div class="confirm-summary">
+            <h3>✅ Xác nhận và lưu kế hoạch học tập tư vấn</h3>
+            <p>CVHT kiểm tra các học phần đã được chọn từ bước gợi ý kịch bản, thêm nhận xét chỉ đạo học vụ và chốt lưu vào hệ thống.</p>
+            <div class="confirm-live-stats">
+                <span>Số môn đã chọn: <strong id="liveSelectedCount">0</strong></span> • 
+                <span>Tổng tín chỉ chọn: <strong id="liveSelectedCredits" class="text-primary">0</strong> TC</span>
+            </div>
+        </div>
+        <div class="confirm-form">
+            <div class="consultation-plan-editor" aria-labelledby="consultationPlanTitle">
+                <div class="consultation-plan-editor__heading">
+                    <div>
+                        <h4 id="consultationPlanTitle">Kế hoạch hệ thống đề xuất</h4>
+                        <p>CVHT có thể bỏ chọn học phần chưa phù hợp trước khi xác nhận kế hoạch.</p>
+                    </div>
+                    <div class="consultation-plan-editor__header-actions">
+                        <button type="button" class="btn-sm btn-primary" onclick="AdvisorWorkspace.openAddCourseModal()">Thêm môn học</button>
+                        <a href="/advisor/scenarios" class="btn-sm btn-outline" onclick="AdvisorWorkspace.goToScenarios(); return false;">Sinh lại kế hoạch</a>
+                    </div>
+                </div>
+                <div id="consultationPlanEmpty" class="consultation-plan-editor__empty">
+                    Chưa có kế hoạch đề xuất cho sinh viên này. Hãy chạy thuật toán gợi ý trước.
+                </div>
+                <div class="table-responsive" id="consultationPlanTableWrap" style="display: none;">
+                    <table class="advisor-table consultation-plan-table">
+                        <thead>
+                            <tr>
+                                <th>Chọn</th>
+                                <th>Mã môn</th>
+                                <th>Tên học phần</th>
+                                <th>Tín chỉ</th>
+                                <th>Lý do đề xuất</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultationPlanBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="planConfirmNotes" style="font-weight: 700; display: block; margin-bottom: 8px;">Nhận xét, hướng dẫn của Cố vấn học tập cho sinh viên:</label>
+                <textarea id="planConfirmNotes" class="form-textarea" rows="4" placeholder="Ghi chú nhanh cho sinh viên về kế hoạch này (nhắc nhở trả nợ, định hướng chuyên ngành, cảnh báo học vụ)..."></textarea>
+            </div>
+            <div class="confirm-btn-row">
+                <button type="button" class="btn confirm-action confirm-action--confirm" onclick="AdvisorWorkspace.confirmPlan()">
+                    Xác nhận kế hoạch tư vấn
+                </button>
+                <a href="/advisor/reports" class="btn confirm-action confirm-action--report" onclick="AdvisorWorkspace.goToReports(); return false;">
+                    Chuyển sang xuất báo cáo in ấn ➔
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Đánh Giá Hệ Thống - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="advisor-workspace" data-role="advisor">
+    <div class="page-top-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <nav class="ui-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label": "Chọn sinh viên", "href": "/advisor/students", "icon": "filter"}, {"label": "Hồ sơ & Lịch sử", "href": "/advisor/profile", "icon": "user"}, {"label": "Sinh kế hoạch", "href": "/advisor/scenarios", "icon": "file"}, {"label": "Xác nhận kế hoạch", "href": "/advisor/consultation", "icon": "check"}, {"label": "Xuất báo cáo & Đánh giá", "icon": "report"}]'>
+            <ol class="ui-breadcrumb__list">
+                <li class="ui-breadcrumb__item"><a href="/advisor" class="ui-breadcrumb__link">⌂ <span>Trang chủ Cố vấn</span></a></li>
+                <li class="ui-breadcrumb__separator" aria-hidden="true">/</li>
+                <li class="ui-breadcrumb__item"><span class="ui-breadcrumb__current" aria-current="page">★ <span>Đánh giá hệ thống</span></span></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="system-evaluation-card bg-light-gradient">
+        <div class="system-evaluation-card__intro">
+            <h2>⭐ Đánh giá hệ thống gợi ý kế hoạch học tập</h2>
+            <p>Đánh giá mức độ chính xác và tính hữu ích của hệ thống trong công tác tư vấn. Phần này không tạo hoặc xuất báo cáo tư vấn sinh viên.</p>
+        </div>
+
+        <form id="evaluationForm" onsubmit="event.preventDefault(); AdvisorWorkspace.submitEvaluation();">
+            <div class="eval-group mt-3">
+                <label>Tính chính xác của gợi ý <span>(quy chế, điều kiện tiên quyết, tiến độ)</span></label>
+                <div class="star-rating" id="ratingAccuracy" aria-label="Đánh giá tính chính xác">
+                    <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star active" data-val="5">★</span>
+                </div>
+            </div>
+
+            <div class="eval-group mt-3">
+                <label>Tính hữu ích của hệ thống trong công tác tư vấn</label>
+                <div class="star-rating" id="ratingUsefulness" aria-label="Đánh giá tính hữu ích">
+                    <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star active" data-val="5">★</span>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="evalComments">Ý kiến đóng góp (không bắt buộc)</label>
+                <textarea id="evalComments" class="form-textarea" rows="4" placeholder="Nêu điểm cần cải thiện về gợi ý, dữ liệu hoặc giao diện..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-warning mt-2">⭐ Gửi đánh giá hệ thống</button>
+        </form>
+
+        <div class="eval-community mt-4">
+            <h3>💬 Phản hồi gần đây từ các cố vấn</h3>
+            <div id="evalListContainer" class="eval-list">
+                <p class="text-gray text-sm">Đang nạp phản hồi...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

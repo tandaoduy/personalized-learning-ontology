@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng ký - Gợi ý kế hoạch học tập{% endblock %}
+{% block main_class %}h-screen overflow-hidden{% endblock %}
+
+{% block content %}
+<section id="authPage" class="relative grid h-screen overflow-hidden bg-white lg:grid-cols-2">
+    <div class="auth-enter-visual absolute inset-0 flex items-center justify-center bg-white px-4 lg:static lg:h-screen lg:px-10 lg:py-6">
+        <img class="animate-auth-float max-h-[calc(100vh-2rem)] w-full object-contain opacity-25 lg:max-h-[calc(100vh-3rem)] lg:opacity-100" src="{{ url_for('static', filename='images/auth-illustration.svg') }}" alt="Minh họa kế hoạch học tập">
+    </div>
+
+    <aside class="auth-enter-panel relative z-10 flex h-screen items-center justify-center border-l border-slate-100 bg-transparent px-6 py-4 lg:bg-white">
+        <div class="w-full max-w-xl">
+            <div id="registerAuthCard" class="animate-auth-fade-up animate-auth-soft-pulse transition duration-300 hover:-translate-y-1"></div>
+        </div>
+    </aside>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const mount = document.getElementById("registerAuthCard");
+        const page = document.getElementById("authPage");
+        let attempts = 0;
+
+        function reveal() {
+            page?.classList.add("auth-page-ready");
+        }
+
+        function mountAuthCard() {
+            attempts += 1;
+            if (!window.UIComponents?.createAuthCard || !window.UIComponents?.createField || !mount) {
+                if (attempts < 30) {
+                    window.setTimeout(mountAuthCard, 50);
+                    return;
+                }
+                reveal();
+                return;
+            }
+
+            mount.appendChild(UIComponents.createAuthCard({
+                mode: "register",
+                badge: "Đăng ký tài khoản",
+                title: "Tạo yêu cầu đăng ký",
+                description: "Chọn vai trò và nhập thông tin tài khoản cần đăng ký.",
+                fields: [
+                    {
+                        label: "Vai trò",
+                        name: "role",
+                        type: "select",
+                        value: "student",
+                        options: [
+                            { value: "student", label: "Sinh viên" },
+                            { value: "advisor", label: "Cố vấn học tập" },
+                        ],
+                    },
+                    { label: "Họ và tên", name: "full_name", placeholder: "Nhập họ và tên" },
+                    { label: "Mã số đăng ký", name: "username", placeholder: "Nhập mã sinh viên hoặc mã cố vấn" },
+                    { label: "Mật khẩu", name: "password", type: "password", placeholder: "Tạo mật khẩu" },
+                ],
+                submitLabel: "Gửi đăng ký",
+                footerText: "Đã có tài khoản?",
+                footerActionLabel: "Đăng nhập",
+                onFooterAction: () => {
+                    window.location.href = "{{ url_for('index') }}";
+                },
+                onSubmit: async (form, formEl, helpers) => {
+                    const response = await fetch("/api/auth/register", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(form),
+                    });
+                    const result = await response.json();
+                    if (!response.ok || !result.success) {
+                        const message = result.error || "Không thể gửi đăng ký.";
+                        helpers.showFieldError(response.status === 409 ? "username" : "password", message);
+                        window.UIComponents?.showAlert(message, { type: "error", duration: 3200 });
+                        return;
+                    }
+                    helpers.clearError();
+                    window.UIComponents?.showAlert(
+                        result.message || "Đăng ký tài khoản thành công.",
+                        { type: "success", duration: 1800 }
+                    );
+                    if (result.data?.redirect_url) {
+                        window.setTimeout(() => {
+                            window.location.href = result.data.redirect_url;
+                        }, 650);
+                    }
+                },
+            }));
+            reveal();
+        }
+
+        mountAuthCard();
+    });
+</script>
+{% endblock %}

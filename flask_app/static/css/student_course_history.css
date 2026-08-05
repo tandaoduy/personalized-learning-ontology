@@ -1,0 +1,404 @@
+.course-history-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.course-history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    margin-top: 18px;
+}
+
+.course-history-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.ch-profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+
+.ch-profile-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fe 100%);
+    border-bottom: 1px solid #e0eaf5;
+}
+
+.ch-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.ch-profile-identity {
+    min-width: 0;
+}
+
+.ch-profile-id {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--text-color);
+}
+
+.ch-profile-name {
+    color: var(--text-light);
+    margin-top: 2px;
+    font-size: 0.95rem;
+}
+
+.ch-profile-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 0;
+}
+
+.ch-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 18px;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ch-detail-item:nth-child(4n) {
+    border-right: none;
+}
+
+.ch-detail-item:nth-last-child(-n+4) {
+    border-bottom: none;
+}
+
+.ch-detail-label {
+    font-size: 0.78rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+.ch-detail-value {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.ch-semester-pill {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.ch-goal-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.ch-goal-ontime {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.ch-goal-light {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.ch-goal-fast {
+    background: #ede7f6;
+    color: #5e35b1;
+}
+
+.ch-detail-highlight {
+    background: #f8fbff;
+}
+
+.ch-credits-value {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.ch-section {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    margin-bottom: 16px;
+}
+
+.ch-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.ch-section h3 {
+    margin: 0;
+}
+
+.ch-muted {
+    color: var(--text-light);
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+}
+
+.ch-table-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.ch-table {
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.ch-table th,
+.ch-table td {
+    /* Đồng bộ chiều cao hàng/padding với bảng "Danh sách môn đủ điều kiện học" */
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    vertical-align: middle;
+}
+
+.ch-mono {
+    /* Ép về font có số 0 bình thường (tránh glyph "0" có gạch chéo ở một số monospace). */
+    font-family: "Courier New", Courier, monospace;
+    font-variant-numeric: normal;
+    font-feature-settings: "zero" 0;
+    font-size: 0.95rem;
+}
+
+.ch-col-stt,
+.ch-col-credit,
+.ch-col-attempt,
+.ch-col-grade,
+.ch-col-status {
+    white-space: nowrap;
+}
+
+.ch-col-stt,
+.ch-col-credit,
+.ch-col-attempt,
+.ch-col-grade {
+    text-align: center;
+}
+
+.ch-col-status {
+    text-align: right;
+}
+
+.ch-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1;
+    border: 1px solid transparent;
+}
+
+.ch-pill-success {
+    color: #1b5e20;
+    background: #e8f5e9;
+    border-color: rgba(56, 142, 60, 0.25);
+}
+
+.ch-pill-danger {
+    color: #b71c1c;
+    background: #ffebee;
+    border-color: rgba(211, 47, 47, 0.25);
+}
+
+.ch-empty {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 16px;
+    background: #f8f9fa;
+    border: 1px dashed rgba(25, 118, 210, 0.35);
+    border-radius: 10px;
+    color: var(--text-light);
+}
+
+.ch-empty-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    color: var(--primary-color);
+    background: rgba(25, 118, 210, 0.08);
+    flex: 0 0 auto;
+}
+
+.ch-empty-title {
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.ch-empty-sub {
+    margin-top: 4px;
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+.ch-pagination {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ch-pagination-info {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.ch-pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.ch-pages {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ch-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
+.ch-page-link:hover {
+    border-color: rgba(25, 118, 210, 0.45);
+}
+
+.ch-page-link.is-active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.ch-page-link.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.ch-page-ellipsis {
+    color: var(--text-light);
+    padding: 0 2px;
+    font-weight: 800;
+}
+
+.ch-perpage {
+    display: flex;
+    align-items: center;
+}
+
+.ch-perpage-select {
+    width: auto;
+    min-width: 110px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .course-history-header {
+        align-items: flex-start;
+    }
+
+    .ch-profile-card {
+        border-left-width: 3px;
+    }
+
+    .ch-profile-top {
+        padding: 14px 16px;
+    }
+
+    .ch-profile-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ch-detail-item:nth-child(2n) {
+        border-right: none;
+    }
+
+    .ch-detail-item:nth-child(4n) {
+        border-right: none;
+    }
+
+    .ch-profile {
+        padding: 12px 14px;
+    }
+
+    .ch-pagination {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ch-pagination-controls {
+        justify-content: space-between;
+    }
+}

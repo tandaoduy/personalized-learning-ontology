@@ -1,0 +1,51 @@
+.ui-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: fit-content;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.ui-badge--primary {
+    border-color: #bfdbfe;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.ui-badge--success {
+    border-color: #bbf7d0;
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.ui-badge--warning {
+    border-color: #fde68a;
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.ui-badge--danger {
+    border-color: #fecaca;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.ui-badge--neutral {
+    border-color: #e5e7eb;
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.ui-badge--dot::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: currentColor;
+}

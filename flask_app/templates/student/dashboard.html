@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<section class="home-dashboard home-dashboard--student" data-role="student">
+    <div class="home-grid">
+        <a class="ui-card home-card reveal-up delay-100" href="/student/profile">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--blue" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+                        <path d="M10 14h17a7 7 0 0 1 7 7v31a6 6 0 0 0-6-6H10V14Z" fill="#dbeafe" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M54 14H37a7 7 0 0 0-7 7v31a6 6 0 0 1 6-6h18V14Z" fill="#eff6ff" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M17 24h9M17 32h9M39 24h8M39 32h8" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Hồ sơ học tập</h2>
+            </div>
+        </a>
+
+        <a class="ui-card home-card reveal-up delay-200" href="/student/plan">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--green" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+                        <rect x="15" y="8" width="34" height="48" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+                        <path d="M24 22h16M24 32h16M24 42h9" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+                        <path d="m42 40 4 4 8-10" stroke="#15803d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Sinh kế hoạch học tập</h2>
+            </div>
+        </a>
+
+        <a class="ui-card home-card reveal-up delay-300" href="/student/history">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--purple" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+                        <circle cx="32" cy="32" r="22" fill="#faf5ff" stroke="#a855f7" stroke-width="3"/>
+                        <path d="M32 16v16l10 10" stroke="#a855f7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="32" cy="32" r="4" fill="#a855f7"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Kết quả học tập</h2>
+            </div>
+        </a>
+    </div>
+
+    <!-- Progress Dashboard Section -->
+    <div class="progress-dashboard-container reveal-up" id="progressDashboard" data-student-id="{{ username }}">
+        <h2 class="progress-dashboard-title">Tiến độ học tập</h2>
+        <div class="progress-dashboard-grid">
+            
+            <div class="progress-chart-card ui-card reveal-up delay-100">
+                <div class="ui-card__body">
+                    <h3 class="progress-card-title">Tỷ lệ hoàn thành tín chỉ</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="progressChart"></canvas>
+                        <div class="chart-center-text" id="chartCenterText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-stats-column">
+                <div class="progress-stat-card ui-card border-left-green reveal-up delay-200">
+                    <div class="ui-card__body">
+                        <div class="stat-icon bg-green-100 text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Tín chỉ đã đạt & miễn</div>
+                            <div class="stat-value text-green-600" id="statPassedCredits">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-stat-card ui-card border-left-red reveal-up delay-300">
+                    <div class="ui-card__body">
+                        <div class="stat-icon bg-red-100 text-red-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Tín chỉ chưa đạt</div>
+                            <div class="stat-value text-red-600" id="statFailedCredits">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-stat-card ui-card border-left-blue reveal-up delay-400">
+                    <div class="ui-card__body">
+                        <div class="stat-icon bg-blue-100 text-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Điểm trung bình (GPA)</div>
+                            <div class="stat-value text-blue-600" id="statGpa">0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student/dashboard.css') }}">
+<script src="{{ url_for('static', filename='js/student/dashboard.js') }}" defer></script>
+{% endblock %}
+
+{% block extra_scripts %}
+{% if request.args.get('login') == 'success' %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        window.UIComponents?.showAlert("Đăng nhập thành công.", { type: "success", duration: 2200 });
+    });
+</script>
+{% endif %}
+{% endblock %}

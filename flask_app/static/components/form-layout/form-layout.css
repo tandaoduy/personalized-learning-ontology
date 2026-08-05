@@ -1,0 +1,84 @@
+.ui-form {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.ui-form--two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ui-form__section {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: #ffffff;
+}
+
+.ui-form__title {
+    color: #111827;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.ui-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.ui-field label {
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.ui-field input,
+.ui-field select,
+.ui-field textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.65rem;
+    padding: 0.95rem 1rem;
+    background: #ffffff;
+    color: #1f2937;
+}
+
+.ui-field input:focus,
+.ui-field select:focus,
+.ui-field textarea:focus {
+    outline: 3px solid rgba(37, 99, 235, 0.14);
+    border-color: #2563eb;
+}
+
+.ui-field.has-error input,
+.ui-field.has-error select,
+.ui-field.has-error textarea {
+    border-color: #ef4444;
+    background: #fffafa;
+}
+
+.ui-field.has-error input:focus,
+.ui-field.has-error select:focus,
+.ui-field.has-error textarea:focus {
+    border-color: #ef4444;
+    outline-color: rgba(239, 68, 68, 0.16);
+}
+
+.ui-field__error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.ui-field__error[hidden] {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .ui-form--two-columns {
+        grid-template-columns: 1fr;
+    }
+}

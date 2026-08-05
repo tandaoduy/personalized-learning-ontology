@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Hồ sơ học tập{% endblock %}
+
+{% block content %}
+<section
+    class="student-profile-page"
+    data-student-id="{{ session.get('username', '') }}"
+    data-account-name="{{ session.get('display_name', '') }}"
+>
+    <header class="student-profile-page__header">
+        <div>
+            <h1>Hồ sơ học tập</h1>
+        </div>
+        <button class="ui-btn" type="submit" form="learningProfileForm">Lưu hồ sơ</button>
+    </header>
+
+    <form id="learningProfileForm" class="learning-profile-form" data-preserve-draft>
+        <div id="specializationWarning" class="learning-warning learning-warning--top" hidden></div>
+
+        <section class="learning-profile-card">
+            <h2>Thông tin sinh viên</h2>
+            <div class="learning-profile-grid">
+                <label class="learning-field">
+                    <span>Mã sinh viên</span>
+                    <input id="studentId" name="student_id" type="text" value="{{ session.get('username', '') }}" readonly>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Họ và tên</span>
+                    <input id="studentName" name="name" type="text" value="{{ session.get('display_name', '') }}" readonly>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Khóa</span>
+                    <select id="yearAdmitted" name="year_admitted">
+                        <option value="">Chọn khóa</option>
+                        {% for cohort in cohorts %}
+                            <option value="{{ cohort.year_admitted }}">{{ cohort.label or cohort.code }} - {{ cohort.year_admitted }}</option>
+                        {% endfor %}
+                    </select>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Lớp hành chính</span>
+                    <select id="academicClass" name="academic_class">
+                        <option value="">Chọn khóa trước</option>
+                    </select>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Ngành</span>
+                    <select id="major" name="major">
+                        <option value="Công Nghệ Thông Tin">Công Nghệ Thông Tin</option>
+                        <option value="Khoa học máy tính">Khoa học máy tính</option>
+                    </select>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Chuyên ngành</span>
+                    <select id="specialization" name="specialization">
+                        <option value="Chưa chọn chuyên ngành">Chưa chọn chuyên ngành</option>
+                    </select>
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Học kỳ hiện tại</span>
+                    <input id="currentSemester" name="current_semester" type="number" min="1" max="8" value="1">
+                    <small></small>
+                </label>
+                <label class="learning-field">
+                    <span>Mục tiêu học tập</span>
+                    <select id="studyGoal" name="study_goal">
+                        <option value="đúng hạn">Đúng hạn</option>
+
+                        <option value="học vượt">Học vượt</option>
+                    </select>
+                    <small></small>
+                </label>
+            </div>
+        </section>
+
+        <section class="learning-profile-card">
+            <div class="learning-card-heading">
+                <div>
+                    <h2>Lịch sử học phần</h2>
+                </div>
+                <button class="ui-btn ui-btn--success" id="addCourseAttemptBtn" type="button">Thêm học phần</button>
+            </div>
+
+            <datalist id="courseCodeList"></datalist>
+
+            <div class="learning-attempt-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã môn</th>
+                            <th>Tên môn</th>
+                            <th>Học kỳ</th>
+                            <th>Năm học</th>
+                            <th>Lần học</th>
+                            <th>Điểm</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseAttemptsBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </form>
+
+    <dialog class="course-attempt-dialog" id="courseAttemptDialog">
+        <form class="course-attempt-modal" id="courseAttemptForm" method="dialog">
+            <button class="course-attempt-modal__close" id="closeCourseAttemptModal" type="button" aria-label="Đóng">×</button>
+
+            <header>
+                <h2>Thêm môn học</h2>
+                <p>Chọn môn học và nhập thông tin của một lần học.</p>
+            </header>
+
+            <div class="course-attempt-modal__body">
+                <div class="course-attempt-modal__grid">
+                    <label class="learning-field learning-field--full">
+                        <span>Học kỳ theo năm học</span>
+                        <select id="modalAcademicYear"></select>
+                        <small></small>
+                    </label>
+                    <label class="learning-field learning-field--full">
+                        <span>Tìm môn học</span>
+                        <input id="modalCourseSearch" type="search" placeholder="Nhập mã môn hoặc tên môn">
+                    </label>
+                    <label class="learning-field learning-field--wide">
+                        <span>Môn học</span>
+                        <select id="modalCourseCode" required></select>
+                        <small></small>
+                    </label>
+                    <label class="learning-field">
+                        <span>Điểm môn học</span>
+                        <input id="modalGrade" type="number" min="0" max="10" step="0.1" placeholder="VD: 7.5">
+                        <small></small>
+                    </label>
+                    <input id="modalSemesterTaken" type="hidden">
+                    <input id="modalActualTerm" type="hidden">
+                </div>
+
+                <fieldset class="course-status-options">
+                    <legend>Trạng thái môn học</legend>
+                    <label><input type="radio" name="modalStatus" value="auto" checked> Tự động (Đạt/Chưa đạt)</label>
+                    <label><input type="radio" name="modalStatus" value="Đạt"> Điểm đạt</label>
+                    <label><input type="radio" name="modalStatus" value="Không tính điểm"> Không tính điểm</label>
+                    <label><input type="radio" name="modalStatus" value="Miễn"> Miễn</label>
+                </fieldset>
+
+                <div class="course-attempt-preview" id="courseAttemptPreview">Chưa chọn môn học</div>
+            </div>
+
+            <footer class="course-attempt-modal__actions">
+                <button class="ui-btn ui-btn--secondary" id="cancelCourseAttempt" type="button">Đóng</button>
+                <button class="ui-btn" type="submit">Thêm vào danh sách</button>
+            </footer>
+        </form>
+    </dialog>
+</section>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student/profile.css') }}">
+    <script id="initialCohortsData" type="application/json">
+        {{ cohorts | tojson | safe }}
+    </script>
+<script src="{{ url_for('static', filename='js/student/profile.js') }}"></script>
+{% endblock %}

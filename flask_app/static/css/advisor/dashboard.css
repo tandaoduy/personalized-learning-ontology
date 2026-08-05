@@ -1,0 +1,13 @@
+/* ==========================================
+   ADVISOR WORKSPACE STYLES - INDEX / BUNDLE
+   Tất cả các CSS đã được tách ra từng trang chuyên biệt cho dễ tra cứu và bảo trì.
+   ========================================== */
+
+@import url('common.css');
+@import url('home.css');
+@import url('students.css');
+@import url('profile.css');
+@import url('at-risk.css');
+@import url('scenarios.css');
+@import url('consultation.css');
+@import url('reports.css');

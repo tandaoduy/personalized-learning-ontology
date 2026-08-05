@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Kết quả học tập{% endblock %}
+
+{% block content %}
+<section class="student-history-page" id="historyPageContainer"
+         data-student-id="{{ session.get('username', '') }}"
+         data-account-name="{{ session.get('display_name', '') }}">
+         
+
+    <div id="studentSummaryCard"></div>
+    
+    <div id="courseAttemptsContainer"></div>
+</section>
+
+<script id="initialCourseData" type="application/json">
+    {{ course_catalog | tojson | safe if course_catalog else '[]' }}
+</script>
+<script id="initialStudentData" type="application/json">
+    {{ student_data | tojson | safe if student_data else 'null' }}
+</script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student/history.css') }}">
+<script src="{{ url_for('static', filename='js/student/history.js') }}"></script>
+{% endblock %}

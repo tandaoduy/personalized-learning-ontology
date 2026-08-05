@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Sinh Kế Hoạch Học Tập - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="advisor-workspace" data-role="advisor">
+    <div class="page-top-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <nav class="ui-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label": "Chọn sinh viên", "href": "/advisor/students", "icon": "filter"}, {"label": "Hồ sơ & Lịch sử", "href": "/advisor/profile", "icon": "user"}, {"label": "Sinh kế hoạch", "icon": "file"}]'>
+            <ol class="ui-breadcrumb__list">
+                <li class="ui-breadcrumb__item">
+                    <a href="/advisor" class="ui-breadcrumb__link">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Trang chủ Cố vấn</span>
+                    </a>
+                </li>
+                <li class="ui-breadcrumb__separator" aria-hidden="true">/</li>
+                <li class="ui-breadcrumb__item">
+                    <span class="ui-breadcrumb__current" aria-current="page">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <span>Sinh kế hoạch học tập</span>
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Student selection dropdown -->
+    <div class="filter-panel" style="margin-bottom: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <label for="standaloneScenSelect" style="font-weight: 700;">⚙️ Chọn sinh viên để sinh kế hoạch học tập:</label>
+        <div style="flex: 1; min-width: 300px;">
+            <select id="standaloneScenSelect" class="form-select" onchange="if(this.value) AdvisorWorkspace.selectStudent(this.value);">
+                <option value="">-- Vui lòng chọn sinh viên từ danh sách --</option>
+            </select>
+        </div>
+        <div class="current-selected-sv">
+            Đang chọn: <strong id="scenStudentName">Chưa chọn</strong> (<span id="scenStudentId">-</span>)
+        </div>
+    </div>
+
+    <div id="scenariosContent" style="display: none;">
+        <!-- Scenario Selector Panel -->
+        <div class="scenario-controls">
+            <div class="scenario-options">
+                <label class="scenario-card active" id="cardScenStandard" onclick="AdvisorWorkspace.selectScenario('standard')">
+                    <input type="radio" name="scenarioType" value="standard" checked>
+                    <div class="scen-title">📌 Kịch bản 1: Tối ưu chuẩn</div>
+                    <div class="scen-desc">Gợi ý bám sát quy chuẩn học vụ, tiến độ mẫu và ràng buộc chuyên ngành.</div>
+                </label>
+                <label class="scenario-card" id="cardScenCompare" onclick="AdvisorWorkspace.selectScenario('compare')">
+                    <input type="radio" name="scenarioType" value="compare">
+                    <div class="scen-title">🔄 Kịch bản 2: So sánh 3 phương án</div>
+                    <div class="scen-desc">Sinh đồng thời 3 kế hoạch (chuẩn & thay thế tự chọn) để đối chiếu.</div>
+                </label>
+            </div>
+
+            <div class="scenario-params">
+                <button type="button" class="btn btn-primary btn-run-algo" onclick="AdvisorWorkspace.runRecommendation()">
+                    Sinh kế hoạch học tập
+                </button>
+            </div>
+        </div>
+
+        <div id="algoLoading" data-ui-loading data-loading-title="Đang tạo kế hoạch học tập" data-loading-message="Đang phân tích tiên quyết và tối ưu danh sách học phần...">
+            ⏳ Đang chạy bộ máy suy diễn ontology và thuật toán Beam Search... Vui lòng chờ...
+        </div>
+
+        <!-- Algorithm Results Section -->
+        <div id="algoResults" style="display: none; margin-top: 24px;">
+            <div class="results-toolbar">
+                <div class="results-stats">
+                    <span class="res-badge">Đề xuất: <strong id="resCourseCount">0</strong> môn</span>
+                    <span class="res-badge">Tổng tín chỉ: <strong id="resCreditCount">0</strong> TC</span>
+                    <span class="res-badge bg-light-blue">Kịch bản: <strong id="resScenarioName">Tối ưu chuẩn</strong></span>
+                </div>
+                <div class="results-actions">
+                    <button type="button" class="btn-sm btn-outline" onclick="AdvisorWorkspace.toggleExcludedPanel()">
+                        Xem môn bị loại / lý do (<span id="resExcludedCount">0</span>)
+                    </button>
+                    <button type="button" class="btn-sm btn-outline" onclick="AdvisorWorkspace.printStudentPlan()" style="margin-left: 8px;" title="In Kế hoạch học tập đề xuất hiện tại">
+                        In KHHT
+                    </button>
+                    <a href="/advisor/consultation" class="btn-sm btn-success" onclick="AdvisorWorkspace.goToConsultation(); return false;" style="text-decoration: none; font-weight: 700; margin-left: 10px;">
+                        ➔ Sang chốt kế hoạch & Nhận xét
+                    </a>
+                </div>
+            </div>
+
+            <!-- Excluded Courses Drawer (Copied from student role) -->
+            <div id="excludedPanel" class="excluded-panel" style="display: none; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; color: #dc2626; font-size: 1.1rem;">📋 Tóm tắt các môn bị loại</h4>
+                        <p class="text-sm text-gray" style="margin: 0 0 4px 0;">Các môn không đủ điều kiện xếp vào kế hoạch đề xuất theo cấu trúc chương trình đào tạo.</p>
+                        <p class="text-dark" style="font-weight: 600; margin: 0; color: #111827;">Tổng số: <strong id="excludedCoursesCount" style="color: #dc2626; font-size: 16px;">0</strong> môn bị loại</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button type="button" class="btn-sm btn-outline" onclick="AdvisorWorkspace.toggleExcludedPanel()" style="padding: 6px 14px; font-size: 13px; font-weight: 600; border-radius: 6px; border: 1px solid #2563eb; background: #eff6ff; color: #1e40af; cursor: pointer;">Quay lại bảng đề xuất</button>
+                        <button type="button" class="btn-sm btn-outline" id="toggleExcludedCoursesBtn" onclick="AdvisorWorkspace.toggleExcludedCoursesDetail()" style="padding: 6px 14px; font-size: 13px; font-weight: 600; border-radius: 6px; border: 1px solid #d1d5db; background: #f3f4f6; color: #374151; white-space: nowrap; cursor: pointer; display: none;">Xem chi tiết</button>
+                    </div>
+                </div>
+                
+                <div class="chip-container mb-4" id="excludedSummaryGrid" style="display: flex; gap: 8px; flex-wrap: wrap; padding: 4px 0; margin-bottom: 16px;"></div>
+                
+                <p class="text-sm text-gray" id="excludedDetailHint" style="display: none; font-size: 13px; margin-bottom: 12px; color: #6b7280;">Chi tiết bên dưới chỉ hiển thị các trường hợp cần lưu ý kiểm tra học vụ.</p>
+                <div class="table-responsive" id="excludedCoursesDetail" style="display: none;">
+                    <table class="advisor-table table-white" style="background: white; border-radius: 8px; overflow: hidden; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th width="5%" style="text-align: center; vertical-align: middle;">STT</th>
+                                <th width="15%" style="text-align: center; vertical-align: middle;">Mã môn học</th>
+                                <th width="40%" style="vertical-align: middle;">Tên môn học</th>
+                                <th width="40%" style="vertical-align: middle;">Lý do bị loại</th>
+                            </tr>
+                        </thead>
+                        <tbody id="excludedCoursesList">
+                        </tbody>
+                    </table>
+                    <div class="text-center text-muted" id="excludedEmptyState" style="display:none; padding: 16px 0; text-align: center; color: #6b7280;">Không có học phần nào bị loại.</div>
+                </div>
+            </div>
+
+            <div id="recommendedCoursesContainer">
+                <!-- Plan Comparison Tabs -->
+                <div id="compareTabsBar" class="compare-tabs-bar" style="display: none;">
+                </div>
+
+                <!-- Recommended Courses Table -->
+                <div class="table-responsive" style="margin-top: 16px;">
+                    <table class="advisor-table">
+                        <thead>
+                            <tr>
+                                <th width="50" class="text-center">Chọn</th>
+                                <th>Mã môn</th>
+                                <th>Tên học phần</th>
+                                <th>Tín chỉ</th>
+                                <th>Nhóm</th>
+                                <th>Lý do hệ thống chọn</th>
+                                <th class="text-center">Chuỗi tiên quyết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block modal_layer %}
+<!-- MODAL CHUỖI TIÊN QUYẾT -->
+<div class="custom-modal" id="prereqModal" style="display: none;">
+    <div class="custom-modal__backdrop" onclick="AdvisorWorkspace.closePrereqModal()"></div>
+    <div class="custom-modal__content">
+        <div class="custom-modal__header">
+            <h3>🔗 Phân tích chuỗi môn tiên quyết</h3>
+            <button type="button" class="btn-close" onclick="AdvisorWorkspace.closePrereqModal()">✖</button>
+        </div>
+        <div class="custom-modal__body" id="prereqModalBody">
+            <div class="loading-state">⏳ Đang nạp phân tích ontology...</div>
+        </div>
+        <div class="custom-modal__footer">
+            <button type="button" class="btn btn-secondary" onclick="AdvisorWorkspace.closePrereqModal()">Đóng</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

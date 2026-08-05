@@ -1,0 +1,5 @@
+# Phụ thuộc chỉ dùng khi phát triển/kiểm thử; không cần khi triển khai ứng dụng.
+pytest==8.3.5
+pytest-cov==6.0.0
+pandas==2.2.3
+openpyxl==3.1.5

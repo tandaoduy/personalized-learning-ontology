@@ -1,0 +1,20 @@
+{
+  "evaluations": [
+    {
+      "id": "EVAL_DEMO_001",
+      "advisor_username": "CV001",
+      "advisor_name": "Cố vấn 01",
+      "accuracy_rating": 5,
+      "usefulness_rating": 5,
+      "comments": ""
+    },
+    {
+      "id": "EVAL_DEMO_002",
+      "advisor_username": "CV001",
+      "advisor_name": "Cố vấn 01",
+      "accuracy_rating": 3,
+      "usefulness_rating": 3,
+      "comments": ""
+    }
+  ]
+}

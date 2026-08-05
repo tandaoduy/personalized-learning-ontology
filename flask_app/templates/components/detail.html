@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Test {{ component_name }}{% endblock %}
+
+{% set labels = {
+    "alert": "Alert",
+    "avatar": "Avatar",
+    "badge": "Badges",
+    "button": "Buttons",
+    "card": "Cards",
+    "dropdown": "Dropdown",
+    "form-layout": "Form Layouts",
+    "modal-dialog": "Modal Dialogs",
+    "navbar": "Navbars",
+    "radio-group": "Radio Groups",
+    "sidebar": "Sidebar Navigation",
+    "sign-in-registration": "Sign-in and Registration",
+    "table": "Table",
+    "tabs": "Tabs",
+    "toggle": "Toggle"
+} %}
+
+{% block content %}
+<section class="py-10">
+    <a class="font-bold text-blue-600 hover:text-blue-700" href="{{ url_for('components_page') }}">← Quay lại danh sách component</a>
+    <header class="mb-8 mt-6">
+        <p class="ui-badge ui-badge--primary">{{ component_name }}</p>
+        <h1 class="mt-4 text-5xl font-extrabold tracking-normal text-slate-900">{{ labels.get(component_name, component_name) }}</h1>
+        <p class="mt-4 text-xl text-slate-600">Trang test riêng cho component này.</p>
+    </header>
+
+    <div class="ui-card ui-card--demo">
+        <div class="ui-card__body">
+            <div id="componentDemo" class="min-h-[420px]"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const componentName = "{{ component_name }}";
+const demo = () => document.getElementById("componentDemo");
+
+function append(node) {
+    demo().appendChild(node);
+}
+
+function textBlock(text) {
+    const p = document.createElement("p");
+    p.className = "text-lg text-slate-600";
+    p.textContent = text;
+    return p;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const root = demo();
+
+    if (componentName === "alert") {
+        root.className = "flex min-h-[420px] flex-wrap items-start gap-4";
+        append(UIComponents.createButton({ label: "Success alert", onClick: () => UIComponents.showAlert("Đã cập nhật điểm môn SOT320 thành công!", { type: "success" }) }));
+        append(UIComponents.createButton({ label: "Error alert", variant: "danger", onClick: () => UIComponents.showAlert("Mật khẩu không đúng.", { type: "error" }) }));
+        append(UIComponents.createButton({ label: "Warning alert", variant: "secondary", onClick: () => UIComponents.showAlert("Học phần chưa mở trong học kỳ hiện tại.", { type: "warning" }) }));
+        return;
+    }
+
+    if (componentName === "avatar") {
+        root.className = "flex min-h-[420px] items-start gap-6";
+        append(UIComponents.createAvatar({ name: "Nguyễn Văn An", size: "sm" }));
+        append(UIComponents.createAvatar({ name: "Trần Minh Bình" }));
+        append(UIComponents.createAvatar({ name: "Lê Thu Hà", size: "lg" }));
+        return;
+    }
+
+    if (componentName === "badge") {
+        root.className = "flex min-h-[420px] flex-wrap items-start gap-4";
+        ["primary", "success", "warning", "danger", "neutral"].forEach((variant) => {
+            append(UIComponents.createBadge({ label: variant, variant, dot: variant !== "neutral" }));
+        });
+        return;
+    }
+
+    if (componentName === "button") {
+        root.className = "flex min-h-[420px] flex-wrap items-start gap-4";
+        append(UIComponents.createButton({ label: "Primary" }));
+        append(UIComponents.createButton({ label: "Secondary", variant: "secondary" }));
+        append(UIComponents.createButton({ label: "Ghost", variant: "ghost" }));
+        append(UIComponents.createButton({ label: "Danger", variant: "danger" }));
+        return;
+    }
+
+    if (componentName === "card") {
+        append(UIComponents.createCard({
+            title: "Kế hoạch học tập",
+            description: "Card dùng cho nhóm chức năng, học phần, cảnh báo hoặc báo cáo."
+        }));
+        return;
+    }
+
+    if (componentName === "dropdown") {
+        append(UIComponents.createDropdown({
+            trigger: "Mở tùy chọn",
+            items: [
+                { label: "Xem hồ sơ", onClick: () => UIComponents.showAlert("Xem hồ sơ", { type: "info" }) },
+                { label: "Xuất báo cáo", onClick: () => UIComponents.showAlert("Đang xuất báo cáo", { type: "success" }) }
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "form-layout") {
+        append(UIComponents.createFormLayout({
+            twoColumns: true,
+            children: [
+                UIComponents.createField({ label: "Mã sinh viên", name: "student_id", placeholder: "65133141" }),
+                UIComponents.createField({ label: "Họ tên", name: "name", placeholder: "Nguyễn Văn An" }),
+                UIComponents.createField({ label: "Ngành", name: "major", placeholder: "Công nghệ thông tin" }),
+                UIComponents.createField({ label: "Mục tiêu", name: "goal", placeholder: "Đúng hạn" })
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "modal-dialog") {
+        append(UIComponents.createButton({
+            label: "Mở modal",
+            onClick: () => UIComponents.showModalDialog({
+                title: "Xác nhận kế hoạch",
+                description: "Ví dụ modal dùng chung.",
+                content: "Bạn có thể dùng modal này cho xác nhận, cảnh báo hoặc nhập nhanh.",
+                actions: [
+                    { label: "Hủy", variant: "secondary" },
+                    { label: "Xác nhận", onClick: () => UIComponents.showAlert("Đã xác nhận.", { type: "success" }) }
+                ]
+            })
+        }));
+        return;
+    }
+
+    if (componentName === "navbar") {
+        append(UIComponents.createNavbar({
+            brand: "Learning Planner",
+            links: [
+                { label: "Trang chủ", href: "#", active: true },
+                { label: "Kế hoạch", href: "#" },
+                { label: "Hồ sơ", href: "#" }
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "radio-group") {
+        append(UIComponents.createRadioGroup({
+            name: "goal",
+            value: "on_time",
+            options: [
+                { value: "on_time", label: "Đúng hạn", description: "Ưu tiên học theo tiến độ khuyến nghị." },
+
+                { value: "advance", label: "Học vượt", description: "Ưu tiên môn có thể học sớm." }
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "sidebar") {
+        append(UIComponents.createSidebar({
+            brand: "Learning Planner",
+            links: [
+                { label: "Tổng quan", href: "#", active: true },
+                { label: "Sinh viên", href: "#" },
+                { label: "Báo cáo", href: "#" }
+            ],
+            footer: "Phiên bản demo"
+        }));
+        return;
+    }
+
+    if (componentName === "sign-in-registration") {
+        append(UIComponents.createAuthCard({
+            mode: "login",
+            badge: "Đăng nhập hệ thống",
+            title: "Chào mừng trở lại",
+            description: "Nhập thông tin để tiếp tục.",
+            fields: [
+                { label: "Mã số đăng nhập", name: "username", placeholder: "65133141" },
+                { label: "Mật khẩu", name: "password", type: "password", placeholder: "Nhập mật khẩu" }
+            ],
+            submitLabel: "Đăng nhập",
+            footerText: "Bạn chưa có tài khoản?",
+            footerActionLabel: "Đăng ký",
+            onSubmit: () => UIComponents.showAlert("Demo submit auth card.", { type: "success" })
+        }));
+        return;
+    }
+
+    if (componentName === "table") {
+        append(UIComponents.createTable({
+            columns: [
+                { key: "code", label: "Mã môn" },
+                { key: "name", label: "Tên học phần" },
+                { key: "status", label: "Trạng thái" }
+            ],
+            rows: [
+                { code: "SOT320", name: "Cấu trúc dữ liệu", status: "Đạt" },
+                { code: "MAT322", name: "Xác suất - Thống kê", status: "Cần học" }
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "tabs") {
+        append(UIComponents.createTabs({
+            tabs: [
+                { label: "Tổng quan", content: "Thông tin tổng quan về kế hoạch học tập." },
+                { label: "Cảnh báo", content: "Danh sách cảnh báo tiên quyết, học kỳ mở môn và quota." },
+                { label: "Ghi chú", content: "Ghi chú tư vấn hoặc phản hồi người dùng." }
+            ]
+        }));
+        return;
+    }
+
+    if (componentName === "toggle") {
+        append(UIComponents.createToggle({
+            label: "Bật cảnh báo học phần",
+            checked: true,
+            onChange: (checked) => UIComponents.showAlert(checked ? "Đã bật cảnh báo." : "Đã tắt cảnh báo.", { type: "info" })
+        }));
+        return;
+    }
+
+    append(textBlock("Chưa có demo cho component này."));
+});
+</script>
+{% endblock %}

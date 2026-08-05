@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}UI Components{% endblock %}
+
+{% set component_links = [
+    ("alert", "Alert"),
+    ("avatar", "Avatar"),
+    ("badge", "Badges"),
+    ("button", "Buttons"),
+    ("card", "Cards"),
+    ("dropdown", "Dropdown"),
+    ("form-layout", "Form Layouts"),
+    ("modal-dialog", "Modal Dialogs"),
+    ("navbar", "Navbars"),
+    ("radio-group", "Radio Groups"),
+    ("sidebar", "Sidebar Navigation"),
+    ("sign-in-registration", "Sign-in and Registration"),
+    ("table", "Table"),
+    ("tabs", "Tabs"),
+    ("toggle", "Toggle")
+] %}
+
+{% block content %}
+<section class="py-10">
+    <header class="mb-8">
+        <p class="ui-badge ui-badge--primary ui-badge--dot">Component Gallery</p>
+        <h1 class="mt-4 text-5xl font-extrabold tracking-normal text-slate-900">Bộ UI Components dùng chung</h1>
+        <p class="mt-4 text-xl text-slate-600">Chọn từng component để test riêng, không dồn chung trong một màn hình.</p>
+        {% if missing_component %}
+        <div class="mt-4 ui-alert ui-alert--error">
+            <div class="ui-alert__message">Không tìm thấy component: {{ missing_component }}</div>
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for slug, label in component_links %}
+        <a class="ui-card min-h-40 transition hover:-translate-y-1 hover:shadow-xl" href="{{ url_for('component_detail_page', component_name=slug) }}">
+            <div class="ui-card__body h-full">
+                <h2 class="ui-card__title">{{ label }}</h2>
+                <p class="ui-card__description">Mở trang test riêng cho {{ label }}.</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

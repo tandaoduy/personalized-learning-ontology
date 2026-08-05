@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Hồ sơ cá nhân{% endblock %}
+
+{% block content %}
+<section class="account-page">
+    <div class="account-page__hero">
+        <h1>Hồ sơ cá nhân</h1>
+        <p>Cập nhật thông tin hiển thị và đổi mật khẩu đăng nhập của bạn.</p>
+    </div>
+
+    <div class="account-page__grid">
+        <aside class="account-page__summary ui-card">
+            <div class="ui-avatar ui-avatar--lg">
+                {{ (session.get("display_name") or session.get("username") or "U")[:1] }}
+            </div>
+            <div>
+                <h2>{{ session.get("display_name", session.get("username")) }}</h2>
+                <p>{{ "Sinh viên" if session.get("role") == "student" else "Cố vấn học tập" }}</p>
+            </div>
+            <dl>
+                <div>
+                    <dt>Mã đăng nhập</dt>
+                    <dd>{{ session.get("username", "") }}</dd>
+                </div>
+                <div>
+                    <dt>Vai trò</dt>
+                    <dd>{{ "Sinh viên" if session.get("role") == "student" else "Cố vấn học tập" }}</dd>
+                </div>
+            </dl>
+        </aside>
+
+        <form class="account-page__form ui-card" data-account-form data-preserve-draft>
+            <div class="account-page__section">
+                <h2>Thông tin tài khoản</h2>
+                <label class="account-page__field">
+                    <span>Mã đăng nhập</span>
+                    <input type="text" value="{{ session.get('username', '') }}" disabled>
+                </label>
+                <label class="account-page__field">
+                    <span>Họ và tên</span>
+                    <input name="display_name" type="text" value="{{ session.get('display_name', '') }}" placeholder="Nhập họ và tên">
+                </label>
+            </div>
+
+            <div class="account-page__divider"></div>
+
+            <div class="account-page__section">
+                <h2>Đổi mật khẩu</h2>
+                <p>Chỉ cần nhập mật khẩu hiện tại khi bạn muốn đặt mật khẩu mới.</p>
+                <label class="account-page__field">
+                    <span>Mật khẩu hiện tại</span>
+                    <input name="current_password" type="password" placeholder="Nhập mật khẩu hiện tại">
+                </label>
+                <label class="account-page__field">
+                    <span>Mật khẩu mới</span>
+                    <input name="new_password" type="password" placeholder="Để trống nếu không đổi mật khẩu">
+                </label>
+            </div>
+
+            <div class="account-page__actions">
+                <a class="ui-btn ui-btn--secondary" href="{{ '/student' if session.get('role') == 'student' else '/advisor' }}">Quay lại</a>
+                <button class="ui-btn" type="submit">Lưu thay đổi</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("[data-account-form]");
+        form?.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const data = Object.fromEntries(new FormData(form).entries());
+            const response = await fetch("/api/auth/profile", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            window.UIComponents?.showAlert(result.message || result.error || "Không thể cập nhật tài khoản.", {
+                type: result.success ? "success" : "error",
+                duration: 2600,
+            });
+            if (result.success) {
+                document.dispatchEvent(new CustomEvent("form-drafts:clear", { detail: { form } }));
+                window.setTimeout(() => window.location.reload(), 650);
+            }
+        });
+    });
+</script>
+{% endblock %}

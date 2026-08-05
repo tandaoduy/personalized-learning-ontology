@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Cảnh Báo Tiến Độ Khẩn Cấp - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="advisor-workspace" data-role="advisor">
+    <div class="page-top-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+        <nav class="ui-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label": "Trang chủ Cố vấn", "href": "/advisor", "icon": "home"}, {"label": "Cảnh báo tiến độ học tập", "icon": "alert"}]'>
+            <ol class="ui-breadcrumb__list">
+                <li class="ui-breadcrumb__item">
+                    <a href="/advisor" class="ui-breadcrumb__link">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Trang chủ Cố vấn</span>
+                    </a>
+                </li>
+                <li class="ui-breadcrumb__separator" aria-hidden="true">/</li>
+                <li class="ui-breadcrumb__item">
+                    <span class="ui-breadcrumb__current" aria-current="page">
+                        <svg class="ui-breadcrumb__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span>Cảnh báo tiến độ học tập</span>
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="at-risk-section" id="atRiskSection" style="margin-bottom: 0;">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <h2>🚨 Nhận diện sinh viên có nguy cơ chậm tiến độ</h2>
+            </div>
+            <div class="risk-filter-group" id="riskFilterGroup">
+                <select id="riskStatusFilter" class="form-control" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background-color: #ffffff; color: #1e293b; font-weight: 500; font-size: 0.9rem; cursor: pointer; outline: none; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                    <option value="ALL">Tất cả</option>
+                    <option value="AT_RISK">Sinh viên có nguy cơ</option>
+                    <option value="BEHIND_SCHEDULE">Sinh viên chậm tiến độ</option>
+                </select>
+            </div>
+        </div>
+        <div class="at-risk-grid" id="atRiskContainer">
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

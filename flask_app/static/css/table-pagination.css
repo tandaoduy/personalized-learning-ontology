@@ -1,0 +1,29 @@
+.app-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 0;
+    padding: 12px 16px;
+    border: 0;
+    border-top: 1px solid #dbe4f0;
+    border-radius: 0 0 12px 12px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.88rem;
+}
+
+.app-pagination__size { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; }
+.app-pagination select { min-height: 34px; padding: 0 28px 0 10px; border: 1px solid #bfdbfe; border-radius: 7px; background: #fff; color: #1e3a8a; font-weight: 800; }
+.app-pagination__actions, .app-pagination__pages { display: inline-flex; align-items: center; gap: 6px; }
+.app-pagination__nav, .app-pagination__page { min-width: 34px; height: 34px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 7px; background: #fff; color: #334155; font-weight: 700; cursor: pointer; }
+.app-pagination__nav { padding: 0; font-size: 1.2rem; line-height: 1; }
+.app-pagination__page.is-active { border-color: #2563eb; background: #2563eb; color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22); }
+.app-pagination__nav:hover:not(:disabled), .app-pagination__page:hover:not(.is-active) { border-color: #60a5fa; background: #eff6ff; color: #1d4ed8; }
+.app-pagination__nav:disabled { opacity: 0.45; cursor: not-allowed; }
+
+@media (max-width: 640px) {
+    .app-pagination { align-items: stretch; }
+    .app-pagination__actions { width: 100%; justify-content: space-between; }
+}

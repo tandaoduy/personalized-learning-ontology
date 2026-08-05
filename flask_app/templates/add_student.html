@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}{% if edit_student_id %}Chỉnh sửa sinh viên{% else %}Thêm sinh viên{% endif %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_student.css') }}">
+
+<div class="add-student-page">
+    <div class="add-student-header">
+        <div class="add-student-header-text">
+            <h2>{% if edit_student_id %}Chỉnh sửa sinh viên {{ edit_student_id }}{% else %}Thêm sinh viên{% endif %}</h2>
+            <p>{% if edit_student_id %}Cập nhật hồ sơ sinh viên và danh sách môn học đã học.{% else %}Tạo hồ sơ sinh viên mới và nhập các môn đã học bằng cửa sổ nổi.{% endif %}</p>
+        </div>
+        <a href="/students" class="btn btn-secondary add-student-back">Quay lại</a>
+    </div>
+
+    <section class="add-student-panel">
+        <form id="createStudentForm" novalidate data-preserve-draft>
+            <div class="add-student-grid">
+                <div class="form-group">
+                    <label for="studentId">Mã sinh viên</label>
+                    <input id="studentId" name="student_id" type="text" placeholder="" required {% if edit_student_id %}value="{{ edit_student_id }}" readonly style="background-color: #f0f0f0; cursor: not-allowed;"{% endif %}>
+                    <small class="field-error" id="studentIdError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="studentName">Tên sinh viên</label>
+                    <input id="studentName" name="name" type="text" placeholder="" required>
+                    <small class="field-error" id="studentNameError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="yearAdmitted">Năm vào học</label>
+                    <input id="yearAdmitted" name="year_admitted" type="number" min="2000" max="2030" required>
+                    <small class="field-error" id="yearAdmittedError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="currentSemester">Học kỳ hiện tại</label>
+                    <input id="currentSemester" name="current_semester" type="number" min="1" max="8" required>
+                    <small class="field-error" id="currentSemesterError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="major">Ngành học</label>
+                    <select id="major" name="major" required></select>
+                    <small class="field-error" id="majorError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="specialization">Chuyên ngành</label>
+                    <select id="specialization" name="specialization"></select>
+                    <small id="specializationHint" class="field-hint">Sinh viên học kỳ 1 đến 3 chưa được chọn chuyên ngành.</small>
+                    <small class="field-error" id="specializationError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="studyGoal">Mục tiêu học tập</label>
+                    <select id="studyGoal" name="study_goal">
+                        <option value="đúng hạn">Đúng hạn</option>
+
+                        <option value="học vượt">Học vượt</option>
+                    </select>
+                    <small class="field-error" id="studyGoalError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="academicClass">Lớp</label>
+                    <select id="academicClass" name="academic_class" required></select>
+                    <small class="field-error" id="academicClassError"></small>
+                </div>
+            </div>
+
+            <div class="course-section">
+                <div class="course-section-header">
+                    <div>
+                        <h3>Danh sách môn đã học</h3>
+                        <p>Điểm môn từ 5 trở lên được tính là đạt và sẽ cộng vào tín chỉ tích lũy.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="openCourseModalBtn">Thêm môn học</button>
+                </div>
+
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <span>Tín chỉ tích lũy</span>
+                        <strong id="accumulatedCreditsValue">0</strong>
+                    </div>
+                    <div class="summary-card">
+                        <span>Điểm TB tích lũy</span>
+                        <strong id="gpaValue" style="color: #2e7d32;">0.00</strong>
+                    </div>
+                    <div class="summary-card">
+                        <span>Số môn đã nhập</span>
+                        <strong id="totalCoursesValue">0</strong>
+                    </div>
+                    <div class="summary-card">
+                        <span>Môn đạt / chưa đạt</span>
+                        <strong id="courseStatusValue">0 / 0</strong>
+                    </div>
+                </div>
+
+                <div class="empty-courses" id="emptyCourseState">Chưa có môn học nào được thêm.</div>
+
+                <div class="table-wrap" id="studentCoursesTableWrap" style="display: none;">
+                    <table class="courses-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã môn</th>
+                                <th>Tên môn</th>
+                                <th>Tín chỉ</th>
+                                <th>Lần</th>
+                                <th>Điểm môn học</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentCoursesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Lưu sinh viên</button>
+                <button type="button" class="btn btn-secondary" id="resetCreateFormBtn">Làm mới</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<div class="course-modal-backdrop" id="courseModalBackdrop" style="display: none;">
+    <div class="course-modal">
+        <button type="button" class="course-modal-close" id="closeCourseModalBtn" title="Đóng">×</button>
+        <div class="course-modal-header">
+            <h3>Thêm môn học</h3>
+            <p>Chọn môn học và nhập điểm môn học.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="courseSearch">Tìm môn học</label>
+            <input id="courseSearch" type="text" placeholder="Nhập mã môn hoặc tên môn">
+        </div>
+
+        <div class="course-modal-grid">
+            <div class="form-group">
+                <label for="courseSelect">Môn học</label>
+                <select id="courseSelect"></select>
+            </div>
+            <div class="form-group">
+                <label for="courseGrade">Điểm môn học</label>
+                <input id="courseGrade" type="number" min="0" max="10" step="0.1" placeholder="VD: 7.5">
+            </div>
+        </div>
+
+        <div class="form-group course-status-group">
+            <label>Trạng thái môn học</label>
+            <div class="course-status-options">
+                <label class="radio-label">
+                    <input type="radio" name="courseStatus" value="auto" checked>
+                    Tự động (Đạt/Chưa đạt)
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="courseStatus" value="Đạt">
+                    Điểm đạt
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="courseStatus" value="Không tính điểm">
+                    Không tính điểm
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="courseStatus" value="Miễn">
+                    Miễn
+                </label>
+            </div>
+        </div>
+
+        <div class="course-info" id="selectedCourseInfo">Chọn môn học để xem thông tin tín chỉ.</div>
+
+        <div class="course-modal-actions">
+            <button type="button" class="btn btn-secondary" id="cancelCourseBtn">Đóng</button>
+            <button type="button" class="btn btn-primary" id="saveCourseBtn">Thêm vào danh sách</button>
+        </div>
+    </div>
+</div>
+
+<div class="grade-change-modal-backdrop" id="gradeChangeModalBackdrop" style="display: none;">
+    <div class="grade-change-modal">
+        <button type="button" class="course-modal-close" id="closeGradeChangeModalBtn" title="Đóng">×</button>
+        <div class="grade-change-modal-header">
+            <h3>Môn học đã tồn tại</h3>
+            <p>Môn học này đã có trong danh sách. Bạn muốn làm gì?</p>
+        </div>
+        <div class="grade-change-comparison" id="gradeChangeComparison"></div>
+        <div class="grade-change-modal-actions">
+            <button type="button" class="btn btn-secondary" id="cancelGradeChangeBtn">Hủy bỏ</button>
+            <button type="button" class="btn btn-primary" id="confirmGradeChangeBtn">Cập nhật lần học cuối</button>
+            <button type="button" class="btn btn-success" id="addNewAttemptBtn">Thêm lần học mới</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const EDIT_MODE_ID = "{{ edit_student_id if edit_student_id else '' }}";
+</script>
+<script src="{{ url_for('static', filename='js/add_student.js') }}"></script>
+{% endblock %}

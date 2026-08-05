@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/vendor/fonts/poppins-latin-ext-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/static/vendor/fonts/poppins-latin-ext-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/static/vendor/fonts/poppins-latin-ext-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/static/vendor/fonts/poppins-latin-ext-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/static/vendor/fonts/poppins-latin-ext-800-normal.woff2") format("woff2");
+}
+
+@layer base {
+  body {
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  @keyframes auth-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @keyframes auth-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(22px) scale(.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes auth-soft-pulse {
+    0%, 100% { box-shadow: 0 20px 50px rgba(24, 54, 95, .14); }
+    50% { box-shadow: 0 26px 70px rgba(24, 54, 95, .22); }
+  }
+
+  @keyframes auth-toast-in {
+    from {
+      opacity: 0;
+      transform: translateX(24px) translateY(-10px) scale(.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+  }
+
+  @keyframes auth-visual-in {
+    from {
+      opacity: 0;
+      transform: translateX(-28px) scale(.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @keyframes auth-panel-in {
+    from {
+      opacity: 0;
+      transform: translateX(28px) scale(.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  .animate-auth-float {
+    animation: auth-float 5.5s ease-in-out infinite;
+  }
+
+  .animate-auth-fade-up {
+    animation: auth-fade-up .6s ease-out both;
+  }
+
+  .animate-auth-soft-pulse {
+    animation: auth-soft-pulse 3.8s ease-in-out infinite;
+  }
+
+  .animate-auth-toast-in {
+    animation: auth-toast-in .35s ease-out both;
+  }
+
+  .auth-enter-visual,
+  .auth-enter-panel {
+    opacity: 0;
+  }
+
+  .auth-page-ready .auth-enter-visual {
+    animation: auth-visual-in .7s cubic-bezier(.2, .8, .2, 1) both;
+  }
+
+  .auth-page-ready .auth-enter-panel {
+    animation: auth-panel-in .7s cubic-bezier(.2, .8, .2, 1) both;
+  }
+
+  @media (max-width: 1023px) {
+    .auth-page-ready .auth-enter-visual,
+    .auth-page-ready .auth-enter-panel {
+      animation-name: auth-fade-up;
+    }
+  }
+}

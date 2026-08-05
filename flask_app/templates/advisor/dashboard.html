@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Trang Chủ Tư Vấn - Cố Vấn Học Tập{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="home-dashboard--advisor" data-role="advisor">
+    <!-- SVG Navigation Cards Grid (Giống trang sinh viên) -->
+    <div class="home-grid">
+        <!-- Card 1: Tìm kiếm & Lọc SV -->
+        <a class="ui-card home-card" href="/advisor/students">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--blue" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <circle cx="28" cy="28" r="18" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+                        <path d="M41 41l13 13" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M21 28h14M21 22h8M21 34h10" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Tìm kiếm & Lọc sinh viên</h2>
+            </div>
+        </a>
+
+        <!-- Card 2: Sinh viên nguy cơ -->
+        <a class="ui-card home-card" href="/advisor/at-risk">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--red" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <path d="M32 10L6 54h52L32 10z" fill="#fef2f2" stroke="#ef4444" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M32 26v14" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round"/>
+                        <circle cx="32" cy="46" r="2.5" fill="#ef4444"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Cảnh báo tiến độ học tập</h2>
+            </div>
+        </a>
+
+        <!-- Card 3: Hồ sơ & Lịch sử học phần -->
+        <a class="ui-card home-card" href="/advisor/profile">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--purple" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <path d="M12 16h40v36H12z" fill="#faf5ff" stroke="#a855f7" stroke-width="3" rx="4"/>
+                        <circle cx="32" cy="28" r="7" stroke="#a855f7" stroke-width="3" fill="#ffffff"/>
+                        <path d="M20 44c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Hồ sơ & Lịch sử học phần</h2>
+            </div>
+        </a>
+
+        <!-- Card 4: Sinh kế hoạch học tập -->
+        <a class="ui-card home-card" href="/advisor/scenarios">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--amber" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <circle cx="32" cy="32" r="20" fill="#fffbeb" stroke="#d97706" stroke-width="3"/>
+                        <path d="M32 18v8M32 38v8M18 32h8M38 32h8" stroke="#d97706" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="32" cy="32" r="6" fill="#f59e0b"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Sinh kế hoạch học tập</h2>
+            </div>
+        </a>
+
+        <!-- Card 5: Chốt kế hoạch & Nhận xét -->
+        <a class="ui-card home-card" href="/advisor/consultation">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--green" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <rect x="14" y="10" width="36" height="46" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="3"/>
+                        <path d="M24 24l5 5 11-11" stroke="#16a34a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 38h20M22 46h14" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Xác nhận & Điều chỉnh KHHT</h2>
+            </div>
+        </a>
+
+        <!-- Card 6: Báo cáo & Đánh giá -->
+        <a class="ui-card home-card" href="/advisor/reports">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--slate" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 64 64" fill="none">
+                        <path d="M12 14h40v38H12z" fill="#f8fafc" stroke="#475569" stroke-width="3" rx="4"/>
+                        <path d="M20 42V30M32 42V22M44 42v-8" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M16 10h32" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Đánh giá hệ thống</h2>
+            </div>
+        </a>
+    </div>
+
+    <!-- Thống kê hoạt động tư vấn -->
+    <div class="progress-dashboard-container" style="margin-top: 40px;">
+        <h2 class="progress-dashboard-title">Thống kê hoạt động tư vấn học tập</h2>
+        <div class="stats-grid">
+            <article class="stat-card">
+                <div class="stat-icon bg-blue">👥</div>
+                <div class="stat-info">
+                    <span class="stat-label">Tổng sinh viên quản lý</span>
+                    <strong class="stat-value" id="statTotalStudents">-</strong>
+                    <small class="stat-desc">Dữ liệu hồ sơ học tập hiện hành</small>
+                </div>
+            </article>
+            <article class="stat-card card-alert">
+                <div class="stat-icon bg-red">🚨</div>
+                <div class="stat-info">
+                    <span class="stat-label">Sinh viên chậm tiến độ</span>
+                    <strong class="stat-value text-red" id="statAtRiskStudents">-</strong>
+                    <small class="stat-desc">Không còn khả năng hoàn thành theo tiến độ CTĐT</small>
+                </div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon bg-green">📋</div>
+                <div class="stat-info">
+                    <span class="stat-label">Lượt tư vấn đã ghi nhận</span>
+                    <strong class="stat-value text-green" id="statConsultations">-</strong>
+                    <small class="stat-desc">Kế hoạch đã chốt & nhận xét</small>
+                </div>
+            </article>
+            <article class="stat-card">
+                <div class="stat-icon bg-amber">⭐</div>
+                <div class="stat-info">
+                    <span class="stat-label">Đánh giá hệ thống</span>
+                    <strong class="stat-value text-amber" id="statAvgRating">- / 5.0</strong>
+                    <small class="stat-desc">Độ chính xác & hữu ích</small>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- Nhận diện sinh viên nguy cơ chậm tiến độ (Giống như hồi nãy) -->
+    <section class="at-risk-section" id="atRiskSection" style="margin-top: 40px;">
+        <div class="section-header">
+            <div>
+                <h2>🚨 Danh sách sinh viên chậm tiến độ</h2>
+                <p class="section-subtitle">Chỉ hiển thị sinh viên đã được xác định không còn theo kịp tiến độ chương trình đào tạo.</p>
+            </div>
+            <a href="/advisor/at-risk" class="btn-sm btn-secondary" style="text-decoration: none;">
+                Xem toàn bộ & Bộ lọc nâng cao ➔
+            </a>
+        </div>
+        <div class="at-risk-grid" id="atRiskContainer">
+        </div>
+    </section>
+</section>
+
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+{% endblock %}

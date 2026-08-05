@@ -1,0 +1,44 @@
+/*
+ * Shared hover rules for outlined actions.
+ * DaisyUI turns .btn-outline text white by default, which makes the action
+ * difficult to read against the light hover surface used by this application.
+ */
+.btn.btn-outline:hover,
+.btn.btn-outline:focus-visible,
+.btn-outline:hover,
+.btn-outline:focus-visible {
+    color: var(--outline-action-color, #1e3a5f) !important;
+    background-color: var(--outline-action-hover-bg, #f8fafc) !important;
+}
+
+.btn.btn-outline.btn-primary:hover,
+.btn.btn-outline.btn-primary:focus-visible {
+    color: #2563eb !important;
+}
+
+.btn.btn-outline.btn-secondary:hover,
+.btn.btn-outline.btn-secondary:focus-visible {
+    color: #475569 !important;
+}
+
+.btn.btn-outline.btn-success:hover,
+.btn.btn-outline.btn-success:focus-visible,
+.btn-outline-success:hover,
+.btn-outline-success:focus-visible {
+    color: #059669 !important;
+}
+
+.btn.btn-outline.btn-warning:hover,
+.btn.btn-outline.btn-warning:focus-visible {
+    color: #b45309 !important;
+}
+
+.btn.btn-outline.btn-error:hover,
+.btn.btn-outline.btn-error:focus-visible {
+    color: #dc2626 !important;
+}
+
+.btn-outline svg,
+.btn-outline i {
+    color: currentColor;
+}

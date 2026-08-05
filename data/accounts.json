@@ -1,0 +1,36 @@
+{
+  "accounts": [
+    {
+      "username": "SV294",
+      "password_hash": "scrypt:32768:8:1$jMq7saGLLattWzPY$d408d1ef5be9840ba3a5e1b3168db74ca150b1221dd21283af8958a197e18a461faad7c9ec8421226af79f37a4936a345b5ae90f134500b8145bc086983d1324",
+      "role": "student",
+      "display_name": "Sinh viên 294",
+      "full_name": "Sinh viên 294",
+      "status": "approved"
+    },
+    {
+      "username": "SV002",
+      "password_hash": "scrypt:32768:8:1$gAshf07sfxNZndiM$c0cfa2a4d9d219a6f39dc4dd8107a1c0462aeb48ac87eeb8500c558a5fc3e221244eb592df198057008e2a404eb2f1572b4dd5ea1354933ffa9139bef177bae9",
+      "role": "student",
+      "display_name": "Sinh viên 02",
+      "full_name": "Sinh viên 02",
+      "status": "approved"
+    },
+    {
+      "username": "CV001",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 01",
+      "full_name": "Cố vấn 01",
+      "status": "approved"
+    },
+    {
+      "username": "SV056",
+      "password_hash": "scrypt:32768:8:1$O7XOYeNwIuWfFQvL$13a8a190eeea5ffd4377bac23ba2d28a96c19cfd1a05a3f6d711f0e9d3be83748fc0690f6b8f31f943feac75b18d3edd6828608cbdf6f61f0f2a04a5a03b1579",
+      "role": "student",
+      "display_name": "Sinh viên 56",
+      "full_name": "Sinh viên 56",
+      "status": "approved"
+    }
+  ]
+}

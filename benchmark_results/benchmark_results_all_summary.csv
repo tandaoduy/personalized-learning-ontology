@@ -1,0 +1,4 @@
+﻿method,plans,constraint_rate_pct,required_coverage_mean_pct,priority_score_mean,quota_fill_mean_pct,credits_mean,time_mean_ms,explanation_rate_mean_pct
+Rule + Semester Order,364,100.0,13.9,129158.1,29.47,18.67,1.401,100.0
+Greedy Heuristic,364,100.0,14.54,135800.14,22.69,18.92,1.355,100.0
+Heuristic + Beam Search,364,100.0,14.54,135878.43,22.02,18.92,6.899,100.0

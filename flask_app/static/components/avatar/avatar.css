@@ -1,0 +1,31 @@
+.ui-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: 800;
+    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+}
+
+.ui-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ui-avatar--sm {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.9rem;
+}
+
+.ui-avatar--lg {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.35rem;
+}

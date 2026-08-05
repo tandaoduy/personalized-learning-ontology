@@ -1,0 +1,7 @@
+﻿student_id,method,status,constraints_ok,required_coverage_pct,priority_score,quota_fill_pct,total_credits,processing_time_ms,explanation_rate_pct
+65134542,Rule + Semester Order,OK,True,19.05,82500,14.29,15,0.855,100.0
+65134542,Greedy Heuristic,OK,True,19.05,82500,14.29,15,0.663,100.0
+65134542,Heuristic + Beam Search,OK,True,19.05,82500,14.29,15,2.4,100.0
+65130011,Rule + Semester Order,OK,True,9.09,41000,0.0,6,0.466,100.0
+65130011,Greedy Heuristic,OK,True,9.09,41000,0.0,6,0.44,100.0
+65130011,Heuristic + Beam Search,OK,True,9.09,41000,0.0,6,1.671,100.0
