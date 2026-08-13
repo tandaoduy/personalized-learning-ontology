@@ -44,7 +44,7 @@ REGISTER_MAX_CREDITS = 27
 REGISTER_MIN_CREDITS = 10
 
 WEIGHT_DEBT = 1000
-WEIGHT_LINK = 100
+WEIGHT_LINK = 20
 WEIGHT_DELAY = 50
 
 ELECTIVE_QUOTA_KEYS = ('general', 'physical', 'foundation', 'specialization')
