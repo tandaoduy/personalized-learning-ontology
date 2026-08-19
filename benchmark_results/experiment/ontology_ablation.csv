@@ -1,0 +1,6 @@
+﻿configuration,plans,invalid_recommendations,valid_plan_rate_pct,prerequisite_violations,corequisite_violations,wrong_program_courses,wrong_semester_courses
+Full Ontology,364,0,100.0,0,0,0,0
+Without prerequisites,364,748,46.15,748,0,0,0
+Without corequisites,364,17,95.6,0,17,0,0
+Without specialization,364,813,41.76,0,0,813,0
+Without semester offering,364,407,46.7,0,0,0,407

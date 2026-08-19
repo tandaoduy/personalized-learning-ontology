@@ -1,0 +1,1093 @@
+﻿student_id,scenario,method,valid_plan,required_coverage_pct,quota_fulfilment_pct,priority_score,credits,processing_time_ms,explanation_rate_pct,violation_total
+001,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,1.906,100.0,0
+001,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,1.691,100.0,0
+001,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,4.538,100.0,0
+002,failed_course_or_prerequisite,Rule + Semester Order,True,28.57,0.0,41000,6,0.635,100.0,0
+002,failed_course_or_prerequisite,Greedy Heuristic,True,28.57,0.0,41000,6,0.592,100.0,0
+002,failed_course_or_prerequisite,Heuristic + Beam Search,True,28.57,0.0,41000,6,0.967,100.0,0
+003,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,100.0,62000,12,0.771,100.0,0
+003,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,100.0,62000,12,0.611,100.0,0
+003,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,100.0,62000,12,2.281,100.0,0
+004,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,50.0,71400,11,0.991,100.0,0
+004,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,50.0,71400,11,0.6,100.0,0
+004,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,50.0,71400,11,2.241,100.0,0
+005,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.856,100.0,0
+005,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,1.012,100.0,0
+005,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.166,100.0,0
+006,accelerated,Rule + Semester Order,True,66.67,100.0,82500,15,0.8,100.0,0
+006,accelerated,Greedy Heuristic,True,66.67,100.0,82500,15,0.771,100.0,0
+006,accelerated,Heuristic + Beam Search,True,66.67,100.0,82500,15,2.272,100.0,0
+007,failed_course_or_prerequisite,Rule + Semester Order,True,19.44,57.14,203750,25,1.926,100.0,0
+007,failed_course_or_prerequisite,Greedy Heuristic,True,19.44,57.14,204150,27,2.238,100.0,0
+007,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.44,57.14,204150,27,12.635,100.0,0
+008,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,2.647,100.0,0
+008,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,2.682,100.0,0
+008,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.403,100.0,0
+009,failed_course_or_prerequisite,Rule + Semester Order,True,27.27,100.0,62000,12,1.103,100.0,0
+009,failed_course_or_prerequisite,Greedy Heuristic,True,27.27,100.0,62000,12,1.228,100.0,0
+009,failed_course_or_prerequisite,Heuristic + Beam Search,True,27.27,100.0,62000,12,2.407,100.0,0
+010,failed_course_or_prerequisite,Rule + Semester Order,True,12.0,100.0,82100,16,1.276,100.0,0
+010,failed_course_or_prerequisite,Greedy Heuristic,True,12.0,100.0,82100,16,1.379,100.0,0
+010,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.0,100.0,82100,16,3.938,100.0,0
+011,failed_course_or_prerequisite,Rule + Semester Order,True,13.04,100.0,82350,16,1.603,100.0,0
+011,failed_course_or_prerequisite,Greedy Heuristic,True,13.04,100.0,82350,16,1.484,100.0,0
+011,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.04,100.0,82350,16,3.58,100.0,0
+012,failed_course_or_prerequisite,Rule + Semester Order,True,7.14,75.0,22000,11,0.927,100.0,0
+012,failed_course_or_prerequisite,Greedy Heuristic,True,7.14,75.0,22000,11,0.732,100.0,0
+012,failed_course_or_prerequisite,Heuristic + Beam Search,True,7.14,75.0,22000,11,2.695,100.0,0
+013,on_track,Rule + Semester Order,True,50.0,100.0,41500,9,1.061,100.0,0
+013,on_track,Greedy Heuristic,True,50.0,100.0,41500,9,0.493,100.0,0
+013,on_track,Heuristic + Beam Search,True,50.0,100.0,41500,9,1.689,100.0,0
+014,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,0.0,20500,3,0.854,100.0,0
+014,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,0.0,20500,3,0.379,100.0,0
+014,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,0.0,20500,3,0.765,100.0,0
+015,failed_course_or_prerequisite,Rule + Semester Order,True,37.5,100.0,62000,12,0.643,100.0,0
+015,failed_course_or_prerequisite,Greedy Heuristic,True,37.5,100.0,62000,12,0.568,100.0,0
+015,failed_course_or_prerequisite,Heuristic + Beam Search,True,37.5,100.0,62000,12,1.594,100.0,0
+016,failed_course_or_prerequisite,Rule + Semester Order,True,15.91,57.14,213200,25,0.995,100.0,0
+016,failed_course_or_prerequisite,Greedy Heuristic,True,22.73,0.0,293600,27,1.031,100.0,0
+016,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.73,0.0,293600,27,6.788,100.0,0
+017,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.627,100.0,0
+017,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.614,100.0,0
+017,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,2.381,100.0,0
+018,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,1.41,100.0,0
+018,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,1.594,100.0,0
+018,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.541,100.0,0
+019,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.603,100.0,0
+019,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.946,100.0,0
+019,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,3.033,100.0,0
+020,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,40.0,234150,26,1.255,100.0,0
+020,failed_course_or_prerequisite,Greedy Heuristic,True,26.67,40.0,234150,26,2.18,100.0,0
+020,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.67,40.0,234150,26,10.214,100.0,0
+021,failed_course_or_prerequisite,Rule + Semester Order,True,17.5,57.14,203750,25,1.173,100.0,0
+021,failed_course_or_prerequisite,Greedy Heuristic,True,17.5,57.14,204150,27,2.495,100.0,0
+021,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.5,57.14,204150,27,10.475,100.0,0
+022,failed_course_or_prerequisite,Rule + Semester Order,True,11.76,75.0,42500,14,1.071,100.0,0
+022,failed_course_or_prerequisite,Greedy Heuristic,True,11.76,75.0,42500,14,1.655,100.0,0
+022,failed_course_or_prerequisite,Heuristic + Beam Search,True,11.76,75.0,42500,14,3.037,100.0,0
+023,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.612,100.0,0
+023,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,0.602,100.0,0
+023,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,1.549,100.0,0
+024,accelerated,Rule + Semester Order,True,60.0,0.0,61500,9,0.475,100.0,0
+024,accelerated,Greedy Heuristic,True,60.0,0.0,61500,9,0.382,100.0,0
+024,accelerated,Heuristic + Beam Search,True,60.0,0.0,61500,9,1.26,100.0,0
+025,failed_course_or_prerequisite,Rule + Semester Order,True,57.14,100.0,82500,15,1.025,100.0,0
+025,failed_course_or_prerequisite,Greedy Heuristic,True,57.14,100.0,82500,15,0.983,100.0,0
+025,failed_course_or_prerequisite,Heuristic + Beam Search,True,57.14,100.0,82500,15,2.717,100.0,0
+026,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,1.306,100.0,0
+026,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,1.466,100.0,0
+026,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.553,100.0,0
+027,failed_course_or_prerequisite,Rule + Semester Order,True,27.27,100.0,71850,13,0.688,100.0,0
+027,failed_course_or_prerequisite,Greedy Heuristic,True,27.27,100.0,71850,13,0.918,100.0,0
+027,failed_course_or_prerequisite,Heuristic + Beam Search,True,27.27,100.0,71850,13,3.153,100.0,0
+028,failed_course_or_prerequisite,Rule + Semester Order,True,17.86,50.0,143300,20,1.84,100.0,0
+028,failed_course_or_prerequisite,Greedy Heuristic,True,17.86,50.0,143300,20,2.826,100.0,0
+028,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.86,50.0,143300,20,3.568,100.0,0
+029,on_track,Rule + Semester Order,True,71.43,0.0,112250,14,0.668,100.0,0
+029,on_track,Greedy Heuristic,True,71.43,0.0,112250,14,0.407,100.0,0
+029,on_track,Heuristic + Beam Search,True,71.43,0.0,112250,14,2.1,100.0,0
+030,accelerated,Rule + Semester Order,True,46.67,100.0,184700,27,2.1,100.0,0
+030,accelerated,Greedy Heuristic,True,46.67,100.0,184700,27,1.746,100.0,0
+030,accelerated,Heuristic + Beam Search,True,46.67,100.0,184700,27,7.047,100.0,0
+031,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,1.103,100.0,0
+031,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,1.169,100.0,0
+031,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.26,100.0,0
+032,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.95,100.0,0
+032,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,0.434,100.0,0
+032,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,0.945,100.0,0
+033,failed_course_or_prerequisite,Rule + Semester Order,True,11.11,100.0,51350,8,0.663,100.0,0
+033,failed_course_or_prerequisite,Greedy Heuristic,True,11.11,100.0,51350,8,0.642,100.0,0
+033,failed_course_or_prerequisite,Heuristic + Beam Search,True,11.11,100.0,51350,8,5.911,100.0,0
+034,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,57.14,213200,25,0.924,100.0,0
+034,failed_course_or_prerequisite,Greedy Heuristic,True,23.81,0.0,293600,27,0.969,100.0,0
+034,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.81,0.0,293600,27,6.64,100.0,0
+035,failed_course_or_prerequisite,Rule + Semester Order,True,22.22,100.0,41500,9,1.136,100.0,0
+035,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,100.0,41500,9,0.551,100.0,0
+035,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,100.0,41500,9,1.565,100.0,0
+036,failed_course_or_prerequisite,Rule + Semester Order,True,38.46,0.0,112200,14,1.369,100.0,0
+036,failed_course_or_prerequisite,Greedy Heuristic,True,38.46,0.0,112200,14,1.384,100.0,0
+036,failed_course_or_prerequisite,Heuristic + Beam Search,True,38.46,0.0,112200,14,3.038,100.0,0
+037,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.671,100.0,0
+037,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,1.33,100.0,0
+037,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.629,100.0,0
+038,failed_course_or_prerequisite,Rule + Semester Order,True,60.0,100.0,62000,12,1.376,100.0,0
+038,failed_course_or_prerequisite,Greedy Heuristic,True,60.0,100.0,62000,12,1.562,100.0,0
+038,failed_course_or_prerequisite,Heuristic + Beam Search,True,60.0,100.0,62000,12,4.629,100.0,0
+039,on_track,Rule + Semester Order,True,66.67,100.0,82100,13,1.032,100.0,0
+039,on_track,Greedy Heuristic,True,66.67,100.0,82100,13,1.091,100.0,0
+039,on_track,Heuristic + Beam Search,True,66.67,100.0,82100,13,2.509,100.0,0
+040,accelerated,Rule + Semester Order,True,50.0,100.0,41500,9,0.776,100.0,0
+040,accelerated,Greedy Heuristic,True,50.0,100.0,41500,9,0.582,100.0,0
+040,accelerated,Heuristic + Beam Search,True,50.0,100.0,41500,9,1.129,100.0,0
+041,failed_course_or_prerequisite,Rule + Semester Order,True,50.0,100.0,62000,12,0.56,100.0,0
+041,failed_course_or_prerequisite,Greedy Heuristic,True,50.0,100.0,62000,12,0.627,100.0,0
+041,failed_course_or_prerequisite,Heuristic + Beam Search,True,50.0,100.0,62000,12,1.434,100.0,0
+042,failed_course_or_prerequisite,Rule + Semester Order,True,12.5,100.0,21000,6,0.583,100.0,0
+042,failed_course_or_prerequisite,Greedy Heuristic,True,12.5,100.0,21000,6,0.573,100.0,0
+042,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.5,100.0,21000,6,0.943,100.0,0
+043,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.753,100.0,0
+043,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,0.568,100.0,0
+043,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,1.493,100.0,0
+044,accelerated,Rule + Semester Order,True,66.67,100.0,82500,15,1.468,100.0,0
+044,accelerated,Greedy Heuristic,True,66.67,100.0,82500,15,1.4,100.0,0
+044,accelerated,Heuristic + Beam Search,True,66.67,100.0,82500,15,3.846,100.0,0
+045,on_track,Rule + Semester Order,True,60.0,100.0,62100,13,0.81,100.0,0
+045,on_track,Greedy Heuristic,True,60.0,100.0,62100,13,1.501,100.0,0
+045,on_track,Heuristic + Beam Search,True,60.0,100.0,62100,13,6.137,100.0,0
+046,failed_course_or_prerequisite,Rule + Semester Order,True,28.57,66.67,102100,13,1.82,100.0,0
+046,failed_course_or_prerequisite,Greedy Heuristic,True,28.57,66.67,102100,13,1.957,100.0,0
+046,failed_course_or_prerequisite,Heuristic + Beam Search,True,28.57,66.67,102100,13,6.609,100.0,0
+047,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,100.0,41500,9,1.718,100.0,0
+047,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,100.0,41500,9,1.387,100.0,0
+047,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,100.0,41500,9,2.763,100.0,0
+048,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,100.0,41500,9,1.477,100.0,0
+048,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,100.0,41500,9,1.626,100.0,0
+048,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,100.0,41500,9,2.895,100.0,0
+049,on_track,Rule + Semester Order,True,60.0,100.0,62500,15,1.565,100.0,0
+049,on_track,Greedy Heuristic,True,60.0,100.0,62500,15,0.578,100.0,0
+049,on_track,Heuristic + Beam Search,True,60.0,100.0,62500,15,4.98,100.0,0
+050,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,1.218,100.0,0
+050,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,1.059,100.0,0
+050,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.068,100.0,0
+051,failed_course_or_prerequisite,Rule + Semester Order,True,17.78,57.14,243750,25,2.772,100.0,0
+051,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,28.57,294200,27,3.12,100.0,0
+051,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,14.29,294100,27,18.783,100.0,0
+052,failed_course_or_prerequisite,Rule + Semester Order,True,17.78,57.14,234200,27,2.92,100.0,0
+052,failed_course_or_prerequisite,Greedy Heuristic,True,17.78,57.14,234200,27,2.695,100.0,0
+052,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.78,42.86,234100,27,12.325,100.0,0
+053,failed_course_or_prerequisite,Rule + Semester Order,True,15.38,100.0,52250,13,2.176,100.0,0
+053,failed_course_or_prerequisite,Greedy Heuristic,True,15.38,100.0,52250,13,1.18,100.0,0
+053,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.38,100.0,52250,13,4.194,100.0,0
+054,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,66.67,173800,24,3.043,100.0,0
+054,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,66.67,173800,24,2.318,100.0,0
+054,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,66.67,173800,24,11.92,100.0,0
+055,failed_course_or_prerequisite,Rule + Semester Order,True,10.0,100.0,20600,4,1.375,100.0,0
+055,failed_course_or_prerequisite,Greedy Heuristic,True,10.0,100.0,20600,4,0.522,100.0,0
+055,failed_course_or_prerequisite,Heuristic + Beam Search,True,10.0,100.0,20600,4,2.509,100.0,0
+056,accelerated,Rule + Semester Order,True,60.0,0.0,61500,9,1.145,100.0,0
+056,accelerated,Greedy Heuristic,True,60.0,0.0,61500,9,1.355,100.0,0
+056,accelerated,Heuristic + Beam Search,True,60.0,0.0,61500,9,1.267,100.0,0
+057,failed_course_or_prerequisite,Rule + Semester Order,True,60.0,100.0,143000,21,1.378,100.0,0
+057,failed_course_or_prerequisite,Greedy Heuristic,True,60.0,100.0,143000,21,0.845,100.0,0
+057,failed_course_or_prerequisite,Heuristic + Beam Search,True,60.0,100.0,143000,21,5.596,100.0,0
+058,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.412,100.0,0
+058,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,0.467,100.0,0
+058,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,0.983,100.0,0
+059,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,100.0,62000,12,0.626,100.0,0
+059,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,100.0,62000,12,0.609,100.0,0
+059,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,100.0,62000,12,1.597,100.0,0
+060,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,100.0,41500,9,2.221,100.0,0
+060,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,100.0,41500,9,1.295,100.0,0
+060,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,100.0,41500,9,2.905,100.0,0
+061,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,0.0,41000,6,1.309,100.0,0
+061,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,0.0,41000,6,1.357,100.0,0
+061,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,0.0,41000,6,1.914,100.0,0
+062,failed_course_or_prerequisite,Rule + Semester Order,True,24.24,50.0,234050,27,2.144,100.0,0
+062,failed_course_or_prerequisite,Greedy Heuristic,True,24.24,50.0,234050,27,2.553,100.0,0
+062,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.24,33.33,233950,27,13.295,100.0,0
+063,failed_course_or_prerequisite,Rule + Semester Order,True,36.36,100.0,101700,13,2.405,100.0,0
+063,failed_course_or_prerequisite,Greedy Heuristic,True,36.36,100.0,101700,13,2.733,100.0,0
+063,failed_course_or_prerequisite,Heuristic + Beam Search,True,36.36,100.0,101700,13,3.833,100.0,0
+064,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,100.0,62000,12,1.58,100.0,0
+064,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,100.0,62000,12,0.687,100.0,0
+064,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,100.0,62000,12,3.284,100.0,0
+065,failed_course_or_prerequisite,Rule + Semester Order,True,18.75,50.0,173350,24,2.136,100.0,0
+065,failed_course_or_prerequisite,Greedy Heuristic,True,18.75,50.0,173350,24,1.115,100.0,0
+065,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.75,50.0,173350,24,6.081,100.0,0
+066,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.486,100.0,0
+066,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,1.141,100.0,0
+066,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.197,100.0,0
+067,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,57.14,173400,25,1.887,100.0,0
+067,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,57.14,173800,26,1.617,100.0,0
+067,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,57.14,173800,27,10.233,100.0,0
+068,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,100.0,41500,9,1.541,100.0,0
+068,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,100.0,41500,9,1.369,100.0,0
+068,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,100.0,41500,9,3.496,100.0,0
+069,failed_course_or_prerequisite,Rule + Semester Order,True,15.56,57.14,213600,25,4.345,100.0,0
+069,failed_course_or_prerequisite,Greedy Heuristic,True,17.78,42.86,234000,27,2.381,100.0,0
+069,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.78,28.57,233900,27,16.698,100.0,0
+070,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,1.625,100.0,0
+070,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,1.329,100.0,0
+070,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.467,100.0,0
+071,failed_course_or_prerequisite,Rule + Semester Order,True,26.32,100.0,154050,25,1.811,100.0,0
+071,failed_course_or_prerequisite,Greedy Heuristic,True,36.84,33.33,194050,25,1.916,100.0,0
+071,failed_course_or_prerequisite,Heuristic + Beam Search,True,36.84,33.33,194050,25,9.864,100.0,0
+072,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.467,100.0,0
+072,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,1.115,100.0,0
+072,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,1.155,100.0,0
+073,on_track,Rule + Semester Order,True,71.43,0.0,112550,15,0.413,100.0,0
+073,on_track,Greedy Heuristic,True,71.43,0.0,112550,15,0.583,100.0,0
+073,on_track,Heuristic + Beam Search,True,71.43,0.0,112550,15,1.976,100.0,0
+074,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,0.615,100.0,0
+074,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,0.643,100.0,0
+074,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.087,100.0,0
+075,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,75.0,103600,21,0.753,100.0,0
+075,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,75.0,103600,21,1.115,100.0,0
+075,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,75.0,103600,21,2.524,100.0,0
+076,failed_course_or_prerequisite,Rule + Semester Order,True,31.25,100.0,112850,19,0.677,100.0,0
+076,failed_course_or_prerequisite,Greedy Heuristic,True,31.25,100.0,112850,19,0.587,100.0,0
+076,failed_course_or_prerequisite,Heuristic + Beam Search,True,31.25,100.0,112850,19,2.376,100.0,0
+077,failed_course_or_prerequisite,Rule + Semester Order,True,21.05,100.0,92350,16,0.671,100.0,0
+077,failed_course_or_prerequisite,Greedy Heuristic,True,21.05,100.0,92350,16,0.658,100.0,0
+077,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.05,100.0,92350,16,1.702,100.0,0
+078,failed_course_or_prerequisite,Rule + Semester Order,True,31.25,100.0,112850,19,0.798,100.0,0
+078,failed_course_or_prerequisite,Greedy Heuristic,True,31.25,100.0,112850,19,0.561,100.0,0
+078,failed_course_or_prerequisite,Heuristic + Beam Search,True,31.25,100.0,112850,19,2.349,100.0,0
+079,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,50.0,51350,10,0.634,100.0,0
+079,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,50.0,51350,10,0.66,100.0,0
+079,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,50.0,51350,10,2.188,100.0,0
+080,failed_course_or_prerequisite,Rule + Semester Order,True,15.56,57.14,213350,26,1.08,100.0,0
+080,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,14.29,263700,27,2.265,100.0,0
+080,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,14.29,263700,27,8.703,100.0,0
+081,on_track,Rule + Semester Order,True,66.67,0.0,82000,12,1.192,100.0,0
+081,on_track,Greedy Heuristic,True,66.67,0.0,82000,12,0.904,100.0,0
+081,on_track,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.368,100.0,0
+082,failed_course_or_prerequisite,Rule + Semester Order,True,15.91,57.14,213400,25,1.651,100.0,0
+082,failed_course_or_prerequisite,Greedy Heuristic,True,20.45,28.57,263850,27,0.985,100.0,0
+082,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.45,14.29,263750,27,7.464,100.0,0
+083,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.626,100.0,0
+083,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.508,100.0,0
+083,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,1.872,100.0,0
+084,accelerated,Rule + Semester Order,True,66.67,100.0,82500,15,0.623,100.0,0
+084,accelerated,Greedy Heuristic,True,66.67,100.0,82500,15,0.623,100.0,0
+084,accelerated,Heuristic + Beam Search,True,66.67,100.0,82500,15,3.797,100.0,0
+085,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.546,100.0,0
+085,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.548,100.0,0
+085,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,1.803,100.0,0
+086,failed_course_or_prerequisite,Rule + Semester Order,True,19.05,57.14,244300,27,0.908,100.0,0
+086,failed_course_or_prerequisite,Greedy Heuristic,True,21.43,42.86,264300,27,0.945,100.0,0
+086,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.43,28.57,264200,27,12.318,100.0,0
+087,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,50.0,41500,9,1.018,100.0,0
+087,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,50.0,41500,9,0.655,100.0,0
+087,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,50.0,41500,9,2.897,100.0,0
+088,failed_course_or_prerequisite,Rule + Semester Order,True,22.22,50.0,233550,27,2.309,100.0,0
+088,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,50.0,233550,27,3.03,100.0,0
+088,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,50.0,233550,27,10.179,100.0,0
+089,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.953,100.0,0
+089,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.673,100.0,0
+089,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,2.047,100.0,0
+090,failed_course_or_prerequisite,Rule + Semester Order,True,23.08,66.67,71900,12,0.969,100.0,0
+090,failed_course_or_prerequisite,Greedy Heuristic,True,23.08,66.67,71900,12,0.731,100.0,0
+090,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.08,66.67,71900,12,2.506,100.0,0
+091,failed_course_or_prerequisite,Rule + Semester Order,True,15.79,66.67,173650,26,0.964,100.0,0
+091,failed_course_or_prerequisite,Greedy Heuristic,True,15.79,66.67,173650,26,0.953,100.0,0
+091,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.79,66.67,173650,26,6.646,100.0,0
+092,failed_course_or_prerequisite,Rule + Semester Order,True,50.0,100.0,62000,12,1.437,100.0,0
+092,failed_course_or_prerequisite,Greedy Heuristic,True,50.0,100.0,62000,12,0.696,100.0,0
+092,failed_course_or_prerequisite,Heuristic + Beam Search,True,50.0,100.0,62000,12,3.309,100.0,0
+093,failed_course_or_prerequisite,Rule + Semester Order,True,62.5,50.0,112800,17,1.199,100.0,0
+093,failed_course_or_prerequisite,Greedy Heuristic,True,62.5,50.0,112800,17,1.571,100.0,0
+093,failed_course_or_prerequisite,Heuristic + Beam Search,True,62.5,50.0,112800,17,3.413,100.0,0
+094,failed_course_or_prerequisite,Rule + Semester Order,True,50.0,100.0,122550,18,1.479,100.0,0
+094,failed_course_or_prerequisite,Greedy Heuristic,True,50.0,100.0,122550,18,0.727,100.0,0
+094,failed_course_or_prerequisite,Heuristic + Beam Search,True,50.0,100.0,122550,18,4.085,100.0,0
+095,failed_course_or_prerequisite,Rule + Semester Order,True,57.14,100.0,82500,15,0.736,100.0,0
+095,failed_course_or_prerequisite,Greedy Heuristic,True,57.14,100.0,82500,15,0.771,100.0,0
+095,failed_course_or_prerequisite,Heuristic + Beam Search,True,57.14,100.0,82500,15,3.277,100.0,0
+096,failed_course_or_prerequisite,Rule + Semester Order,True,15.38,66.67,41600,10,0.76,100.0,0
+096,failed_course_or_prerequisite,Greedy Heuristic,True,15.38,66.67,41600,10,0.678,100.0,0
+096,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.38,66.67,41600,10,3.702,100.0,0
+097,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.628,100.0,0
+097,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,1.128,100.0,0
+097,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,3.669,100.0,0
+098,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,0.894,100.0,0
+098,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,0.967,100.0,0
+098,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.518,100.0,0
+099,on_track,Rule + Semester Order,True,66.67,0.0,142500,15,0.506,100.0,0
+099,on_track,Greedy Heuristic,True,66.67,0.0,142500,15,0.503,100.0,0
+099,on_track,Heuristic + Beam Search,True,66.67,0.0,142500,15,1.262,100.0,0
+100,failed_course_or_prerequisite,Rule + Semester Order,True,40.0,100.0,82500,15,0.669,100.0,0
+100,failed_course_or_prerequisite,Greedy Heuristic,True,40.0,100.0,82500,15,0.643,100.0,0
+100,failed_course_or_prerequisite,Heuristic + Beam Search,True,40.0,100.0,82500,15,1.806,100.0,0
+101,failed_course_or_prerequisite,Rule + Semester Order,True,11.11,50.0,51550,9,0.961,100.0,0
+101,failed_course_or_prerequisite,Greedy Heuristic,True,11.11,50.0,51550,9,0.674,100.0,0
+101,failed_course_or_prerequisite,Heuristic + Beam Search,True,11.11,50.0,51550,9,1.409,100.0,0
+102,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,0.627,100.0,0
+102,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,0.593,100.0,0
+102,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,1.532,100.0,0
+103,failed_course_or_prerequisite,Rule + Semester Order,True,62.5,100.0,112750,17,0.659,100.0,0
+103,failed_course_or_prerequisite,Greedy Heuristic,True,62.5,100.0,112750,17,0.667,100.0,0
+103,failed_course_or_prerequisite,Heuristic + Beam Search,True,62.5,100.0,112750,17,6.522,100.0,0
+104,failed_course_or_prerequisite,Rule + Semester Order,True,15.79,57.14,173600,25,2.398,100.0,0
+104,failed_course_or_prerequisite,Greedy Heuristic,True,15.79,57.14,174000,27,1.087,100.0,0
+104,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.79,57.14,174000,27,9.314,100.0,0
+105,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.566,100.0,0
+105,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,0.574,100.0,0
+105,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,1.516,100.0,0
+106,failed_course_or_prerequisite,Rule + Semester Order,True,5.56,100.0,21500,9,0.699,100.0,0
+106,failed_course_or_prerequisite,Greedy Heuristic,True,5.56,100.0,21500,9,0.715,100.0,0
+106,failed_course_or_prerequisite,Heuristic + Beam Search,True,5.56,100.0,21500,9,1.179,100.0,0
+107,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,3.144,100.0,0
+107,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,2.644,100.0,0
+107,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,8.791,100.0,0
+108,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,1.264,100.0,0
+108,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,0.597,100.0,0
+108,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,1.367,100.0,0
+109,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.846,100.0,0
+109,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,0.788,100.0,0
+109,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,2.668,100.0,0
+110,failed_course_or_prerequisite,Rule + Semester Order,True,19.05,57.14,243900,26,1.299,100.0,0
+110,failed_course_or_prerequisite,Greedy Heuristic,True,23.81,14.29,304300,27,1.911,100.0,0
+110,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.81,14.29,304300,27,15.622,100.0,0
+111,failed_course_or_prerequisite,Rule + Semester Order,True,19.05,57.14,243450,27,2.283,100.0,0
+111,failed_course_or_prerequisite,Greedy Heuristic,True,23.81,14.29,303450,27,2.329,100.0,0
+111,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.81,14.29,303450,27,11.256,100.0,0
+112,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,0.0,41000,6,0.455,100.0,0
+112,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,0.0,41000,6,0.438,100.0,0
+112,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,0.0,41000,6,0.732,100.0,0
+113,failed_course_or_prerequisite,Rule + Semester Order,True,40.0,100.0,41500,9,0.775,100.0,0
+113,failed_course_or_prerequisite,Greedy Heuristic,True,40.0,100.0,41500,9,1.417,100.0,0
+113,failed_course_or_prerequisite,Heuristic + Beam Search,True,40.0,100.0,41500,9,2.215,100.0,0
+114,failed_course_or_prerequisite,Rule + Semester Order,True,15.79,0.0,81200,8,0.583,100.0,0
+114,failed_course_or_prerequisite,Greedy Heuristic,True,15.79,0.0,81200,8,0.562,100.0,0
+114,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.79,0.0,81200,8,0.918,100.0,0
+115,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,100.0,41500,9,0.582,100.0,0
+115,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,100.0,41500,9,1.218,100.0,0
+115,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,100.0,41500,9,2.229,100.0,0
+116,failed_course_or_prerequisite,Rule + Semester Order,True,33.33,100.0,62000,12,0.67,100.0,0
+116,failed_course_or_prerequisite,Greedy Heuristic,True,33.33,100.0,62000,12,1.26,100.0,0
+116,failed_course_or_prerequisite,Heuristic + Beam Search,True,33.33,100.0,62000,12,2.959,100.0,0
+117,on_track,Rule + Semester Order,True,45.45,100.0,124100,24,1.782,100.0,0
+117,on_track,Greedy Heuristic,True,45.45,100.0,124100,24,1.447,100.0,0
+117,on_track,Heuristic + Beam Search,True,45.45,100.0,124100,24,3.774,100.0,0
+118,failed_course_or_prerequisite,Rule + Semester Order,True,24.14,66.67,203800,27,2.39,100.0,0
+118,failed_course_or_prerequisite,Greedy Heuristic,True,24.14,66.67,203800,27,0.884,100.0,0
+118,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.14,66.67,203800,27,5.056,100.0,0
+119,failed_course_or_prerequisite,Rule + Semester Order,True,36.36,66.67,92650,17,0.706,100.0,0
+119,failed_course_or_prerequisite,Greedy Heuristic,True,36.36,66.67,92650,17,1.299,100.0,0
+119,failed_course_or_prerequisite,Heuristic + Beam Search,True,36.36,66.67,92650,17,1.702,100.0,0
+120,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,0.0,61500,9,1.329,100.0,0
+120,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,0.0,61500,9,1.096,100.0,0
+120,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,0.0,61500,9,1.167,100.0,0
+121,on_track,Rule + Semester Order,True,60.0,100.0,62000,12,0.7,100.0,0
+121,on_track,Greedy Heuristic,True,60.0,100.0,62000,12,0.932,100.0,0
+121,on_track,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.411,100.0,0
+122,failed_course_or_prerequisite,Rule + Semester Order,True,57.14,100.0,83000,18,0.857,100.0,0
+122,failed_course_or_prerequisite,Greedy Heuristic,True,57.14,100.0,83000,18,1.189,100.0,0
+122,failed_course_or_prerequisite,Heuristic + Beam Search,True,57.14,100.0,83000,18,2.073,100.0,0
+123,on_track,Rule + Semester Order,True,66.67,0.0,82000,12,0.489,100.0,0
+123,on_track,Greedy Heuristic,True,66.67,0.0,82000,12,0.544,100.0,0
+123,on_track,Heuristic + Beam Search,True,66.67,0.0,82000,12,0.931,100.0,0
+124,failed_course_or_prerequisite,Rule + Semester Order,True,12.5,100.0,21000,6,0.558,100.0,0
+124,failed_course_or_prerequisite,Greedy Heuristic,True,12.5,100.0,21000,6,0.548,100.0,0
+124,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.5,100.0,21000,6,0.912,100.0,0
+125,failed_course_or_prerequisite,Rule + Semester Order,True,17.24,66.67,143300,22,1.645,100.0,0
+125,failed_course_or_prerequisite,Greedy Heuristic,True,17.24,66.67,143300,22,2.054,100.0,0
+125,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.24,66.67,143300,22,10.706,100.0,0
+126,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,1.145,100.0,0
+126,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,2.471,100.0,0
+126,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.215,100.0,0
+127,on_track,Rule + Semester Order,True,66.67,0.0,82000,12,1.337,100.0,0
+127,on_track,Greedy Heuristic,True,66.67,0.0,82000,12,1.124,100.0,0
+127,on_track,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.763,100.0,0
+128,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,100.0,62000,12,1.542,100.0,0
+128,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,100.0,62000,12,1.792,100.0,0
+128,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,100.0,62000,12,3.475,100.0,0
+129,failed_course_or_prerequisite,Rule + Semester Order,True,21.28,42.86,304250,27,2.725,100.0,0
+129,failed_course_or_prerequisite,Greedy Heuristic,True,23.4,0.0,334400,27,2.156,100.0,0
+129,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.4,0.0,334400,27,8.295,100.0,0
+130,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,0.836,100.0,0
+130,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,0.603,100.0,0
+130,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,2.158,100.0,0
+131,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,1.455,100.0,0
+131,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,1.487,100.0,0
+131,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,4.843,100.0,0
+132,failed_course_or_prerequisite,Rule + Semester Order,True,60.0,100.0,62000,12,1.238,100.0,0
+132,failed_course_or_prerequisite,Greedy Heuristic,True,60.0,100.0,62000,12,1.485,100.0,0
+132,failed_course_or_prerequisite,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.783,100.0,0
+133,failed_course_or_prerequisite,Rule + Semester Order,True,66.67,0.0,82000,12,1.333,100.0,0
+133,failed_course_or_prerequisite,Greedy Heuristic,True,66.67,0.0,82000,12,1.142,100.0,0
+133,failed_course_or_prerequisite,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.513,100.0,0
+134,failed_course_or_prerequisite,Rule + Semester Order,True,33.33,100.0,62000,12,1.503,100.0,0
+134,failed_course_or_prerequisite,Greedy Heuristic,True,33.33,100.0,62000,12,2.192,100.0,0
+134,failed_course_or_prerequisite,Heuristic + Beam Search,True,33.33,100.0,62000,12,4.446,100.0,0
+135,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,100.0,113100,22,1.724,100.0,0
+135,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,100.0,113100,22,0.751,100.0,0
+135,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,100.0,113100,22,11.355,100.0,0
+136,failed_course_or_prerequisite,Rule + Semester Order,True,17.02,57.14,243950,26,1.529,100.0,0
+136,failed_course_or_prerequisite,Greedy Heuristic,True,19.15,28.57,264250,27,2.464,100.0,0
+136,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.15,28.57,264250,27,11.917,100.0,0
+137,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,0.0,51050,6,0.497,100.0,0
+137,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,0.0,51050,6,0.489,100.0,0
+137,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,0.0,51050,6,0.928,100.0,0
+138,accelerated,Rule + Semester Order,True,66.67,100.0,82500,15,0.707,100.0,0
+138,accelerated,Greedy Heuristic,True,66.67,100.0,82500,15,0.718,100.0,0
+138,accelerated,Heuristic + Beam Search,True,66.67,100.0,82500,15,1.926,100.0,0
+139,failed_course_or_prerequisite,Rule + Semester Order,True,27.27,85.71,73550,23,0.842,100.0,0
+139,failed_course_or_prerequisite,Greedy Heuristic,True,27.27,85.71,73550,23,0.71,100.0,0
+139,failed_course_or_prerequisite,Heuristic + Beam Search,True,27.27,85.71,73550,23,6.529,100.0,0
+140,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.607,100.0,0
+140,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,0.482,100.0,0
+140,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.037,100.0,0
+141,failed_course_or_prerequisite,Rule + Semester Order,True,16.0,57.14,244150,25,2.478,100.0,0
+141,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,28.57,294600,27,2.573,100.0,0
+141,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,14.29,294500,27,14.474,100.0,0
+142,failed_course_or_prerequisite,Rule + Semester Order,True,15.38,0.0,41000,6,0.832,100.0,0
+142,failed_course_or_prerequisite,Greedy Heuristic,True,15.38,0.0,41000,6,0.732,100.0,0
+142,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.38,0.0,41000,6,1.378,100.0,0
+143,failed_course_or_prerequisite,Rule + Semester Order,True,57.14,0.0,82000,12,1.199,100.0,0
+143,failed_course_or_prerequisite,Greedy Heuristic,True,57.14,0.0,82000,12,0.698,100.0,0
+143,failed_course_or_prerequisite,Heuristic + Beam Search,True,57.14,0.0,82000,12,1.963,100.0,0
+144,failed_course_or_prerequisite,Rule + Semester Order,True,66.67,0.0,82000,12,1.084,100.0,0
+144,failed_course_or_prerequisite,Greedy Heuristic,True,66.67,0.0,82000,12,0.958,100.0,0
+144,failed_course_or_prerequisite,Heuristic + Beam Search,True,66.67,0.0,82000,12,0.986,100.0,0
+145,on_track,Rule + Semester Order,True,50.0,0.0,41000,6,0.956,100.0,0
+145,on_track,Greedy Heuristic,True,50.0,0.0,41000,6,1.13,100.0,0
+145,on_track,Heuristic + Beam Search,True,50.0,0.0,41000,6,1.693,100.0,0
+146,failed_course_or_prerequisite,Rule + Semester Order,True,42.86,100.0,62000,12,1.823,100.0,0
+146,failed_course_or_prerequisite,Greedy Heuristic,True,42.86,100.0,62000,12,1.676,100.0,0
+146,failed_course_or_prerequisite,Heuristic + Beam Search,True,42.86,100.0,62000,12,4.15,100.0,0
+147,failed_course_or_prerequisite,Rule + Semester Order,True,57.14,0.0,82000,12,1.285,100.0,0
+147,failed_course_or_prerequisite,Greedy Heuristic,True,57.14,0.0,82000,12,0.839,100.0,0
+147,failed_course_or_prerequisite,Heuristic + Beam Search,True,57.14,0.0,82000,12,2.393,100.0,0
+148,accelerated,Rule + Semester Order,True,50.0,100.0,41500,9,1.446,100.0,0
+148,accelerated,Greedy Heuristic,True,50.0,100.0,41500,9,1.387,100.0,0
+148,accelerated,Heuristic + Beam Search,True,50.0,100.0,41500,9,3.035,100.0,0
+149,failed_course_or_prerequisite,Rule + Semester Order,True,19.57,57.14,274500,26,2.01,100.0,0
+149,failed_course_or_prerequisite,Greedy Heuristic,True,23.91,14.29,324850,27,3.373,100.0,0
+149,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.91,14.29,324850,27,19.185,100.0,0
+150,failed_course_or_prerequisite,Rule + Semester Order,True,40.0,100.0,82500,15,1.179,100.0,0
+150,failed_course_or_prerequisite,Greedy Heuristic,True,40.0,100.0,82500,15,1.262,100.0,0
+150,failed_course_or_prerequisite,Heuristic + Beam Search,True,40.0,100.0,82500,15,4.035,100.0,0
+151,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,100.0,41500,9,1.378,100.0,0
+151,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,100.0,41500,9,1.745,100.0,0
+151,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,100.0,41500,9,3.125,100.0,0
+152,failed_course_or_prerequisite,Rule + Semester Order,True,71.43,50.0,112800,17,1.543,100.0,0
+152,failed_course_or_prerequisite,Greedy Heuristic,True,71.43,50.0,112800,17,1.011,100.0,0
+152,failed_course_or_prerequisite,Heuristic + Beam Search,True,71.43,50.0,112800,17,3.944,100.0,0
+153,failed_course_or_prerequisite,Rule + Semester Order,True,18.75,50.0,72250,10,1.04,100.0,0
+153,failed_course_or_prerequisite,Greedy Heuristic,True,18.75,50.0,72250,10,0.961,100.0,0
+153,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.75,50.0,72250,10,1.845,100.0,0
+154,failed_course_or_prerequisite,Rule + Semester Order,True,15.0,60.0,174200,23,0.918,100.0,0
+154,failed_course_or_prerequisite,Greedy Heuristic,True,15.0,60.0,174200,23,0.941,100.0,0
+154,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.0,60.0,174200,23,4.147,100.0,0
+155,on_track,Rule + Semester Order,True,66.67,100.0,82500,15,0.639,100.0,0
+155,on_track,Greedy Heuristic,True,66.67,100.0,82500,15,1.524,100.0,0
+155,on_track,Heuristic + Beam Search,True,66.67,100.0,82500,15,3.999,100.0,0
+156,accelerated,Rule + Semester Order,True,60.0,100.0,62000,12,1.379,100.0,0
+156,accelerated,Greedy Heuristic,True,60.0,100.0,62000,12,1.117,100.0,0
+156,accelerated,Heuristic + Beam Search,True,60.0,100.0,62000,12,3.537,100.0,0
+157,failed_course_or_prerequisite,Rule + Semester Order,True,12.5,66.67,42000,12,1.049,100.0,0
+157,failed_course_or_prerequisite,Greedy Heuristic,True,12.5,66.67,42000,12,1.056,100.0,0
+157,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.5,66.67,42000,12,2.202,100.0,0
+158,accelerated,Rule + Semester Order,True,66.67,100.0,82500,15,0.93,100.0,0
+158,accelerated,Greedy Heuristic,True,66.67,100.0,82500,15,0.9,100.0,0
+158,accelerated,Heuristic + Beam Search,True,66.67,100.0,82500,15,2.548,100.0,0
+159,failed_course_or_prerequisite,Rule + Semester Order,True,40.0,100.0,41500,9,1.683,100.0,0
+159,failed_course_or_prerequisite,Greedy Heuristic,True,40.0,100.0,41500,9,1.456,100.0,0
+159,failed_course_or_prerequisite,Heuristic + Beam Search,True,40.0,100.0,41500,9,2.89,100.0,0
+160,accelerated,Rule + Semester Order,True,66.67,0.0,82000,12,0.729,100.0,0
+160,accelerated,Greedy Heuristic,True,66.67,0.0,82000,12,0.548,100.0,0
+160,accelerated,Heuristic + Beam Search,True,66.67,0.0,82000,12,2.328,100.0,0
+161,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,100.0,113200,19,0.636,100.0,0
+161,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,100.0,113200,19,1.421,100.0,0
+161,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,100.0,113200,19,5.163,100.0,0
+162,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,50.0,51300,9,1.588,100.0,0
+162,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,50.0,51300,9,1.56,100.0,0
+162,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,50.0,51300,9,3.073,100.0,0
+163,failed_course_or_prerequisite,Rule + Semester Order,True,26.32,75.0,143900,23,1.793,100.0,0
+163,failed_course_or_prerequisite,Greedy Heuristic,True,26.32,75.0,143900,23,1.858,100.0,0
+163,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.32,75.0,143900,23,5.404,100.0,0
+164,accelerated,Rule + Semester Order,True,18.6,57.14,243500,27,1.476,100.0,0
+164,accelerated,Greedy Heuristic,True,23.26,14.29,303500,27,1.573,100.0,0
+164,accelerated,Heuristic + Beam Search,True,23.26,14.29,303500,27,7.172,100.0,0
+165,failed_course_or_prerequisite,Rule + Semester Order,True,15.22,57.14,213200,25,1.022,100.0,0
+165,failed_course_or_prerequisite,Greedy Heuristic,True,21.74,0.0,293600,27,1.093,100.0,0
+165,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.74,0.0,293600,27,9.679,100.0,0
+166,failed_course_or_prerequisite,Rule + Semester Order,True,17.95,57.14,213150,25,1.015,100.0,0
+166,failed_course_or_prerequisite,Greedy Heuristic,True,25.64,0.0,293550,27,0.888,100.0,0
+166,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.64,0.0,293550,27,14.498,100.0,0
+167,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,60.0,173700,24,1.543,100.0,0
+167,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,60.0,173700,24,1.422,100.0,0
+167,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,60.0,173700,24,5.347,100.0,0
+168,accelerated,Rule + Semester Order,True,18.37,42.86,274100,27,1.084,100.0,0
+168,accelerated,Greedy Heuristic,True,20.41,14.29,304350,27,1.054,100.0,0
+168,accelerated,Heuristic + Beam Search,True,22.45,0.0,334450,27,10.495,100.0,0
+169,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,57.14,243750,25,1.052,100.0,0
+169,failed_course_or_prerequisite,Greedy Heuristic,True,20.83,28.57,294200,27,1.034,100.0,0
+169,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.83,14.29,294100,27,7.587,100.0,0
+170,failed_course_or_prerequisite,Rule + Semester Order,True,15.91,57.14,213150,25,1.046,100.0,0
+170,failed_course_or_prerequisite,Greedy Heuristic,True,22.73,0.0,293550,27,0.974,100.0,0
+170,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.73,0.0,293550,27,6.965,100.0,0
+171,failed_course_or_prerequisite,Rule + Semester Order,True,17.39,57.14,243700,26,0.982,100.0,0
+171,failed_course_or_prerequisite,Greedy Heuristic,True,21.74,14.29,294050,27,0.985,100.0,0
+171,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.74,14.29,294050,27,15.242,100.0,0
+172,failed_course_or_prerequisite,Rule + Semester Order,True,15.0,60.0,173400,23,1.064,100.0,0
+172,failed_course_or_prerequisite,Greedy Heuristic,True,15.0,60.0,173400,23,1.535,100.0,0
+172,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.0,60.0,173400,23,8.832,100.0,0
+173,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,57.14,243500,26,2.522,100.0,0
+173,failed_course_or_prerequisite,Greedy Heuristic,True,22.73,14.29,303900,27,3.657,100.0,0
+173,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.73,14.29,303900,27,20.287,100.0,0
+174,failed_course_or_prerequisite,Rule + Semester Order,True,20.51,50.0,243800,27,2.499,100.0,0
+174,failed_course_or_prerequisite,Greedy Heuristic,True,25.64,0.0,293750,27,2.444,100.0,0
+174,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.64,0.0,293750,27,14.939,100.0,0
+175,failed_course_or_prerequisite,Rule + Semester Order,True,17.02,57.14,243950,27,2.796,100.0,0
+175,failed_course_or_prerequisite,Greedy Heuristic,True,19.15,42.86,263950,27,2.482,100.0,0
+175,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.15,28.57,263850,27,9.312,100.0,0
+176,failed_course_or_prerequisite,Rule + Semester Order,True,17.02,57.14,243950,27,2.538,100.0,0
+176,failed_course_or_prerequisite,Greedy Heuristic,True,19.15,42.86,263950,27,2.556,100.0,0
+176,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.15,28.57,263850,27,10.637,100.0,0
+177,failed_course_or_prerequisite,Rule + Semester Order,True,17.39,57.14,243750,27,1.578,100.0,0
+177,failed_course_or_prerequisite,Greedy Heuristic,True,21.74,14.29,293700,27,1.603,100.0,0
+177,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.74,14.29,293700,27,15.523,100.0,0
+178,failed_course_or_prerequisite,Rule + Semester Order,True,18.6,57.14,243700,26,3.365,100.0,0
+178,failed_course_or_prerequisite,Greedy Heuristic,True,23.26,14.29,294050,27,1.332,100.0,0
+178,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.26,14.29,294050,27,8.499,100.0,0
+179,failed_course_or_prerequisite,Rule + Semester Order,True,17.39,57.14,243750,25,2.607,100.0,0
+179,failed_course_or_prerequisite,Greedy Heuristic,True,21.74,28.57,294200,27,3.042,100.0,0
+179,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.74,14.29,294100,27,15.398,100.0,0
+180,failed_course_or_prerequisite,Rule + Semester Order,True,17.5,57.14,203750,25,2.518,100.0,0
+180,failed_course_or_prerequisite,Greedy Heuristic,True,17.5,57.14,204150,27,3.139,100.0,0
+180,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.5,57.14,204150,27,13.141,100.0,0
+181,failed_course_or_prerequisite,Rule + Semester Order,True,15.56,57.14,213600,26,1.921,100.0,0
+181,failed_course_or_prerequisite,Greedy Heuristic,True,17.78,28.57,233900,27,0.963,100.0,0
+181,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.78,28.57,233900,27,14.624,100.0,0
+182,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,57.14,213150,25,2.509,100.0,0
+182,failed_course_or_prerequisite,Greedy Heuristic,True,23.81,0.0,293550,27,2.719,100.0,0
+182,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.81,0.0,293550,27,9.671,100.0,0
+183,failed_course_or_prerequisite,Rule + Semester Order,True,17.78,57.14,243750,25,2.407,100.0,0
+183,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,28.57,294200,27,1.103,100.0,0
+183,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,14.29,294100,27,13.31,100.0,0
+184,failed_course_or_prerequisite,Rule + Semester Order,True,15.56,57.14,213150,25,2.603,100.0,0
+184,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,0.0,293550,27,1.423,100.0,0
+184,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,0.0,293550,27,11.784,100.0,0
+185,failed_course_or_prerequisite,Rule + Semester Order,True,28.57,33.33,172650,24,1.364,100.0,0
+185,failed_course_or_prerequisite,Greedy Heuristic,True,28.57,33.33,172650,24,1.418,100.0,0
+185,failed_course_or_prerequisite,Heuristic + Beam Search,True,28.57,33.33,172650,24,9.677,100.0,0
+186,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,33.33,142250,24,2.257,100.0,0
+186,failed_course_or_prerequisite,Greedy Heuristic,True,26.67,33.33,142250,24,0.986,100.0,0
+186,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.67,33.33,142250,24,7.903,100.0,0
+187,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,0.713,100.0,0
+187,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,0.633,100.0,0
+187,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,3.865,100.0,0
+188,failed_course_or_prerequisite,Rule + Semester Order,True,18.42,42.86,141850,23,0.656,100.0,0
+188,failed_course_or_prerequisite,Greedy Heuristic,True,18.42,42.86,141850,23,0.656,100.0,0
+188,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.42,42.86,141850,23,7.928,100.0,0
+189,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.342,100.0,0
+189,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.359,100.0,0
+189,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,5.321,100.0,0
+190,failed_course_or_prerequisite,Rule + Semester Order,True,21.88,42.86,131850,22,0.71,100.0,0
+190,failed_course_or_prerequisite,Greedy Heuristic,True,21.88,42.86,131850,22,1.142,100.0,0
+190,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.88,42.86,131850,22,10.188,100.0,0
+191,failed_course_or_prerequisite,Rule + Semester Order,True,8.33,42.86,61000,10,0.962,100.0,0
+191,failed_course_or_prerequisite,Greedy Heuristic,True,8.33,42.86,61000,10,1.194,100.0,0
+191,failed_course_or_prerequisite,Heuristic + Beam Search,True,8.33,42.86,61000,10,5.523,100.0,0
+192,no_specialization,Rule + Semester Order,True,36.0,20.0,163000,25,0.634,100.0,0
+192,no_specialization,Greedy Heuristic,True,40.0,0.0,173000,26,1.34,100.0,0
+192,no_specialization,Heuristic + Beam Search,True,40.0,0.0,173000,26,5.016,100.0,0
+193,failed_course_or_prerequisite,Rule + Semester Order,True,13.33,42.86,81100,12,0.712,100.0,0
+193,failed_course_or_prerequisite,Greedy Heuristic,True,13.33,42.86,81100,12,0.938,100.0,0
+193,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.33,42.86,81100,12,3.396,100.0,0
+194,failed_course_or_prerequisite,Rule + Semester Order,True,33.33,33.33,163100,26,0.678,100.0,0
+194,failed_course_or_prerequisite,Greedy Heuristic,True,37.04,16.67,173100,27,0.727,100.0,0
+194,failed_course_or_prerequisite,Heuristic + Beam Search,True,37.04,16.67,173100,27,4.659,100.0,0
+195,failed_course_or_prerequisite,Rule + Semester Order,True,23.33,33.33,152500,20,0.645,100.0,0
+195,failed_course_or_prerequisite,Greedy Heuristic,True,23.33,33.33,152500,20,0.624,100.0,0
+195,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.33,33.33,152500,20,4.203,100.0,0
+196,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,0.836,100.0,0
+196,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,0.708,100.0,0
+196,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,6.177,100.0,0
+197,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,33.33,172650,24,0.953,100.0,0
+197,failed_course_or_prerequisite,Greedy Heuristic,True,26.67,33.33,172650,24,1.114,100.0,0
+197,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.67,33.33,172650,24,6.49,100.0,0
+198,failed_course_or_prerequisite,Rule + Semester Order,True,23.33,33.33,131700,21,0.589,100.0,0
+198,failed_course_or_prerequisite,Greedy Heuristic,True,23.33,33.33,131700,21,0.616,100.0,0
+198,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.33,33.33,131700,21,3.738,100.0,0
+199,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,33.33,111150,15,0.623,100.0,0
+199,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,33.33,111150,15,0.745,100.0,0
+199,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,33.33,111150,15,2.654,100.0,0
+200,failed_course_or_prerequisite,Rule + Semester Order,True,17.65,33.33,111650,19,0.642,100.0,0
+200,failed_course_or_prerequisite,Greedy Heuristic,True,17.65,33.33,111650,19,0.745,100.0,0
+200,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.65,33.33,111650,19,4.742,100.0,0
+201,failed_course_or_prerequisite,Rule + Semester Order,True,25.93,33.33,142500,20,0.527,100.0,0
+201,failed_course_or_prerequisite,Greedy Heuristic,True,25.93,33.33,142500,20,0.625,100.0,0
+201,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.93,33.33,142500,20,3.285,100.0,0
+202,failed_course_or_prerequisite,Rule + Semester Order,True,33.33,33.33,163100,26,0.651,100.0,0
+202,failed_course_or_prerequisite,Greedy Heuristic,True,33.33,33.33,163100,26,0.648,100.0,0
+202,failed_course_or_prerequisite,Heuristic + Beam Search,True,33.33,33.33,163100,26,4.502,100.0,0
+203,failed_course_or_prerequisite,Rule + Semester Order,True,13.89,42.86,121200,17,0.667,100.0,0
+203,failed_course_or_prerequisite,Greedy Heuristic,True,13.89,42.86,121200,17,0.627,100.0,0
+203,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.89,42.86,121200,17,3.447,100.0,0
+204,failed_course_or_prerequisite,Rule + Semester Order,True,23.33,33.33,131750,21,0.522,100.0,0
+204,failed_course_or_prerequisite,Greedy Heuristic,True,23.33,33.33,131750,21,0.571,100.0,0
+204,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.33,33.33,131750,21,3.769,100.0,0
+205,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,0.638,100.0,0
+205,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,0.612,100.0,0
+205,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,7.968,100.0,0
+206,failed_course_or_prerequisite,Rule + Semester Order,True,19.44,33.33,141750,22,2.266,100.0,0
+206,failed_course_or_prerequisite,Greedy Heuristic,True,19.44,33.33,141750,22,0.895,100.0,0
+206,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.44,33.33,141750,22,10.096,100.0,0
+207,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,33.33,121150,15,1.503,100.0,0
+207,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,33.33,121150,15,1.468,100.0,0
+207,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,33.33,121150,15,4.191,100.0,0
+208,failed_course_or_prerequisite,Rule + Semester Order,True,16.22,33.33,111650,19,1.513,100.0,0
+208,failed_course_or_prerequisite,Greedy Heuristic,True,16.22,33.33,111650,19,2.045,100.0,0
+208,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.22,33.33,111650,19,7.629,100.0,0
+209,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,33.33,81000,11,2.283,100.0,0
+209,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,33.33,81000,11,1.376,100.0,0
+209,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,33.33,81000,11,5.469,100.0,0
+210,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.652,100.0,0
+210,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.539,100.0,0
+210,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,11.887,100.0,0
+211,failed_course_or_prerequisite,Rule + Semester Order,True,14.71,33.33,111150,15,1.769,100.0,0
+211,failed_course_or_prerequisite,Greedy Heuristic,True,14.71,33.33,111150,15,1.55,100.0,0
+211,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.71,33.33,111150,15,6.821,100.0,0
+212,failed_course_or_prerequisite,Rule + Semester Order,True,34.62,33.33,163100,26,1.482,100.0,0
+212,failed_course_or_prerequisite,Greedy Heuristic,True,38.46,16.67,173100,27,1.493,100.0,0
+212,failed_course_or_prerequisite,Heuristic + Beam Search,True,38.46,16.67,173100,27,10.123,100.0,0
+213,failed_course_or_prerequisite,Rule + Semester Order,True,13.79,42.86,81100,12,1.71,100.0,0
+213,failed_course_or_prerequisite,Greedy Heuristic,True,13.79,42.86,81100,12,0.825,100.0,0
+213,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.79,42.86,81100,12,3.857,100.0,0
+214,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,0.856,100.0,0
+214,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,0.859,100.0,0
+214,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,8.292,100.0,0
+215,failed_course_or_prerequisite,Rule + Semester Order,True,24.24,33.33,172650,24,2.029,100.0,0
+215,failed_course_or_prerequisite,Greedy Heuristic,True,24.24,33.33,172650,24,1.633,100.0,0
+215,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.24,33.33,172650,24,8.764,100.0,0
+216,failed_course_or_prerequisite,Rule + Semester Order,True,32.14,20.0,182650,26,0.867,100.0,0
+216,failed_course_or_prerequisite,Greedy Heuristic,True,35.71,0.0,193050,27,0.796,100.0,0
+216,failed_course_or_prerequisite,Heuristic + Beam Search,True,35.71,0.0,193050,27,3.827,100.0,0
+217,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,0.575,100.0,0
+217,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.56,100.0,0
+217,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,8.047,100.0,0
+218,failed_course_or_prerequisite,Rule + Semester Order,True,22.58,33.33,131750,21,1.424,100.0,0
+218,failed_course_or_prerequisite,Greedy Heuristic,True,22.58,33.33,131750,21,1.494,100.0,0
+218,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.58,33.33,131750,21,6.451,100.0,0
+219,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,33.33,111150,15,1.45,100.0,0
+219,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,33.33,111150,15,1.051,100.0,0
+219,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,33.33,111150,15,2.543,100.0,0
+220,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,0.636,100.0,0
+220,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,0.599,100.0,0
+220,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,8.471,100.0,0
+221,failed_course_or_prerequisite,Rule + Semester Order,True,26.92,33.33,142500,20,1.64,100.0,0
+221,failed_course_or_prerequisite,Greedy Heuristic,True,26.92,33.33,142500,20,1.636,100.0,0
+221,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.92,33.33,142500,20,5.27,100.0,0
+222,failed_course_or_prerequisite,Rule + Semester Order,True,23.53,33.33,143000,24,1.43,100.0,0
+222,failed_course_or_prerequisite,Greedy Heuristic,True,23.53,33.33,143000,24,0.932,100.0,0
+222,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.53,33.33,143000,24,9.107,100.0,0
+223,failed_course_or_prerequisite,Rule + Semester Order,True,12.9,42.86,91100,12,2.119,100.0,0
+223,failed_course_or_prerequisite,Greedy Heuristic,True,12.9,42.86,91100,12,1.501,100.0,0
+223,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.9,42.86,91100,12,7.384,100.0,0
+224,failed_course_or_prerequisite,Rule + Semester Order,True,34.62,33.33,163100,26,1.779,100.0,0
+224,failed_course_or_prerequisite,Greedy Heuristic,True,38.46,16.67,173100,27,1.537,100.0,0
+224,failed_course_or_prerequisite,Heuristic + Beam Search,True,38.46,16.67,173100,27,10.932,100.0,0
+225,failed_course_or_prerequisite,Rule + Semester Order,True,26.92,42.86,142600,21,0.547,100.0,0
+225,failed_course_or_prerequisite,Greedy Heuristic,True,26.92,42.86,142600,21,0.659,100.0,0
+225,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.92,42.86,142600,21,5.254,100.0,0
+226,no_specialization,Rule + Semester Order,True,31.03,33.33,182750,27,1.12,100.0,0
+226,no_specialization,Greedy Heuristic,True,34.48,0.0,193050,27,0.664,100.0,0
+226,no_specialization,Heuristic + Beam Search,True,34.48,0.0,193050,27,4.502,100.0,0
+227,failed_course_or_prerequisite,Rule + Semester Order,True,25.93,33.33,142500,20,0.52,100.0,0
+227,failed_course_or_prerequisite,Greedy Heuristic,True,25.93,33.33,142500,20,0.515,100.0,0
+227,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.93,33.33,142500,20,5.139,100.0,0
+228,no_specialization,Rule + Semester Order,True,28.57,42.86,172750,25,0.609,100.0,0
+228,no_specialization,Greedy Heuristic,True,35.71,0.0,193050,27,0.61,100.0,0
+228,no_specialization,Heuristic + Beam Search,True,35.71,0.0,193050,27,4.744,100.0,0
+229,failed_course_or_prerequisite,Rule + Semester Order,True,12.12,33.33,91050,13,0.807,100.0,0
+229,failed_course_or_prerequisite,Greedy Heuristic,True,12.12,33.33,91050,13,1.395,100.0,0
+229,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.12,33.33,91050,13,5.105,100.0,0
+230,failed_course_or_prerequisite,Rule + Semester Order,True,15.0,42.86,111700,19,0.736,100.0,0
+230,failed_course_or_prerequisite,Greedy Heuristic,True,15.0,42.86,111700,19,0.649,100.0,0
+230,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.0,42.86,111700,19,10.704,100.0,0
+231,failed_course_or_prerequisite,Rule + Semester Order,True,17.86,33.33,111150,15,2.274,100.0,0
+231,failed_course_or_prerequisite,Greedy Heuristic,True,17.86,33.33,111150,15,1.018,100.0,0
+231,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.86,33.33,111150,15,5.355,100.0,0
+232,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.149,100.0,0
+232,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.103,100.0,0
+232,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,8.803,100.0,0
+233,failed_course_or_prerequisite,Rule + Semester Order,True,9.68,42.86,61000,10,1.573,100.0,0
+233,failed_course_or_prerequisite,Greedy Heuristic,True,9.68,42.86,61000,10,1.098,100.0,0
+233,failed_course_or_prerequisite,Heuristic + Beam Search,True,9.68,42.86,61000,10,3.713,100.0,0
+234,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,1.057,100.0,0
+234,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,1.142,100.0,0
+234,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,9.203,100.0,0
+235,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,33.33,121150,15,1.134,100.0,0
+235,failed_course_or_prerequisite,Greedy Heuristic,True,16.67,33.33,121150,15,0.913,100.0,0
+235,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.67,33.33,121150,15,4.689,100.0,0
+236,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.128,100.0,0
+236,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,3.281,100.0,0
+236,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,7.981,100.0,0
+237,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,42.86,111250,16,1.116,100.0,0
+237,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,42.86,111250,16,0.787,100.0,0
+237,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,42.86,111250,16,3.439,100.0,0
+238,failed_course_or_prerequisite,Rule + Semester Order,True,16.13,42.86,81600,16,9.087,100.0,0
+238,failed_course_or_prerequisite,Greedy Heuristic,True,16.13,42.86,81600,16,1.083,100.0,0
+238,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.13,42.86,81600,16,5.767,100.0,0
+239,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.12,100.0,0
+239,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.09,100.0,0
+239,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,3.85,100.0,0
+240,no_specialization,Rule + Semester Order,True,26.67,42.86,182750,25,0.801,100.0,0
+240,no_specialization,Greedy Heuristic,True,33.33,0.0,203050,27,1.052,100.0,0
+240,no_specialization,Heuristic + Beam Search,True,33.33,0.0,203050,27,11.973,100.0,0
+241,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,1.234,100.0,0
+241,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.185,100.0,0
+241,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,9.871,100.0,0
+242,no_specialization,Rule + Semester Order,True,36.0,42.86,163200,27,2.681,100.0,0
+242,no_specialization,Greedy Heuristic,True,40.0,14.29,173100,27,2.211,100.0,0
+242,no_specialization,Heuristic + Beam Search,True,40.0,14.29,173100,27,10.084,100.0,0
+243,failed_course_or_prerequisite,Rule + Semester Order,True,15.38,42.86,151400,19,2.226,100.0,0
+243,failed_course_or_prerequisite,Greedy Heuristic,True,15.38,42.86,151400,19,1.349,100.0,0
+243,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.38,42.86,151400,19,7.281,100.0,0
+244,failed_course_or_prerequisite,Rule + Semester Order,True,33.33,42.86,173200,27,1.188,100.0,0
+244,failed_course_or_prerequisite,Greedy Heuristic,True,37.04,14.29,183100,27,1.055,100.0,0
+244,failed_course_or_prerequisite,Heuristic + Beam Search,True,37.04,14.29,183100,27,10.392,100.0,0
+245,failed_course_or_prerequisite,Rule + Semester Order,True,12.9,33.33,91050,13,0.651,100.0,0
+245,failed_course_or_prerequisite,Greedy Heuristic,True,12.9,33.33,91050,13,2.182,100.0,0
+245,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.9,33.33,91050,13,2.121,100.0,0
+246,failed_course_or_prerequisite,Rule + Semester Order,True,34.62,33.33,163100,26,0.681,100.0,0
+246,failed_course_or_prerequisite,Greedy Heuristic,True,38.46,16.67,173100,27,0.97,100.0,0
+246,failed_course_or_prerequisite,Heuristic + Beam Search,True,38.46,16.67,173100,27,11.226,100.0,0
+247,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,1.407,100.0,0
+247,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.086,100.0,0
+247,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,12.568,100.0,0
+248,failed_course_or_prerequisite,Rule + Semester Order,True,31.03,33.33,182750,27,1.36,100.0,0
+248,failed_course_or_prerequisite,Greedy Heuristic,True,34.48,0.0,192650,27,1.936,100.0,0
+248,failed_course_or_prerequisite,Heuristic + Beam Search,True,34.48,0.0,192650,27,8.855,100.0,0
+249,failed_course_or_prerequisite,Rule + Semester Order,True,14.81,20.0,90900,10,1.268,100.0,0
+249,failed_course_or_prerequisite,Greedy Heuristic,True,14.81,20.0,90900,10,0.799,100.0,0
+249,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.81,20.0,90900,10,2.816,100.0,0
+250,no_specialization,Rule + Semester Order,True,36.0,42.86,163200,27,1.221,100.0,0
+250,no_specialization,Greedy Heuristic,True,40.0,14.29,173100,27,1.258,100.0,0
+250,no_specialization,Heuristic + Beam Search,True,40.0,14.29,173100,27,12.755,100.0,0
+251,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,42.86,81100,12,1.531,100.0,0
+251,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,42.86,81100,12,2.055,100.0,0
+251,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,42.86,81100,12,5.467,100.0,0
+252,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,42.86,112200,21,1.234,100.0,0
+252,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,42.86,112200,21,2.46,100.0,0
+252,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,42.86,112200,21,14.5,100.0,0
+253,failed_course_or_prerequisite,Rule + Semester Order,True,28.57,33.33,172650,24,1.961,100.0,0
+253,failed_course_or_prerequisite,Greedy Heuristic,True,28.57,33.33,172650,24,1.831,100.0,0
+253,failed_course_or_prerequisite,Heuristic + Beam Search,True,28.57,33.33,172650,24,11.476,100.0,0
+254,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,42.86,111700,19,1.724,100.0,0
+254,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,42.86,111700,19,2.421,100.0,0
+254,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,42.86,111700,19,8.623,100.0,0
+255,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,33.33,172650,24,1.545,100.0,0
+255,failed_course_or_prerequisite,Greedy Heuristic,True,26.67,33.33,172650,24,1.296,100.0,0
+255,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.67,33.33,172650,24,8.074,100.0,0
+256,failed_course_or_prerequisite,Rule + Semester Order,True,27.59,33.33,142250,24,1.908,100.0,0
+256,failed_course_or_prerequisite,Greedy Heuristic,True,27.59,33.33,142250,24,1.764,100.0,0
+256,failed_course_or_prerequisite,Heuristic + Beam Search,True,27.59,33.33,142250,24,6.85,100.0,0
+257,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,42.86,111250,16,1.072,100.0,0
+257,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,42.86,111250,16,1.075,100.0,0
+257,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,42.86,111250,16,11.216,100.0,0
+258,failed_course_or_prerequisite,Rule + Semester Order,True,20.59,42.86,131800,21,1.09,100.0,0
+258,failed_course_or_prerequisite,Greedy Heuristic,True,20.59,42.86,131800,21,3.454,100.0,0
+258,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.59,42.86,131800,21,7.939,100.0,0
+259,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,33.33,111150,15,1.12,100.0,0
+259,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,33.33,111150,15,1.126,100.0,0
+259,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,33.33,111150,15,6.377,100.0,0
+260,failed_course_or_prerequisite,Rule + Semester Order,True,25.81,33.33,131850,23,2.348,100.0,0
+260,failed_course_or_prerequisite,Greedy Heuristic,True,25.81,33.33,131850,23,1.247,100.0,0
+260,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.81,33.33,131850,23,19.565,100.0,0
+261,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,42.86,111250,16,1.024,100.0,0
+261,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,42.86,111250,16,3.115,100.0,0
+261,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,42.86,111250,16,5.453,100.0,0
+262,failed_course_or_prerequisite,Rule + Semester Order,True,21.95,42.86,221800,26,1.247,100.0,0
+262,failed_course_or_prerequisite,Greedy Heuristic,True,24.39,14.29,232100,27,1.208,100.0,0
+262,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.39,14.29,232100,27,10.172,100.0,0
+263,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,42.86,172750,25,1.227,100.0,0
+263,failed_course_or_prerequisite,Greedy Heuristic,True,26.67,42.86,172750,25,1.123,100.0,0
+263,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.67,42.86,172750,25,8.134,100.0,0
+264,failed_course_or_prerequisite,Rule + Semester Order,True,23.33,33.33,131750,21,1.095,100.0,0
+264,failed_course_or_prerequisite,Greedy Heuristic,True,23.33,33.33,131750,21,1.173,100.0,0
+264,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.33,33.33,131750,21,9.882,100.0,0
+265,failed_course_or_prerequisite,Rule + Semester Order,True,18.18,42.86,151300,19,1.044,100.0,0
+265,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,42.86,151300,19,1.775,100.0,0
+265,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,42.86,151300,19,10.445,100.0,0
+266,no_specialization,Rule + Semester Order,True,28.57,42.86,172750,25,1.503,100.0,0
+266,no_specialization,Greedy Heuristic,True,35.71,0.0,193050,27,1.301,100.0,0
+266,no_specialization,Heuristic + Beam Search,True,35.71,0.0,193050,27,14.889,100.0,0
+267,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.288,100.0,0
+267,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,2.948,100.0,0
+267,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,4.327,100.0,0
+268,failed_course_or_prerequisite,Rule + Semester Order,True,21.21,33.33,131750,21,1.12,100.0,0
+268,failed_course_or_prerequisite,Greedy Heuristic,True,21.21,33.33,131750,21,1.542,100.0,0
+268,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.21,33.33,131750,21,6.709,100.0,0
+269,no_specialization,Rule + Semester Order,True,28.0,42.86,142600,21,1.117,100.0,0
+269,no_specialization,Greedy Heuristic,True,28.0,42.86,142600,21,2.223,100.0,0
+269,no_specialization,Heuristic + Beam Search,True,28.0,42.86,142600,21,11.76,100.0,0
+270,no_specialization,Rule + Semester Order,True,34.62,42.86,173200,27,4.232,100.0,0
+270,no_specialization,Greedy Heuristic,True,38.46,14.29,183100,27,1.086,100.0,0
+270,no_specialization,Heuristic + Beam Search,True,38.46,14.29,183100,27,13.685,100.0,0
+271,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,1.42,100.0,0
+271,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.384,100.0,0
+271,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,10.415,100.0,0
+272,failed_course_or_prerequisite,Rule + Semester Order,True,30.77,20.0,112100,21,2.11,100.0,0
+272,failed_course_or_prerequisite,Greedy Heuristic,True,30.77,20.0,112100,21,1.501,100.0,0
+272,failed_course_or_prerequisite,Heuristic + Beam Search,True,30.77,20.0,112100,21,5.385,100.0,0
+273,failed_course_or_prerequisite,Rule + Semester Order,True,13.33,42.86,91150,14,1.029,100.0,0
+273,failed_course_or_prerequisite,Greedy Heuristic,True,13.33,42.86,91150,14,2.573,100.0,0
+273,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.33,42.86,91150,14,4.303,100.0,0
+274,failed_course_or_prerequisite,Rule + Semester Order,True,31.03,33.33,182750,27,1.156,100.0,0
+274,failed_course_or_prerequisite,Greedy Heuristic,True,34.48,0.0,193050,27,1.216,100.0,0
+274,failed_course_or_prerequisite,Heuristic + Beam Search,True,34.48,0.0,193050,27,11.131,100.0,0
+275,failed_course_or_prerequisite,Rule + Semester Order,True,12.5,42.86,91100,12,1.18,100.0,0
+275,failed_course_or_prerequisite,Greedy Heuristic,True,12.5,42.86,91100,12,1.128,100.0,0
+275,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.5,42.86,91100,12,6.233,100.0,0
+276,failed_course_or_prerequisite,Rule + Semester Order,True,29.03,33.33,163100,26,1.413,100.0,0
+276,failed_course_or_prerequisite,Greedy Heuristic,True,29.03,33.33,163100,26,1.18,100.0,0
+276,failed_course_or_prerequisite,Heuristic + Beam Search,True,29.03,33.33,163100,26,12.352,100.0,0
+277,no_specialization,Rule + Semester Order,True,28.0,20.0,142400,19,1.138,100.0,0
+277,no_specialization,Greedy Heuristic,True,28.0,20.0,142400,19,2.946,100.0,0
+277,no_specialization,Heuristic + Beam Search,True,28.0,20.0,142400,19,5.203,100.0,0
+278,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,2.904,100.0,0
+278,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,2.541,100.0,0
+278,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,11.558,100.0,0
+279,no_specialization,Rule + Semester Order,True,28.0,42.86,142600,21,1.111,100.0,0
+279,no_specialization,Greedy Heuristic,True,28.0,42.86,142600,21,1.144,100.0,0
+279,no_specialization,Heuristic + Beam Search,True,28.0,42.86,142600,21,6.49,100.0,0
+280,failed_course_or_prerequisite,Rule + Semester Order,True,34.62,42.86,163200,27,0.683,100.0,0
+280,failed_course_or_prerequisite,Greedy Heuristic,True,38.46,14.29,173100,27,0.942,100.0,0
+280,failed_course_or_prerequisite,Heuristic + Beam Search,True,38.46,14.29,173100,27,5.026,100.0,0
+281,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,0.612,100.0,0
+281,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,0.596,100.0,0
+281,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,5.799,100.0,0
+282,failed_course_or_prerequisite,Rule + Semester Order,True,21.43,42.86,101700,18,0.579,100.0,0
+282,failed_course_or_prerequisite,Greedy Heuristic,True,21.43,42.86,101700,18,0.554,100.0,0
+282,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.43,42.86,101700,18,6.971,100.0,0
+283,no_specialization,Rule + Semester Order,True,29.17,20.0,142400,19,0.508,100.0,0
+283,no_specialization,Greedy Heuristic,True,29.17,20.0,142400,19,0.507,100.0,0
+283,no_specialization,Heuristic + Beam Search,True,29.17,20.0,142400,19,3.768,100.0,0
+284,no_specialization,Rule + Semester Order,True,28.57,42.86,172750,25,1.194,100.0,0
+284,no_specialization,Greedy Heuristic,True,35.71,0.0,193050,27,1.14,100.0,0
+284,no_specialization,Heuristic + Beam Search,True,35.71,0.0,193050,27,10.257,100.0,0
+285,failed_course_or_prerequisite,Rule + Semester Order,True,13.79,33.33,81000,11,1.056,100.0,0
+285,failed_course_or_prerequisite,Greedy Heuristic,True,13.79,33.33,81000,11,0.998,100.0,0
+285,failed_course_or_prerequisite,Heuristic + Beam Search,True,13.79,33.33,81000,11,5.966,100.0,0
+286,failed_course_or_prerequisite,Rule + Semester Order,True,17.5,42.86,141850,23,2.436,100.0,0
+286,failed_course_or_prerequisite,Greedy Heuristic,True,17.5,42.86,141850,23,1.587,100.0,0
+286,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.5,42.86,141850,23,15.209,100.0,0
+287,no_specialization,Rule + Semester Order,True,29.63,42.86,172750,25,3.021,100.0,0
+287,no_specialization,Greedy Heuristic,True,29.63,42.86,172750,25,1.095,100.0,0
+287,no_specialization,Heuristic + Beam Search,True,29.63,42.86,172750,25,10.058,100.0,0
+288,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.155,100.0,0
+288,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.243,100.0,0
+288,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,10.722,100.0,0
+289,failed_course_or_prerequisite,Rule + Semester Order,True,28.57,42.86,172750,25,1.063,100.0,0
+289,failed_course_or_prerequisite,Greedy Heuristic,True,28.57,42.86,172750,25,1.288,100.0,0
+289,failed_course_or_prerequisite,Heuristic + Beam Search,True,28.57,42.86,172750,25,10.258,100.0,0
+290,failed_course_or_prerequisite,Rule + Semester Order,True,26.67,42.86,172750,25,1.515,100.0,0
+290,failed_course_or_prerequisite,Greedy Heuristic,True,33.33,0.0,193050,27,1.626,100.0,0
+290,failed_course_or_prerequisite,Heuristic + Beam Search,True,33.33,0.0,193050,27,10.187,100.0,0
+291,failed_course_or_prerequisite,Rule + Semester Order,True,19.05,42.86,212100,21,1.07,100.0,0
+291,failed_course_or_prerequisite,Greedy Heuristic,True,19.05,42.86,212100,21,1.198,100.0,0
+291,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.05,42.86,212100,21,8.485,100.0,0
+292,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,1.145,100.0,0
+292,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,1.324,100.0,0
+292,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,10.785,100.0,0
+293,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.149,100.0,0
+293,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,0.864,100.0,0
+293,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,7.261,100.0,0
+294,failed_course_or_prerequisite,Rule + Semester Order,True,21.21,33.33,131750,21,1.714,100.0,0
+294,failed_course_or_prerequisite,Greedy Heuristic,True,21.21,33.33,131750,21,1.645,100.0,0
+294,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.21,33.33,131750,21,7.018,100.0,0
+295,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,0.643,100.0,0
+295,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.794,100.0,0
+295,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,13.331,100.0,0
+296,failed_course_or_prerequisite,Rule + Semester Order,True,25.81,20.0,141750,22,1.087,100.0,0
+296,failed_course_or_prerequisite,Greedy Heuristic,True,25.81,20.0,141750,22,2.805,100.0,0
+296,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.81,20.0,141750,22,14.703,100.0,0
+297,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.324,100.0,0
+297,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,3.739,100.0,0
+297,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,13.183,100.0,0
+298,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,4.295,100.0,0
+298,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.512,100.0,0
+298,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,16.587,100.0,0
+299,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,33.33,111150,15,0.666,100.0,0
+299,failed_course_or_prerequisite,Greedy Heuristic,True,16.67,33.33,111150,15,0.872,100.0,0
+299,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.67,33.33,111150,15,5.106,100.0,0
+300,failed_course_or_prerequisite,Rule + Semester Order,True,16.22,42.86,111750,20,1.388,100.0,0
+300,failed_course_or_prerequisite,Greedy Heuristic,True,16.22,42.86,111750,20,1.455,100.0,0
+300,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.22,42.86,111750,20,14.936,100.0,0
+301,failed_course_or_prerequisite,Rule + Semester Order,True,14.63,42.86,151350,17,2.957,100.0,0
+301,failed_course_or_prerequisite,Greedy Heuristic,True,14.63,42.86,151350,17,2.938,100.0,0
+301,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.63,42.86,151350,17,8.53,100.0,0
+302,failed_course_or_prerequisite,Rule + Semester Order,True,15.79,42.86,111700,19,1.264,100.0,0
+302,failed_course_or_prerequisite,Greedy Heuristic,True,15.79,42.86,111700,19,0.888,100.0,0
+302,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.79,42.86,111700,19,4.149,100.0,0
+303,failed_course_or_prerequisite,Rule + Semester Order,True,12.9,33.33,81000,11,2.11,100.0,0
+303,failed_course_or_prerequisite,Greedy Heuristic,True,12.9,33.33,81000,11,0.738,100.0,0
+303,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.9,33.33,81000,11,2.472,100.0,0
+304,failed_course_or_prerequisite,Rule + Semester Order,True,26.92,33.33,112100,20,0.587,100.0,0
+304,failed_course_or_prerequisite,Greedy Heuristic,True,26.92,33.33,112100,20,0.999,100.0,0
+304,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.92,33.33,112100,20,4.343,100.0,0
+305,failed_course_or_prerequisite,Rule + Semester Order,True,14.29,33.33,81000,11,0.769,100.0,0
+305,failed_course_or_prerequisite,Greedy Heuristic,True,14.29,33.33,81000,11,0.951,100.0,0
+305,failed_course_or_prerequisite,Heuristic + Beam Search,True,14.29,33.33,81000,11,4.586,100.0,0
+306,failed_course_or_prerequisite,Rule + Semester Order,True,22.58,33.33,131750,21,0.563,100.0,0
+306,failed_course_or_prerequisite,Greedy Heuristic,True,22.58,33.33,131750,21,0.623,100.0,0
+306,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.58,33.33,131750,21,12.659,100.0,0
+307,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,2.58,100.0,0
+307,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.054,100.0,0
+307,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,4.099,100.0,0
+308,failed_course_or_prerequisite,Rule + Semester Order,True,21.88,33.33,141750,21,1.081,100.0,0
+308,failed_course_or_prerequisite,Greedy Heuristic,True,21.88,33.33,141750,21,0.594,100.0,0
+308,failed_course_or_prerequisite,Heuristic + Beam Search,True,21.88,33.33,141750,21,4.971,100.0,0
+309,failed_course_or_prerequisite,Rule + Semester Order,True,15.62,42.86,111250,16,1.421,100.0,0
+309,failed_course_or_prerequisite,Greedy Heuristic,True,15.62,42.86,111250,16,1.707,100.0,0
+309,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.62,42.86,111250,16,7.091,100.0,0
+310,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.229,100.0,0
+310,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.094,100.0,0
+310,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,8.612,100.0,0
+311,no_specialization,Rule + Semester Order,True,22.5,42.86,262350,27,1.886,100.0,0
+311,no_specialization,Greedy Heuristic,True,27.5,14.29,301950,27,1.367,100.0,0
+311,no_specialization,Heuristic + Beam Search,True,27.5,14.29,301950,27,14.758,100.0,0
+312,failed_course_or_prerequisite,Rule + Semester Order,True,22.22,33.33,101600,17,1.911,100.0,0
+312,failed_course_or_prerequisite,Greedy Heuristic,True,22.22,33.33,101600,17,0.765,100.0,0
+312,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.22,33.33,101600,17,7.57,100.0,0
+313,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.211,100.0,0
+313,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.131,100.0,0
+313,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,5.33,100.0,0
+314,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.057,100.0,0
+314,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,2.18,100.0,0
+314,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,8.635,100.0,0
+315,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,0.639,100.0,0
+315,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,0.966,100.0,0
+315,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,4.688,100.0,0
+316,failed_course_or_prerequisite,Rule + Semester Order,True,16.22,33.33,111650,19,0.727,100.0,0
+316,failed_course_or_prerequisite,Greedy Heuristic,True,16.22,33.33,111650,19,1.107,100.0,0
+316,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.22,33.33,111650,19,3.028,100.0,0
+317,failed_course_or_prerequisite,Rule + Semester Order,True,25.81,42.86,172750,25,0.657,100.0,0
+317,failed_course_or_prerequisite,Greedy Heuristic,True,25.81,42.86,172750,25,0.671,100.0,0
+317,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.81,42.86,172750,25,4.092,100.0,0
+318,no_specialization,Rule + Semester Order,True,28.57,42.86,172750,25,1.578,100.0,0
+318,no_specialization,Greedy Heuristic,True,35.71,0.0,193050,27,2.863,100.0,0
+318,no_specialization,Heuristic + Beam Search,True,35.71,0.0,193050,27,14.89,100.0,0
+319,failed_course_or_prerequisite,Rule + Semester Order,True,24.14,33.33,142500,20,2.298,100.0,0
+319,failed_course_or_prerequisite,Greedy Heuristic,True,24.14,33.33,142500,20,1.575,100.0,0
+319,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.14,33.33,142500,20,13.154,100.0,0
+320,failed_course_or_prerequisite,Rule + Semester Order,True,17.14,33.33,111650,19,2.482,100.0,0
+320,failed_course_or_prerequisite,Greedy Heuristic,True,17.14,33.33,111650,19,1.234,100.0,0
+320,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.14,33.33,111650,19,5.764,100.0,0
+321,failed_course_or_prerequisite,Rule + Semester Order,True,15.15,33.33,111150,15,0.945,100.0,0
+321,failed_course_or_prerequisite,Greedy Heuristic,True,15.15,33.33,111150,15,0.983,100.0,0
+321,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.15,33.33,111150,15,13.165,100.0,0
+322,failed_course_or_prerequisite,Rule + Semester Order,True,32.14,42.86,163200,27,1.773,100.0,0
+322,failed_course_or_prerequisite,Greedy Heuristic,True,32.14,42.86,163200,27,2.24,100.0,0
+322,failed_course_or_prerequisite,Heuristic + Beam Search,True,32.14,42.86,163200,27,13.889,100.0,0
+323,failed_course_or_prerequisite,Rule + Semester Order,True,12.5,42.86,81100,12,1.294,100.0,0
+323,failed_course_or_prerequisite,Greedy Heuristic,True,12.5,42.86,81100,12,1.354,100.0,0
+323,failed_course_or_prerequisite,Heuristic + Beam Search,True,12.5,42.86,81100,12,6.626,100.0,0
+324,failed_course_or_prerequisite,Rule + Semester Order,True,17.95,42.86,141850,23,2.346,100.0,0
+324,failed_course_or_prerequisite,Greedy Heuristic,True,17.95,42.86,141850,23,2.252,100.0,0
+324,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.95,42.86,141850,23,11.429,100.0,0
+325,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.805,100.0,0
+325,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,1.611,100.0,0
+325,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,8.372,100.0,0
+326,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,33.33,101600,17,2.76,100.0,0
+326,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,33.33,101600,17,1.654,100.0,0
+326,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,33.33,101600,17,9.274,100.0,0
+327,failed_course_or_prerequisite,Rule + Semester Order,True,26.92,33.33,142500,20,0.976,100.0,0
+327,failed_course_or_prerequisite,Greedy Heuristic,True,26.92,33.33,142500,20,0.925,100.0,0
+327,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.92,33.33,142500,20,8.517,100.0,0
+328,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,1.967,100.0,0
+328,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,0.997,100.0,0
+328,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,11.405,100.0,0
+329,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,1.53,100.0,0
+329,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.484,100.0,0
+329,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,9.324,100.0,0
+330,no_specialization,Rule + Semester Order,True,32.14,33.33,182750,27,1.304,100.0,0
+330,no_specialization,Greedy Heuristic,True,35.71,0.0,193050,27,1.465,100.0,0
+330,no_specialization,Heuristic + Beam Search,True,35.71,0.0,193050,27,11.677,100.0,0
+331,no_specialization,Rule + Semester Order,True,29.63,33.33,172650,24,1.437,100.0,0
+331,no_specialization,Greedy Heuristic,True,29.63,33.33,172650,24,1.775,100.0,0
+331,no_specialization,Heuristic + Beam Search,True,29.63,33.33,172650,24,9.092,100.0,0
+332,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,2.701,100.0,0
+332,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,1.468,100.0,0
+332,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,9.248,100.0,0
+333,failed_course_or_prerequisite,Rule + Semester Order,True,26.92,33.33,142500,20,0.778,100.0,0
+333,failed_course_or_prerequisite,Greedy Heuristic,True,26.92,33.33,142500,20,0.829,100.0,0
+333,failed_course_or_prerequisite,Heuristic + Beam Search,True,26.92,33.33,142500,20,9.575,100.0,0
+334,no_specialization,Rule + Semester Order,True,34.62,33.33,163100,26,2.509,100.0,0
+334,no_specialization,Greedy Heuristic,True,38.46,16.67,173100,27,0.808,100.0,0
+334,no_specialization,Heuristic + Beam Search,True,38.46,16.67,173100,27,6.957,100.0,0
+335,failed_course_or_prerequisite,Rule + Semester Order,True,25.0,33.33,142500,20,0.786,100.0,0
+335,failed_course_or_prerequisite,Greedy Heuristic,True,25.0,33.33,142500,20,2.164,100.0,0
+335,failed_course_or_prerequisite,Heuristic + Beam Search,True,25.0,33.33,142500,20,3.955,100.0,0
+336,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,0.647,100.0,0
+336,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,0.616,100.0,0
+336,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,10.385,100.0,0
+337,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.537,100.0,0
+337,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,0.631,100.0,0
+337,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,4.768,100.0,0
+338,no_specialization,Rule + Semester Order,True,33.33,33.33,182750,27,0.823,100.0,0
+338,no_specialization,Greedy Heuristic,True,37.04,0.0,193050,27,0.796,100.0,0
+338,no_specialization,Heuristic + Beam Search,True,37.04,0.0,193050,27,10.792,100.0,0
+339,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.093,100.0,0
+339,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,0.593,100.0,0
+339,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,7.426,100.0,0
+340,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,0.667,100.0,0
+340,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,1.826,100.0,0
+340,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,10.289,100.0,0
+341,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.454,100.0,0
+341,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,2.586,100.0,0
+341,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,5.496,100.0,0
+342,failed_course_or_prerequisite,Rule + Semester Order,True,24.14,42.86,131850,22,0.89,100.0,0
+342,failed_course_or_prerequisite,Greedy Heuristic,True,24.14,42.86,131850,22,1.249,100.0,0
+342,failed_course_or_prerequisite,Heuristic + Beam Search,True,24.14,42.86,131850,22,6.487,100.0,0
+343,no_specialization,Rule + Semester Order,True,28.0,33.33,142500,20,1.137,100.0,0
+343,no_specialization,Greedy Heuristic,True,28.0,33.33,142500,20,2.364,100.0,0
+343,no_specialization,Heuristic + Beam Search,True,28.0,33.33,142500,20,4.391,100.0,0
+344,no_specialization,Rule + Semester Order,True,36.0,33.33,163100,26,1.138,100.0,0
+344,no_specialization,Greedy Heuristic,True,40.0,16.67,173100,27,0.823,100.0,0
+344,no_specialization,Heuristic + Beam Search,True,40.0,16.67,173100,27,7.364,100.0,0
+345,no_specialization,Rule + Semester Order,True,28.57,33.33,172650,24,1.074,100.0,0
+345,no_specialization,Greedy Heuristic,True,28.57,33.33,172650,24,0.906,100.0,0
+345,no_specialization,Heuristic + Beam Search,True,28.57,33.33,172650,24,4.817,100.0,0
+346,failed_course_or_prerequisite,Rule + Semester Order,True,17.14,42.86,111750,20,0.961,100.0,0
+346,failed_course_or_prerequisite,Greedy Heuristic,True,17.14,42.86,111750,20,1.164,100.0,0
+346,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.14,42.86,111750,20,5.353,100.0,0
+347,failed_course_or_prerequisite,Rule + Semester Order,True,17.24,33.33,111100,13,0.978,100.0,0
+347,failed_course_or_prerequisite,Greedy Heuristic,True,17.24,33.33,111100,13,0.968,100.0,0
+347,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.24,33.33,111100,13,3.79,100.0,0
+348,failed_course_or_prerequisite,Rule + Semester Order,True,22.58,33.33,131700,19,0.732,100.0,0
+348,failed_course_or_prerequisite,Greedy Heuristic,True,22.58,33.33,131700,19,0.563,100.0,0
+348,failed_course_or_prerequisite,Heuristic + Beam Search,True,22.58,33.33,131700,19,5.728,100.0,0
+349,failed_course_or_prerequisite,Rule + Semester Order,True,15.56,57.14,212450,25,1.512,100.0,0
+349,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,28.57,252850,27,0.983,100.0,0
+349,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,14.29,252750,27,8.501,100.0,0
+350,failed_course_or_prerequisite,Rule + Semester Order,True,15.38,57.14,162950,24,2.004,100.0,0
+350,failed_course_or_prerequisite,Greedy Heuristic,True,15.38,57.14,162950,24,1.293,100.0,0
+350,failed_course_or_prerequisite,Heuristic + Beam Search,True,15.38,57.14,162950,24,6.964,100.0,0
+351,on_track,Rule + Semester Order,True,21.43,42.86,272350,26,2.338,100.0,0
+351,on_track,Greedy Heuristic,True,23.81,14.29,292650,27,1.289,100.0,0
+351,on_track,Heuristic + Beam Search,True,23.81,14.29,292650,27,11.452,100.0,0
+352,failed_course_or_prerequisite,Rule + Semester Order,True,15.91,57.14,202750,25,1.12,100.0,0
+352,failed_course_or_prerequisite,Greedy Heuristic,True,18.18,42.86,223150,27,0.975,100.0,0
+352,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.18,42.86,223150,27,6.639,100.0,0
+353,on_track,Rule + Semester Order,True,21.95,42.86,272350,26,1.013,100.0,0
+353,on_track,Greedy Heuristic,True,24.39,14.29,292650,27,0.961,100.0,0
+353,on_track,Heuristic + Beam Search,True,24.39,14.29,292650,27,12.777,100.0,0
+354,failed_course_or_prerequisite,Rule + Semester Order,True,18.6,57.14,242650,27,3.368,100.0,0
+354,failed_course_or_prerequisite,Greedy Heuristic,True,23.26,14.29,282550,27,2.301,100.0,0
+354,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.26,14.29,282550,27,14.776,100.0,0
+355,failed_course_or_prerequisite,Rule + Semester Order,True,16.28,57.14,212400,25,3.107,100.0,0
+355,failed_course_or_prerequisite,Greedy Heuristic,True,20.93,28.57,252800,27,2.521,100.0,0
+355,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.93,14.29,252700,27,14.862,100.0,0
+356,failed_course_or_prerequisite,Rule + Semester Order,True,18.42,57.14,212400,25,2.711,100.0,0
+356,failed_course_or_prerequisite,Greedy Heuristic,True,23.68,28.57,252800,27,3.746,100.0,0
+356,failed_course_or_prerequisite,Heuristic + Beam Search,True,23.68,14.29,252700,27,10.537,100.0,0
+357,failed_course_or_prerequisite,Rule + Semester Order,True,17.39,57.14,223250,27,2.363,100.0,0
+357,failed_course_or_prerequisite,Greedy Heuristic,True,17.39,57.14,223250,27,1.815,100.0,0
+357,failed_course_or_prerequisite,Heuristic + Beam Search,True,17.39,57.14,223250,27,10.378,100.0,0
+358,failed_course_or_prerequisite,Rule + Semester Order,True,16.13,40.0,122350,18,2.442,100.0,0
+358,failed_course_or_prerequisite,Greedy Heuristic,True,16.13,40.0,122350,18,1.495,100.0,0
+358,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.13,40.0,122350,18,6.841,100.0,0
+359,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,50.0,152700,23,2.119,100.0,0
+359,failed_course_or_prerequisite,Greedy Heuristic,True,16.67,50.0,152700,23,0.813,100.0,0
+359,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.67,50.0,152700,23,4.385,100.0,0
+360,failed_course_or_prerequisite,Rule + Semester Order,True,16.67,50.0,162650,21,1.174,100.0,0
+360,failed_course_or_prerequisite,Greedy Heuristic,True,16.67,50.0,162650,21,0.882,100.0,0
+360,failed_course_or_prerequisite,Heuristic + Beam Search,True,16.67,50.0,162650,21,4.233,100.0,0
+361,failed_course_or_prerequisite,Rule + Semester Order,True,9.38,50.0,71800,14,1.037,100.0,0
+361,failed_course_or_prerequisite,Greedy Heuristic,True,9.38,50.0,71800,14,1.269,100.0,0
+361,failed_course_or_prerequisite,Heuristic + Beam Search,True,9.38,50.0,71800,14,6.245,100.0,0
+362,failed_course_or_prerequisite,Rule + Semester Order,True,15.22,57.14,212450,25,1.854,100.0,0
+362,failed_course_or_prerequisite,Greedy Heuristic,True,19.57,28.57,252850,27,2.322,100.0,0
+362,failed_course_or_prerequisite,Heuristic + Beam Search,True,19.57,14.29,252750,27,13.714,100.0,0
+363,failed_course_or_prerequisite,Rule + Semester Order,True,20.0,25.0,152050,20,1.012,100.0,0
+363,failed_course_or_prerequisite,Greedy Heuristic,True,20.0,25.0,152050,20,2.269,100.0,0
+363,failed_course_or_prerequisite,Heuristic + Beam Search,True,20.0,25.0,152050,20,5.347,100.0,0
+364,failed_course_or_prerequisite,Rule + Semester Order,True,18.42,25.0,182750,20,0.887,100.0,0
+364,failed_course_or_prerequisite,Greedy Heuristic,True,18.42,25.0,182750,20,0.873,100.0,0
+364,failed_course_or_prerequisite,Heuristic + Beam Search,True,18.42,25.0,182750,20,2.599,100.0,0

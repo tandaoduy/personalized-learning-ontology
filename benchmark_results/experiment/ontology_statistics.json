@@ -1,0 +1,9 @@
+{
+  "classes": 22,
+  "object_properties": 29,
+  "datatype_properties": 31,
+  "courses": 106,
+  "prerequisite_relations": 55,
+  "corequisite_relations": 4,
+  "rdf_triples": 149438
+}
