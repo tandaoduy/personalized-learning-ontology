@@ -31,6 +31,15 @@
       "display_name": "Sinh viên 56",
       "full_name": "Sinh viên 56",
       "status": "approved"
+    },
+    {
+      "username": "65133141",
+      "password_hash": "scrypt:32768:8:1$Wu1LfuDrrrWV8uQl$1e8f6e89af1528fc41c1814f6c0dd7058edb6a4b340f3d2ffaadf7ded8682586c76ac750bd41faf7508234f817d86886aec87516023087ee891af1883eca0fde",
+      "role": "student",
+      "display_name": "65133141",
+      "full_name": "65133141",
+      "status": "approved",
+      "created_at": "2026-08-21T09:46:45"
     }
   ]
 }

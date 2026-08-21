@@ -352,7 +352,7 @@
         const warning = document.getElementById("specializationWarning");
         if (!specializationSelect || !warning) return;
 
-        if (currentSemester <= 4) {
+        if (currentSemester < 4) {
             specializationSelect.value = NO_SPECIALIZATION;
             specializationSelect.disabled = true;
             warning.hidden = true;
@@ -361,9 +361,9 @@
         }
 
         specializationSelect.disabled = false;
-        const shouldWarn = currentSemester >= 5 && specializationSelect.value === NO_SPECIALIZATION;
+        const shouldWarn = currentSemester >= 4 && specializationSelect.value === NO_SPECIALIZATION;
         warning.hidden = !shouldWarn;
-        warning.textContent = shouldWarn ? "Sinh viên từ học kỳ 5 cần chọn chuyên ngành." : "";
+        warning.textContent = shouldWarn ? "Sinh viên từ học kỳ 4 cần chọn chuyên ngành." : "";
     }
 
     function openAttemptModal() {
@@ -686,7 +686,7 @@
             ["academicClass", payload.academic_class, "Vui lòng nhập lớp hành chính."],
             ["yearAdmitted", payload.year_admitted >= 2000 && payload.year_admitted <= 2030, "Vui lòng chọn khóa."],
             ["currentSemester", payload.current_semester >= 1 && payload.current_semester <= 8, "Học kỳ hiện tại phải từ 1 đến 8."],
-            ["specialization", payload.current_semester <= 4 || payload.specialization !== NO_SPECIALIZATION, "Sinh viên từ học kỳ 5 cần chọn chuyên ngành."],
+            ["specialization", payload.current_semester < 4 || payload.specialization !== NO_SPECIALIZATION, "Sinh viên từ học kỳ 4 cần chọn chuyên ngành."],
         ].forEach(([id, condition, message]) => {
             if (!condition) {
                 setFieldError(document.getElementById(id), message);

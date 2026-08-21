@@ -257,11 +257,37 @@
     border: 0;
     border-radius: 1.25rem;
     background: transparent;
+    animation: course-attempt-modal-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .course-attempt-dialog::backdrop {
-    background: transparent;
-    backdrop-filter: none;
+    background: rgba(15, 23, 42, 0.52);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    animation: course-attempt-backdrop-in 160ms ease-out;
+}
+
+@keyframes course-attempt-backdrop-in {
+    from { background: rgba(15, 23, 42, 0); }
+    to { background: rgba(15, 23, 42, 0.52); }
+}
+
+@keyframes course-attempt-modal-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .course-attempt-dialog,
+    .course-attempt-dialog::backdrop {
+        animation: none;
+    }
 }
 
 .course-attempt-modal {
