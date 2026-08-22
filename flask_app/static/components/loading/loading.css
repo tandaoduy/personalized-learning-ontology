@@ -14,22 +14,77 @@
 
 .ui-loading.is-active { display: flex; }
 
-.ui-loading__spinner {
-    width: 25px;
-    height: 25px;
-    flex: 0 0 25px;
-    border: 3px solid #bfdbfe;
-    border-top-color: #2563eb;
-    border-radius: 50%;
-    animation: ui-loading-spin 0.75s linear infinite;
+.ui-loading__paw-track {
+    position: relative;
+    width: 132px;
+    height: 42px;
+    flex: 0 0 132px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(219, 234, 254, 0), #dbeafe 50%, rgba(219, 234, 254, 0));
+}
+
+.ui-loading__paw {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: #2563eb;
+    font-size: 1.65rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 5px rgba(37, 99, 235, 0.2));
+    transform: translate(-120%, -50%) rotate(-12deg);
+    animation: ui-loading-paw-walk 1.65s ease-in-out infinite;
 }
 
 .ui-loading__content { display: grid; gap: 2px; }
 .ui-loading__title { font-weight: 800; }
 .ui-loading__message { color: #475569; font-size: 0.86rem; }
 
-@keyframes ui-loading-spin { to { transform: rotate(360deg); } }
+@keyframes ui-loading-paw-walk {
+    0% {
+        opacity: 0;
+        transform: translate(-120%, -50%) rotate(-14deg) scale(0.9);
+    }
+    12% { opacity: 1; }
+    50% {
+        transform: translate(52px, -64%) rotate(8deg) scale(1.05);
+    }
+    88% { opacity: 1; }
+    100% {
+        opacity: 0;
+        transform: translate(132px, -50%) rotate(-8deg) scale(0.92);
+    }
+}
+
+.loading-state .ui-loading__paw-track,
+#planOverlayLoader .ui-loading__paw-track {
+    width: 190px;
+    flex-basis: 190px;
+}
+
+.loading-state .ui-loading__paw,
+#planOverlayLoader .ui-loading__paw {
+    animation-duration: 1.9s;
+}
+
+@keyframes ui-loading-paw-walk-wide {
+    0% { opacity: 0; transform: translate(-120%, -50%) rotate(-14deg) scale(0.9); }
+    12% { opacity: 1; }
+    50% { transform: translate(80px, -64%) rotate(8deg) scale(1.05); }
+    88% { opacity: 1; }
+    100% { opacity: 0; transform: translate(190px, -50%) rotate(-8deg) scale(0.92); }
+}
+
+.loading-state .ui-loading__paw,
+#planOverlayLoader .ui-loading__paw {
+    animation-name: ui-loading-paw-walk-wide;
+}
 
 @media (prefers-reduced-motion: reduce) {
-    .ui-loading__spinner { animation-duration: 1.8s; }
+    .ui-loading__paw {
+        left: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+        animation: none;
+    }
 }

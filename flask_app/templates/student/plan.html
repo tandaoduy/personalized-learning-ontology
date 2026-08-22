@@ -42,10 +42,6 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 In/Xuất PDF
             </button>
-            <button id="btnFeedback" class="btn btn-outline" title="Đánh giá chương trình">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                Phản hồi
-            </button>
         </div>
     </header>
 
@@ -60,7 +56,7 @@
 
     <div id="planLoadingState" class="plan-state-view hidden">
         <div class="loading-state">
-            <div class="spinner"></div>
+            <div class="ui-loading__paw-track" aria-hidden="true"><span class="ui-loading__paw">🐾</span></div>
             <h3>Đang phân tích lộ trình...</h3>
             <p>AI đang xử lý các ràng buộc học phần, điều kiện tiên quyết và lịch sử học tập của bạn.</p>
         </div>
@@ -78,7 +74,7 @@
     <div id="planResultContainer" class="plan-result-container hidden" style="position: relative;">
         <!-- Overlay Loader -->
         <div id="planOverlayLoader" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); z-index: 50; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px;">
-            <div class="spinner" style="width: 40px; height: 40px; border-width: 4px;"></div>
+            <div class="ui-loading__paw-track" aria-hidden="true"><span class="ui-loading__paw">🐾</span></div>
             <h4 style="margin-top: 16px; color: #1d4ed8;">Đang tạo phương án khác...</h4>
         </div>
         <!-- Khối 1: Kết quả gợi ý kế hoạch -->
@@ -197,36 +193,6 @@
         <!-- Print Footer removed as requested -->
     </div>
 </section>
-
-<!-- Feedback Modal -->
-<div id="feedbackModal" class="modal-overlay hidden no-print">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Đánh giá chương trình gợi ý</h2>
-            <button class="modal-close" id="btnCloseFeedback">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>Đánh giá mức độ hài lòng về kết quả gợi ý:</label>
-                <div class="rating-stars">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="feedbackComment">Ý kiến đóng góp (tùy chọn):</label>
-                <textarea id="feedbackComment" rows="4" class="form-control" placeholder="Bạn thấy lộ trình này có hợp lý không?..."></textarea>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-outline" id="btnCancelFeedback">Hủy</button>
-            <button class="btn btn-primary" id="btnSubmitFeedback">Gửi đánh giá</button>
-        </div>
-    </div>
-</div>
 
 <!-- Compare Mock Modal -->
 <div id="compareModal" class="modal-overlay hidden no-print">

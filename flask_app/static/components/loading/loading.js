@@ -21,7 +21,7 @@
             el.setAttribute('role', 'status');
             el.setAttribute('aria-live', 'polite');
             el.setAttribute('aria-hidden', 'true');
-            el.innerHTML = `<span class="ui-loading__spinner" aria-hidden="true"></span><div class="ui-loading__content"><strong class="ui-loading__title"></strong><span class="ui-loading__message" data-loading-message></span></div>`;
+            el.innerHTML = `<span class="ui-loading__paw-track" aria-hidden="true"><span class="ui-loading__paw">🐾</span></span><div class="ui-loading__content"><strong class="ui-loading__title"></strong><span class="ui-loading__message" data-loading-message></span></div>`;
             el.querySelector('.ui-loading__title').textContent = title;
             el.querySelector('[data-loading-message]').textContent = message;
             el.dataset.loadingReady = 'true';

@@ -26,6 +26,7 @@
     let pendingAcademicClass = "";
     let profileExists = false;
     let specializationRequestId = 0;
+    let specializationWarningShown = false;
     const attemptsDraftKey = `student-profile-attempts:${studentId}`;
 
     const NO_SPECIALIZATION = "Chưa chọn chuyên ngành";
@@ -54,9 +55,6 @@
         restoreCachedProfile();
         await Promise.all([loadCohorts(), loadStudentProfile()]);
         await loadCourseCatalog();
-        if (!profileExists) {
-            restoreAttemptsDraft();
-        }
         renderAttempts();
     }
 
@@ -349,21 +347,24 @@
     function applySpecializationRule() {
         const currentSemester = Number(document.getElementById("currentSemester")?.value || 1);
         const specializationSelect = document.getElementById("specialization");
-        const warning = document.getElementById("specializationWarning");
-        if (!specializationSelect || !warning) return;
+        if (!specializationSelect) return;
 
         if (currentSemester < 4) {
             specializationSelect.value = NO_SPECIALIZATION;
             specializationSelect.disabled = true;
-            warning.hidden = true;
-            warning.textContent = "";
+            specializationWarningShown = false;
             return;
         }
 
         specializationSelect.disabled = false;
         const shouldWarn = currentSemester >= 4 && specializationSelect.value === NO_SPECIALIZATION;
-        warning.hidden = !shouldWarn;
-        warning.textContent = shouldWarn ? "Sinh viên từ học kỳ 4 cần chọn chuyên ngành." : "";
+        if (shouldWarn && !specializationWarningShown) {
+            window.UIComponents?.showAlert("Sinh viên từ học kỳ 4 cần chọn chuyên ngành.", {
+                type: "warning",
+                duration: 6000,
+            });
+        }
+        specializationWarningShown = shouldWarn;
     }
 
     function openAttemptModal() {
@@ -528,7 +529,6 @@
             grade_specified: gradeSpecified,
         }));
         renumberAttempts(code);
-        saveAttemptsDraft();
         renderAttempts();
         
         if (modalCourseSearch) modalCourseSearch.value = "";
@@ -620,7 +620,6 @@
                     const code = attempts[index]?.code;
                     attempts.splice(index, 1);
                 if (code) renumberAttempts(code);
-                saveAttemptsDraft();
                 renderAttempts();
                 });
             });

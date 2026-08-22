@@ -349,6 +349,7 @@
             tableContainer.className = "learning-attempt-table";
             
             const table = document.createElement("table");
+            table.dataset.pagination = "off";
             table.innerHTML = `
                 <thead>
                     <tr>

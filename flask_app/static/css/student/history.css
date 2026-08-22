@@ -287,6 +287,10 @@
 /* ==========================================================================
    PRINT LAYOUT
    ========================================================================== */
+#printSection {
+    display: none;
+}
+
 @media print {
     /* Hide all elements in body except printSection */
     body > *:not(#printSection) {

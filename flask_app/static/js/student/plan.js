@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnGeneratePlan = document.getElementById("btnGeneratePlan");
     const btnGenerateAlternative = document.getElementById("btnGenerateAlternative");
     const btnPrintPlan = document.getElementById("btnPrintPlan");
-    const btnFeedback = document.getElementById("btnFeedback");
     const btnRetryPlan = document.getElementById("btnRetryPlan");
     const stateInitial = document.getElementById("planInitialState");
     const stateLoading = document.getElementById("planLoadingState");
@@ -476,7 +475,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Modal Logic
     const modals = {
-        feedback: document.getElementById("feedbackModal"),
         compare: document.getElementById("compareModal")
     };
 
@@ -502,67 +500,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnPrintPlan.addEventListener("click", () => {
         window.print();
-    });
-
-    btnFeedback.addEventListener("click", () => {
-        openModal("feedback");
-    });
-    document.getElementById("btnCloseFeedback").addEventListener("click", () => closeModal("feedback"));
-    document.getElementById("btnCancelFeedback").addEventListener("click", () => closeModal("feedback"));
-    
-    // Star Rating Logic
-    let currentRating = 0;
-    const stars = document.querySelectorAll(".rating-stars .star");
-    stars.forEach(star => {
-        star.addEventListener("click", function() {
-            currentRating = parseInt(this.dataset.value);
-            stars.forEach(s => {
-                if (parseInt(s.dataset.value) <= currentRating) {
-                    s.classList.add("active");
-                } else {
-                    s.classList.remove("active");
-                }
-            });
-        });
-    });
-
-    document.getElementById("btnSubmitFeedback").addEventListener("click", async () => {
-        if (currentRating === 0) {
-            if(window.UIComponents) window.UIComponents.showAlert("Vui lòng chọn số sao đánh giá.", {type: "warning"});
-            return;
-        }
-        
-        const submitButton = document.getElementById("btnSubmitFeedback");
-        const comment = document.getElementById("feedbackComment").value.trim();
-        submitButton.disabled = true;
-
-        try {
-            const response = await fetch("/api/student-feedback", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ rating: currentRating, comment })
-            });
-            const result = await response.json();
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || "Unable to submit feedback.");
-            }
-        } catch (error) {
-            console.error("Feedback submission failed:", error);
-            if (window.UIComponents) {
-                window.UIComponents.showAlert("Không thể gửi phản hồi. Vui lòng thử lại.", {type: "error"});
-            }
-            return;
-        } finally {
-            submitButton.disabled = false;
-        }
-
-        closeModal("feedback");
-        
-        currentRating = 0;
-        stars.forEach(s => s.classList.remove("active"));
-        document.getElementById("feedbackComment").value = "";
-        
-        if(window.UIComponents) window.UIComponents.showAlert("Cảm ơn bạn đã đóng góp ý kiến!", {type: "success"});
     });
 
     // Auto-generate on load
