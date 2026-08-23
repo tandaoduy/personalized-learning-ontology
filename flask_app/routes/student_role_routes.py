@@ -47,7 +47,22 @@ def dashboard():
         return redirect(url_for("index"))
     
     student_id = session.get("username", "")
-    return render_template("student/dashboard.html", username=student_id)
+    student = current_app.student_data_service.get_student(student_id)
+    student_data = student.to_dict() if student else None
+
+    course_catalog = []
+    engine = current_app.recommendation_engine
+    if engine:
+        from flask_app.routes.student_routes import _get_course_catalog
+        catalog_dict = _get_course_catalog(engine)
+        course_catalog = sorted(catalog_dict.values(), key=lambda item: (item["code"], item["name"]))
+
+    return render_template(
+        "student/dashboard.html",
+        username=student_id,
+        student_data=student_data,
+        course_catalog=course_catalog,
+    )
 
 
 @bp.route("/profile")

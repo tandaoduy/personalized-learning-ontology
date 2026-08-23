@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // UI Elements
     const btnGeneratePlan = document.getElementById("btnGeneratePlan");
+    const btnWelcomeGenerate = document.querySelector("[data-trigger-generate]");
     const btnGenerateAlternative = document.getElementById("btnGenerateAlternative");
     const btnPrintPlan = document.getElementById("btnPrintPlan");
     const btnRetryPlan = document.getElementById("btnRetryPlan");
@@ -391,26 +392,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 expGrid.appendChild(card);
             });
-            
-            // Render Warnings
-            const warningsContainer = document.getElementById("warningsContainer");
-            if (warningsContainer) {
-                if (data.warnings && data.warnings.length > 0) {
-                    warningsContainer.innerHTML = data.warnings.map(w => 
-                        `<div style="padding: 12px 16px; background-color: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e; border-radius: 4px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
-                            <span style="font-size: 16px; line-height: 1;">⚠️</span>
-                            <div>
-                                <strong style="display: block; margin-bottom: 4px;">Lưu ý về kế hoạch học tập</strong>
-                                <span>${escapeHtml(w)}</span>
-                            </div>
-                        </div>`
-                    ).join("");
-                    warningsContainer.style.display = "block";
-                } else {
-                    warningsContainer.innerHTML = "";
-                    warningsContainer.style.display = "none";
-                }
-            }
         } else {
             recTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">Không có môn học nào được gợi ý.</td></tr>`;
             expGrid.innerHTML = `<div class="text-muted">Không có dữ liệu.</div>`;
@@ -488,6 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Event Listeners
     btnGeneratePlan.addEventListener("click", () => generatePlan(false));
+    btnWelcomeGenerate?.addEventListener("click", () => btnGeneratePlan.click());
     btnRetryPlan.addEventListener("click", () => generatePlan(false));
 
     btnGenerateAlternative.addEventListener("click", () => {

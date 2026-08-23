@@ -110,3 +110,28 @@
 }
 
 
+
+/* Stable table frame while student data is loading */
+#studentsTableBody .student-row-skeleton {
+    height: 58px;
+    pointer-events: none;
+}
+#studentsTableBody .student-row-skeleton span {
+    display: block;
+    width: 72%;
+    height: 13px;
+    margin: auto;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e9eef5 25%, #f8fafc 50%, #e9eef5 75%);
+    background-size: 200% 100%;
+    animation: student-row-skeleton 1.4s ease-in-out infinite;
+}
+#studentsTableBody .student-row-skeleton td:nth-child(3) span,
+#studentsTableBody .student-row-skeleton td:nth-child(5) span { width: 88%; }
+@keyframes student-row-skeleton {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    #studentsTableBody .student-row-skeleton span { animation: none; }
+}

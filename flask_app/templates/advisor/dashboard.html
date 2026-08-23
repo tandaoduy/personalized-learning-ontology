@@ -3,7 +3,7 @@
 {% block title %}Trang Chủ Tư Vấn - Cố Vấn Học Tập{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css', v='fixed-risk-grid-1') }}">
 {% endblock %}
 
 {% block content %}
@@ -95,44 +95,7 @@
         </a>
     </div>
 
-    <!-- Thống kê hoạt động tư vấn -->
-    <div class="progress-dashboard-container" style="margin-top: 40px;">
-        <h2 class="progress-dashboard-title">Thống kê hoạt động tư vấn học tập</h2>
-        <div class="stats-grid">
-            <article class="stat-card">
-                <div class="stat-icon bg-blue">👥</div>
-                <div class="stat-info">
-                    <span class="stat-label">Tổng sinh viên quản lý</span>
-                    <strong class="stat-value" id="statTotalStudents">-</strong>
-                    <small class="stat-desc">Dữ liệu hồ sơ học tập hiện hành</small>
-                </div>
-            </article>
-            <article class="stat-card card-alert">
-                <div class="stat-icon bg-red">🚨</div>
-                <div class="stat-info">
-                    <span class="stat-label">Sinh viên chậm tiến độ</span>
-                    <strong class="stat-value text-red" id="statAtRiskStudents">-</strong>
-                    <small class="stat-desc">Không còn khả năng hoàn thành theo tiến độ CTĐT</small>
-                </div>
-            </article>
-            <article class="stat-card">
-                <div class="stat-icon bg-green">📋</div>
-                <div class="stat-info">
-                    <span class="stat-label">Lượt tư vấn đã ghi nhận</span>
-                    <strong class="stat-value text-green" id="statConsultations">-</strong>
-                    <small class="stat-desc">Kế hoạch đã chốt & nhận xét</small>
-                </div>
-            </article>
-            <article class="stat-card">
-                <div class="stat-icon bg-amber">⭐</div>
-                <div class="stat-info">
-                    <span class="stat-label">Đánh giá hệ thống</span>
-                    <strong class="stat-value text-amber" id="statAvgRating">- / 5.0</strong>
-                    <small class="stat-desc">Độ chính xác & hữu ích</small>
-                </div>
-            </article>
-        </div>
-    </div>
+
 
     <!-- Nhận diện sinh viên nguy cơ chậm tiến độ (Giống như hồi nãy) -->
     <section class="at-risk-section" id="atRiskSection" style="margin-top: 40px;">
@@ -146,9 +109,17 @@
             </a>
         </div>
         <div class="at-risk-grid" id="atRiskContainer">
+            {% for _ in range(4) %}
+            <article class="risk-card risk-card--skeleton" aria-hidden="true">
+                <div class="risk-skeleton risk-skeleton--title"></div>
+                <div class="risk-skeleton risk-skeleton--meta"></div>
+                <div class="risk-skeleton risk-skeleton--body"></div>
+                <div class="risk-skeleton risk-skeleton--button"></div>
+            </article>
+            {% endfor %}
         </div>
     </section>
 </section>
 
-<script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/advisor/dashboard.js', v='dashboard-cache-2') }}" defer></script>
 {% endblock %}

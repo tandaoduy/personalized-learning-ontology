@@ -1,3 +1,37 @@
+/* Student picker */
+.scenario-student-picker {
+    display: grid;
+    grid-template-columns: minmax(230px, .8fr) minmax(320px, 1.2fr) minmax(210px, .7fr);
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding: 20px 22px;
+    border: 1px solid var(--adv-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .04);
+}
+.scenario-student-picker__heading { display: flex; align-items: center; gap: 12px; }
+.scenario-student-picker__icon { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 11px; background: #eff6ff; color: #2563eb; }
+.scenario-student-picker__heading label { display: block; color: #0f172a; font-size: 16px; font-weight: 750; }
+.scenario-student-picker__heading p { margin: 3px 0 0; color: #64748b; font-size: 12px; line-height: 1.4; }
+.scenario-student-picker__field > span { display: block; margin-bottom: 7px; color: #475569; font-size: 12px; font-weight: 650; }
+.scenario-student-picker__field select { width: 100%; min-height: 44px; }
+.scenario-student-picker__field .ts-control { min-height: 44px; align-items: center; border-color: #cbd5e1; border-radius: 9px; box-shadow: none; }
+.scenario-student-picker__field .ts-wrapper.focus .ts-control { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, .12); }
+.scenario-student-picker__status { display: flex; min-width: 0; flex-direction: column; gap: 3px; padding: 12px 14px; border-left: 1px solid #e2e8f0; }
+.scenario-student-picker__status-label { display: flex; align-items: center; gap: 7px; color: #64748b; font-size: 11px; font-weight: 650; }
+.scenario-student-picker__status-label i { width: 7px; height: 7px; border-radius: 50%; background: #2563eb; }
+.scenario-student-picker__status strong { overflow: hidden; color: #1e293b; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.scenario-student-picker__status small { color: #64748b; font-size: 11px; }
+@media (max-width: 900px) {
+    .scenario-student-picker { grid-template-columns: 1fr 1fr; }
+    .scenario-student-picker__status { grid-column: 1 / -1; border-top: 1px solid #e2e8f0; border-left: 0; padding: 12px 0 0; }
+}
+@media (max-width: 640px) {
+    .scenario-student-picker { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+    .scenario-student-picker__status { grid-column: auto; }
+}
 /* --- TRANG GIẢ LẬP & PHÂN TÍCH TIẾN ĐỘ --- */
 /* --- Scenarios Section --- */
 .scenario-controls {

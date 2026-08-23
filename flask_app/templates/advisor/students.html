@@ -3,7 +3,7 @@
 {% block title %}Tìm Kiếm & Lọc Sinh Viên - Cố Vấn Học Tập{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css', v='stable-data-frames-1') }}">
 {% endblock %}
 
 {% block content %}
@@ -81,7 +81,13 @@
                 </tr>
             </thead>
             <tbody id="studentsTableBody">
-                <tr><td colspan="9" class="text-center">⏳ Đang nạp danh sách sinh viên...</td></tr>
+                {% for _ in range(8) %}
+                <tr class="student-row-skeleton" aria-hidden="true">
+                    <td><span></span></td><td><span></span></td><td><span></span></td>
+                    <td><span></span></td><td><span></span></td><td><span></span></td>
+                    <td><span></span></td><td><span></span></td><td><span></span></td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

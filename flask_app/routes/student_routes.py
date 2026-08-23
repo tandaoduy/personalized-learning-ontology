@@ -1,10 +1,24 @@
-﻿"""
+"""
 Các route quản lý dữ liệu sinh viên.
 """
 
 from flask import Blueprint, current_app, jsonify, request, session
 
+import os
+from threading import Lock
+
 bp = Blueprint("students", __name__, url_prefix="/api/students")
+
+_student_list_cache = {"source": None, "data": None}
+_student_list_cache_lock = Lock()
+
+
+def _student_data_signature(service) -> tuple[str, float]:
+    try:
+        path = os.path.abspath(service.json_path)
+        return path, os.path.getmtime(path)
+    except (AttributeError, OSError, TypeError):
+        return "", 0.0
 
 
 @bp.route("", methods=["GET"])
@@ -13,6 +27,18 @@ def list_students():
     try:
         current_app.logger.info("Đã yêu cầu danh sách sinh viên")
         service = current_app.student_data_service
+        data_signature = _student_data_signature(service)
+        with _student_list_cache_lock:
+            if (_student_list_cache["data"] is not None
+                    and _student_list_cache["source"] == data_signature):
+                cached_result = _student_list_cache["data"]
+                return jsonify({
+                    "success": True,
+                    "data": cached_result,
+                    "total": len(cached_result),
+                    "cached": True,
+                })
+
         students = service.get_all_students()
 
         result = [
@@ -47,10 +73,15 @@ def list_students():
                 except Exception as exc:
                     current_app.logger.warning("Progress analysis failed")
 
+        with _student_list_cache_lock:
+            _student_list_cache["source"] = data_signature
+            _student_list_cache["data"] = result
+
         return jsonify({
             "success": True,
             "data": result,
             "total": len(result),
+            "cached": False,
         })
     except Exception as exc:
         current_app.logger.exception("Không thể lấy danh sách sinh viên")

@@ -15,6 +15,34 @@ window.AdvisorWorkspace = (function() {
     const STUDENTS_CACHE_KEY = 'advisor.students.list.v1';
     const STATS_CACHE_KEY = 'advisor.stats.v1';
     const PLAN_DRAFT_KEY = 'advisor.plan.draft.v1';
+    const STUDENTS_CACHE_TTL = 24 * 60 * 60 * 1000;
+
+    function getPersistentStudentsCacheKey() {
+        const cacheUser = document.body.dataset.cacheUser || 'advisor';
+        return `${STUDENTS_CACHE_KEY}.${cacheUser}`;
+    }
+
+    function readPersistentStudentsCache() {
+        try {
+            const cached = JSON.parse(localStorage.getItem(getPersistentStudentsCacheKey()) || 'null');
+            if (!cached || !Array.isArray(cached.data)) return null;
+            if (Date.now() - Number(cached.savedAt || 0) > STUDENTS_CACHE_TTL) return null;
+            return cached.data;
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function writePersistentStudentsCache(data) {
+        try {
+            localStorage.setItem(getPersistentStudentsCacheKey(), JSON.stringify({
+                savedAt: Date.now(),
+                data,
+            }));
+        } catch (_) {
+            // Network loading remains available when browser storage is unavailable.
+        }
+    }
 
     function escapeHtml(unsafe) {
         return String(unsafe ?? '').replace(/[&<>'"]/g, char => ({
@@ -320,7 +348,6 @@ window.AdvisorWorkspace = (function() {
         initRiskFilters();
         document.getElementById('planConfirmNotes')?.addEventListener('input', savePlanDraft);
 
-        loadAdvisorStats();
         loadCourseCatalog();
         loadAllStudents().then(() => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -380,7 +407,7 @@ window.AdvisorWorkspace = (function() {
             renderAtRiskPanel();
             applyFilters();
         };
-        const cachedStudents = readSessionCache(STUDENTS_CACHE_KEY);
+        const cachedStudents = readSessionCache(STUDENTS_CACHE_KEY) || readPersistentStudentsCache();
         if (Array.isArray(cachedStudents) && cachedStudents.length > 0) {
             renderStudents(cachedStudents);
         }
@@ -389,6 +416,7 @@ window.AdvisorWorkspace = (function() {
             const json = await res.json();
             if (json.success && Array.isArray(json.data)) {
                 writeSessionCache(STUDENTS_CACHE_KEY, json.data);
+                writePersistentStudentsCache(json.data);
                 renderStudents(json.data);
             } else if (!Array.isArray(cachedStudents) || cachedStudents.length === 0) {
                 if (document.getElementById('studentsTableBody')) {
@@ -672,6 +700,7 @@ window.AdvisorWorkspace = (function() {
             studentsList = studentsList.filter(student => String(student.student_id) !== String(studentId));
             sessionStorage.removeItem(STUDENTS_CACHE_KEY);
             sessionStorage.removeItem(STATS_CACHE_KEY);
+            localStorage.removeItem(getPersistentStudentsCacheKey());
             if (selectedStudent && String(selectedStudent.student_id) === String(studentId)) selectedStudent = null;
             applyFilters();
             window.alert(result.message || 'Đã xóa hồ sơ sinh viên.');
@@ -1467,7 +1496,6 @@ window.AdvisorWorkspace = (function() {
                     document.getElementById('consultationNotes').value = notes;
                 }
                 loadConsultationHistory(selectedStudent.student_id);
-                loadAdvisorStats();
                 window.UIComponents?.showModalDialog({
                     title: 'Đã xác nhận kế hoạch tư vấn',
                     description: `Kế hoạch của ${selectedStudent.name || selectedStudent.student_id} đã được lưu thành công.`,
@@ -1517,7 +1545,6 @@ window.AdvisorWorkspace = (function() {
                 alert("💾 Đã lưu hồ sơ nhận xét tư vấn thành công.");
                 document.getElementById('consultationNotes').value = "";
                 loadConsultationHistory(selectedStudent.student_id);
-                loadAdvisorStats();
             } else {
                 alert(`Lỗi lưu nhận xét: ${json.error}`);
             }
@@ -2033,7 +2060,6 @@ window.AdvisorWorkspace = (function() {
             if (json.success) {
                 if (document.getElementById('evalComments')) document.getElementById('evalComments').value = "";
                 loadCommunityEvaluations();
-                loadAdvisorStats();
                 window.UIComponents?.showModalDialog({
                     title: 'Cảm ơn đánh giá của bạn',
                     description: json.message || 'Đánh giá về hệ thống đã được ghi nhận thành công.',

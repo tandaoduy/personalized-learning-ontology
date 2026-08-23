@@ -637,3 +637,64 @@ main,
 .content-wrapper {
     min-width: 0;
 }
+
+/* Simple plan landing state */
+.plan-page { padding-top: 28px; }
+.plan-header { align-items: center; margin-bottom: 24px; padding-bottom: 20px; }
+.plan-header h1 { margin: 4px 0; font-size: 30px; letter-spacing: -.025em; }
+.plan-actions .btn { min-height: 42px; padding: 10px 16px; border-radius: 8px; font-weight: 600; }
+.plan-actions .btn:disabled { background: #f1f5f9; border-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; opacity: 1; }
+#planInitialState.plan-state-view { min-height: 360px; padding: 56px 24px; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 2px 8px rgba(15, 23, 42, .05); }
+.plan-empty { width: 100%; max-width: 520px; margin: auto; text-align: center; }
+.plan-empty__icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 20px; border-radius: 14px; background: #eff6ff; color: #2563eb; }
+.plan-empty h2 { margin: 0 0 10px; color: #0f172a; font-size: 22px; font-weight: 700; }
+.plan-empty p { margin: 0 auto 24px; color: #64748b; font-size: 15px; line-height: 1.65; }
+.plan-empty__cta { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 18px; border: 0; border-radius: 8px; background: #2563eb; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+.plan-empty__cta:hover { background: #1d4ed8; }
+.plan-empty__cta:focus-visible { outline: 3px solid #bfdbfe; outline-offset: 2px; }
+@media (max-width: 760px) {
+    .plan-page { padding: 16px 4px; }
+    .plan-header { align-items: flex-start; flex-direction: column; }
+    .plan-actions { justify-content: flex-start; width: 100%; }
+    .plan-actions .btn { flex: 1 1 100%; justify-content: center; }
+    #planInitialState.plan-state-view { min-height: 320px; padding: 40px 20px; }
+}
+/* Unified summary color */
+.summary-card {
+    background: #2563eb;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.22);
+}
+/* Paw prints walking from left to right */
+.plan-paw-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 220px;
+    height: 54px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.plan-paw-loader span {
+    display: block;
+    color: #2563eb;
+    font-size: 25px;
+    line-height: 1;
+    opacity: 0;
+    transform: translateX(-18px) translateY(5px) rotate(-18deg) scale(.7);
+    animation: plan-paw-step 1.6s ease-in-out infinite;
+}
+.plan-paw-loader span:nth-child(even) {
+    transform: translateX(-18px) translateY(-5px) rotate(18deg) scale(.7);
+}
+.plan-paw-loader span:nth-child(2) { animation-delay: .2s; }
+.plan-paw-loader span:nth-child(3) { animation-delay: .4s; }
+.plan-paw-loader span:nth-child(4) { animation-delay: .6s; }
+@keyframes plan-paw-step {
+    0%, 15% { opacity: 0; }
+    35%, 70% { opacity: 1; transform: translateX(0) translateY(0) rotate(0) scale(1); }
+    90%, 100% { opacity: 0; transform: translateX(18px) translateY(0) rotate(8deg) scale(.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .plan-paw-loader span { opacity: 1; transform: none; animation: none; }
+}

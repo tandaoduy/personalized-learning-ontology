@@ -102,6 +102,9 @@
     </div>
 </section>
 
+<script id="initialDashboardStudentData" type="application/json">{{ student_data | tojson | safe if student_data else 'null' }}</script>
+<script id="initialDashboardCourseData" type="application/json">{{ course_catalog | tojson | safe if course_catalog else '[]' }}</script>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/student/dashboard.css') }}">
 <script src="{{ url_for('static', filename='js/student/dashboard.js') }}" defer></script>
 {% endblock %}

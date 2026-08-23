@@ -3,7 +3,7 @@
 {% block title %}Sinh Kế Hoạch Học Tập - Cố Vấn Học Tập{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css', v='scenario-picker-1') }}">
 {% endblock %}
 
 {% block content %}
@@ -29,18 +29,28 @@
     </div>
 
     <!-- Student selection dropdown -->
-    <div class="filter-panel" style="margin-bottom: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-        <label for="standaloneScenSelect" style="font-weight: 700;">⚙️ Chọn sinh viên để sinh kế hoạch học tập:</label>
-        <div style="flex: 1; min-width: 300px;">
+    <div class="scenario-student-picker">
+        <div class="scenario-student-picker__heading">
+            <span class="scenario-student-picker__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="11" cy="7" r="4"/><path d="M19 8v6M16 11h6"/></svg>
+            </span>
+            <div>
+                <label for="standaloneScenSelect">Chọn sinh viên</label>
+                <p>Chọn hồ sơ cần sinh kế hoạch học tập.</p>
+            </div>
+        </div>
+        <div class="scenario-student-picker__field">
+            <span>Tìm theo mã hoặc họ tên</span>
             <select id="standaloneScenSelect" class="form-select" onchange="if(this.value) AdvisorWorkspace.selectStudent(this.value);">
                 <option value="">-- Vui lòng chọn sinh viên từ danh sách --</option>
             </select>
         </div>
-        <div class="current-selected-sv">
-            Đang chọn: <strong id="scenStudentName">Chưa chọn</strong> (<span id="scenStudentId">-</span>)
+        <div class="scenario-student-picker__status" aria-live="polite">
+            <span class="scenario-student-picker__status-label"><i aria-hidden="true"></i> Sinh viên đang chọn</span>
+            <strong id="scenStudentName">Chưa chọn sinh viên</strong>
+            <small>Mã sinh viên: <span id="scenStudentId">—</span></small>
         </div>
     </div>
-
     <div id="scenariosContent" style="display: none;">
         <!-- Scenario Selector Panel -->
         <div class="scenario-controls">

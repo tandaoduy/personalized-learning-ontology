@@ -14,7 +14,7 @@
             <div class="print-department">PHÒNG ĐÀO TẠO ĐẠI HỌC</div>
         </div>
         <div class="print-header-right">
-            <div class="print-title">KẾ HOẠCH VÀ LỘ TRÌNH HỌC TẬP</div>
+            <div class="print-title">KẾ HOẠCH ĐỀ XUẤT</div>
         </div>
     </div>
     
@@ -47,16 +47,22 @@
 
     <!-- State Views -->
     <div id="planInitialState" class="plan-state-view">
-        <div class="empty-state">
-            <div class="empty-state-icon">📝</div>
-            <h3>Chưa có kế hoạch nào</h3>
-            <p>Nhấn nút "Sinh kế hoạch" để hệ thống phân tích dữ liệu và đề xuất lộ trình tối ưu cho bạn.</p>
+        <div class="plan-empty">
+            <div class="plan-empty__icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h12v15.5"/><path d="M6 18h12a2 2 0 0 1 2 2H6a2 2 0 0 1-2-2Z"/><path d="M9 8h6M9 12h4"/></svg>
+            </div>
+            <h2>Chưa có kế hoạch học tập</h2>
+            <p>Hệ thống sẽ phân tích kết quả học tập và đề xuất các môn phù hợp cho học kỳ tiếp theo.</p>
+            <button type="button" class="plan-empty__cta" data-trigger-generate>
+                Sinh kế hoạch
+                <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
         </div>
     </div>
 
     <div id="planLoadingState" class="plan-state-view hidden">
         <div class="loading-state">
-            <div class="ui-loading__paw-track" aria-hidden="true"><span class="ui-loading__paw">🐾</span></div>
+            <div class="plan-paw-loader" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
             <h3>Đang phân tích lộ trình...</h3>
             <p>AI đang xử lý các ràng buộc học phần, điều kiện tiên quyết và lịch sử học tập của bạn.</p>
         </div>
@@ -74,7 +80,7 @@
     <div id="planResultContainer" class="plan-result-container hidden" style="position: relative;">
         <!-- Overlay Loader -->
         <div id="planOverlayLoader" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(2px); z-index: 50; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px;">
-            <div class="ui-loading__paw-track" aria-hidden="true"><span class="ui-loading__paw">🐾</span></div>
+            <div class="plan-paw-loader" aria-hidden="true"><span>🐾</span><span>🐾</span><span>🐾</span><span>🐾</span></div>
             <h4 style="margin-top: 16px; color: #1d4ed8;">Đang tạo phương án khác...</h4>
         </div>
         <!-- Khối 1: Kết quả gợi ý kế hoạch -->
@@ -103,7 +109,7 @@
         <div class="plan-section">
             <h3 class="section-title mb-3">Danh sách được gợi ý</h3>
             <div class="table-responsive">
-                <table class="data-table">
+                <table class="data-table" data-pagination="off">
                     <thead>
                         <tr>
                             <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>
@@ -129,7 +135,6 @@
         <!-- Khối 3: Giải thích cơ chế gợi ý & Lý do chọn môn -->
         <div class="plan-section no-print">
             <h3 class="section-title mb-4 text-blue">Giải thích cơ chế gợi ý & Lý do chọn môn</h3>
-            <div id="warningsContainer" style="margin-bottom: 20px; display: none;"></div>
             <div class="explanation-grid" id="explanationGrid">
                 <!-- Rendered by JS -->
             </div>
@@ -141,7 +146,7 @@
             <p class="section-desc mb-2">Đây là tập môn hợp lệ (đầu vào) sau khi hệ thống kiểm tra điều kiện tiên quyết, kỳ mở, chuyên ngành và các ràng buộc nghiệp vụ.</p>
             <p class="section-desc mb-3 text-dark">Tổng số: <strong id="eligibleCountText">0</strong> môn</p>
             <div class="table-responsive">
-                <table class="data-table table-white">
+                <table class="data-table table-white" data-pagination="off">
                     <thead>
                         <tr>
                             <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>
@@ -174,7 +179,7 @@
             
             <p class="section-desc text-muted" id="excludedDetailHint" style="display: none; font-size: 13px; margin-bottom: 12px;">Chi tiết bên dưới chỉ hiển thị các trường hợp cần lưu ý kiểm tra học vụ (ẩn các môn đã học, ngoài phạm vi,...).</p>
             <div class="table-responsive" id="excludedCoursesDetail" style="display: none;">
-                <table class="data-table table-white">
+                <table class="data-table table-white" data-pagination="off">
                     <thead>
                         <tr>
                             <th width="5%" style="text-align: center; vertical-align: middle; white-space: nowrap;">STT</th>

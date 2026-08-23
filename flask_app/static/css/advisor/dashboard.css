@@ -5,9 +5,9 @@
 
 @import url('common.css');
 @import url('home.css');
-@import url('students.css');
+@import url('students.css?v=stable-frame-1');
 @import url('profile.css');
-@import url('at-risk.css');
-@import url('scenarios.css');
+@import url('at-risk.css?v=fixed-grid-1');
+@import url('scenarios.css?v=picker-1');
 @import url('consultation.css');
 @import url('reports.css');

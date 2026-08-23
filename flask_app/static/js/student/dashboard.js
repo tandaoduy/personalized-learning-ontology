@@ -8,6 +8,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!studentId) return;
 
     try {
+        const initialStudent = JSON.parse(document.getElementById("initialDashboardStudentData")?.textContent || "null");
+        const initialCourses = JSON.parse(document.getElementById("initialDashboardCourseData")?.textContent || "[]");
+        if (initialStudent && Array.isArray(initialCourses) && initialCourses.length) {
+            renderProgress(initialStudent, initialCourses);
+        }
+    } catch (error) {
+        console.warn("Initial dashboard data is unavailable:", error);
+    }
+
+    try {
         // Fetch student data and course catalog concurrently
         const [studentRes, coursesRes] = await Promise.all([
             fetch(`/api/students/${encodeURIComponent(studentId)}`),

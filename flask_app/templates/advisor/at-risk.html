@@ -3,7 +3,7 @@
 {% block title %}Cảnh Báo Tiến Độ Khẩn Cấp - Cố Vấn Học Tập{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/advisor/dashboard.css', v='fixed-risk-grid-1') }}">
 {% endblock %}
 
 {% block content %}
@@ -42,6 +42,14 @@
             </div>
         </div>
         <div class="at-risk-grid" id="atRiskContainer">
+            {% for _ in range(4) %}
+            <article class="risk-card risk-card--skeleton" aria-hidden="true">
+                <div class="risk-skeleton risk-skeleton--title"></div>
+                <div class="risk-skeleton risk-skeleton--meta"></div>
+                <div class="risk-skeleton risk-skeleton--body"></div>
+                <div class="risk-skeleton risk-skeleton--button"></div>
+            </article>
+            {% endfor %}
         </div>
     </section>
 </section>
