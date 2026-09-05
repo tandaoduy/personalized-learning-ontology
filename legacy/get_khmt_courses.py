@@ -5,7 +5,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding='utf-8')
 
 g = rdflib.Graph()
-ontology_path = Path(__file__).resolve().parents[1] / "owl" / "ontology_v23.rdf"
+ontology_path = Path(__file__).resolve().parents[1] / "knowledge" / "ontology" / "ontology_v23.rdf"
 g.parse(str(ontology_path))
 
 query = """

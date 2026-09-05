@@ -15,7 +15,7 @@ Hệ thống web Flask hỗ trợ sinh viên và cố vấn học tập theo dõ
 
 - Python 3.10+, Flask 3, RDFLib 7.
 - Node.js 18+, npm, Tailwind CSS, DaisyUI, Alpine.js, HTMX, Chart.js.
-- Ontology chính thức v23: `owl/ontology_v23.rdf` (RDF/XML); bản OWL nguồn là `owl/TrainingProgramOntology_v23.owl`.
+- Ontology chính thức v23: `knowledge/ontology/ontology_v23.rdf` (RDF/XML); bản OWL nguồn là `knowledge/ontology/TrainingProgramOntology_v23.owl`.
 - Dữ liệu demo: `data/`.
 
 ## Cài đặt
@@ -30,7 +30,7 @@ npm install
 npm run build:ui
 ```
 
-`npm run build:ui` biên dịch CSS và sao chép vendor vào `flask_app/static/vendor/`.
+`npm run build:ui` biên dịch CSS và sao chép vendor vào `backend/app/static/vendor/`.
 
 Lệnh trên cũng cài `rdflib` (cho các truy vấn SPARQL) và `pypdf` (cho script migration). Các script không tự cài thư viện khi chạy.
 
@@ -54,12 +54,12 @@ python run_app.py
 
 ```powershell
 python -m pip install -r requirements-dev.txt
-python scripts/run_benchmark.py
+python experiments/run_benchmark.py
 ```
 
 Lệnh trên sẽ chạy toàn bộ các bài kiểm thử tự động thông qua `pytest` (bao gồm unit test và integration test giao diện/API) và tự động sinh ra một file báo cáo Markdown tại `benchmark_results/test_report.md` thể hiện rõ môi trường chạy, phiên bản Python, số ca đạt/không đạt và các ánh xạ tới yêu cầu nghiệp vụ.
 
-Lệnh `scripts/run_benchmark.py` chạy toàn bộ pytest (unit, API integration và UI integration), đồng thời tạo `benchmark_results/test_report.md`. Có thể chạy pytest trực tiếp bằng `python -m pytest` hoặc tạo báo cáo coverage bằng `python -m pytest --cov=flask_app.services --cov-report=term-missing`.
+Lệnh `experiments/run_benchmark.py` chạy toàn bộ pytest (unit, API integration và UI integration), đồng thời tạo `benchmark_results/test_report.md`. Có thể chạy pytest trực tiếp bằng `python -m pytest` hoặc tạo báo cáo coverage bằng `python -m pytest --cov=backend.app.services --cov-report=term-missing`.
 
 ## Bảo mật và dữ liệu mẫu
 
@@ -75,7 +75,7 @@ Các trang `/components/*` và endpoint `/api/debug/pipeline/<student_id>` chỉ
 Kết quả mẫu nằm trong `benchmark_results/`. Tái tạo bằng dữ liệu mẫu, ontology v23 và seed cố định:
 
 ```powershell
-python scripts/benchmark_algorithms.py --limit 0 --output benchmark_results/benchmark_results_all.csv
+python experiments/benchmark_algorithms.py --limit 0 --output benchmark_results/benchmark_results_all.csv
 ```
 
 Lệnh trên tạo file chi tiết và file `_summary.csv` tương ứng.
@@ -94,11 +94,11 @@ Có thể chỉ định rõ các file nếu dữ liệu nằm ở vị trí khá
 python scripts/migrate_student_data.py --input-json path/to/students.json --output-json path/to/students-v2.json --pdf path/to/transcript-1.pdf --pdf path/to/transcript-2.pdf
 ```
 
-Để chạy script truy vấn SPARQL, hãy cài dependencies trước rồi chạy `python tests/test_sparql.py`.
+Để chạy script truy vấn SPARQL, hãy cài dependencies trước rồi chạy `python backend/tests/test_sparql.py`.
 
 ## Cấu hình
 
-Xem [`flask_app/config.py`](flask_app/config.py):
+Xem [`backend/app/config.py`](backend/app/config.py):
 
 - `ONTOLOGY_PATH`, `STUDENT_DATA_JSON`, `STUDENT_DATA_CSV`.
 - `REGISTER_MIN_CREDITS`, `REGISTER_MAX_CREDITS`.
@@ -116,12 +116,34 @@ Không commit mật khẩu hoặc dữ liệu sinh viên thật. Dữ liệu tro
 ## Cấu trúc
 
 ```text
-flask_app/   routes, services, models, templates, static
-data/        JSON/CSV/tài khoản demo
-owl/         ontology RDF/OWL
-frontend/    mã nguồn CSS và script build
-tests/       unit test pytest
-run_app.py   điểm khởi động
+backend/
+  app/
+    routes/          API, xác thực và giao diện Flask
+    agent/           vị trí triển khai Orchestrator và State
+    schemas/         vị trí triển khai hợp đồng capability
+    validation/      vị trí triển khai Standard Validator
+    services/        ontology, eligibility, Beam Search, risk, explanation
+    models/
+    templates/
+    static/
+  tests/
+knowledge/
+  ontology/          RDF/OWL và cấu hình ontology hiện có
+  queries/           vị trí tách SPARQL có định danh
+  rules/             vị trí đóng gói rule có phiên bản
+experiments/         benchmark, đánh giá và biểu đồ
+benchmark_results/  kết quả thực nghiệm hiện có
+data/                dữ liệu ứng dụng
+frontend/            mã nguồn CSS và công cụ build tài nguyên Flask
+scripts/             tiện ích xử lý dữ liệu
+legacy/              mã tham khảo cũ
+docs/
+run_app.py           điểm khởi động từ thư mục gốc
 ```
+
+`agent/`, `schemas/`, `validation/`, `knowledge/queries/` và `knowledge/rules/` mới là khung thư mục; chức năng MVP tương ứng chưa được triển khai. `frontend/` hiện chỉ chứa công cụ build, không phải ứng dụng frontend độc lập.
+
+Chạy từ thư mục gốc: `python run_app.py`, `python -m pytest`, `npm run build:ui`. Khi dùng Flask CLI: `python -m flask --app backend.app.app:app run`. Điểm WSGI là `backend.app.app:app`.
+
 
 Xem thêm [Sách hướng dẫn sử dụng](HDSD_HeThong_CoVanHocTap.md).

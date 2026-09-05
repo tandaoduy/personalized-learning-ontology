@@ -71,7 +71,7 @@ Vào `/advisor/reports` để xem hoặc in kế hoạch đã xác nhận. Kiể
 
 ### Ứng dụng không khởi động
 
-Kiểm tra chạy từ thư mục gốc và các tệp `owl/ontology_v23.rdf`, `data/DanhSachSinhVien.json`, `data/DanhSachSinhVien.csv`. Xem log terminal và `/api/health`.
+Kiểm tra chạy từ thư mục gốc và các tệp `knowledge/ontology/ontology_v23.rdf`, `data/DanhSachSinhVien.json`, `data/DanhSachSinhVien.csv`. Xem log terminal và `/api/health`.
 
 ### Không có môn được đề xuất
 
@@ -86,10 +86,10 @@ Kiểm tra `course_attempts`, trạng thái, `grade_specified`, `attempt_number`
 ```powershell
 python -m pytest
 # hoặc chạy pytest và sinh báo cáo Markdown:
-python scripts/run_benchmark.py
+python experiments/run_benchmark.py
 ```
 
-Notebook trong `tests/test_ontology/` chỉ dùng để minh họa/phân tích ontology, không phải bộ kiểm thử chính.
+Notebook trong `backend/tests/test_ontology/` chỉ dùng để minh họa/phân tích ontology, không phải bộ kiểm thử chính.
 
 ## 7. API kiểm tra nhanh
 

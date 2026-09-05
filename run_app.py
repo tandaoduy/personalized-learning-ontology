@@ -42,12 +42,12 @@ def main():
 
     print("Đang kiểm tra cấu hình...")
     try:
-        from flask_app.config import Config
+        from backend.app.config import Config
         print("  Đã nạp cấu hình")
         print(f"    - Ontology: {Config.ONTOLOGY_PATH}")
         print(f"    - Dữ liệu sinh viên: {Config.STUDENT_DATA_JSON}")
 
-        from flask_app.services.student_data_service import StudentDataService
+        from backend.app.services.student_data_service import StudentDataService
         service = StudentDataService(Config.STUDENT_DATA_JSON, Config.STUDENT_DATA_CSV)
         students = service.get_all_students()
         print(f"  Đã nạp dữ liệu sinh viên: {len(students)} sinh viên")
@@ -77,7 +77,7 @@ def main():
     print("=" * 70 + "\n")
 
     try:
-        from flask_app.app import app
+        from backend.app.app import app
         app.run(debug=Config.DEBUG, port=5000, use_reloader=Config.DEBUG)
     except KeyboardInterrupt:
         print("\nMáy chủ đã dừng")

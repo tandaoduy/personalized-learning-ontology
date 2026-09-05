@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build:css": "tailwindcss -i ./frontend/styles/app.css -o ./flask_app/static/vendor/app.css --minify",
-    "watch:css": "tailwindcss -i ./frontend/styles/app.css -o ./flask_app/static/vendor/app.css --watch",
+    "build:css": "tailwindcss -i ./frontend/styles/app.css -o ./backend/app/static/vendor/app.css --minify",
+    "watch:css": "tailwindcss -i ./frontend/styles/app.css -o ./backend/app/static/vendor/app.css --watch",
     "copy:vendor": "node ./frontend/scripts/copy-vendor.mjs",
     "build:ui": "npm run build:css && npm run copy:vendor"
   },

@@ -1,0 +1,379 @@
+/* Student picker */
+.scenario-student-picker {
+    display: grid;
+    grid-template-columns: minmax(230px, .8fr) minmax(320px, 1.2fr) minmax(210px, .7fr);
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding: 20px 22px;
+    border: 1px solid var(--adv-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .04);
+}
+.scenario-student-picker__heading { display: flex; align-items: center; gap: 12px; }
+.scenario-student-picker__icon { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 11px; background: #eff6ff; color: #2563eb; }
+.scenario-student-picker__heading label { display: block; color: #0f172a; font-size: 16px; font-weight: 750; }
+.scenario-student-picker__heading p { margin: 3px 0 0; color: #64748b; font-size: 12px; line-height: 1.4; }
+.scenario-student-picker__field > span { display: block; margin-bottom: 7px; color: #475569; font-size: 12px; font-weight: 650; }
+.scenario-student-picker__field select { width: 100%; min-height: 44px; }
+.scenario-student-picker__field .ts-control { min-height: 44px; align-items: center; border-color: #cbd5e1; border-radius: 9px; box-shadow: none; }
+.scenario-student-picker__field .ts-wrapper.focus .ts-control { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, .12); }
+.scenario-student-picker__status { display: flex; min-width: 0; flex-direction: column; gap: 3px; padding: 12px 14px; border-left: 1px solid #e2e8f0; }
+.scenario-student-picker__status-label { display: flex; align-items: center; gap: 7px; color: #64748b; font-size: 11px; font-weight: 650; }
+.scenario-student-picker__status-label i { width: 7px; height: 7px; border-radius: 50%; background: #2563eb; }
+.scenario-student-picker__status strong { overflow: hidden; color: #1e293b; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.scenario-student-picker__status small { color: #64748b; font-size: 11px; }
+@media (max-width: 900px) {
+    .scenario-student-picker { grid-template-columns: 1fr 1fr; }
+    .scenario-student-picker__status { grid-column: 1 / -1; border-top: 1px solid #e2e8f0; border-left: 0; padding: 12px 0 0; }
+}
+@media (max-width: 640px) {
+    .scenario-student-picker { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+    .scenario-student-picker__status { grid-column: auto; }
+}
+/* --- TRANG GIẢ LẬP & PHÂN TÍCH TIẾN ĐỘ --- */
+/* --- Scenarios Section --- */
+.scenario-controls {
+    background: #ffffff;
+    border: 1px solid var(--adv-border);
+    border-radius: var(--adv-radius);
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.scenario-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.scenario-card {
+    border: 2px solid var(--adv-border);
+    border-radius: 14px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    background: #ffffff;
+}
+
+.scenario-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.scenario-card:hover {
+    border-color: #93c5fd;
+    background: #f8fafc;
+}
+
+.scenario-card.active {
+    border-color: var(--adv-primary);
+    background: var(--adv-primary-light);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.scen-title {
+    font-weight: 800;
+    color: var(--adv-dark);
+    font-size: 1.05rem;
+}
+
+.scen-desc {
+    font-size: 0.85rem;
+    color: var(--adv-muted);
+    line-height: 1.5;
+}
+
+.scenario-params {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    border-top: 1px dashed var(--adv-border);
+}
+
+.param-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 160px;
+}
+
+.btn-run-algo {
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    background: var(--adv-primary);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-run-algo:hover {
+    background: var(--adv-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.results-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.results-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.res-badge {
+    background: #ffffff;
+    border: 1px solid var(--adv-border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--adv-text);
+}
+
+.bg-light-blue {
+    background: #e0f2fe;
+    border-color: #bae6fd;
+    color: #0369a1;
+}
+
+.excluded-panel {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.excluded-panel h4 {
+    margin: 0 0 6px;
+    color: #92400e;
+}
+
+/* --- Compare Tabs --- */
+.compare-tabs-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.btn-compare-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid var(--adv-border);
+    background: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-compare-tab.active {
+    border-color: var(--adv-primary);
+    background: var(--adv-primary);
+    color: #ffffff;
+}
+
+/* --- Plan Confirm Box --- */
+.plan-confirm-box {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+    border: 2px solid #a7f3d0;
+    border-radius: var(--adv-radius);
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.08);
+}
+
+.confirm-summary h3 {
+    margin: 0 0 6px;
+    color: #065f46;
+}
+
+.confirm-summary p {
+    color: var(--adv-muted);
+    margin: 0 0 12px;
+}
+
+.confirm-live-stats {
+    font-size: 1.05rem;
+    color: #065f46;
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #d1fae5;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.confirm-btn-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.confirm-action {
+    flex: 1 1 300px;
+    min-height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.confirm-action:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.confirm-action--confirm {
+    border: 1px solid #059669;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(5, 150, 105, 0.2);
+}
+
+.confirm-action--confirm:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 12px 24px rgba(5, 150, 105, 0.28);
+}
+
+.confirm-action--report {
+    border: 1px solid #2563eb;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #1d4ed8;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+}
+
+.confirm-action--report:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
+}
+
+/* --- UI Chips (Excluded Reasons) --- */
+.ui-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    background: #f3f4f6;
+    color: #4b5563;
+    white-space: nowrap;
+}
+.ui-chip:hover {
+    background: #e5e7eb;
+}
+.ui-chip.is-active {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.ui-chip__count {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(0,0,0,0.08);
+    color: inherit;
+}
+.ui-chip.is-active .ui-chip__count {
+    background: rgba(0,0,0,0.1);
+}
+
+/* Tùy chỉnh màu chip: Hover/Active KHÔNG ĐƯỢC CHUYỂN CHỮ THÀNH MÀU TRẮNG */
+/* Red */
+.ui-chip--red { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+.ui-chip--red:hover { background: #fca5a5; color: #991b1b !important; border-color: #f87171; }
+.ui-chip--red.is-active { background: #f87171; color: #7f1d1d !important; border-color: #dc2626; box-shadow: 0 0 0 2px #fca5a5; }
+
+/* Orange */
+.ui-chip--orange { background: #ffedd5; color: #c2410c; border-color: #fdba74; }
+.ui-chip--orange:hover { background: #fdba74; color: #9a3412 !important; border-color: #fb923c; }
+.ui-chip--orange.is-active { background: #fb923c; color: #7c2d12 !important; border-color: #ea580c; box-shadow: 0 0 0 2px #fdba74; }
+
+/* Amber */
+.ui-chip--amber { background: #fef3c7; color: #b45309; border-color: #fcd34d; }
+.ui-chip--amber:hover { background: #fcd34d; color: #92400e !important; border-color: #fbbf24; }
+.ui-chip--amber.is-active { background: #fbbf24; color: #78350f !important; border-color: #d97706; box-shadow: 0 0 0 2px #fcd34d; }
+
+/* Green */
+.ui-chip--green { background: #dcfce7; color: #15803d; border-color: #86efac; }
+.ui-chip--green:hover { background: #86efac; color: #166534 !important; border-color: #4ade80; }
+.ui-chip--green.is-active { background: #4ade80; color: #14532d !important; border-color: #16a34a; box-shadow: 0 0 0 2px #86efac; }
+
+/* Teal */
+.ui-chip--teal { background: #ccfbf1; color: #0f766e; border-color: #5eead4; }
+.ui-chip--teal:hover { background: #5eead4; color: #115e59 !important; border-color: #2dd4bf; }
+.ui-chip--teal.is-active { background: #2dd4bf; color: #134e4a !important; border-color: #0d9488; box-shadow: 0 0 0 2px #5eead4; }
+
+/* Cyan */
+.ui-chip--cyan { background: #cffafe; color: #0e7490; border-color: #67e8f9; }
+.ui-chip--cyan:hover { background: #67e8f9; color: #155e75 !important; border-color: #22d3ee; }
+.ui-chip--cyan.is-active { background: #22d3ee; color: #164e63 !important; border-color: #0891b2; box-shadow: 0 0 0 2px #67e8f9; }
+
+/* Blue */
+.ui-chip--blue { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+.ui-chip--blue:hover { background: #93c5fd; color: #1e40af !important; border-color: #60a5fa; }
+.ui-chip--blue.is-active { background: #60a5fa; color: #1e3a8a !important; border-color: #2563eb; box-shadow: 0 0 0 2px #93c5fd; }
+
+/* Indigo */
+.ui-chip--indigo { background: #e0e7ff; color: #4338ca; border-color: #a5b4fc; }
+.ui-chip--indigo:hover { background: #a5b4fc; color: #3730a3 !important; border-color: #818cf8; }
+.ui-chip--indigo.is-active { background: #818cf8; color: #312e81 !important; border-color: #4f46e5; box-shadow: 0 0 0 2px #a5b4fc; }
+
+/* Purple */
+.ui-chip--purple { background: #f3e8ff; color: #7e22ce; border-color: #d8b4fe; }
+.ui-chip--purple:hover { background: #d8b4fe; color: #6b21a8 !important; border-color: #c084fc; }
+.ui-chip--purple.is-active { background: #c084fc; color: #581c87 !important; border-color: #9333ea; box-shadow: 0 0 0 2px #d8b4fe; }
+
+/* Pink */
+.ui-chip--pink { background: #fce7f3; color: #be185d; border-color: #f9a8d4; }
+.ui-chip--pink:hover { background: #f9a8d4; color: #9d174d !important; border-color: #f472b6; }
+.ui-chip--pink.is-active { background: #f472b6; color: #831843 !important; border-color: #db2777; box-shadow: 0 0 0 2px #f9a8d4; }
+
+/* Rose */
+.ui-chip--rose { background: #ffe4e6; color: #e11d48; border-color: #fda4af; }
+.ui-chip--rose:hover { background: #fda4af; color: #be123c !important; border-color: #fb7185; }
+.ui-chip--rose.is-active { background: #fb7185; color: #9f1239 !important; border-color: #e11d48; box-shadow: 0 0 0 2px #fda4af; }
+
+/* Gray */
+.ui-chip--gray { background: #f3f4f6; color: #4b5563; border-color: #d1d5db; }
+.ui-chip--gray:hover { background: #d1d5db; color: #374151 !important; border-color: #9ca3af; }
+.ui-chip--gray.is-active { background: #9ca3af; color: #1f2937 !important; border-color: #4b5563; box-shadow: 0 0 0 2px #d1d5db; }
+
+
