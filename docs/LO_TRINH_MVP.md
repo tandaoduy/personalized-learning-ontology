@@ -59,3 +59,11 @@ Phân biệt môn không đủ điều kiện và môn đủ điều kiện như
 Giữ các baseline trong bản thiết kế. BL-04 chỉ chạy offline và không nhận Ontology Validator feedback trong generation; mọi baseline được hậu kiểm bằng cùng Standard Validator. Đo valid plan rate trên toàn bộ candidate đã sinh trước khi lọc.
 
 So sánh explanation có/không grounded trên cùng candidate, Validation và Ranking. LTR thực hiện sau khi thu được dữ liệu preference cố vấn phù hợp; chưa là điều kiện hoàn thành MVP đầu tiên.
+
+## Cập nhật Validator cấp plan
+
+Đã có StandardValidator kiểm tra prerequisite toàn candidate, phạm vi checked/pending, lỗi cấu trúc và chuỗi evidence đầy đủ. Chưa hoàn thành Standard Validator toàn bộ ràng buộc: kết quả đạt tiên quyết là partially_validated. Xem [hợp đồng và giới hạn](../backend/app/validation/README.md).
+
+## Cập nhật rule toàn vẹn candidate
+
+Đã bật course_existence, duplicate_course, catalog_credit_match cùng prerequisite; bổ sung audit từng môn và skip theo phụ thuộc. Plan đạt vẫn partially_validated. Các rule còn lại tiếp tục pending.

@@ -4,3 +4,4 @@ Werkzeug==3.0.0
 python-dotenv==1.0.0
 gunicorn==21.0.0
 pypdf==5.1.0
+pydantic==2.13.5

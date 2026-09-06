@@ -1,1 +1,4 @@
-"""Independent Standard Validator (planned MVP implementation)."""
+"""Independent validation entry point."""
+from .validator import StandardValidator
+
+__all__ = ["StandardValidator"]

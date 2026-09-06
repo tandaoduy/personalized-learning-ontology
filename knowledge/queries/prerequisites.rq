@@ -1,0 +1,4 @@
+SELECT ?prerequisite WHERE {
+  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse> ?prerequisite .
+}
+ORDER BY STR(?prerequisite)

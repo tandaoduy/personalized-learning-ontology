@@ -1,0 +1,5 @@
+SELECT ?subject ?predicate ?value WHERE {
+ ?subject ?predicate ?value .
+ FILTER(?predicate = <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode>)
+ FILTER(UCASE(STR(?value)) = STR(?code))
+}

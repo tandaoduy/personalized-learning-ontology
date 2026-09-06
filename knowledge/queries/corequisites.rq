@@ -1,0 +1,4 @@
+SELECT ?corequisite WHERE {
+  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#corequisiteWith> ?corequisite .
+}
+ORDER BY STR(?corequisite)

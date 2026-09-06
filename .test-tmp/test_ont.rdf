@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#B">
+    <ns1:courseCode>B</ns1:courseCode>
+    <ns1:hasCredit rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ns1:hasCredit>
+    <ns1:hasPrerequisiteCourse rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#A"/>
+    <ns1:openSemesterType rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ns1:openSemesterType>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#A">
+    <ns1:courseCode>A</ns1:courseCode>
+    <ns1:hasCredit rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ns1:hasCredit>
+    <ns1:openSemesterType rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ns1:openSemesterType>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#C">
+    <ns1:courseCode>C</ns1:courseCode>
+    <ns1:hasCredit rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ns1:hasCredit>
+    <ns1:corequisiteWith rdf:resource="http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#A"/>
+    <ns1:openSemesterType rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ns1:openSemesterType>
+  </rdf:Description>
+</rdf:RDF>

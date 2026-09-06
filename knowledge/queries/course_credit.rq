@@ -1,0 +1,6 @@
+SELECT ?subject ?predicate ?value WHERE {
+ ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .
+ FILTER(UCASE(STR(?catalogCode)) = STR(?code))
+ ?subject ?predicate ?value .
+ FILTER(?predicate IN (<http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasCredit>, <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit>))
+}

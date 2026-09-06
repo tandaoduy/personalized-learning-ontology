@@ -1,0 +1,13 @@
+SELECT ?subject ?predicate ?value WHERE {
+  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .
+  FILTER(UCASE(STR(?catalogCode)) = STR(?code))
+  ?subject ?predicate ?value .
+  FILTER(?predicate IN (
+    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,
+    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,
+    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,
+    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,
+    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,
+    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>
+  ))
+}
