@@ -1,13 +1,14 @@
 from .common import conclusion
 
-def evaluate(plan, code, student, fact):
-    next_sem = max(1, student.current_semester + 1)
-    target_sem_type = 1 if next_sem % 2 != 0 else 2
-    open_type = fact.open_semester_type if fact and fact.open_semester_type is not None else 3
-    passed = open_type == 3 or open_type == target_sem_type
-    return conclusion(
-        plan, code, "semester_offering", passed,
+
+def evaluate(plan, code, knowledge, fact):
+    if knowledge.target_semester_type is None:
+        raise ValueError("TARGET_SEMESTER_TYPE_MISSING")
+    if fact.open_semester_type is None:
+        raise ValueError("SEMESTER_OFFERING_MISSING")
+    passed = fact.open_semester_type in (3, 12, knowledge.target_semester_type)
+    return conclusion(plan, code, "semester_offering", passed,
         "Offered in target semester" if passed else "SEMESTER_OFFERING_MISMATCH",
-        {"target_semester": next_sem, "target_semester_type": target_sem_type, "open_semester_type": open_type},
-        fact
-    )
+        {"target_term_id": knowledge.target_term_id, "target_semester_type": knowledge.target_semester_type,
+         "open_semester_type": fact.open_semester_type, "offerings_ref": knowledge.offerings_ref,
+         "snapshot_id": knowledge.snapshot_id}, fact)

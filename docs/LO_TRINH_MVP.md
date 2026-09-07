@@ -62,8 +62,8 @@ So sánh explanation có/không grounded trên cùng candidate, Validation và R
 
 ## Cập nhật Validator cấp plan
 
-Đã có StandardValidator kiểm tra prerequisite toàn candidate, phạm vi checked/pending, lỗi cấu trúc và chuỗi evidence đầy đủ. Chưa hoàn thành Standard Validator toàn bộ ràng buộc: kết quả đạt tiên quyết là partially_validated. Xem [hợp đồng và giới hạn](../backend/app/validation/README.md).
+Đã triển khai schemas, OntologyEvidenceService và StandardValidator độc lập; mô tả khung package ở phần lịch sử phía trên không còn phản ánh đầy đủ source hiện tại. Xem [hợp đồng và giới hạn](../backend/app/validation/README.md).
 
 ## Cập nhật rule toàn vẹn candidate
 
-Đã bật course_existence, duplicate_course, catalog_credit_match cùng prerequisite; bổ sung audit từng môn và skip theo phụ thuộc. Plan đạt vẫn partially_validated. Các rule còn lại tiếp tục pending.
+Validator v3 kiểm tra REQUIRED_RULES, gồm học trước, quota từ lịch sử/candidate, ngành/chuyên ngành và học kỳ đích. Thiếu chính sách hoặc dữ kiện không trả valid; rule giữ pending kèm error. Agent và API chưa nối vào Validator, chưa phải kết quả end-to-end của MVP.

@@ -26,4 +26,4 @@ ValidationResult có bốn trạng thái: valid, invalid, partially_validated, e
 
 ontology_evidence giữ fact gốc, evidence giữ kết luận; supporting_evidence_ids phải trỏ tới fact cùng môn, cùng phiên bản ontology. Lỗi xảy ra trước truy vấn có thể trả evidence rỗng. Các schema không tự thực hiện hay chứng minh rule đã chạy; phạm vi thực tế được StandardValidator quyết định.
 
-Validator hiện bật course_existence, duplicate_course, catalog_credit_match và prerequisite; rule_checks lưu audit từng môn với pass/fail/skipped/error. Các ràng buộc còn lại luôn pending, kể cả khi không thấy lỗi. Schema và API cũ chưa được nối vào giao diện.
+Validator v3 kiểm tra toàn bộ REQUIRED_RULES khi đủ dữ liệu; thiếu/lỗi dữ liệu giữ rule pending và trả error. KnowledgeSnapshot bổ sung target_semester_type, curriculum_courses, prior_study_requirements và elective_quotas. Chi tiết nguồn chính sách và giới hạn xem [Validator](../validation/README.md). AgentState/AdjustmentRequest và tích hợp API chưa triển khai.

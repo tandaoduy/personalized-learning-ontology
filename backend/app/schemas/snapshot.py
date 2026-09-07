@@ -33,6 +33,14 @@ class StudentSnapshot(SchemaModel):
             raise ValueError("GPA exceeds its scale")
         return self
 
+class PriorStudyRequirement(SchemaModel):
+    course_code: CourseCode
+    required_courses: frozenset[CourseCode] = frozenset()
+
+class ElectiveQuota(SchemaModel):
+    category: Identifier
+    max_courses: int = Field(ge=0, strict=True)
+
 class KnowledgeSnapshot(SchemaModel):
     snapshot_id: Identifier
     versions: KnowledgeVersion
@@ -42,4 +50,18 @@ class KnowledgeSnapshot(SchemaModel):
     ontology_ref: Identifier
     rules_ref: Identifier
     offerings_ref: Identifier
+    target_semester_type: Literal[1, 2] | None = None
+    curriculum_courses: frozenset[CourseCode] | None = None
+    prior_study_requirements: tuple[PriorStudyRequirement, ...] = ()
+    elective_quotas: tuple[ElectiveQuota, ...] = ()
+
+    @model_validator(mode="after")
+    def unique_policies(self):
+        for values in (
+            [r.course_code for r in self.prior_study_requirements],
+            [q.category for q in self.elective_quotas],
+        ):
+            if len(values) != len(set(values)):
+                raise ValueError("Duplicate policy keys")
+        return self
     # References must resolve to immutable/versioned artifacts, not mutable live data.

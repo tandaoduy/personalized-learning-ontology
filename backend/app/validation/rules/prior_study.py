@@ -1,8 +1,17 @@
 from .common import conclusion
 
-def evaluate(plan, code, student, fact=None):
-    # Prior study check: default pass when no specific prior study constraint failed
-    passed = True
-    message = "Prior study conditions satisfied"
-    inputs = {"student_id": student.student_id, "current_semester": student.current_semester}
-    return conclusion(plan, code, "prior_study", passed, message, inputs, fact)
+
+def evaluate(plan, code, student, knowledge):
+    policy = next((r for r in knowledge.prior_study_requirements if r.course_code == code), None)
+    if policy is None:
+        raise ValueError("PRIOR_STUDY_POLICY_MISSING")
+    # A finished attempt (including a failed attempt) counts as studied.
+    # In-progress and courses merely proposed in this plan do not count.
+    studied = set(student.completed_courses) | set(student.failed_courses)
+    studied.update(a.course_code for a in student.attempts if a.outcome in {"passed", "failed", "exempt"})
+    missing = sorted(policy.required_courses - studied)
+    return conclusion(plan, code, "prior_study", not missing,
+        "PRIOR_STUDY_MISSING: " + ", ".join(missing) if missing else "Prior study conditions satisfied",
+        {"required_courses": sorted(policy.required_courses), "studied_courses": sorted(studied),
+         "missing_courses": missing, "rules_ref": knowledge.rules_ref,
+         "snapshot_id": knowledge.snapshot_id})

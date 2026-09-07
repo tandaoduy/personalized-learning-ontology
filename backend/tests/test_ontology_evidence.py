@@ -10,6 +10,7 @@ def service(tmp_path):
     graph = Graph()
     for code in ["A", "B", "C"]:
         graph.add((URIRef(BASE + code), CODE, Literal(code)))
+        graph.add((URIRef(BASE + code), URIRef(BASE + "isRequiredForMajor"), URIRef(BASE + "m1")))
         graph.add((URIRef(BASE + code), URIRef(BASE + "hasCredit"), Literal(3)))
     graph.add((URIRef(BASE + "B"), PREREQ, URIRef(BASE + "A")))
     graph.add((URIRef(BASE + "C"), URIRef(BASE + "corequisiteWith"), URIRef(BASE + "A")))

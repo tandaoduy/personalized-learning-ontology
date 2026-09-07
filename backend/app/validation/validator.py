@@ -21,7 +21,7 @@ from .rules import (
 )
 
 class StandardValidator:
-    VERSION = "standard-integrity-v2"
+    VERSION = "standard-academic-v3"
 
     def __init__(self, evidence_service: OntologyEvidenceService, min_credits: float = 0.0, max_credits: float = 27.0):
         self.evidence_service = evidence_service
@@ -79,7 +79,10 @@ class StandardValidator:
             # Completed retake check
             record("completed_course_retake", code, completed_course_retake.evaluate(plan, code, student))
             # Prior study check
-            record("prior_study", code, prior_study.evaluate(plan, code, student))
+            try:
+                record("prior_study", code, prior_study.evaluate(plan, code, student, knowledge))
+            except Exception as exc:
+                failed("prior_study", code, exc)
 
             # Course existence check
             exists = False
@@ -110,13 +113,20 @@ class StandardValidator:
                         item = corequisite.evaluate(plan, code, student, fact)
                     elif rule == "semester_offering":
                         fact = self.evidence_service.get_semester_offering_evidence(code, knowledge.versions.ontology_version)
-                        item = semester_offering.evaluate(plan, code, student, fact)
+                        item = semester_offering.evaluate(plan, code, knowledge, fact)
                     elif rule in ("curriculum_membership", "elective_quota"):
                         fact = self.evidence_service.get_course_category_evidence(code, knowledge.versions.ontology_version)
                         if rule == "curriculum_membership":
-                            item = curriculum_membership.evaluate(plan, code, student, fact)
+                            item = curriculum_membership.evaluate(plan, code, student, fact, knowledge)
                         else:
-                            item = elective_quota.evaluate(plan, code, fact)
+                            category_facts = {code: fact}
+                            if fact.elective_category is not None:
+                                for other in sorted(set(student.completed_courses) | {c.course_code for c in plan.courses}):
+                                    other_fact = self.evidence_service.get_course_category_evidence(other, knowledge.versions.ontology_version)
+                                    category_facts[other] = other_fact
+                                    if not any(f.evidence_id == other_fact.evidence_id for f in facts):
+                                        facts.append(other_fact)
+                            item = elective_quota.evaluate(plan, code, fact, student, knowledge, category_facts)
                     record(rule, code, item, fact)
                 except Exception as exc:
                     failed(rule, code, exc)

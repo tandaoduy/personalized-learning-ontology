@@ -147,19 +147,25 @@ class OntologyEvidenceService:
         query_version = "sha256:" + sha256(query_text.encode()).hexdigest()
         rows = list(self._graph.query(query_text, initBindings={"code": Literal(code)}))
         triples = []
-        open_sem_type = 3  # default open in both
+        open_types = set()
+        open_sem_type = None
         rec_sem = None
         for row in rows:
             subject, predicate, value = row
             pred_str = str(predicate)
+            if pred_str.endswith("openSemesterType") and not isinstance(value, Literal):
+                raise EvidenceSourceError("SEMESTER_OFFERING_INVALID")
             if isinstance(value, Literal):
                 triples.append(RDFTriple(subject=str(subject), predicate=pred_str, object=str(value), object_kind="literal",
                     datatype=str(value.datatype) if value.datatype else None, language=value.language))
                 if pred_str.endswith("openSemesterType"):
                     try:
-                        open_sem_type = int(str(value).strip())
+                        parsed = int(str(value).strip())
+                        if parsed not in (1, 2, 3, 12):
+                            raise ValueError()
+                        open_types.add(3 if parsed == 12 else parsed)
                     except ValueError:
-                        open_sem_type = 3
+                        raise EvidenceSourceError("SEMESTER_OFFERING_INVALID")
             elif isinstance(value, URIRef):
                 triples.append(RDFTriple(subject=str(subject), predicate=pred_str, object=str(value), object_kind="iri"))
                 if pred_str.endswith("recommendedInSemester"):
@@ -169,6 +175,9 @@ class OntologyEvidenceService:
                             rec_sem = int(sem_str.replace("Semester", ""))
                         except ValueError:
                             pass
+        if len(open_types) > 1:
+            raise EvidenceSourceError("SEMESTER_OFFERING_AMBIGUOUS")
+        open_sem_type = next(iter(open_types)) if open_types else None
         triples = tuple(sorted(set(triples), key=lambda t: t.model_dump_json()))
         identifier = sha256((self.ontology_version + query_version + code).encode()).hexdigest()
         return OntologyFactEvidence(evidence_id="ONTO_" + identifier, course_code=code, source_ref=self.source_ref,
@@ -196,10 +205,13 @@ class OntologyEvidenceService:
         is_phys_ed = False
         is_found = False
         is_spec_elec = False
-        specs = []
+        specs, majors = [], []
+        is_req_spec = False
         for row in rows:
             subject, predicate, value = row
             pred_str = str(predicate)
+            if not isinstance(value, URIRef):
+                raise EvidenceSourceError("COURSE_CATEGORY_INVALID")
             val_str = str(value)
             kind = "iri" if isinstance(value, URIRef) else "literal"
             triples.append(RDFTriple(subject=str(subject), predicate=pred_str, object=val_str, object_kind=kind))
@@ -207,13 +219,27 @@ class OntologyEvidenceService:
                 if val_str.endswith("GeneralEducationCourse"): is_gen_ed = True
                 elif val_str.endswith("PhysicalEducationCourse"): is_phys_ed = True
                 elif val_str.endswith("FoundationCourse"): is_found = True
-            elif pred_str.endswith("isRequiredForMajor"): is_req_major = True
-            elif pred_str.endswith("isElectiveForMajor"): is_elec_major = True
-            elif pred_str.endswith("isElectiveForSpecialization") or pred_str.endswith("offeredInSpecialization"):
+            elif pred_str.endswith("isRequiredForMajor"):
+                is_req_major = True
+                majors.append(val_str)
+            elif pred_str.endswith("isElectiveForMajor"):
+                is_elec_major = True
+                majors.append(val_str)
+            elif pred_str.endswith("isRequiredForSpecialization"):
+                is_req_spec = True
+                specs.append(val_str)
+            elif pred_str.endswith("offeredInSpecialization"):
+                specs.append(val_str)
+            elif pred_str.endswith("isElectiveForSpecialization"):
                 is_spec_elec = True
-                specs.append(val_str.split("#")[-1])
+                specs.append(val_str)
+        if (is_req_major or is_req_spec) and (is_elec_major or is_spec_elec):
+            raise EvidenceSourceError("COURSE_CATEGORY_AMBIGUOUS")
+        if not (is_req_major or is_req_spec or is_elec_major or is_spec_elec or is_phys_ed or is_gen_ed or is_found):
+            raise EvidenceSourceError("COURSE_CATEGORY_MISSING")
         category = None
-        if is_phys_ed: category = "physical"
+        if is_req_major or is_req_spec: pass
+        elif is_phys_ed: category = "physical"
         elif is_gen_ed: category = "general"
         elif is_found: category = "foundation"
         elif is_spec_elec or is_elec_major: category = "specialization" if is_spec_elec else "general"
@@ -224,7 +250,7 @@ class OntologyEvidenceService:
             ontology_version=self.ontology_version, query_id="Q_CATEGORY_01", query_version=query_version,
             query_text=query_text, subject_uri=str(next(iter(subjects))) if subjects else "urn:unresolved-course:" + code,
             exists=bool(subjects), elective_category=category, is_required_major=is_req_major, is_elective_major=is_elec_major,
-            specializations=tuple(sorted(set(specs))), triples=triples, captured_at=datetime.now(timezone.utc))
+            specializations=tuple(sorted(set(specs))), majors=tuple(sorted(set(majors))), triples=triples, captured_at=datetime.now(timezone.utc))
 
 
     def get_course_evidence(self, course_id, expected_version):

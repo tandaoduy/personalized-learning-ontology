@@ -6,7 +6,7 @@ from backend.app.schemas.snapshot import StudentSnapshot
 from backend.app.schemas.evidence import EvidenceRecord, OntologyFactEvidence, QueryBinding
 
 RULE_ID = "PREREQ_COMPLETED_01"
-RULE_VERSION = "integrity-prerequisite-v2"
+RULE_VERSION = "academic-constraints-v3"
 
 def evaluate_prerequisites(fact: OntologyFactEvidence, student: StudentSnapshot,
                            versions: KnowledgeVersion) -> EvidenceRecord:
