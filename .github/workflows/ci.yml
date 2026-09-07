@@ -51,3 +51,59 @@ jobs:
           name: test-results
           path: test-results.xml
           if-no-files-found: ignore
+
+  package:
+    name: Package deployment image
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out tested source
+        uses: actions/checkout@v4
+
+      - name: Build container
+        run: docker build --tag "personalized-learning-ontology:${GITHUB_SHA}" .
+
+      - name: Start production container
+        run: |
+          export SECRET_KEY="$(openssl rand -hex 32)"
+          docker run -d --name app-smoke --env SECRET_KEY "personalized-learning-ontology:${GITHUB_SHA}"
+
+      - name: Check application and ontology readiness
+        run: |
+          for attempt in $(seq 1 45); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' app-smoke)
+            if [ "$status" = healthy ]; then exit 0; fi
+            if [ "$(docker inspect --format '{{.State.Running}}' app-smoke)" != true ]; then break; fi
+            sleep 2
+          done
+          docker logs app-smoke
+          exit 1
+
+      - name: Export tested image and deployment files
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          mkdir -p delivery
+          docker save "personalized-learning-ontology:${GITHUB_SHA}" | gzip > delivery/app-image.tar.gz
+          cp compose.yaml .env.example docs/CD.md delivery/
+          echo "personalized-learning-ontology:${GITHUB_SHA}" > delivery/IMAGE.txt
+          cd delivery
+          sha256sum app-image.tar.gz > SHA256SUMS
+
+      - name: Upload deployment bundle
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-${{ github.sha }}
+          path: delivery/
+          include-hidden-files: true
+          retention-days: 14
+          compression-level: 0
+
+      - name: Container logs
+        if: failure()
+        run: docker logs app-smoke || true
+
+      - name: Remove smoke container
+        if: always()
+        run: docker rm -f app-smoke || true

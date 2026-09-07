@@ -19,3 +19,9 @@ legacy/reports/
 
 # Frontend dependencies
 node_modules/
+
+# Deployment secrets and exported container images
+.env
+.env.*
+!.env.example
+delivery/

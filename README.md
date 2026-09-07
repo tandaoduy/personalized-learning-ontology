@@ -1,5 +1,7 @@
 # Hệ thống cố vấn học tập dựa trên Ontology
 
+CI và đóng gói Docker để triển khai sau này: xem [hướng dẫn CD](docs/CD.md).
+
 Hệ thống web Flask hỗ trợ sinh viên và cố vấn học tập theo dõi kết quả, phân tích tiến độ và tạo kế hoạch học phần dựa trên chương trình đào tạo trong ontology RDF.
 
 ## Tính năng

@@ -1,0 +1,15 @@
+services:
+  app:
+    image: ${APP_IMAGE:-personalized-learning-ontology:local}
+    build: .
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env before starting}
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
+    volumes:
+      - app-data:/app/data
+
+volumes:
+  app-data:
