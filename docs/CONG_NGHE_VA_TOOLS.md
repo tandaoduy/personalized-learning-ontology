@@ -1,15 +1,15 @@
 # CÔNG NGHỆ VÀ CÔNG CỤ CHO AI AGENT
 
-> Nguồn: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf>). Nội dung và trạng thái công nghệ được đồng bộ theo bản PDF.
+> Nguồn thiết kế gốc: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>). Cập nhật trạng thái source và liên kết [đặc tả triển khai](DAC_TA_TRIEN_KHAI_MVP.md) ngày 2026-09-08 theo PDF v3.
 
 ## 1. Technology Stack
 
 | Lớp | Công nghệ | Trạng thái |
 |---|---|---|
-| Agent | LangGraph, Pydantic | Dự kiến MVP |
+| Agent | LangGraph, Pydantic | Có schemas Pydantic thành phần; Orchestrator/LangGraph chưa triển khai |
 | Knowledge | RDF/OWL, Protégé, RDFLib, SPARQL | Đang dùng một phần |
 | Planning | Python, Beam Search, heuristic | Đang dùng |
-| Validation | Python Rule Engine + Ontology | Cần đóng gói capability |
+| Validation | Python Rule Engine + Ontology | StandardValidator v3 độc lập đã có; adapter capability chưa có |
 | Data | PostgreSQL, SQLAlchemy | Kiến trúc đích; hiện dùng JSON/CSV |
 | Backend | Flask | Đang dùng |
 | Testing | Pytest | Đang dùng |
@@ -29,7 +29,7 @@
 | Explanation | Giải thích từ evidence | Explanations |
 | Feedback/Re-planning | Chuẩn hóa phản hồi và lập lại | Feedback, Adjustment Request |
 
-Danh sách trên mô tả capability logic, chưa ấn định tên hàm, API hoặc schema triển khai.
+Danh sách trên là capability logic. Mapping tên tool → adapter → module tái sử dụng, schema, timeout, error handling và provenance được chốt ở [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md). Tên module mới trong đó là đích triển khai, chưa phải source đã có. Risk chạy trước Ranking; Feedback trả adjustment, Re-planning do Orchestrator điều phối.
 
 ## 3. Hợp đồng tool và cập nhật State
 
@@ -51,8 +51,8 @@ Trong đó aₜ là hành động tại bước t và Oⱼ là kết quả do to
 
 - Ontology và Rule Engine quyết định tính hợp lệ; Candidate Generator chỉ sinh ứng viên.
 - Validator kiểm tra độc lập trước Ranking, sau Re-planning và trước xác nhận.
-- Ranking dùng tổng có trọng số các đặc trưng; Safe, Balanced và Accelerated dùng cùng tập đặc trưng với trọng số khác nhau. Trọng số được xác định trên validation và cố định trước test.
-- Độ khác biệt Top-3 dùng Jaccard trên tập học phần và ngưỡng được xác định trong giai đoạn validation.
+- Ranking dùng sáu feature và trọng số PDF v3, tóm tắt tại [mục 6 đặc tả MVP](DAC_TA_TRIEN_KHAI_MVP.md#6-ranking-thống-nhất-theo-pdf-v3), chưa kiểm chứng thực nghiệm. Hiệu chỉnh trên validation và cố định trước test; không dùng điểm heuristic cấp môn thay điểm plan.
+- Độ khác biệt Top-3 dùng Jaccard, delta khởi tạo đề xuất 0.30; duyệt plan valid theo score giảm dần và chỉ nhận khi đủ diversity với mọi plan đã chọn, không nới ngưỡng để đủ ba.
 - LLM chỉ hỗ trợ diễn giải mục tiêu, phản hồi và evidence; không tự tạo học phần, tín chỉ, quan hệ tiên quyết hoặc quy định học vụ.
 - LTR chỉ thay đổi thứ tự phương án hợp lệ. Preference cố vấn là tín hiệu giám sát chính trong thực nghiệm; dữ liệu preference phải được ẩn danh.
 - PostgreSQL/SQLAlchemy là kiến trúc đích; trạng thái hiện tại theo PDF là JSON/CSV. LTR, pgvector/RAG và LLM thuộc phần mở rộng.

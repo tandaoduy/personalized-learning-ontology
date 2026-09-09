@@ -26,4 +26,10 @@ ValidationResult có bốn trạng thái: valid, invalid, partially_validated, e
 
 ontology_evidence giữ fact gốc, evidence giữ kết luận; supporting_evidence_ids phải trỏ tới fact cùng môn, cùng phiên bản ontology. Lỗi xảy ra trước truy vấn có thể trả evidence rỗng. Các schema không tự thực hiện hay chứng minh rule đã chạy; phạm vi thực tế được StandardValidator quyết định.
 
-Validator v3 kiểm tra toàn bộ REQUIRED_RULES khi đủ dữ liệu; thiếu/lỗi dữ liệu giữ rule pending và trả error. KnowledgeSnapshot bổ sung target_semester_type, curriculum_courses, prior_study_requirements và elective_quotas. Chi tiết nguồn chính sách và giới hạn xem [Validator](../validation/README.md). AgentState/AdjustmentRequest và tích hợp API chưa triển khai.
+Validator v3 kiểm tra toàn bộ REQUIRED_RULES khi đủ dữ liệu; thiếu/lỗi dữ liệu giữ rule pending và trả error. KnowledgeSnapshot bổ sung target_semester_type, curriculum_courses, prior_study_requirements và elective_quotas. Chi tiết nguồn chính sách và giới hạn xem [Validator](../validation/README.md). `AgentState`, contract capability và `AdjustmentRequest` đã có; adapter capability và tích hợp API chưa triển khai.
+
+## Agent State và capability contract
+
+`capability.py` định nghĩa `ToolCallContext`, `ToolResult`, `ToolError` và `Provenance`. Mỗi lời gọi tool có input hash, version, nguồn/evidence và kết quả hoặc lỗi có cấu trúc.
+
+`agent_state.py` định nghĩa `AgentState`, `ToolTraceEvent` và `ValidationSummary`. State là bất biến; `AgentOrchestrator` là thành phần duy nhất tạo phiên bản State mới, kiểm tra thứ tự chuyển bước và chặn `invalid`, `partially_validated` hoặc `error` trước Risk/Ranking. `feedback.py` định nghĩa phản hồi và adjustment; schema chưa thay thế snapshot loader, adapters capability hay tích hợp API.

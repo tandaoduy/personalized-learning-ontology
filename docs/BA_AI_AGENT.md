@@ -1,6 +1,8 @@
 # ĐẶC TẢ NGHIỆP VỤ AI AGENT LẬP KẾ HOẠCH HỌC TẬP
 
-> Nguồn: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf>). Bản này trình bày các yêu cầu nghiệp vụ theo PDF; thiết kế và thực nghiệm đầy đủ xem [tài liệu thiết kế](THIET_KE_AI_AGENT.md).
+> Nguồn: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>). Bản này trình bày các yêu cầu nghiệp vụ theo PDF; thiết kế và thực nghiệm đầy đủ xem [tài liệu thiết kế](THIET_KE_AI_AGENT.md).
+
+> Cập nhật theo PDF v3 ngày 2026-09-08: [contract và Ranking MVP](DAC_TA_TRIEN_KHAI_MVP.md) cụ thể hóa nghiệp vụ; tham số đề xuất chưa qua thực nghiệm. Các bổ sung triển khai được ghi rõ trong đặc tả MVP.
 
 ## 1. Bối cảnh
 
@@ -77,7 +79,7 @@ Nếu không đủ ba phương án hợp lệ, hệ thống trả phương án h
 4. Sinh phương án theo ba định hướng.
 5. Kiểm tra toàn bộ ràng buộc.
 6. Loại hoặc sinh lại phương án sai.
-7. Xếp hạng phương án hợp lệ, chọn Top-3.
+7. Tính Risk trên phương án hợp lệ, rồi Ranking và chọn tối đa ba phương án khác biệt.
 8. Trình bày môn, tín chỉ, cảnh báo và lý do.
 9. Người dùng chọn, xếp hạng hoặc điều chỉnh.
 10. Kế hoạch điều chỉnh được sinh và kiểm tra lại.
@@ -108,7 +110,7 @@ Nếu không đủ ba phương án hợp lệ, hệ thống trả phương án h
 
 ## 9. Kết quả đầu ra
 
-Mỗi phương án gồm loại/mục tiêu, danh sách và phân loại môn, tổng tín chỉ, điểm, lý do chọn/loại, cảnh báo, trạng thái Validation và evidence. Kết quả Validation gồm valid/invalid, violations, warnings, evidence và phiên bản nguồn.
+Mỗi phương án gồm loại/mục tiêu, danh sách và phân loại môn, tổng tín chỉ, điểm, lý do chọn/loại, cảnh báo, trạng thái Validation và evidence. Kết quả Validation triển khai gồm valid/invalid/partially_validated/error, checked/pending rules, violations, warnings, errors, evidence và phiên bản nguồn; chỉ valid được xếp hạng. Môn đủ điều kiện nhưng không được chọn có lý do Ranking/diversity hoặc giới hạn tìm kiếm, không mặc nhiên là vi phạm học vụ.
 
 ## 10. Yêu cầu phản hồi và lập lại kế hoạch
 

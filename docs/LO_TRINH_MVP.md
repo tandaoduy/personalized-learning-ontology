@@ -2,6 +2,12 @@
 
 Tài liệu triển khai bổ sung cho [thiết kế](THIET_KE_AI_AGENT.md), theo góp ý ưu tiên Ontology Evidence, Standard Validator và Agent Orchestrator. Các bước dưới đây phân biệt việc đã làm với chức năng cần phát triển tiếp.
 
+Kế hoạch công việc, module cần tạo và tiêu chí nghiệm thu từng mốc M0–M7: [Kế hoạch triển khai Agent MVP](KE_HOACH_TRIEN_KHAI_AGENT_MVP.md).
+
+Đầu ra báo cáo đã có: [sơ đồ mapping capability → tool → module](MAPPING_CAPABILITY_MODULE_TOOL.md), kèm trạng thái triển khai từng thành phần.
+
+**Cập nhật thiết kế 2026-09-08:** [mapping capability/tool và contracts](DAC_TA_TRIEN_KHAI_MVP.md) được giữ; Ranking thống nhất theo PDF v3 với sáu feature, bảng trọng số PDF và diversity 0.30. JSON bảy feature trước đây không còn là cấu hình áp dụng. Đây là tài liệu để triển khai, chưa phải capability/Ranking đã code và chưa có kết quả thực nghiệm. Các mô tả “khung package” dưới đây là lịch sử; schemas thành phần, OntologyEvidenceService và StandardValidator v3 hiện đã có.
+
 ## 1. Tổ chức source đã thực hiện
 
 Source đã được chuyển sang cấu trúc MVP:
@@ -41,6 +47,8 @@ Commit này là mốc truy xuất thuật toán Beam Search hiện tại cho BL-
 | 7. Explanation và Feedback | Giải thích từ evidence, chuẩn hóa điều chỉnh, Re-planning, Final Validation và lưu phản hồi |
 
 Khung Orchestrator có thể được xây song song từ bước schema; chỉ kết nối capability thật khi hợp đồng và các kiểm tra tương ứng đã sẵn sàng.
+
+Đã có `AgentState`, capability envelope, feedback/adjustment schema, trace, run store và khung Orchestrator kiểm tra chuyển trạng thái, budget, timeout, retry, version/hash và validation gate; chưa có adapter capability hoặc API Agent. Ưu tiên tiếp theo là loader snapshot có manifest, rồi nối một hồ sơ qua Ontology → Eligibility → Generation → Validator → Risk → Ranking → Explanation → Feedback/Re-planning. Ranking thực hiện theo PDF v3 tại mục 6 đặc tả MVP, hiệu chỉnh khi có validation data. Chuẩn bị trace end-to-end thật cho lần báo cáo tới; công thức trong đặc tả không thay thế trace đó.
 
 Phân biệt môn không đủ điều kiện và môn đủ điều kiện nhưng không được chọn. Quyết định do Ranking phải truy vết được tới đặc trưng/điểm và dữ kiện hỗ trợ, không diễn đạt thành vi phạm học vụ.
 

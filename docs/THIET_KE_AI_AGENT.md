@@ -1,6 +1,6 @@
 # THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP
 
-> Nguồn: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP.pdf>). Nội dung và trạng thái công nghệ được đồng bộ theo bản PDF.
+> Nguồn thiết kế gốc: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>). Cập nhật ngày 2026-09-08: thống nhất Ranking theo PDF v3; contract triển khai được bổ sung trong Markdown. Chi tiết đủ để code và các tham số **đề xuất, chưa kiểm chứng thực nghiệm** nằm trong [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md).
 
 ## 1. Mục đích
 
@@ -49,10 +49,10 @@ Agent Orchestrator không trực tiếp quyết định quy tắc học vụ. On
 
 | Lớp | Công nghệ | Trạng thái |
 |---|---|---|
-| Agent | LangGraph, Pydantic | Dự kiến MVP |
+| Agent | LangGraph, Pydantic | Schemas Pydantic thành phần đã có; Orchestrator/LangGraph chưa triển khai |
 | Knowledge | RDF/OWL, Protégé, RDFLib, SPARQL | Đang dùng một phần |
 | Planning | Python, Beam Search, heuristic | Đang dùng |
-| Validation | Python Rule Engine + Ontology | Cần đóng gói capability |
+| Validation | Python Rule Engine + Ontology | StandardValidator v3 độc lập đã có; chưa nối capability/Agent |
 | Data | PostgreSQL, SQLAlchemy | Kiến trúc đích; hiện dùng JSON/CSV |
 | Backend | Flask | Đang dùng |
 | Testing | Pytest | Đang dùng |
@@ -72,7 +72,28 @@ Agent Orchestrator không trực tiếp quyết định quy tắc học vụ. On
 | Explanation | Giải thích từ evidence | Explanations |
 | Feedback/Re-planning | Chuẩn hóa phản hồi và lập lại | Feedback, Adjustment Request |
 
-Danh sách trên mô tả capability logic, chưa ấn định tên hàm, API hoặc schema triển khai.
+Danh sách trên mô tả capability logic. Mapping module/tool và schema triển khai dự kiến được chốt tại mục 3.3 và tài liệu liên kết; không đồng nghĩa các capability đã được code.
+
+### 3.3. Đặc tả Capability và Tool Contract
+
+Mỗi capability là một đơn vị chức năng do Agent Orchestrator điều phối, phải công bố **input schema, output schema, precondition, postcondition, timeout, error handling và provenance**. Capability chỉ trả output thuộc phạm vi trách nhiệm; Orchestrator là thành phần duy nhất áp dụng output vào Agent State và quyết định chuyển trạng thái. Contract độc lập với cách gọi Python, LangGraph hoặc adapter tool của LLM.
+
+| Capability | Input chính | Output chính | Precondition | Postcondition | Provenance chính |
+|---|---|---|---|---|---|
+| Student Context | Student ID, học kỳ đích | StudentSnapshot, source manifest | Hồ sơ và lịch học xác định | Snapshot nhất quán, chỉ dùng lịch sử trước học kỳ đích | studentVersion, source hash, cutoff |
+| Ontology/Knowledge | StudentSnapshot, CTĐT/học kỳ | KnowledgeContext, Evidence | Nguồn tri thức và phiên bản xác định | Dữ kiện đầy đủ theo manifest, truy vết được | ontology/rule/curriculum/offering version, query ID/hash |
+| Eligibility | Student/Knowledge Context | CourseSpace | Snapshot hợp lệ | Phân biệt eligible, conditional, ineligible, unknown; có evidence | Rule inputs, fact IDs |
+| Candidate Generator | CourseSpace, request, adjustment, seed/budget | CandidatePlans, generation trace | CourseSpace đủ dữ liệu | Sinh 0..budget candidate, chưa khẳng định validity | Generator/config version, seed, snapshots |
+| Standard Validator | Candidate, snapshots, credit policy | ValidationResult | Schema hợp lệ, đúng nội dung nguồn | Trả valid/invalid/partially_validated/error; chỉ valid đi tiếp | Plan hash, ontology/rule/config version, evidence |
+| Risk Analysis | ValidatedPlan, Student Context, RankingContext | RiskResult | Validation còn hiệu lực | Điểm và thành phần rủi ro có căn cứ; không đổi validity | Risk version, inputs, assumptions |
+| Ranking | ValidatedPlans, RiskResults, request/context/config | RankingResult | Plan valid, đủ feature, cùng versions | Điểm thành phần/tổng và tối đa ba phương án khác biệt | Ranking/config/feature version, validation hash |
+| Explanation | Selected plans, Validation, Ranking, Evidence | GroundedExplanation | Mọi tham chiếu giải được và đúng version | Claim liên kết decision/evidence đúng nội dung | Claim/decision/evidence IDs, template version |
+| Feedback | Feedback, displayed result, request | AdjustmentRequest hoặc selection intent | Phản hồi có kiểu, kết quả chưa stale | Không sửa candidate/knowledge; persist idempotent | Feedback ID, parent result, actor role |
+| Re-planning | Adjustment hoặc validation diagnostics | Vòng điều phối mới | Còn budget, dữ kiện đủ | Gọi lại generator và Validator, rồi risk/rank/explain | Iteration và chuỗi tool calls |
+
+Mapping tới module/tool, schema trường, timeout cụ thể, lỗi và quy tắc retry được quy định tại [mục 2–5 của đặc tả triển khai](DAC_TA_TRIEN_KHAI_MVP.md). Risk chạy **trước Ranking** vì safety là feature; Feedback và Re-planning được tách trách nhiệm. Final Validation dùng lại StandardValidator trên nguồn hiện hành.
+
+Nếu precondition không thỏa, capability trả lỗi có cấu trúc cho Orchestrator, không suy đoán dữ kiện học vụ hoặc nới hard constraints. Plan invalid là kết luận nghiệp vụ; lỗi nguồn, timeout và chưa kiểm tra đủ phải được phân biệt. Output ảnh hưởng đến quyết định giữ đủ input hash, nguồn/version, cấu hình và evidence để tái lập. Trọng số Ranking và heuristic Risk là quyết định thiết kế có phiên bản, không được ghi thành fact ontology.
 
 ## 4. Agent State và Agent Memory
 
@@ -146,7 +167,7 @@ Các bất biến an toàn:
 ### 4.3. Cơ chế cập nhật State
 
 - Khởi tạo từ yêu cầu hợp lệ và snapshot.
-- Capability chỉ cập nhật phần thuộc trách nhiệm.
+- Capability chỉ trả phần output thuộc trách nhiệm; Orchestrator kiểm tra và cập nhật State.
 - Câu chữ phải được chuẩn hóa trước khi cập nhật.
 - Mỗi vòng giữ iteration/version và trace cũ.
 - Candidate Plans có trước Validation Results.
@@ -187,7 +208,7 @@ RECEIVED → LOADING_CONTEXT → PLANNING → VALIDATING
 Any state → FAILED
 ```
 
-*Sơ đồ chữ được chép theo mục 4.5 của PDF; điều kiện xác nhận và lập lại được quy định tại các mục 4.1, 4.3 và 5.4.*
+*Sơ đồ chữ trên giữ bản gốc PDF. Luồng triển khai bổ sung Risk trước Ranking và làm mới snapshot trước xác nhận tại [đặc tả MVP](DAC_TA_TRIEN_KHAI_MVP.md); không có chuyển trạng thái CONFIRMED quay lại planning tự động.*
 
 ## 5. Quy trình Planning–Validation–Re-planning
 
@@ -197,7 +218,7 @@ Any state → FAILED
 2. Tải Knowledge Context đúng CTĐT/học kỳ.
 3. Xác định môn đủ điều kiện và môn bị loại kèm evidence.
 4. Sinh candidate plans Safe, Balanced và Accelerated.
-5. Loại phương án trùng hoặc thiếu khác biệt.
+5. Ghi lại candidate attempts và gộp trùng chính xác khi cùng nội dung; chưa lọc theo diversity.
 6. Chuyển candidate plans tới Validator.
 
 Planning không tự xác nhận phương án hợp lệ.
@@ -213,55 +234,15 @@ Validator kiểm tra:
 - Môn đã hoàn thành, học lại/cải thiện.
 - Quota và nhóm môn tự chọn.
 
-Kết quả gồm valid/invalid, violations, warnings, evidence và phiên bản nguồn. Validator chạy trước Ranking, sau Re-planning và ngay trước xác nhận.
+Kết quả triển khai gồm `valid`, `invalid`, `partially_validated`, `error`, kèm checked/pending rules, violations, warnings, errors, evidence và phiên bản nguồn. Chỉ `valid` trên đúng candidate/snapshot được Ranking/Explain và hiển thị như phương án đề xuất; trạng thái khác chỉ trả chẩn đoán. Validator độc lập, deterministic trên cùng đầu vào/cấu hình, không gọi LLM; bắt buộc chạy sau mỗi Re-planning và ngay trước xác nhận. Không đủ ba plan hợp lệ thì trả ít hơn và giải thích.
 
-### 5.3. Ranking
+### 5.3. Ranking — thống nhất theo PDF v3
 
-Ranking chỉ được thực hiện trên các phương án đã vượt qua Validation. Với mỗi phương án hợp lệ $p$, hệ thống tính các đặc trưng: mức phù hợp với mục tiêu người học, mức ưu tiên môn bắt buộc, khả năng mở khóa học phần tiên quyết, độ phù hợp tín chỉ, độ cân bằng tải học tập và mức rủi ro.
+Theo PDF mục 5.3 (trang 15–30), dùng **sáu feature**: Goal Fit, Mandatory Priority, Unlock Score, Credit Fit, Workload Balance và Safety. Mandatory/Unlock chuẩn hóa min–max trong pool valid; max=min thì gán 1. Các feature còn lại tính trực tiếp trong [0,1], giá trị cao hơn là tốt hơn.
 
-Điểm tổng quát của một phương án:
+`Score_s(P) = sum(w[s,i] * f_i(P))`; Safe/Balanced/Accelerated dùng bảng trọng số PDF trang 25. Công thức từng feature, risk và bảng trọng số được tóm tắt tại [mục 6 đặc tả MVP](DAC_TA_TRIEN_KHAI_MVP.md#6-ranking-thống-nhất-theo-pdf-v3). Bản này thay đề xuất bảy feature trước đây; không dùng cấu hình JSON cũ để triển khai.
 
-$$
-Score(p \mid g) = \sum_{i=1}^{n} w_i^{(g)} f_i(p)
-$$
-
-Trong đó $f_i(p)$ là các đặc trưng của phương án, $w_i^{(g)}$ là trọng số tương ứng và $g$ là loại phương án:
-
-$$
-g \in \{Safe, Balanced, Accelerated\}
-$$
-
-Ba loại phương án sử dụng cùng tập đặc trưng nhưng có trọng số khác nhau:
-
-- **Safe:** ưu tiên giảm rủi ro, xử lý môn nợ và duy trì tải học phù hợp.
-- **Balanced:** ưu tiên bám tiến độ chuẩn và cân bằng giữa tải học, môn bắt buộc và mục tiêu cá nhân.
-- **Accelerated:** ưu tiên khả năng học trước tiến độ và mở khóa các học phần tiếp theo nhưng vẫn phải bảo đảm các hard constraints.
-
-Các trọng số được xác định trong giai đoạn validation và cố định trước khi đánh giá trên tập test.
-
-#### 5.3.1. Độ đa dạng của Top-3 phương án
-
-Để tránh ba phương án có nội dung gần như giống nhau, hệ thống đánh giá độ khác biệt dựa trên tập học phần. Với hai phương án $p_i$ và $p_j$, độ tương đồng Jaccard là:
-
-$$
-J(p_i,p_j) = \frac{|Courses(p_i) \cap Courses(p_j)|}{|Courses(p_i) \cup Courses(p_j)|}
-$$
-
-Độ khác biệt giữa hai phương án:
-
-$$
-D(p_i,p_j) = 1 - J(p_i,p_j)
-$$
-
-Các phương án trong Top-3 đủ khác biệt khi:
-
-$$
-D(p_i,p_j) \geq \delta
-$$
-
-Điều kiện áp dụng cho mọi cặp phương án trong Top-3; ngưỡng $\delta$ được xác định trong giai đoạn validation.
-
-Ngoài tập học phần, độ đa dạng có thể được xem xét thêm theo tổng tín chỉ, tỷ lệ môn bắt buộc/tự chọn và mức rủi ro. Khi hai phương án có điểm Ranking gần nhau nhưng quá giống nhau về danh sách học phần, hệ thống ưu tiên phương án có độ khác biệt cao hơn để cung cấp lựa chọn có ý nghĩa.
+Top-3 chỉ xét plan đã valid: duyệt theo score giảm dần và chỉ thêm plan khi `D = 1 − Jaccard >= 0.30` với mọi plan đã chọn. Trả ít hơn ba khi thiếu phương án, kèm lý do. Trọng số/ngưỡng là khởi tạo, hiệu chỉnh trên validation rồi cố định trước test. PDF chưa chốt cách hợp nhất ba strategy thành một bộ ba có đủ nhãn; không mặc nhiên áp dụng assignment của đề xuất cũ.
 
 ### 5.4. Re-planning
 
