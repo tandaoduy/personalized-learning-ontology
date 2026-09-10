@@ -74,6 +74,8 @@ class OntologyFactEvidence(SchemaModel):
     elective_category: Identifier | None = None
     is_required_major: bool | None = None
     is_elective_major: bool | None = None
+    is_required_specialization: bool | None = None
+    is_elective_specialization: bool | None = None
     specializations: tuple[Identifier, ...] = ()
     majors: tuple[Identifier, ...] = ()
     captured_at: AwareDatetime

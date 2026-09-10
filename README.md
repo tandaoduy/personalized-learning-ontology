@@ -13,6 +13,18 @@ Hệ thống web Flask hỗ trợ sinh viên và cố vấn học tập theo dõ
 - Phân tích nguy cơ `LOW`, `MEDIUM`, `HIGH`.
 - Giao diện và API cho sinh viên/cố vấn học tập.
 
+## Phạm vi Agent pilot
+
+Luồng Agent hiện dùng dữ liệu và luật deterministic; không dùng LLM để quyết định học vụ.
+Sau Validator, pipeline tính Risk/Safety, sáu feature Ranking, ba bộ trọng số
+Safe/Balanced/Accelerated và chọn tối đa ba phương án với khoảng cách Jaccard tối thiểu 0.30.
+Mọi kết quả mang hash context/config và source refs; trạng thái học vụ hiện là proxy nghiên cứu
+`ProgressRiskAnalyzer`, được đánh dấu rõ là không phải cảnh báo học vụ chính thức.
+Pilot chỉ nhận `target_term_id=next-term`, nghĩa là học kỳ hiện tại cộng một. Các mã kỳ lịch sử
+hoặc tùy ý bị từ chối cho đến khi có mapping lịch học có phiên bản. Ánh xạ ngành chỉ chấp nhận
+CNTT/Công nghệ thông tin và KHMT/Khoa học máy tính; ngành chưa ánh xạ trả lỗi thay vì mặc định CNTT.
+Trong lịch sử học, `Chưa đạt` là failed; `Đạt` là passed; `Miễn` và `Không tính điểm` là exempt.
+
 ## Công nghệ
 
 - Python 3.10+, Flask 3, RDFLib 7.

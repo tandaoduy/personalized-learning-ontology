@@ -1,87 +1,147 @@
 """Run one real Agent → ontology → beam → validator trace from project data."""
 from __future__ import annotations
 
+import io
 import json
+import logging
 import sys
-from hashlib import sha256
 from pathlib import Path
+
+# Fix UTF-8 output on Windows terminal
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+else:
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+else:
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from backend.app.agent import AgentOrchestrator
-from backend.app.capabilities import build_course_space, generate_candidates, load_knowledge_context, load_student_context, validate_candidate
+from backend.app.agent import AgentOrchestrator, run_agent_pipeline
 from backend.app.config import Config
-from backend.app.schemas import PlanningRequest, ToolError, ToolResult
+from backend.app.schemas import PlanningRequest
 from backend.app.services.agent_run_store import AgentRunStore
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
 
 
-def digest(value: object) -> str:
-    return "sha256:" + sha256(json.dumps(value, sort_keys=True, default=str).encode()).hexdigest()
+class ReadableTextFilter(logging.Filter):
+    """Repair legacy mojibake in logs while preserving normal Unicode text."""
+    def filter(self, record):
+        message = record.getMessage()
+        if "Ã" in message or "Ä" in message:
+            try:
+                message = message.encode("latin1").decode("utf-8")
+            except UnicodeError:
+                pass
+        record.msg, record.args = message, ()
+        return True
+
+
+def setup_logging(log_path: Path):
+    """Configure logging for clear terminal output."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(levelname)-7s | %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(log_path, encoding="utf-8")],
+    )
+    root_logger = logging.getLogger()
+    for handler in root_logger.handlers:
+        handler.addFilter(ReadableTextFilter())
+    logging.getLogger("backend.app.agent.pipeline").setLevel(logging.INFO)
+    logging.getLogger("backend.app.capabilities").setLevel(logging.INFO)
 
 
 def main(student_id: str = "SV001") -> int:
-    request = PlanningRequest(request_id="demo-" + student_id, student_id=student_id,
-        target_term_id="next-term", goal="on_time", target_credits=15)
-    students = StudentDataService(Config.STUDENT_DATA_JSON, Config.STUDENT_DATA_CSV)
-    profile = students.get_student(student_id)
-    if profile is None:
-        print(json.dumps({"error": "STUDENT_NOT_FOUND", "student_id": student_id})); return 2
-    engine = RecommendationEngine(Config.ONTOLOGY_PATH, beam_width=Config.BEAM_WIDTH,
-        min_credits=Config.REGISTER_MIN_CREDITS, max_credits=Config.REGISTER_MAX_CREDITS,
-        elective_quotas=Config.ELECTIVE_QUOTAS)
-    evidence = OntologyEvidenceService(Config.ONTOLOGY_PATH)
-    orchestrator = AgentOrchestrator()
-    store = AgentRunStore(ROOT / "artifacts" / "agent_runs")
-    state = orchestrator.start(orchestrator.create_run(request, run_id="DEMO_" + student_id))
-    store.save_state(state)
+    output_dir = ROOT / "artifacts" / "agent_runs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    setup_logging(output_dir / f"demo-{student_id}.log")
+    logger = logging.getLogger(__name__)
 
-    context = orchestrator.create_call_context(state, "load_student_context", digest(request.model_dump()))
-    student_result = load_student_context(context, request, students)
-    state = orchestrator.apply_result(state, "load_student_context", context, student_result)
-    if student_result.status == "error": return _finish(store, state, student_result.error)
-    student = student_result.output.student_snapshot
+    logger.info("=" * 68)
+    logger.info("        AGENT PIPELINE DEMO - ORCHESTRATOR + 5 CAPABILITIES")
+    logger.info("=" * 68)
+    logger.info("")
 
-    context = orchestrator.create_call_context(state, "load_knowledge_context", digest({"request": request.model_dump(), "student": student.model_dump()}))
-    knowledge_result = load_knowledge_context(context, request, student, engine, evidence)
-    state = orchestrator.apply_result(state, "load_knowledge_context", context, knowledge_result)
-    if knowledge_result.status == "error": return _finish(store, state, knowledge_result.error)
-    knowledge = knowledge_result.output.knowledge_snapshot
+    # Initialize services
+    logger.info("Initializing services...")
+    try:
+        students = StudentDataService(Config.STUDENT_DATA_JSON, Config.STUDENT_DATA_CSV)
+        profile = students.get_student(student_id)
+        if profile is None:
+            logger.error("Student %s not found", student_id)
+            return 2
 
-    context = orchestrator.create_call_context(state, "build_course_space", digest({"student": student.model_dump(), "knowledge": knowledge.model_dump()}))
-    eligibility_result = build_course_space(context, student, knowledge, profile, engine)
-    state = orchestrator.apply_result(state, "build_course_space", context, eligibility_result)
-    if eligibility_result.status == "error": return _finish(store, state, eligibility_result.error)
+        engine = RecommendationEngine(
+            Config.ONTOLOGY_PATH,
+            beam_width=Config.BEAM_WIDTH,
+            min_credits=Config.REGISTER_MIN_CREDITS,
+            max_credits=Config.REGISTER_MAX_CREDITS,
+            elective_quotas=Config.ELECTIVE_QUOTAS,
+        )
+        evidence = OntologyEvidenceService(Config.ONTOLOGY_PATH)
+        orchestrator = AgentOrchestrator()
+        logger.info("[OK] All services initialized successfully")
+        logger.info("")
+    except Exception as exc:
+        logger.exception("Failed to initialize services: %s", exc)
+        return 1
 
-    context = orchestrator.create_call_context(state, "generate_candidates", digest({"space": eligibility_result.output.model_dump(), "seed": state.seed}))
-    generation = generate_candidates(context, request, student, knowledge, profile, engine)
-    hashes = tuple("sha256:" + sha256(plan.model_dump_json().encode()).hexdigest() for plan in (generation.output.candidates if generation.output else ()))
-    state = orchestrator.apply_generation_result(state, context, generation, hashes,
-        len(generation.output.attempt_records) if generation.output else 0,
-        generation.output.expanded_states if generation.output else 0)
-    if generation.status == "error" or not generation.output or not generation.output.candidates:
-        return _finish(store, state, generation.error or ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates"))
+    # Create planning request
+    request = PlanningRequest(
+        request_id="demo-" + student_id,
+        student_id=student_id,
+        target_term_id="next-term",
+        goal="on_time",
+        target_credits=15,
+    )
 
-    candidate = generation.output.candidates[0]
-    context = orchestrator.create_call_context(state, "validate_candidates", digest(candidate.model_dump()))
-    validated = validate_candidate(context, candidate, student, knowledge, evidence,
-        min_credits=engine.min_credits, max_credits=engine.max_credits)
-    if validated.status == "ok":
-        item = validated.output.validation if hasattr(validated.output, "validation") else validated.output
-        state = orchestrator.apply_validations(state, (item,), context, validated)
-    return _finish(store, state, None)
+    # Run pipeline
+    result = run_agent_pipeline(request, students, engine, evidence, orchestrator)
 
+    # Save to store
+    logger.info("\n--- SAVING RUN ARTIFACTS ---")
+    store = AgentRunStore(output_dir)
+    store.root.mkdir(parents=True, exist_ok=True)
+    artifact_path = store.root / f"{request.request_id}.json"
+    artifact_path.write_text(json.dumps(result, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+    logger.info("Artifacts saved to: %s", artifact_path)
+    logger.info("Step log saved to: %s", output_dir / f"demo-{student_id}.log")
 
-def _finish(store: AgentRunStore, state, error: ToolError | None) -> int:
-    store.save_state(state)
-    print(json.dumps({"run_id": state.run_id, "status": state.status, "iteration": state.iteration,
-        "candidate_attempts": state.candidate_attempts_used, "validations": [v.model_dump() for v in state.validations],
-        "errors": [e.model_dump() for e in state.errors] + ([error.model_dump()] if error else []),
-        "trace": [event.model_dump() for event in state.trace]}, ensure_ascii=False, default=str, indent=2))
-    return 0 if state.status == "assessing_risk" else 1
+    # Print summary
+    logger.info("\n" + "=" * 68)
+    logger.info("                          DEMO COMPLETE")
+    logger.info("=" * 68)
+
+    final_status = result.get("status")
+    if result.get("success") and final_status == "explaining":
+        logger.info("Status: SUCCESS — valid plans passed Validator, Risk and Ranking")
+        logger.info("Final state: %s", final_status)
+        logger.info("Candidates generated: %d", len(result.get("candidates", [])))
+        logger.info("Valid plans: %d", sum(1 for v in result.get("validations", []) if v.get("status") == "valid"))
+        logger.info("Invalid plans: %d", sum(1 for v in result.get("validations", []) if v.get("status") != "valid"))
+        logger.info("Selected plans: %s", result.get("ranking", {}).get("selected_plans", []))
+        logger.info("Trace summary:")
+        for event in result.get("trace", []):
+            logger.info("  %s | %s | call=%s | output=%s", event["action"], event["outcome"],
+                        event["call_id"], event.get("output_hash") or "-")
+        return 0
+    if result.get("success") and final_status in {"replanning", "no_plan_found"}:
+        logger.warning("Status: COMPLETE — no valid plan is available yet; this is not a system error")
+        logger.warning("Final state: %s", final_status)
+        logger.warning("Read validation violations in the artifact before changing any rule or data.")
+        return 0
+    else:
+        logger.error("Status: FAILED — pipeline could not accept its final tool output")
+        logger.error("Final state: %s", final_status)
+        error = result.get("error", {})
+        logger.error("Error: %s - %s", error.get("code"), error.get("message"))
+        return 1
 
 
 if __name__ == "__main__":

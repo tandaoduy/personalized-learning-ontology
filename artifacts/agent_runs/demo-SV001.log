@@ -1,0 +1,167 @@
+INFO    | ====================================================================
+INFO    |         AGENT PIPELINE DEMO - ORCHESTRATOR + 5 CAPABILITIES
+INFO    | ====================================================================
+INFO    | 
+INFO    | Initializing services...
+INFO    | Đang nạp dữ liệu sinh viên (force_reload=True)
+INFO    | Đã nạp 364 sinh viên từ JSON
+INFO    | Đã làm mới bộ nhớ đệm sinh viên với 364 bản ghi
+INFO    | Đã tìm thấy sinh viên
+INFO    | Đang nạp ontology từ file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf
+INFO    | Đã gộp môn tương đương: SOT348 -> INT6900
+INFO    | Đã nạp ontology: 106 môn học, 5 chuyên ngành
+INFO    | [OK] All services initialized successfully
+INFO    | 
+INFO    | === AGENT PIPELINE START ===
+INFO    | Run ID: RUN_demo-SV001
+INFO    | Student ID: SV001, Target: next-term, Goal: on_time
+INFO    | Initial state: loading_context (revision=1)
+INFO    | 
+--- [1/5] LOADING STUDENT CONTEXT ---
+INFO    | Call ID: CALL_cbb483c67f304a54bb94f9fcea0ef94f, Deadline: 2026-09-09T08:39:37.619076+00:00
+INFO    | Đã tìm thấy sinh viên
+INFO    | Status: ok
+INFO    | Student loaded: 001, completed=50 courses, GPA=7.59
+INFO    | State transition: loading_context → loading_knowledge (revision=2)
+INFO    | 
+--- [2/5] LOADING KNOWLEDGE CONTEXT ---
+INFO    | Call ID: CALL_a7c7e58eac4d44418d415dd30acd5146
+INFO    | Status: ok
+INFO    | Ontology loaded: version=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad, catalog=106 courses
+INFO    | Policy: credits=10-27, quotas={'general': 1, 'physical': 2, 'foundation': 1, 'specialization': 3}
+INFO    | State transition: loading_knowledge → building_course_space (revision=3)
+INFO    | 
+--- [3/5] BUILD COURSE SPACE (ELIGIBILITY) ---
+INFO    | Đã tìm thấy sinh viên
+INFO    | Call ID: CALL_b878dcd5d5154fdb9bbf91d15b382d5a
+INFO    | Status: ok
+INFO    | Course space built: eligible=9, ineligible=97 (total=106)
+INFO    | State transition: building_course_space → generating (revision=4)
+INFO    | 
+--- [4/5] GENERATE CANDIDATES (BEAM SEARCH) ---
+INFO    | Call ID: CALL_c152f2b8ff54454c8c49f783ae5a173d, Seed: 42, Beam width: 8
+INFO    | Status: ok
+INFO    | Candidates generated: 3 plans, attempts=3, expanded_states=15, duplicates=0
+INFO    |   Plan 1: type=safe, courses=5, credits=15.0
+INFO    |   Plan 2: type=balanced, courses=5, credits=15.0
+INFO    |   Plan 3: type=balanced, courses=5, credits=15.0
+INFO    | State transition: generating → validating (revision=5)
+INFO    | 
+--- [5/5] VALIDATE CANDIDATES ---
+INFO    | Call ID: CALL_ad7dbcfc731e4f969aab1ad5ca3861b4 (batch of 3)
+INFO    | Validating plan 1/3: RUN_demo-SV001-plan-1
+INFO    |   Status: ok
+INFO    |   Validation result: status=invalid, checked=11/11, violations=4, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    |     Violation: constraint=curriculum_membership, courses=INT6209, evidence=RULE_9a0c7dcdac57d0acebd4b27a45c02f80522aef969e11277770418dc666c63185
+INFO    |     Violation: constraint=curriculum_membership, courses=NEC326, evidence=RULE_9006a6951a71b1cf468dc1495b3ccecb871ae9d877ac7e433be1ca330e3bc075
+INFO    |     Violation: constraint=curriculum_membership, courses=SOT344, evidence=RULE_d015c3e544634f7d7c1ae8a968ed43ac695780fb3feae0ee100d061d866bb57e
+INFO    | Validating plan 2/3: RUN_demo-SV001-plan-2
+INFO    |   Status: ok
+INFO    |   Validation result: status=invalid, checked=11/11, violations=4, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    |     Violation: constraint=curriculum_membership, courses=INT6209, evidence=RULE_60d0703675f3ce5b657d699d48bfdf9a55096cca665044dcd2a4bba30c8c9eae
+INFO    |     Violation: constraint=curriculum_membership, courses=NEC326, evidence=RULE_a45d9f67ad4c1cd72ba81a57f1652edc668ed62935929831f14762a97027bcbc
+INFO    |     Violation: constraint=curriculum_membership, courses=SOT344, evidence=RULE_f8ecb596baed15f0902854ec7ba798126f0c09afefcc13173458a330b5070ffc
+INFO    | Validating plan 3/3: RUN_demo-SV001-plan-3
+INFO    |   Status: ok
+INFO    |   Validation result: status=invalid, checked=11/11, violations=4, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    |     Violation: constraint=curriculum_membership, courses=INT6209, evidence=RULE_5d517b199840dfe4590844779bba90d335d33b24e9429bc359cdeec3a415711b
+INFO    |     Violation: constraint=curriculum_membership, courses=NEC326, evidence=RULE_91833a1c23bd2918f557b5995ea81b0917007b5e585be528fdc60281e0b4f7ad
+INFO    |     Violation: constraint=curriculum_membership, courses=SOT344, evidence=RULE_6dab9b6acefa6a54e79d24c16166ef1efbe12bd5d4eef6469142100d60ceef78
+INFO    | Validation complete: valid=0, invalid=3
+INFO    | State transition: validating → failed (revision=6)
+INFO    | 
+=== AGENT PIPELINE COMPLETE ===
+INFO    | Final state: failed
+INFO    | Budget used: candidates=3/60, expanded_states=15/5000
+INFO    | 
+--- SAVING RUN ARTIFACTS ---
+INFO    | Artifacts saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV001.json
+INFO    | Step log saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV001.log
+INFO    | 
+====================================================================
+INFO    |                           DEMO COMPLETE
+INFO    | ====================================================================
+INFO    | Status: SUCCESS [OK]
+INFO    | Final state: failed
+INFO    | Candidates generated: 3
+INFO    | Valid plans: 0
+INFO    | Invalid plans: 3
+INFO    | Trace summary:
+INFO    |   load_student_context | ok | call=CALL_cbb483c67f304a54bb94f9fcea0ef94f | output=sha256:94b13529682ddb20d85fba6d22901eaeaa6b0ec6f4163e08e6680dcddf4d4199
+INFO    |   load_knowledge_context | ok | call=CALL_a7c7e58eac4d44418d415dd30acd5146 | output=sha256:897cb07408beea7a05fb4f09c31c16979b358775d6bff19908fd54bb16565fab
+INFO    |   build_course_space | ok | call=CALL_b878dcd5d5154fdb9bbf91d15b382d5a | output=sha256:4f3fff3ac51183741266ff6246de5ddd06a31e73975498fe8ea129f9e84386aa
+INFO    |   generate_candidates | ok | call=CALL_c152f2b8ff54454c8c49f783ae5a173d | output=sha256:f085b687f15c5854cc193c545f99989dbf0b4d97534a669c66c483b56585618c
+INFO    |   validate_candidates | error | call=CALL_ad7dbcfc731e4f969aab1ad5ca3861b4 | output=sha256:367b41d97d57ae2516c5ba5c43326dbeb85ef927a1ad405773b22e3f359bdbb7
+INFO    | ====================================================================
+INFO    |         AGENT PIPELINE DEMO - ORCHESTRATOR + 5 CAPABILITIES
+INFO    | ====================================================================
+INFO    | 
+INFO    | Initializing services...
+INFO    | Đang nạp dữ liệu sinh viên (force_reload=True)
+INFO    | Đã nạp 364 sinh viên từ JSON
+INFO    | Đã làm mới bộ nhớ đệm sinh viên với 364 bản ghi
+INFO    | Đã tìm thấy sinh viên
+INFO    | Đang nạp ontology từ file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf
+INFO    | Đã gộp môn tương đương: SOT348 -> INT6900
+INFO    | Đã nạp ontology: 106 môn học, 5 chuyên ngành
+INFO    | [OK] All services initialized successfully
+INFO    | 
+INFO    | === AGENT PIPELINE START ===
+INFO    | Run ID: RUN_demo-SV001
+INFO    | Student ID: SV001, Target: next-term, Goal: on_time
+INFO    | Initial state: loading_context (revision=1)
+INFO    | 
+--- [1/5] LOADING STUDENT CONTEXT ---
+INFO    | Call ID: CALL_af1d043552be410d8da4d0da8236e98c, Deadline: 2026-09-10T04:23:30.740916+00:00
+INFO    | Đã tìm thấy sinh viên
+INFO    | Status: ok
+INFO    | Student loaded: 001, completed=50 courses, GPA=7.59
+INFO    | State transition: loading_context → loading_knowledge (revision=2)
+INFO    | 
+--- [2/5] LOADING KNOWLEDGE CONTEXT ---
+INFO    | Call ID: CALL_18e399e29de248eb99f27b1484f65197
+INFO    | Status: ok
+INFO    | Ontology loaded: version=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad, catalog=106 courses
+INFO    | Policy: credits=10-27, quotas={'general': 1, 'physical': 2, 'foundation': 1, 'specialization': 3}
+INFO    | State transition: loading_knowledge → building_course_space (revision=3)
+INFO    | 
+--- [3/5] BUILD COURSE SPACE (ELIGIBILITY) ---
+INFO    | Đã tìm thấy sinh viên
+INFO    | Call ID: CALL_3f3cf077710841e18fd1b457033e4050
+INFO    | Status: ok
+INFO    | Course space built: eligible=9, ineligible=97 (total=106)
+INFO    | State transition: building_course_space → generating (revision=4)
+INFO    | 
+--- [4/5] GENERATE CANDIDATES (BEAM SEARCH) ---
+INFO    | Call ID: CALL_73c339761d9b42fa9eb06c2a787e540c, Seed: 42, Beam width: 8
+INFO    | Status: ok
+INFO    | Candidates generated: 1 plans, attempts=3, expanded_states=15, duplicates=2
+INFO    |   Plan 1: type=safe, courses=5, credits=15.0
+INFO    | State transition: generating → validating (revision=5)
+INFO    | 
+--- [5/5] VALIDATE CANDIDATES ---
+INFO    | Call ID: CALL_d029335eb3c14715bc32175d228467b8 (batch of 1)
+INFO    | Validating plan 1/1: RUN_demo-SV001-plan-1
+INFO    |   Status: ok
+INFO    |   Validation result: status=valid, checked=11/11, violations=0, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    | Validation complete: valid=1, invalid=0
+INFO    | State transition: validating → failed (revision=6)
+INFO    | 
+=== AGENT PIPELINE COMPLETE ===
+INFO    | Final state: failed
+INFO    | Budget used: candidates=3/60, expanded_states=15/5000
+INFO    | 
+--- SAVING RUN ARTIFACTS ---
+INFO    | Artifacts saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV001.json
+INFO    | Step log saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV001.log
+INFO    | 
+====================================================================
+INFO    |                           DEMO COMPLETE
+INFO    | ====================================================================
+ERROR   | Status: FAILED — pipeline could not accept its final tool output
+ERROR   | Final state: failed
+ERROR   | Error: None - None

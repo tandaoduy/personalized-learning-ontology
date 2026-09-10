@@ -1,0 +1,63 @@
+INFO    | Đang nạp ontology từ file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf
+INFO    | Đã gộp môn tương đương: SOT348 -> INT6900
+INFO    | Đã nạp ontology: 106 môn học, 5 chuyên ngành
+INFO    | === AGENT PIPELINE START ===
+INFO    | Run ID: RUN_m4-SV001
+INFO    | Student ID: SV001, Target: next-term, Goal: on_time
+INFO    | Initial state: loading_context (revision=1)
+INFO    | 
+--- [1/5] LOADING STUDENT CONTEXT ---
+INFO    | Call ID: CALL_9e9be1d14a9a42b08753da82be3bf435, Deadline: 2026-09-10T07:58:43.760840+00:00
+INFO    | Đang nạp dữ liệu sinh viên (force_reload=True)
+INFO    | Đã nạp 364 sinh viên từ JSON
+INFO    | Đã làm mới bộ nhớ đệm sinh viên với 364 bản ghi
+INFO    | Đã tìm thấy sinh viên
+INFO    | Status: ok
+INFO    | Student loaded: 001, completed=50 courses, GPA=7.59
+INFO    | State transition: loading_context → loading_knowledge (revision=2)
+INFO    | 
+--- [2/5] LOADING KNOWLEDGE CONTEXT ---
+INFO    | Call ID: CALL_6bc85e08aaf4479c854cf7c619aa1a9a
+INFO    | Status: ok
+INFO    | Ontology loaded: version=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad, catalog=106 courses
+INFO    | Policy: credits=10-27, quotas={'general': 1, 'physical': 2, 'foundation': 1, 'specialization': 3}
+INFO    | State transition: loading_knowledge → building_course_space (revision=3)
+INFO    | 
+--- [3/5] BUILD COURSE SPACE (ELIGIBILITY) ---
+INFO    | Đã tìm thấy sinh viên
+INFO    | Call ID: CALL_c885c4c7667d4e9580619d9cdbd9811c
+INFO    | Status: ok
+INFO    | Course space built: eligible=9, ineligible=97 (total=106)
+INFO    | State transition: building_course_space → generating (revision=4)
+INFO    | 
+--- [4/5] GENERATE CANDIDATES (BEAM SEARCH) ---
+INFO    | Call ID: CALL_25f929ac366941e9a2e32fdbe4f56d91, Seed: 42, Beam width: 8
+INFO    | Status: ok
+INFO    | Candidates generated: 2 plans, attempts=3, expanded_states=15, duplicates=1
+INFO    |   Plan 1: type=safe, courses=5, credits=15.0
+INFO    |   Plan 2: type=balanced, courses=5, credits=15.0
+INFO    | State transition: generating → validating (revision=5)
+INFO    | 
+--- [5/5] VALIDATE CANDIDATES ---
+INFO    | Call ID: CALL_19e65d3b31104722ae9f19d62f623976 (batch of 2)
+INFO    | Validating plan 1/2: RUN_m4-SV001-plan-1
+INFO    |   Status: ok
+INFO    |   Validation result: status=valid, checked=11/11, violations=0, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    | Validating plan 2/2: RUN_m4-SV001-plan-2
+INFO    |   Status: ok
+INFO    |   Validation result: status=valid, checked=11/11, violations=0, evidence=55, ontology_facts=80
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    | Validation complete: valid=2, invalid=0
+INFO    | State transition: validating → assessing_risk (revision=6)
+INFO    | 
+--- [6/7] ASSESS PLAN RISK ---
+INFO    | Risk complete: plans=2, status=ranking
+INFO    | 
+--- [7/7] RANK VALID PLANS + DIVERSITY ---
+INFO    | Ranking complete: scored=2, selected=2, recommended=RUN_m4-SV001-plan-1, status=explaining
+INFO    | 
+=== AGENT PIPELINE COMPLETE ===
+INFO    | Final state: explaining
+INFO    | Budget used: candidates=3/60, expanded_states=15/5000
+INFO    | Acceptance artifacts: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\m4_acceptance\20260910T075814368579Z

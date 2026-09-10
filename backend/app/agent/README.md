@@ -14,16 +14,36 @@ Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning`
 
 ## Capability Adapters
 
-5 adapter skeleton đã được triển khai trong `backend/app/capabilities/`:
+7 adapter được nối với service thật qua `AgentPipeline` trong `pipeline.py`:
 - `load_student_context`: StudentContextOutput
 - `load_knowledge_context`: KnowledgeContext  
 - `build_course_space`: CourseSpace
 - `generate_candidates`: GenerationResult
 - `validate_candidate`: ValidatedPlan
+- `assess_plan_risk`: RiskBatch
+- `rank_valid_plans`: RankingResult
 
 Mỗi adapter nhận `ToolCallContext` + typed parameters, trả về `ToolResult[OutputSchema]` với `Provenance`. Orchestrator gọi adapter qua `create_call_context()` → adapter function → `apply_result()` / `apply_generation_result()` / `apply_validations()`.
 
-**Hiện tại:** skeleton implementation (mock data, minimal evidence). Tests pass (21/21).  
-**Tiếp theo:** wire adapters to real services (`StudentDataService`, `RecommendationEngine`, `StandardValidator`).
+**Ngày 10/09/2026:** SV001 chạy qua StudentDataService, ontology, Beam Search và StandardValidator;
+hai candidate valid được tính Risk, chấm sáu feature, xếp hạng và chọn đa dạng trước khi Orchestrator tới `explaining`. Có ca đối chứng thêm môn sai chuyên ngành.
+Bộ kết quả kiểm thử mới nhất nằm trong `artifacts/m4_acceptance/`; đó không phải kết quả
+toàn bộ repository.
 
-Xem [Capability Adapter README](../capabilities/README.md) để biết chi tiết integration, wiring steps, và testing strategy. Các nhánh Feedback/Confirm và real service wiring đang pending. Tham khảo [sơ đồ mapping](../../../docs/MAPPING_CAPABILITY_MODULE_TOOL.md) và [kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md).
+## Ràng buộc pilot về dữ liệu đầu vào
+
+- Chỉ nhận `target_term_id=next-term`, được định nghĩa là học kỳ hiện tại cộng một. Các kỳ quá khứ
+  hay mã kỳ bất kỳ trả `TARGET_TERM_UNSUPPORTED` cho tới khi có academic-calendar mapping có phiên bản.
+- Ngành được ánh xạ tường minh: CNTT/Công nghệ thông tin → `CNTT`; KHMT/Khoa học máy tính → `KHMT`.
+  Không nhận diện được ngành sẽ trả `MAJOR_MAPPING_UNKNOWN`, không tự mặc định CNTT.
+- Trạng thái lần học được phân biệt chính xác: `Chưa đạt` → failed; `Đạt` → passed;
+  `Miễn` và `Không tính điểm` → exempt.
+
+Tái chạy và xuất request, snapshots, JSON, trace, source audit và kiểm thử:
+
+```powershell
+python scripts/run_m4_acceptance.py --with-tests
+```
+
+Xem [mapping capability](../../../docs/MAPPING_CAPABILITY_MODULE_TOOL.md) và
+[kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md). M4 đã nối capability Risk/Ranking vào pipeline. Trạng thái học vụ dùng proxy `ProgressRiskAnalyzer` có version và được đánh dấu không phải cảnh báo học vụ chính thức. Các nhánh Explanation/Feedback/Confirm còn cần triển khai.

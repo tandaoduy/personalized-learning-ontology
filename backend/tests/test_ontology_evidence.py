@@ -36,6 +36,24 @@ def test_corequisite_evidence(service):
     assert fact.query_id == "Q_COREQ_01"
     assert fact.triples
 
+def test_specialization_requirement_is_preserved_in_evidence(tmp_path):
+    graph = Graph()
+    course = URIRef(BASE + "SOT357")
+    specialization = URIRef(BASE + "CNPM")
+    graph.add((course, CODE, Literal("SOT357")))
+    graph.add((course, URIRef(BASE + "isRequiredForSpecialization"), specialization))
+    path = tmp_path / "specialization.rdf"
+    graph.serialize(path, format="xml")
+    evidence = OntologyEvidenceService(path)
+
+    fact = evidence.get_course_category_evidence("SOT357", evidence.ontology_version)
+
+    assert fact.is_required_specialization is True
+    assert fact.is_elective_specialization is False
+    assert fact.elective_category is None
+    assert fact.specializations == (str(specialization),)
+    assert any(triple.predicate.endswith("isRequiredForSpecialization") for triple in fact.triples)
+
 def test_semester_offering_evidence(service):
     fact_a = service.get_semester_offering_evidence("A", service.ontology_version)
     assert fact_a.open_semester_type == 1
@@ -48,6 +66,14 @@ def test_unknown_course_and_version_mismatch_are_errors(service):
     with pytest.raises(EvidenceSourceError): service.get_prerequisite_evidence("UNKNOWN", service.ontology_version)
     with pytest.raises(EvidenceSourceError): service.get_prerequisite_evidence("B", "wrong")
     assert service.get_prerequisite_evidence("C", service.ontology_version).prerequisite_codes == ()
+
+@pytest.mark.parametrize("method", ["get_course_evidence", "get_course_credit_evidence",
+    "get_course_category_evidence", "get_semester_offering_evidence"])
+def test_indexed_query_preserves_full_query_results(service, method):
+    fact = getattr(service, method)("A", service.ontology_version)
+    baseline = set(service._graph.query(fact.query_text, initBindings={"code": Literal("A")}))
+    indexed = set(service._graph.query(fact.query_text, initBindings=service._code_bindings("A")))
+    assert indexed == baseline
 
 @pytest.mark.parametrize("completed,expected", [((), "fail"), (("A",), "pass")])
 def test_rule_conclusion_links_to_fact(service, completed, expected):

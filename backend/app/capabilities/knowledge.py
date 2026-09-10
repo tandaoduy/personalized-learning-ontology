@@ -8,6 +8,7 @@ from backend.app.schemas import (CourseInfo, ElectiveQuota, KnowledgeContext, Kn
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.validation.prerequisite_rule import RULE_VERSION
+from .student_context import NEXT_TERM_ID
 from ._envelope import fail, now, ok
 
 
@@ -16,6 +17,8 @@ def load_knowledge_context(context: ToolCallContext, request: PlanningRequest, s
     """Load catalog facts from the engine and bind them to the RDF content version."""
     started = now()
     try:
+        if request.target_term_id != NEXT_TERM_ID:
+            raise ValueError("TARGET_TERM_UNSUPPORTED")
         if Path(engine.ontology_path).resolve().as_uri() != evidence.source_ref:
             raise ValueError("ONTOLOGY_SOURCE_MISMATCH")
         policy = {"min": engine.min_credits, "max": engine.max_credits, "quotas": engine.elective_quotas}

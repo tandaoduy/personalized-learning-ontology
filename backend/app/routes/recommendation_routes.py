@@ -4,10 +4,13 @@ Các route của luồng gợi ý kế hoạch học tập.
 
 from datetime import datetime
 import json
+import logging
 from pathlib import Path
 import time
 
 from flask import Blueprint, current_app, jsonify, request, session
+
+logger = logging.getLogger(__name__)
 
 bp = Blueprint("recommendations", __name__, url_prefix="/api")
 
@@ -58,9 +61,9 @@ def get_recommendation():
         if role == "student" and student_id != session.get("username"):
             return jsonify({"success": False, "error": "Bạn chỉ được tạo gợi ý cho hồ sơ của mình."}), 403
 
-        current_app.logger.info(
-            "Đã nhận yêu cầu gợi ý: endpoint=%s",
-            request.path,
+        logger.info(
+            "Recommendation request: endpoint=%s student_id=%s",
+            request.path, student_id,
         )
 
         student_service = current_app.student_data_service
@@ -85,9 +88,9 @@ def get_recommendation():
             scenario = "standard"
         is_compare = scenario == "compare" or bool(data.get("compare", False))
         num_plans = 3 if is_compare else 1
-        
+
         import random
-        
+
         plans = []
         engine = current_app.recommendation_engine
         explanation_generator = getattr(current_app, "explanation_generator", None)
@@ -142,8 +145,8 @@ def get_recommendation():
             }
             plans.append(payload)
 
-        current_app.logger.info(
-            "Đã hoàn tất gợi ý: num_plans=%s duration_ms=%s",
+        logger.info(
+            "Legacy engine completed: num_plans=%s duration_ms=%s",
             len(plans),
             round((time.perf_counter() - started_at) * 1000, 2)
         )
@@ -156,8 +159,96 @@ def get_recommendation():
         })
 
     except Exception as exc:
-        current_app.logger.exception("Không thể xử lý gợi ý")
-        return jsonify({"success": False, "error": "Không thể tạo gợi ý lúc này."}), 500
+        logger.exception("Failed to process recommendation request for student_id=%s", student_id)
+        return jsonify({"success": False, "error": "Không thể tạo gợi ý lúc này.", "details": str(exc)}), 500
+
+
+@bp.route("/agent/recommendations", methods=["POST"])
+def get_agent_recommendation():
+    """Sinh gợi ý qua AgentOrchestrator + 5 capabilities (song song với /api/recommendations)."""
+    started_at = time.perf_counter()
+    student_id = None
+
+    try:
+        role = session.get("role")
+        if role not in {"student", "advisor"}:
+            return jsonify({"success": False, "error": "Bạn cần đăng nhập trước khi tạo gợi ý."}), 401
+
+        if current_app.recommendation_engine is None:
+            return jsonify({
+                "success": False,
+                "error": "Bộ máy gợi ý chưa sẵn sàng. Vui lòng kiểm tra đường dẫn ontology.",
+            }), 500
+        if current_app.agent_orchestrator is None or current_app.ontology_evidence_service is None:
+            return jsonify({
+                "success": False,
+                "error": "Agent pipeline chưa sẵn sàng.",
+            }), 500
+
+        data = request.get_json(silent=True) or {}
+        student_id = str(data.get("student_id", "")).strip()
+        if not student_id:
+            return jsonify({"success": False, "error": "student_id không được để trống"}), 400
+        if role == "student" and student_id != session.get("username"):
+            return jsonify({"success": False, "error": "Bạn chỉ được tạo gợi ý cho hồ sơ của mình."}), 403
+
+        student_service = current_app.student_data_service
+        student = student_service.get_student(student_id)
+        if not student:
+            return jsonify({"success": False, "error": f"Không tìm thấy sinh viên {student_id}"}), 404
+
+        errors = student.validate()
+        if errors:
+            return jsonify({
+                "success": False,
+                "error": "Dữ liệu sinh viên không hợp lệ",
+                "details": errors,
+            }), 400
+
+        from backend.app.agent.pipeline import run_agent_pipeline
+        from backend.app.schemas import PlanningRequest
+
+        target_credits = data.get("target_credits", 15)
+        goal = str(data.get("goal", "on_time")).strip().lower()
+        if goal not in {"on_time", "accelerated"}:
+            goal = "on_time"
+
+        planning_request = PlanningRequest(
+            request_id=f"api-{student_id}-{int(time.time())}",
+            student_id=student_id,
+            target_term_id=data.get("target_term_id", "next-term"),
+            goal=goal,
+            target_credits=target_credits,
+        )
+
+        logger.info("Agent pipeline start: student=%s goal=%s credits=%s", student_id, goal, target_credits)
+        result = run_agent_pipeline(
+            planning_request,
+            student_service,
+            current_app.recommendation_engine,
+            current_app.ontology_evidence_service,
+            current_app.agent_orchestrator,
+        )
+
+        elapsed_ms = round((time.perf_counter() - started_at) * 1000, 2)
+        result["processing_time_ms"] = elapsed_ms
+        logger.info(
+            "Agent pipeline done: success=%s status=%s iteration=%s time_ms=%.2f",
+            result.get("success"),
+            result.get("status"),
+            result.get("iteration", 0),
+            elapsed_ms,
+        )
+        return jsonify(result)
+
+    except Exception as exc:
+        logger.exception("Agent recommendation failed for student_id=%s", student_id)
+        return jsonify({
+            "success": False,
+            "error": "Không thể tạo gợi ý qua agent lúc này.",
+            "details": str(exc),
+        }), 500
+
 
 @bp.route("/student-feedback", methods=["POST"])
 def save_student_feedback():

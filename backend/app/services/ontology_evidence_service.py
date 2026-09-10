@@ -26,6 +26,19 @@ class OntologyEvidenceService:
         for subject, value in self._graph.subject_objects(CODE):
             self._codes.setdefault(str(value).strip().upper(), set()).add(subject)
 
+    def _code_bindings(self, code):
+        """Constrain joins to the indexed course without changing query semantics.
+
+        Keep the original code filter and query text, including the unbound
+        query for ambiguous codes so validation still detects duplicate IRIs.
+        """
+        from rdflib import Literal
+        bindings = {"code": Literal(code)}
+        subjects = self._codes.get(code, set())
+        if len(subjects) == 1:
+            bindings["subject"] = next(iter(subjects))
+        return bindings
+
     def get_prerequisite_evidence(self, course_code: str, expected_ontology_version: str) -> OntologyFactEvidence:
         if expected_ontology_version != self.ontology_version:
             raise EvidenceSourceError("Ontology snapshot version mismatch")
@@ -68,7 +81,7 @@ class OntologyEvidenceService:
         code = code.strip().upper()
         query_id = "Q_CREDIT_01" if credit else "Q_COURSE_01"
         query_text = (QUERY_PATH.parent / ("course_credit.rq" if credit else "course_exists.rq")).read_text(encoding="utf-8")
-        rows = list(self._graph.query(query_text, initBindings={"code": Literal(code)}))
+        rows = list(self._graph.query(query_text, initBindings=self._code_bindings(code)))
         subjects = {row[0] for row in rows}
         if len(subjects) > 1:
             raise EvidenceSourceError("CATALOG_COURSE_AMBIGUOUS")
@@ -145,7 +158,7 @@ class OntologyEvidenceService:
         query_path = QUERY_PATH.parent / "semester_offering.rq"
         query_text = query_path.read_text(encoding="utf-8")
         query_version = "sha256:" + sha256(query_text.encode()).hexdigest()
-        rows = list(self._graph.query(query_text, initBindings={"code": Literal(code)}))
+        rows = list(self._graph.query(query_text, initBindings=self._code_bindings(code)))
         triples = []
         open_types = set()
         open_sem_type = None
@@ -197,7 +210,7 @@ class OntologyEvidenceService:
         query_path = QUERY_PATH.parent / "course_category.rq"
         query_text = query_path.read_text(encoding="utf-8")
         query_version = "sha256:" + sha256(query_text.encode()).hexdigest()
-        rows = list(self._graph.query(query_text, initBindings={"code": Literal(code)}))
+        rows = list(self._graph.query(query_text, initBindings=self._code_bindings(code)))
         triples = []
         is_req_major = False
         is_elec_major = False
@@ -249,7 +262,9 @@ class OntologyEvidenceService:
         return OntologyFactEvidence(evidence_id="ONTO_" + identifier, course_code=code, source_ref=self.source_ref,
             ontology_version=self.ontology_version, query_id="Q_CATEGORY_01", query_version=query_version,
             query_text=query_text, subject_uri=str(next(iter(subjects))) if subjects else "urn:unresolved-course:" + code,
-            exists=bool(subjects), elective_category=category, is_required_major=is_req_major, is_elective_major=is_elec_major,
+            exists=bool(subjects), elective_category=category,
+            is_required_major=is_req_major, is_elective_major=is_elec_major,
+            is_required_specialization=is_req_spec, is_elective_specialization=is_spec_elec,
             specializations=tuple(sorted(set(specs))), majors=tuple(sorted(set(majors))), triples=triples, captured_at=datetime.now(timezone.utc))
 
 

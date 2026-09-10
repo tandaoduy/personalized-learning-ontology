@@ -1,0 +1,50 @@
+{
+  "version": "ranking-pdf3-v1",
+  "source": "docs/DAC_TA_TRIEN_KHAI_MVP.md#6-ranking-thong-nhat-theo-pdf-v3",
+  "calibrated": false,
+  "features": ["goal_fit", "mandatory", "unlock", "credit_fit", "workload", "safety"],
+  "weights": {
+    "safe": [0.15, 0.20, 0.10, 0.15, 0.15, 0.25],
+    "balanced": [0.20, 0.20, 0.15, 0.20, 0.15, 0.10],
+    "accelerated": [0.20, 0.15, 0.30, 0.15, 0.10, 0.10]
+  },
+  "risk_weights": {"load": 0.40, "retake": 0.30, "academic": 0.30},
+  "risk_levels": {"low_max": 0.333333333333, "medium_max": 0.666666666667},
+  "academic_risk_mapping": {"normal": 0.0, "mild_warning": 0.5, "academic_warning": 1.0},
+  "academic_status_proxy": {
+    "version": "progress-risk-proxy-v1",
+    "source": "backend/app/services/progress_risk_analyzer.py",
+    "mapping": {"ON_TRACK": "normal", "AT_RISK": "mild_warning", "BEHIND_SCHEDULE": "academic_warning"},
+    "official_academic_warning": false
+  },
+  "reference_credits": {
+    "value": 15.0,
+    "source": "research-baseline-config",
+    "official_policy": false
+  },
+  "goal_fit": {
+    "version": "goal-fit-v1",
+    "objective_weight": 1.0,
+    "preferred_weight": 1.0,
+    "avoided_weight": 1.0,
+    "on_time": "share of selected courses recommended no later than the target semester",
+    "accelerated": "share of selected courses recommended after the current semester",
+    "preferred": "share of preferred courses selected; omitted when preference set is empty",
+    "avoided": "share of selected courses not in avoided set; omitted when avoided set is empty"
+  },
+  "diversity_threshold": 0.30,
+  "selection_policy": "safe-balanced-accelerated-slots-v1",
+  "slot_order": ["safe", "balanced", "accelerated"],
+  "tie_break": "score descending, sorted course tuple, plan ID, plan version",
+  "comparison_decimals": 12,
+  "constant_pool_normalization": 1.0,
+  "equal_credit_bounds_load": 0.0,
+  "recommended_policy": "highest balanced score among selected plans",
+  "implementation_additions": [
+    "Slot order and recommendation policy supplement the PDF and are not experimentally calibrated.",
+    "If U=L and T=L, load is zero; credit validity remains the Validator's responsibility.",
+    "Risk requires an explicitly sourced academic status; missing status is an error.",
+    "Reference credits must be supplied with a source, never inferred from GPA.",
+    "Goal criteria and weights must be explicit; an empty or zero-weight set is an error."
+  ]
+}

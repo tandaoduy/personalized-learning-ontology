@@ -45,11 +45,17 @@ validate_candidate(
 ## Current State
 
 All five adapters use project data and deterministic services:
-- `load_student_context`: loads `StudentDataService` and hashes its JSON source.
-- `load_knowledge_context`: binds the RDF content hash, catalog and engine policy.
+- `load_student_context`: loads `StudentDataService`, hashes its JSON source, maps only
+  `CNTT`/`Công nghệ thông tin` and `KHMT`/`Khoa học máy tính` to ontology IRIs, and rejects
+  an unknown major rather than defaulting it to CNTT. Course-attempt statuses are matched
+  exactly: `Đạt`, `Miễn`, `Không tính điểm`, `Chưa đạt`.
+- `load_knowledge_context`: binds the RDF content hash, catalog and engine policy. The pilot
+  accepts only `target_term_id=next-term`, defined as `current_semester + 1`; it rejects a
+  historical or arbitrary term until a versioned academic-calendar mapping exists.
 - `build_course_space`: invokes the legacy eligibility logic.
 - `generate_candidates`: invokes Beam Search on a bounded ranked pool of 24 courses.
-- `validate_candidate`: mock `ValidationResult` with all 11 `REQUIRED_RULES` checked, minimal ontology `EvidenceRecord` per course; course code `INVALID` → `ToolError` `VALIDATION_FAILED`
+- `validate_candidate`: invokes the independent `StandardValidator` and retains its real
+  validation result and ontology/rule evidence for both valid and invalid candidates.
 
 ## Integration with Orchestrator
 
@@ -68,41 +74,11 @@ state = orchestrator.apply_result(state, action="load_student_context", context=
 
 For `generate_candidates` and `validate_candidates`, use dedicated `apply_generation_result` / `apply_validations`.
 
-## Wiring Full Implementation
+## Remaining work
 
-To wire real services:
-
-1. **Student Context** (`student_context.py`):
-   - Import `StudentDataService` from `backend.app.services`
-   - Call `service.get_profile(student_id)` 
-   - Normalize history, compute GPA, check warnings
-   - Build real `StudentSnapshot` with completed/failed courses
-
-2. **Knowledge Context** (`knowledge.py`):
-   - Import `RecommendationEngine` or `OntologyEvidenceService`
-   - Load RDF graph from `config.ONTOLOGY_PATH`
-   - Extract catalog via SPARQL: course codes, credits, names
-   - Build `PolicyManifest` with real credit bounds, completeness flags
-   - Set `knowledge_versions` from ontology properties
-
-3. **Eligibility** (`eligibility.py`):
-   - Import eligibility logic from `backend.app.services.recommendation.eligibility`
-   - For each course in curriculum, check prerequisites/corequisites/history
-   - Produce `EligibilityDecision` with status + evidence_ids
-   - Link to ontology triples for prerequisite/corequisite relations
-
-4. **Generation** (`generation.py`):
-   - Import `backend.app.services.recommendation.candidate_generation`
-   - Run Beam Search with `beam_width`, `seed`, eligible courses
-   - Track `expanded_states`, `generated_count`, `duplicate_count`
-   - Return `CandidatePlan` tuple with `plan_type` (safe/balanced/accelerated)
-
-5. **Validation** (`validation.py`):
-   - Import `StandardValidator` from `backend.app.validation`
-   - Instantiate with `engine`, `student_snapshot`, `knowledge_snapshot`
-   - Call `validator.validate(candidate)` → `ValidationResult`
-   - If `status != "valid"`, return `ToolResult` with status="error" + `ToolError` code="VALIDATION_FAILED"
-   - Only create `ValidatedPlan` if `status == "valid"`
+The current baseline still needs a curriculum manifest per cohort, an academic-calendar
+mapping for terms other than `next-term`, and an official academic-warning source. M4
+currently records a versioned research proxy and marks it as non-official in the output.
 
 ## Evidence Tracking
 
@@ -122,17 +98,8 @@ Unit tests in `backend/tests/test_capabilities.py`:
 - `test_validate_candidate_valid_plan`: expects `ValidatedPlan` with status="valid"
 - `test_validate_candidate_invalid_plan`: expects `ToolResult` status="error" for invalid plans
 
-All tests pass against skeleton implementations.
-
-## Next Steps
-
-1. Wire `load_student_context` to `StudentDataService`
-2. Wire `load_knowledge_context` to `RecommendationEngine` / `OntologyEvidenceService`
-3. Wire `build_course_space` to eligibility logic
-4. Wire `generate_candidates` to Beam Search
-5. Wire `validate_candidate` to `StandardValidator` with evidence
-6. Add integration test: orchestrator → adapters → real services → assert state transitions
-7. Connect orchestrator to Flask route `/api/recommendations`
+Tests cover the explicit major/status mappings and rejection of unsupported target terms,
+alongside evidence, Validator and end-to-end pipeline tests.
 
 See:
 - `docs/DAC_TA_TRIEN_KHAI_MVP.md` — capability contracts

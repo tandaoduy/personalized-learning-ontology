@@ -2,11 +2,23 @@
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
+import unicodedata
 
 from backend.app.models.student import StudentProfile
 from backend.app.schemas import PlanningRequest, StudentContextOutput, StudentSnapshot, ToolCallContext, ToolError, ToolResult
 from backend.app.services.student_data_service import StudentDataService
 from ._envelope import fail, now, ok
+
+
+ONTOLOGY_BASE = "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
+NEXT_TERM_ID = "next-term"
+
+
+def _normalized_key(value: str) -> str:
+    """Normalize Vietnamese labels, including legacy mojibake, for exact lookup."""
+    repaired = _readable(value).replace("Đ", "D").replace("đ", "d")
+    ascii_value = unicodedata.normalize("NFD", repaired).encode("ascii", "ignore").decode().lower()
+    return "".join(ch for ch in ascii_value if ch.isalnum())
 
 
 def _student_version(service: StudentDataService) -> str:
@@ -17,22 +29,66 @@ def _student_version(service: StudentDataService) -> str:
 
 
 def _major_id(major: str) -> str:
-    base = "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
-    normalized = "".join(ch for ch in major.upper() if ch.isalnum())
-    return base + ("KHMT" if "KHOAHOCMAYTINH" in normalized else "CNTT")
+    codes = {
+        "congnghethongtin": "CNTT",
+        "cntt": "CNTT",
+        "khoahocmaytinh": "KHMT",
+        "khmt": "KHMT",
+    }
+    code = codes.get(_normalized_key(major))
+    if code is None:
+        raise ValueError("MAJOR_MAPPING_UNKNOWN")
+    return ONTOLOGY_BASE + code
+
+
+def _readable(value: str) -> str:
+    """Repair legacy UTF-8-as-Latin-1 text without changing normal Unicode."""
+    try:
+        return value.encode("latin1").decode("utf-8") if any(token in value for token in ("Ã", "Ä")) else value
+    except UnicodeError:
+        return value
+
+
+def _specialization_id(value: str) -> str | None:
+    normalized = _normalized_key(value)
+    codes = {
+        "congnghephanmem": "CNPM", "hethongthongtin": "HTTT",
+        "truyenthongvamangmaytinh": "TTMMT", "trituenhantao": "TTNT",
+        "khoahocdulieu": "KHDL",
+    }
+    code = codes.get(normalized)
+    return ONTOLOGY_BASE + code if code else None
+
+
+def _attempt_outcome(status: str) -> str:
+    """Translate canonical source statuses without matching substrings.
+
+    In particular, ``Chưa đạt`` contains the word ``đạt`` but is a failure.
+    ``Miễn`` and ``Không tính điểm`` satisfy the course without a numeric grade.
+    """
+    outcomes = {
+        "dat": "passed",
+        "mien": "exempt",
+        "khongtinhdiem": "exempt",
+        "chuadat": "failed",
+        "danghoc": "in_progress",
+    }
+    outcome = outcomes.get(_normalized_key(status))
+    if outcome is None:
+        raise ValueError("COURSE_ATTEMPT_STATUS_UNKNOWN")
+    return outcome
 
 
 def snapshot_from_profile(profile: StudentProfile, version: str, captured_at: datetime) -> StudentSnapshot:
     attempts = []
     for item in profile.course_attempts:
-        status = item.status.casefold()
-        outcome = "passed" if "đạt" in status or "mien" in status or "miễn" in status else "failed"
         attempts.append({"course_code": item.course_code, "term_id": str(item.semester_taken or "unknown"),
-                         "outcome": outcome, "grade": item.grade if item.grade_specified else None})
+                         "outcome": _attempt_outcome(item.status),
+                         "grade": item.grade if item.grade_specified else None})
     return StudentSnapshot(
         student_id=profile.student_id, student_version=version, captured_at=captured_at,
         curriculum_id=f"CURRICULUM-{profile.year_admitted}", major_id=_major_id(profile.major),
-        specialization_id=None, current_semester=profile.current_semester,
+        specialization_id=_specialization_id(profile.specialization), current_semester=profile.current_semester,
         completed_courses=frozenset(profile.passed_courses), failed_courses=frozenset(profile.failed_courses),
         attempts=tuple(attempts), earned_credits=profile.total_credits_accumulated,
         gpa=profile.gpa_accumulated if profile.gpa_accumulated >= 0 else None,
@@ -45,6 +101,11 @@ def load_student_context(context: ToolCallContext, request: PlanningRequest,
     """Read the requested student record and bind it to a content hash."""
     started = now()
     try:
+        if request.target_term_id != NEXT_TERM_ID:
+            return fail(context, "load_student_context", ToolError(
+                code="TARGET_TERM_UNSUPPORTED",
+                message="Only next-term is supported until calendar mapping is available",
+            ), started_at=started)
         profile = student_service.get_student(request.student_id)
         if profile is None:
             return fail(context, "load_student_context", ToolError(code="STUDENT_NOT_FOUND", message="Student does not exist"), started_at=started)
@@ -53,7 +114,7 @@ def load_student_context(context: ToolCallContext, request: PlanningRequest,
         return ok(context, "load_student_context", StudentContextOutput(
             student_snapshot=snapshot, source_manifest_ref=Path(student_service.json_path).resolve().as_uri(),
             target_term_id=request.target_term_id, history_cutoff=str(profile.current_semester),
-            normalization_rule_version="student-snapshot-v1",
+            normalization_rule_version="student-snapshot-v2",
         ), started_at=started, source_refs=(Path(student_service.json_path).resolve().as_uri(),))
     except (ValueError, FileNotFoundError) as exc:
         return fail(context, "load_student_context", ToolError(code=str(exc), message=str(exc)), started_at=started)

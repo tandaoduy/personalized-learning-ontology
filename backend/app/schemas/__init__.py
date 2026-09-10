@@ -7,6 +7,11 @@ from .validation import ValidationIssue, ValidationResult
 from .capability import ToolCallContext, ToolError, Provenance, ToolResult
 from .feedback import AdjustmentRequest, FeedbackOperation, FeedbackReceipt, FeedbackRequest
 from .agent_state import AgentState, ToolTraceEvent, ValidationSummary
+from .ranking import (
+    RankingContext, RiskComponents, RiskInputs, RiskResult, RiskBatch,
+    NormalizationRange, ScoredPlan, SelectedPlan, PairwiseDiversity,
+    SelectionDecision, RankingResult,
+)
 from .capability_output import (
     StudentContextOutput, KnowledgeContext, PolicyManifest, CourseInfo,
     CourseSpace, EligibilityDecision, GenerationResult, GenerationAttemptRecord, ValidatedPlan
@@ -21,4 +26,7 @@ __all__ = [
     "AdjustmentRequest", "FeedbackReceipt",
     "StudentContextOutput", "KnowledgeContext", "PolicyManifest", "CourseInfo",
     "CourseSpace", "EligibilityDecision", "GenerationResult", "GenerationAttemptRecord", "ValidatedPlan",
+    "RankingContext", "RiskComponents", "RiskInputs", "RiskResult", "RiskBatch",
+    "NormalizationRange", "ScoredPlan", "SelectedPlan", "PairwiseDiversity",
+    "SelectionDecision", "RankingResult",
 ]

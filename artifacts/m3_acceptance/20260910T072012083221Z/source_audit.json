@@ -1,0 +1,49 @@
+{
+  "scope": "Local MVP baseline, not certification of current university regulations",
+  "student_alias": "SV001",
+  "stored_student_id": "001",
+  "curriculum_id": "CURRICULUM-2023",
+  "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+  "specialization_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+  "current_semester": 6,
+  "target_semester": 7,
+  "target_semester_type": 1,
+  "target_term_mapping": "next-term = current_semester + 1; no academic-calendar date mapping",
+  "credit_policy": {
+    "min": 10,
+    "max": 27,
+    "target": 15.0,
+    "source": "backend/app/config.py"
+  },
+  "elective_quotas": {
+    "general": 1,
+    "physical": 2,
+    "foundation": 1,
+    "specialization": 3
+  },
+  "sources": [
+    {
+      "path": "data/DanhSachSinhVien.json",
+      "sha256": "e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae"
+    },
+    {
+      "path": "knowledge/ontology/ontology_v23.rdf",
+      "sha256": "55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad"
+    },
+    {
+      "path": "backend/app/config.py",
+      "sha256": "ef1b15855498ee6be51a90c4dca7bfd32878ec9403fa3084fa5f2f24e09a40fc"
+    },
+    {
+      "path": "backend/app/services/recommendation/constants.py",
+      "sha256": "6d018a0377b26ea65bd72063e9b0889a89ca70ac773d2ce8dfc656f0b0a0df85"
+    }
+  ],
+  "limitations": [
+    "CURRICULUM-2023 is a derived cohort label; no independently versioned cohort curriculum manifest.",
+    "Prior-study requirements are the explicit empty legacy baseline, not a verified university policy.",
+    "History uses the stored profile at its current semester; arbitrary past-term reconstruction is not supported.",
+    "Academic warning status is not explicitly sourced; M4 must not infer normal status from empty warnings or GPA.",
+    "expanded_states currently counts selected courses per attempt, not actual Beam Search expansions."
+  ]
+}

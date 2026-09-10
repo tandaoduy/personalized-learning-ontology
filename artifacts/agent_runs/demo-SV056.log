@@ -1,0 +1,73 @@
+INFO    | ====================================================================
+INFO    |         AGENT PIPELINE DEMO - ORCHESTRATOR + 5 CAPABILITIES
+INFO    | ====================================================================
+INFO    | 
+INFO    | Initializing services...
+INFO    | Đang nạp dữ liệu sinh viên (force_reload=True)
+INFO    | Đã nạp 364 sinh viên từ JSON
+INFO    | Đã làm mới bộ nhớ đệm sinh viên với 364 bản ghi
+INFO    | Đã tìm thấy sinh viên
+INFO    | Đang nạp ontology từ file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf
+INFO    | Đã gộp môn tương đương: SOT348 -> INT6900
+INFO    | Đã nạp ontology: 106 môn học, 5 chuyên ngành
+INFO    | [OK] All services initialized successfully
+INFO    | 
+INFO    | === AGENT PIPELINE START ===
+INFO    | Run ID: RUN_demo-SV056
+INFO    | Student ID: SV056, Target: next-term, Goal: on_time
+INFO    | Initial state: loading_context (revision=1)
+INFO    | 
+--- [1/5] LOADING STUDENT CONTEXT ---
+INFO    | Call ID: CALL_18d04707c2f243dab801f60ca3571270, Deadline: 2026-09-09T09:02:57.243769+00:00
+INFO    | Đã tìm thấy sinh viên
+INFO    | Status: ok
+INFO    | Student loaded: 056, completed=53 courses, GPA=8.25
+INFO    | State transition: loading_context → loading_knowledge (revision=2)
+INFO    | 
+--- [2/5] LOADING KNOWLEDGE CONTEXT ---
+INFO    | Call ID: CALL_ec1df3319cbc45639cbfe10e6ae36ab3
+INFO    | Status: ok
+INFO    | Ontology loaded: version=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad, catalog=106 courses
+INFO    | Policy: credits=10-27, quotas={'general': 1, 'physical': 2, 'foundation': 1, 'specialization': 3}
+INFO    | State transition: loading_knowledge → building_course_space (revision=3)
+INFO    | 
+--- [3/5] BUILD COURSE SPACE (ELIGIBILITY) ---
+INFO    | Đã tìm thấy sinh viên
+INFO    | Call ID: CALL_86159024defc46deac63277ccc0745f4
+INFO    | Status: ok
+INFO    | Course space built: eligible=3, ineligible=103 (total=106)
+INFO    | State transition: building_course_space → generating (revision=4)
+INFO    | 
+--- [4/5] GENERATE CANDIDATES (BEAM SEARCH) ---
+INFO    | Call ID: CALL_e6fef322313d4841ab3bd4276d71e3db, Seed: 42, Beam width: 8
+INFO    | Status: ok
+INFO    | Candidates generated: 1 plans, attempts=3, expanded_states=9, duplicates=2
+INFO    |   Plan 1: type=safe, courses=3, credits=9.0
+INFO    | State transition: generating → validating (revision=5)
+INFO    | 
+--- [5/5] VALIDATE CANDIDATES ---
+INFO    | Call ID: CALL_9e318b2a0e0e4d1cb65f193c3010c87b (batch of 1)
+INFO    | Validating plan 1/1: RUN_demo-SV056-plan-1
+INFO    |   Status: ok
+INFO    |   Validation result: status=invalid, checked=11/11, violations=3, evidence=33, ontology_facts=18
+INFO    |   Versions: ontology=sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad rule=academic-constraints-v3 validator=standard-academic-v3
+INFO    |     Violation: constraint=credit_limit, courses=INT6900, evidence=RULE_11ff49cd5bb94a2d1c5e6819f997e46303bd9018d70f9f34e6d1fc58435fd467
+INFO    |     Violation: constraint=credit_limit, courses=NEC326, evidence=RULE_32057a39e6920714b56a6c938f0b3b8a127496f6307e7cfda9c9d03ab14eee45
+INFO    |     Violation: constraint=credit_limit, courses=SOT357, evidence=RULE_61e223183a3dca927a4fd52b06496bdc01c0b7632cea65a360e00b1b18f3441e
+INFO    | Validation complete: valid=0, invalid=1
+INFO    | State transition: validating → replanning (revision=6)
+INFO    | 
+=== AGENT PIPELINE COMPLETE ===
+INFO    | Final state: replanning
+INFO    | Budget used: candidates=3/60, expanded_states=9/5000
+INFO    | 
+--- SAVING RUN ARTIFACTS ---
+INFO    | Artifacts saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV056.json
+INFO    | Step log saved to: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_runs\demo-SV056.log
+INFO    | 
+====================================================================
+INFO    |                           DEMO COMPLETE
+INFO    | ====================================================================
+WARNING | Status: COMPLETE — no valid plan is available yet; this is not a system error
+WARNING | Final state: replanning
+WARNING | Read validation violations in the artifact before changing any rule or data.

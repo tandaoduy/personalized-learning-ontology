@@ -75,6 +75,19 @@ def create_app():
         print("Bộ máy sẽ được khởi tạo ở lần yêu cầu đầu tiên.")
         app.recommendation_engine = None
 
+    # Khởi tạo evidence service cho agent pipeline
+    try:
+        from backend.app.services.ontology_evidence_service import OntologyEvidenceService
+        from backend.app.agent import AgentOrchestrator
+
+        app.ontology_evidence_service = OntologyEvidenceService(Config.ONTOLOGY_PATH)
+        app.agent_orchestrator = AgentOrchestrator()
+        print("Agent pipeline initialized successfully")
+    except Exception as exc:
+        print(f"Cảnh báo: lỗi khi khởi tạo agent pipeline components: {exc}")
+        app.ontology_evidence_service = None
+        app.agent_orchestrator = None
+
     app.explanation_generator = ExplanationGenerator()
     app.progress_risk_analyzer = ProgressRiskAnalyzer(app.recommendation_engine)
 
