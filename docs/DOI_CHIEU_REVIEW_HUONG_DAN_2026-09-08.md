@@ -159,7 +159,7 @@ Không trình bày ví dụ số học trong JSON hay kết quả engine cũ th�
 ## 8. Nguồn kiểm tra chính
 
 - [PDF v3](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>): 45 trang, đặc biệt trang 13–30, 31–37, 39–45.
-- [Thiết kế tổng thể](THIET_KE_AI_AGENT.md), [nghiệp vụ](BA_AI_AGENT.md), [công nghệ](CONG_NGHE_VA_TOOLS.md), [lộ trình](LO_TRINH_MVP.md), [đặc tả triển khai](DAC_TA_TRIEN_KHAI_MVP.md), [CD](CD.md).
+- [Thiết kế tổng thể](THIET_KE_AI_AGENT.md), [nghiệp vụ](BA_AI_AGENT.md), [công nghệ](CONG_NGHE_VA_TOOLS.md), [lộ trình](LO_TRINH_MVP.md), [đặc tả triển khai](DAC_TA_TRIEN_KHAI_MVP.md), [hướng dẫn triển khai](DEPLOYMENT.md).
 - [Ranking JSON đề xuất](ranking_v1.proposed.json).
 - [Agent placeholder](../backend/app/agent/__init__.py), [schemas](../backend/app/schemas/__init__.py).
 - [Validator](../backend/app/validation/validator.py), [hợp đồng snapshot/giới hạn](../backend/app/validation/README.md), [Evidence service](../backend/app/services/ontology_evidence_service.py).

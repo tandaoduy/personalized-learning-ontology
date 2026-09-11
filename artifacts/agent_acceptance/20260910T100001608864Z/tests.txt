@@ -1,0 +1,18 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-8.3.5, pluggy-1.6.0
+rootdir: D:\NTU\CNTT\NCKH\personalized-learning-ontology
+configfile: pytest.ini
+plugins: cov-6.0.0
+collected 98 items
+
+backend\tests\test_student_specialization.py ...................         [ 19%]
+backend\tests\test_target_term_mapping.py ....                           [ 23%]
+backend\tests\test_ontology_evidence.py ...........                      [ 34%]
+backend\tests\test_standard_validator.py ............................... [ 66%]
+.............                                                            [ 79%]
+backend\tests\test_agent_pipeline.py ...                                 [ 82%]
+backend\tests\test_agent_pipeline_fast.py .                              [ 83%]
+backend\tests\test_m4_scoring.py ................                        [100%]
+
+- generated xml file: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\agent_acceptance\20260910T100001608864Z\tests.xml -
+============================= 98 passed in 37.87s =============================

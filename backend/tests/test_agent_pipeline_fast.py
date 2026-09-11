@@ -64,7 +64,7 @@ def test_fast_agent_pipeline_e2e(tmp_path):
         target_term_id="next-term", goal="on_time", target_credits=3))
 
     assert result["success"] is True
-    assert result["status"] == "explaining"
+    assert result["status"] == "awaiting_feedback"
     assert len(result["candidates"]) == 1
     assert len(result["validations"]) == 1
     assert pipeline.engine.eligible[0].total_priority_score == 1
@@ -76,7 +76,11 @@ def test_fast_agent_pipeline_e2e(tmp_path):
     AgentState.model_validate(exported["state"])
     assert {event["action"] for event in result["trace"]} == {
         "load_student_context", "load_knowledge_context", "build_course_space",
-        "generate_candidates", "validate_candidates", "assess_plan_risk", "rank_valid_plans",
+        "generate_candidates", "validate_candidates", "assess_plan_risk", "rank_valid_plans", "explain_plans",
     }
     assert result["ranking"]["selected_plans"] == [{"plan_id": result["candidates"][0]["plan_id"], "strategy": "safe"}]
     assert result["ranking_context"]["academic_status_is_official"] is False
+    explanation = result["explanations"]["explanations"][0]
+    assert explanation["plan_id"] == result["candidates"][0]["plan_id"]
+    assert all(claim["evidence_ids"] and claim["source_refs"] for claim in explanation["claims"])
+    assert any(claim["kind"] == "course_classification" for claim in explanation["claims"])

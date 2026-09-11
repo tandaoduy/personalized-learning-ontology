@@ -26,8 +26,8 @@ Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning`
 Mỗi adapter nhận `ToolCallContext` + typed parameters, trả về `ToolResult[OutputSchema]` với `Provenance`. Orchestrator gọi adapter qua `create_call_context()` → adapter function → `apply_result()` / `apply_generation_result()` / `apply_validations()`.
 
 **Ngày 10/09/2026:** SV001 chạy qua StudentDataService, ontology, Beam Search và StandardValidator;
-hai candidate valid được tính Risk, chấm sáu feature, xếp hạng và chọn đa dạng trước khi Orchestrator tới `explaining`. Có ca đối chứng thêm môn sai chuyên ngành.
-Bộ kết quả kiểm thử mới nhất nằm trong `artifacts/m4_acceptance/`; đó không phải kết quả
+hai candidate valid được tính Risk, chấm sáu feature, xếp hạng, chọn đa dạng và tạo giải thích có evidence trước khi Orchestrator tới `awaiting_feedback`. Có ca đối chứng thêm môn sai chuyên ngành.
+Bộ kết quả kiểm thử mới nhất nằm trong `artifacts/agent_acceptance/`; đó không phải kết quả
 toàn bộ repository.
 
 ## Ràng buộc pilot về dữ liệu đầu vào
@@ -46,4 +46,4 @@ python scripts/run_m4_acceptance.py --with-tests
 ```
 
 Xem [mapping capability](../../../docs/MAPPING_CAPABILITY_MODULE_TOOL.md) và
-[kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md). M4 đã nối capability Risk/Ranking vào pipeline. Trạng thái học vụ dùng proxy `ProgressRiskAnalyzer` có version và được đánh dấu không phải cảnh báo học vụ chính thức. Các nhánh Explanation/Feedback/Confirm còn cần triển khai.
+[kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md). Pipeline đã nối Risk, Ranking và Grounded Explanation. Trạng thái học vụ dùng proxy `ProgressRiskAnalyzer` có version và được đánh dấu không phải cảnh báo học vụ chính thức. Các nhánh Feedback/Re-planning/Confirm còn cần triển khai.

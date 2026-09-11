@@ -119,8 +119,8 @@ def main(student_id: str = "SV001") -> int:
     logger.info("=" * 68)
 
     final_status = result.get("status")
-    if result.get("success") and final_status == "explaining":
-        logger.info("Status: SUCCESS — valid plans passed Validator, Risk and Ranking")
+    if result.get("success") and final_status == "awaiting_feedback":
+        logger.info("Status: SUCCESS — valid plans passed Validator, Risk, Ranking and Explanation")
         logger.info("Final state: %s", final_status)
         logger.info("Candidates generated: %d", len(result.get("candidates", [])))
         logger.info("Valid plans: %d", sum(1 for v in result.get("validations", []) if v.get("status") == "valid"))

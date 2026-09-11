@@ -52,8 +52,8 @@ flowchart LR
     RA["Ranking / Diversity<br/>rank_valid_plans<br/>DỰ KIẾN"] --> RAA["capabilities/ranking.py<br/>DỰ KIẾN"]
     RAA --> RAS["services/plan_ranking_service.py<br/>6 feature và Jaccard — DỰ KIẾN"]
 
-    EX["Grounded Explanation<br/>explain_plans<br/>DỰ KIẾN"] --> EXA["capabilities/explanation.py<br/>DỰ KIẾN"]
-    EXA --> EXS["services/grounded_explanation_service.py<br/>Claim liên kết evidence — DỰ KIẾN"]
+    EX["Grounded Explanation<br/>explain_plans"] --> EXA["capabilities/explanation.py"]
+    EXA --> EXS["services/grounded_explanation_service.py<br/>Claim liên kết evidence"]
 
     classDef existing fill:#ecfdf5,stroke:#15803d,color:#14532d;
     classDef planned fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-dasharray:5 3;

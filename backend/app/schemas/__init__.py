@@ -12,6 +12,7 @@ from .ranking import (
     NormalizationRange, ScoredPlan, SelectedPlan, PairwiseDiversity,
     SelectionDecision, RankingResult,
 )
+from .explanation import GroundedClaim, GroundedExplanation, GroundedExplanationBatch
 from .capability_output import (
     StudentContextOutput, KnowledgeContext, PolicyManifest, CourseInfo,
     CourseSpace, EligibilityDecision, GenerationResult, GenerationAttemptRecord, ValidatedPlan
@@ -29,4 +30,5 @@ __all__ = [
     "RankingContext", "RiskComponents", "RiskInputs", "RiskResult", "RiskBatch",
     "NormalizationRange", "ScoredPlan", "SelectedPlan", "PairwiseDiversity",
     "SelectionDecision", "RankingResult",
+    "GroundedClaim", "GroundedExplanation", "GroundedExplanationBatch",
 ]

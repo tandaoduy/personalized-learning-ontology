@@ -46,7 +46,7 @@ Tên tool và các đường dẫn ghi **mới** là đích triển khai, chưa 
 | Validation | `validate_candidate` | `backend/app/capabilities/validation.py` | Bọc `validation/validator.py::StandardValidator.validate`; giữ độc lập với Agent/Flask/LLM |
 | Risk | `assess_plan_risk` | `backend/app/capabilities/risk.py` | MVP dùng proxy tại mục 6; `services/recommendation/plan_risk.py` là thuật toán cũ, không tự coi heuristic theo tên môn là ontology fact |
 | Ranking | `rank_valid_plans` | `backend/app/capabilities/ranking.py` | **Mới**: `services/plan_ranking_service.py`, `schemas/ranking.py`; không lấy điểm heuristic cấp môn làm điểm kế hoạch |
-| Explanation | `explain_plans` | `backend/app/capabilities/explanation.py` | **Mới**: `services/grounded_explanation_service.py`; bộ `explanation_generator.py` cũ chỉ tham khảo cách trình bày |
+| Explanation | `explain_plans` | `backend/app/capabilities/explanation.py` | Đã triển khai `services/grounded_explanation_service.py`; bộ `explanation_generator.py` cũ chỉ tham khảo cách trình bày |
 | Feedback | `normalize_feedback`, `persist_feedback` | `backend/app/capabilities/feedback.py` | **Mới**: `schemas/feedback.py`; rating/comment trong routes hiện chưa đủ cho lựa chọn A/B/C và adjustment |
 | Re-planning / Confirm | Nhánh `replan`, `confirm` | `backend/app/agent/orchestrator.py` | **Mới**: gọi lại tool, quản lý budget, version và Final Validation; không tạo luật riêng |
 

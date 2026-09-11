@@ -85,7 +85,7 @@ jobs:
         run: |
           mkdir -p delivery
           docker save "personalized-learning-ontology:${GITHUB_SHA}" | gzip > delivery/app-image.tar.gz
-          cp compose.yaml .env.example docs/CD.md delivery/
+          cp compose.yaml .env.example docs/DEPLOYMENT.md delivery/
           echo "personalized-learning-ontology:${GITHUB_SHA}" > delivery/IMAGE.txt
           cd delivery
           sha256sum app-image.tar.gz > SHA256SUMS

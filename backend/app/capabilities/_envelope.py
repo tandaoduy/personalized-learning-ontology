@@ -18,7 +18,8 @@ def output_hash(output: SchemaModel) -> str:
 
 def ok(context: ToolCallContext, tool_name: str, output: SchemaModel, *,
        started_at: datetime, finished_at: datetime | None = None,
-       knowledge_versions=None, source_refs: tuple[str, ...] = ()) -> ToolResult:
+       knowledge_versions=None, source_refs: tuple[str, ...] = (),
+       evidence_ids: tuple[str, ...] = ()) -> ToolResult:
     finished = finished_at or now()
     return ToolResult(
         status="ok",
@@ -31,6 +32,7 @@ def ok(context: ToolCallContext, tool_name: str, output: SchemaModel, *,
             output_hash=output_hash(output),
             knowledge_versions=knowledge_versions,
             source_refs=source_refs,
+            evidence_ids=evidence_ids,
             started_at=started_at,
             finished_at=finished,
         ),

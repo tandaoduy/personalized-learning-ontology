@@ -139,7 +139,7 @@ Tạo mới `schemas/ranking.py`, `services/plan_risk_service.py`, `services/pla
 
 ## 8. M5 — Grounded Explanation
 
-Tạo `services/grounded_explanation_service.py`, `capabilities/explanation.py` và schema claims/decisions. Dùng template tiếng Việt từ dữ liệu đã tính cho MVP; chưa cần LLM để tạo lời giải thích.
+Đã tạo `services/grounded_explanation_service.py`, `capabilities/explanation.py` và schema claim/decision/evidence. Capability dùng template tiếng Việt từ dữ liệu đã tính; không dùng LLM để tạo lý do. Mỗi claim giữ evidence ID, source reference và version.
 
 Phải phân biệt lý do: không đủ điều kiện, cần song hành, chưa biết vì thiếu dữ liệu, nằm trong plan invalid, không được search tới, điểm thấp hoặc xung đột diversity. Một môn hợp lệ không được chọn không đồng nghĩa vi phạm học vụ.
 

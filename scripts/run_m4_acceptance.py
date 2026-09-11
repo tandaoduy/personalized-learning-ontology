@@ -31,7 +31,7 @@ def write_json(path, value):
 
 
 def main(with_tests=False):
-    folder = ROOT / "artifacts" / "m4_acceptance" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    folder = ROOT / "artifacts" / "agent_acceptance" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     folder.mkdir(parents=True)
     setup_logging(folder / "pipeline.log")
     started = perf_counter()
@@ -44,7 +44,7 @@ def main(with_tests=False):
         goal="on_time", target_credits=15)
     result = AgentPipeline(students, engine, evidence).run_planning_flow(request)
     write_json(folder / "positive.json", result)
-    if result.get("status") != "explaining":
+    if result.get("status") != "awaiting_feedback":
         raise RuntimeError(f"Positive case did not pass the orchestration gate: {folder}")
     # These reads prove the exported collections/timestamps are real JSON, not repr strings.
     student = StudentSnapshot.model_validate(result["student_snapshot"])
@@ -137,7 +137,7 @@ def main(with_tests=False):
         "diversity_threshold": 0.30, "ranking_shortfall_reason": ranking["shortfall_reason"], "tests": test_result}
     write_json(folder / "summary.json", summary)
     (folder / "REPORT.md").write_text(
-        f"# Minh chứng M4 — SV001\n\n"
+        f"# Kết quả chạy thử Agent — SV001\n\n"
         f"- Hồ sơ: {student.student_id}, CNTT/CNPM, {student.curriculum_id}; học kỳ {student.current_semester} → {student.current_semester + 1}.\n"
         f"- Chính sách baseline: {engine.min_credits}–{engine.max_credits} tín chỉ; mục tiêu 15.\n"
         f"- Validator: {len(valid_ids)} plan valid; phương án đầu {summary['positive_plan_credits']:g} tín chỉ.\n"
@@ -145,7 +145,7 @@ def main(with_tests=False):
         f"- Ranking: chọn {len(ranking['selected_plans'])} plan; đề xuất `{ranking['recommended_plan_id']}`; ngưỡng Jaccard 0.30.\n"
         f"- Diversity giữa hai plan: {ranking['pairwise_diversity'][0]['distance']:.4f}.\n"
         f"- Đối chứng: thêm {forbidden} sai chuyên ngành; Validator phát hiện `curriculum_membership`.\n"
-        f"- Trạng thái pipeline: `{result['status']}`; kiểm thử: {'đạt' if test_result.get('exit_code') == 0 else 'xem tests.txt / chưa chạy'}.\n\n"
+        f"- Trạng thái pipeline: `{result['status']}`; đã tạo giải thích có căn cứ cho các phương án được chọn; kiểm thử: {'đạt' if test_result.get('exit_code') == 0 else 'xem tests.txt / chưa chạy'}.\n\n"
         "Risk học vụ hiện dùng proxy ProgressRiskAnalyzer có version và được đánh dấu không chính thức. "
         "Dữ liệu chi tiết nằm trong positive.json, negative.json, source_audit.json, summary.json và tests.txt.\n",
         encoding="utf-8")

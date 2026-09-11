@@ -42,7 +42,7 @@ def test_pipeline_e2e_generates_and_validates_candidates(pipeline):
 
     assert result["success"] is True
     assert result["run_id"].startswith("RUN_")
-    assert result["status"] in {"explaining", "replanning", "no_plan_found"}
+    assert result["status"] in {"awaiting_feedback", "replanning", "no_plan_found"}
     assert result["iteration"] >= 0
 
     student = result["student_snapshot"]
@@ -77,9 +77,10 @@ def test_pipeline_e2e_generates_and_validates_candidates(pipeline):
         "generate_candidates",
         "validate_candidates",
     }
-    if result["status"] == "explaining":
-        expected_actions.update({"assess_plan_risk", "rank_valid_plans"})
+    if result["status"] == "awaiting_feedback":
+        expected_actions.update({"assess_plan_risk", "rank_valid_plans", "explain_plans"})
         assert result["ranking"]["selected_plans"]
+        assert result["explanations"]["explanations"]
     trace_actions = {event["action"] for event in result["trace"]}
     assert expected_actions.issubset(trace_actions)
 
@@ -125,6 +126,6 @@ def test_pipeline_trace_records_capability_outcomes(pipeline):
         assert event["outcome"] in {"ok", "error"}
         assert event["input_hash"]
 
-    # A valid pool is assessed and ranked before the unimplemented explanation stage,
+    # A valid pool is assessed, ranked and explained before awaiting feedback,
     # or replanning / no_plan_found when all candidates fail validation.
-    assert result["status"] in {"explaining", "replanning", "no_plan_found"}
+    assert result["status"] in {"awaiting_feedback", "replanning", "no_plan_found"}

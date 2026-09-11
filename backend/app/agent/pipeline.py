@@ -13,6 +13,7 @@ from backend.app.capabilities import (
     load_knowledge_context,
     load_student_context,
     assess_plan_risks,
+    explain_plans,
     rank_plans,
     validate_candidate,
 )
@@ -252,6 +253,7 @@ class AgentPipeline:
         ranking_context = None
         risk_batch = None
         ranking_result = None
+        explanations = None
         if state.status == "assessing_risk":
             logger.info("\n--- [6/7] ASSESS PLAN RISK ---")
             try:
@@ -261,7 +263,7 @@ class AgentPipeline:
                 state = self.orchestrator.fail_for_missing_data(state, error)
                 return self._result(state, request, student, knowledge_result, eligibility_result,
                     generation, validation_results, tool_provenance, run_started,
-                    ranking_context=None, risk_batch=None, ranking_result=None)
+                    ranking_context=None, risk_batch=None, ranking_result=None, explanations=None)
             context = self.orchestrator.create_call_context(state, "assess_plan_risk",
                 digest({"plans": [p.candidate_hash for p in validated_plans],
                         "ranking_context": ranking_context.model_dump(mode="json")}), timeout_seconds=10)
@@ -288,6 +290,19 @@ class AgentPipeline:
                 len(ranking_result.scored_plans), len(ranking_result.selected_plans),
                 ranking_result.recommended_plan_id, state.status)
 
+            logger.info("\n--- [8/8] BUILD GROUNDED EXPLANATIONS ---")
+            context = self.orchestrator.create_call_context(state, "explain_plans",
+                digest({"ranking": ranking_result.model_dump(mode="json"),
+                        "plans": [plan.candidate_hash for plan in validated_plans]}), timeout_seconds=10)
+            explained = explain_plans(context, tuple(validated_plans), risk_batch, ranking_result)
+            state = self.orchestrator.apply_result(state, "explain_plans", context, explained)
+            tool_provenance.append(explained.provenance)
+            if explained.status == "error" or state.status == "failed":
+                return self._error_response(state, explained.error or state.errors[-1])
+            explanations = explained.output
+            logger.info("Explanation complete: plans=%d, claims=%d, status=%s",
+                len(explanations.explanations), sum(len(item.claims) for item in explanations.explanations), state.status)
+
         logger.info("\n=== AGENT PIPELINE COMPLETE ===")
         logger.info("Final state: %s", state.status)
         logger.info("Budget used: candidates=%d/%d, expanded_states=%d/%d",
@@ -296,11 +311,12 @@ class AgentPipeline:
 
         return self._result(state, request, student, knowledge_result, eligibility_result,
             generation, validation_results, tool_provenance, run_started,
-            ranking_context=ranking_context, risk_batch=risk_batch, ranking_result=ranking_result)
+            ranking_context=ranking_context, risk_batch=risk_batch, ranking_result=ranking_result,
+            explanations=explanations)
 
     def _result(self, state, request, student, knowledge_result, eligibility_result,
                 generation, validation_results, tool_provenance, run_started, *,
-                ranking_context, risk_batch, ranking_result):
+                ranking_context, risk_batch, ranking_result, explanations=None):
         knowledge = knowledge_result.output.knowledge_snapshot
         return {
             "success": state.status != "failed",
@@ -319,6 +335,7 @@ class AgentPipeline:
             "ranking_context": ranking_context.model_dump(mode="json") if ranking_context else None,
             "risk": risk_batch.model_dump(mode="json") if risk_batch else None,
             "ranking": ranking_result.model_dump(mode="json") if ranking_result else None,
+            "explanations": explanations.model_dump(mode="json") if explanations else None,
             "tool_provenance": [p.model_dump(mode="json") for p in tool_provenance],
             "elapsed_seconds": perf_counter() - run_started,
             "errors": [e.model_dump(mode="json") for e in state.errors],
