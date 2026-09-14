@@ -1,0 +1,38 @@
+{
+  "scenario": {
+    "id": "E2E-03",
+    "source_student_id": "SV010",
+    "label": "missing_prerequisite",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "prerequisite",
+    "replan": "add eligible alternative",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-03",
+    "label": "missing_prerequisite",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "passed_contract": true,
+    "valid_candidates": 0,
+    "candidate_count": 2,
+    "latency_seconds": 1.0698129000002154,
+    "expected_invalid_probe": "prerequisite",
+    "invalid_probe_passed": true,
+    "replan_criterion": "add eligible alternative",
+    "replan_status": null,
+    "confirm_required": false,
+    "confirm_status": null
+  }
+}

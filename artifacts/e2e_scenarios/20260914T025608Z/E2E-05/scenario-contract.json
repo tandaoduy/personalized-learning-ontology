@@ -1,0 +1,33 @@
+{
+  "scenario": {
+    "id": "E2E-05",
+    "source_student_id": "SV185",
+    "label": "undeclared_specialization",
+    "target_credits": 12,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "expected_violation": "curriculum_membership",
+    "replan": "exclude specialization course",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-05",
+    "label": "undeclared_specialization",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "passed_contract": false,
+    "valid_candidates": 0,
+    "candidate_count": 3,
+    "latency_seconds": 1.226695700000164,
+    "expected_invalid_probe": "curriculum_membership",
+    "replan_criterion": "exclude specialization course",
+    "confirm_required": false
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "scenario": {
+    "id": "E2E-11",
+    "source_student_id": "SV056",
+    "label": "accelerated_near_graduation",
+    "target_credits": 18,
+    "goal": "accelerated",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "completed_course_retake",
+    "replan": "prioritize remaining requirements",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-11",
+    "label": "accelerated_near_graduation",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "valid_candidates": 0,
+    "candidate_count": 1,
+    "latency_seconds": 0.2439420999999129,
+    "expected_invalid_probe": "completed_course_retake",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "SSH379",
+    "replan_status": null,
+    "confirm_required": false,
+    "confirm_status": null,
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": null,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {
+      "credit_limit": 3
+    },
+    "evidence_coverage": {
+      "total_rule_decisions": 33,
+      "decisions_with_evidence": 33,
+      "coverage": 1.0
+    },
+    "replan_criterion": "prioritize remaining requirements"
+  }
+}

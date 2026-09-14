@@ -46,6 +46,13 @@ ENGLISH_COURSES = frozenset({'FLS310', *ENGLISH_COURSE_PREREQUISITES.keys()})
 NATIONAL_DEFENSE_COURSES = frozenset({'QPAD011', 'QPAD02', 'QPAD033', 'QPAD044'})
 NON_GPA_ONE_CREDIT_COURSES = frozenset({'SOT301'})
 
+# Registration credit (tín chỉ đăng ký) cho các học phần giáo dục thể chất.
+# Lưu ý: ontology gốc ghi credit=0 vì các môn này không tính vào tích lũy GPA,
+# nhưng sinh viên vẫn phải đăng ký và chúng chiếm 1 tín chỉ tải đăng ký (không tính tổng TC tích lũy).
+# Generator và validator/evidence PHẢI dùng cùng giá trị này; không được tự override.
+PHYSICAL_EDUCATION_REGISTRATION_CREDIT = 1
+NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT = 1
+
 # Môn tương đương: key = mã phụ (sẽ bị loại), value = mã chính (sẽ giữ lại)
 # INT6900 và SOT348 thực chất là cùng một môn thực tập ngành
 EQUIVALENT_COURSES = {

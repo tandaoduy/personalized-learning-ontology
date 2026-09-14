@@ -1,0 +1,68 @@
+{
+  "matrix_version": "e2e-scenarios-v1",
+  "generated_at": "2026-09-14T04:13:26.289093+00:00",
+  "cases": [
+    {
+      "scenario_id": "E2E-04",
+      "label": "corequisite",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 2.719571800000267,
+      "expected_invalid_probe": "corequisite",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "INS325",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "add corequisite or replace"
+    }
+  ],
+  "passed": 1,
+  "total": 1,
+  "controlled_fixture_count": 0,
+  "data_derived_fixture_count": 1,
+  "validity": {
+    "candidate_attempts": 2,
+    "valid_candidates": 2,
+    "validity_rate": 1.0
+  },
+  "violation_histogram": {},
+  "invalid_probe": {
+    "passed": 1,
+    "total": 1
+  },
+  "replan": {
+    "passed": 1,
+    "total": 1
+  },
+  "confirm": {
+    "passed": 0,
+    "total": 0
+  },
+  "evidence_coverage_avg": 1.0,
+  "latency": {
+    "avg_seconds": 2.7196,
+    "max_seconds": 2.7196
+  }
+}

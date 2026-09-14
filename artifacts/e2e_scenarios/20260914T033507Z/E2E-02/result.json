@@ -1,0 +1,5435 @@
+{
+  "success": true,
+  "run_id": "RUN_E2E-02",
+  "status": "replanning",
+  "iteration": 1,
+  "request": {
+    "request_id": "E2E-02",
+    "student_id": "E2E-02",
+    "target_term_id": "next-term",
+    "goal": "on_time",
+    "target_credits": 15.0,
+    "preferred_courses": [],
+    "avoided_courses": []
+  },
+  "state": {
+    "run_id": "RUN_E2E-02",
+    "request": {
+      "request_id": "E2E-02",
+      "student_id": "E2E-02",
+      "target_term_id": "next-term",
+      "goal": "on_time",
+      "target_credits": 15.0,
+      "preferred_courses": [],
+      "avoided_courses": []
+    },
+    "status": "replanning",
+    "iteration": 1,
+    "max_generation_rounds": 3,
+    "max_candidate_attempts": 60,
+    "max_expanded_states": 5000,
+    "max_active_seconds": 120,
+    "seed": 42,
+    "candidate_attempts_used": 3,
+    "expanded_states_used": 6,
+    "state_revision": 6,
+    "created_at": "2026-09-14T03:35:56.593243Z",
+    "updated_at": "2026-09-14T03:35:56.811813Z",
+    "active_deadline_at": "2026-09-14T03:37:56.593243Z",
+    "knowledge_versions": {
+      "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+      "curriculum_version": "CURRICULUM-2023",
+      "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+      "rule_version": "academic-constraints-v3",
+      "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+    },
+    "student_snapshot_hash": "sha256:80d17fe7a63deba2af14e34588bd432910c54952f5b524f0313d908a15818e23",
+    "knowledge_snapshot_hash": "sha256:7236ba39139cb91e9f903ec6bde9e5d2afdc03193222ee024276481cc1e5902e",
+    "course_space_hash": "sha256:7c82bdcf6d271b7395b05987906c37073224a59188e32f64b0dcd82df707c2c6",
+    "candidate_hashes": [
+      "sha256:27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+    ],
+    "validations": [
+      {
+        "plan_id": "RUN_E2E-02-plan-1",
+        "plan_version": "beam-v1",
+        "status": "invalid",
+        "validation_hash": "sha256:78374ca1f3dee444ddef1d1f81e3c16fff9850332da216ca38a07992dc0c7906"
+      }
+    ],
+    "risk_hashes": [],
+    "ranking_hash": null,
+    "explanation_hashes": [],
+    "feedback_hashes": [],
+    "latest_adjustment": null,
+    "artifacts": [],
+    "selected_plan_id": null,
+    "final_validation_hash": null,
+    "final_result_hash": null,
+    "trace": [
+      {
+        "call_id": "CALL_d2cc9efe74d44ffbab38d0cdbd5a8919",
+        "action": "load_student_context",
+        "tool_name": "load_student_context",
+        "iteration": 0,
+        "outcome": "ok",
+        "input_hash": "sha256:a95807ddaea280eb25bbd610e9a7949b4d2a3620592bcfaa520eefab62ae1b95",
+        "output_hash": "sha256:80d17fe7a63deba2af14e34588bd432910c54952f5b524f0313d908a15818e23",
+        "deadline_at": "2026-09-14T03:36:06.593437Z",
+        "attempt": 1,
+        "evidence_ids": [],
+        "occurred_at": "2026-09-14T03:35:56.608911Z",
+        "error": null
+      },
+      {
+        "call_id": "CALL_914ba2389a1847389a2575a398e8fd71",
+        "action": "load_knowledge_context",
+        "tool_name": "load_knowledge_context",
+        "iteration": 0,
+        "outcome": "ok",
+        "input_hash": "sha256:dbfdeea6bf1fc01371c3ee79d6bb9aeaee5c68e74b0ff18f5842f33f30f82265",
+        "output_hash": "sha256:7236ba39139cb91e9f903ec6bde9e5d2afdc03193222ee024276481cc1e5902e",
+        "deadline_at": "2026-09-14T03:36:06.609520Z",
+        "attempt": 1,
+        "evidence_ids": [],
+        "occurred_at": "2026-09-14T03:35:56.610803Z",
+        "error": null
+      },
+      {
+        "call_id": "CALL_066b60b366d54f1b8b6ff7eb11084558",
+        "action": "build_course_space",
+        "tool_name": "build_course_space",
+        "iteration": 0,
+        "outcome": "ok",
+        "input_hash": "sha256:47f09a3c574dacd9a024aa2d464d22dd06fb2efe405338500fee0839a37874b0",
+        "output_hash": "sha256:7c82bdcf6d271b7395b05987906c37073224a59188e32f64b0dcd82df707c2c6",
+        "deadline_at": "2026-09-14T03:36:06.611841Z",
+        "attempt": 1,
+        "evidence_ids": [],
+        "occurred_at": "2026-09-14T03:35:56.613277Z",
+        "error": null
+      },
+      {
+        "call_id": "CALL_67c9e07051cc4059915b1d9a9323fc7f",
+        "action": "generate_candidates",
+        "tool_name": "generate_candidates",
+        "iteration": 0,
+        "outcome": "ok",
+        "input_hash": "sha256:a0f7fbe220687b8dca116a845d076c5e6ecc7436345d6dbad1e387191983a369",
+        "output_hash": "sha256:ba9ee8c8046ca65c2e4ccacf9155d14033214620b940792dedbdb826fb743004",
+        "deadline_at": "2026-09-14T03:36:56.614090Z",
+        "attempt": 1,
+        "evidence_ids": [],
+        "occurred_at": "2026-09-14T03:35:56.615450Z",
+        "error": null
+      },
+      {
+        "call_id": "CALL_83180da2d9a04b899a86d7288ae64f62",
+        "action": "validate_candidates",
+        "tool_name": "validate_candidates",
+        "iteration": 0,
+        "outcome": "ok",
+        "input_hash": "sha256:9a0866a7b87838e512135f27ae1d1abbc778fde5076f2b1b5411291be60b90dc",
+        "output_hash": "sha256:3de00934873d0bb3574a3f21e0d7547af6945db24098aa615443983cb570ed0e",
+        "deadline_at": "2026-09-14T03:37:56.593243Z",
+        "attempt": 1,
+        "evidence_ids": [
+          "RULE_71a3e4fc7348c61ff23c8c2d1c68942069591ab508c8449e27de1d8d6fbf592c",
+          "RULE_0f9ef9e3c325dfe52c1f528eaeeef11969384243e5d37f42500ab5420f753539",
+          "RULE_703773c14102ab9f9ea8948f5aa3f88e2c6cb1b152839712f3c92fc6046cc26a",
+          "RULE_bc21c4a6c5e0f5524dcd7d0949a6c953951fb0c00c8bc5878b3a717be654126b",
+          "RULE_7fd10557e6ab0be93304ebfef0edc33941b81656eaa261ccdf15f842349069c6",
+          "RULE_e7a976aee4e24428243318b0fb46b3c481297bfd1d4b19bcd5cb185839f89add",
+          "RULE_87ed3046cfba9b72b21869d4881b9f051fb84bb1050d38bfa751e8817f09651b",
+          "RULE_2e27cfa0f0c7e3e5077095af30bb9ff2573745cc5a37657cbf94db6d0bed3aac",
+          "RULE_035690a59e6a044fd7571e717d4b0da84aff63d570319b1a59d34deca4b9f9cf",
+          "RULE_ab4b07b6881608fa7fa37fca0e817f16ac73f20c24e7191723439148bf52edf7",
+          "RULE_a5e4519d33bed22b22e461363e361fa2d66964c248b57d912ceba813416b0e4c",
+          "RULE_1ac51d4fda43b332365283021e6b9fb1aad0ba3773d0217e499c9b1e941177db",
+          "RULE_6730ae88e45bcc95e4e7a14d1d5af9912f08e2850415367f8204d5b1fdce23cd",
+          "RULE_ae552aad0509bef1d7b17ab9adfca309a5b9e511ec3271b7f1bec85c31ea5aca",
+          "RULE_26720254b15a8afe6a9328bb1f3273e16f97f5d2d68bc03dd31592a6ada6875e",
+          "RULE_d276a6ff00782d82b522fc16f5b0c22983130ba85fc46ebe966f3bac8d6e4308",
+          "RULE_8d781b48e29186d88cf9e09d70b4da4f9fcabeb31881af85cbbdc1d2cbd86385",
+          "RULE_bb34826de8b2e8ed4b98f9ab223e85c5b30e4598ef3a61753db52f6d8cf98bc3",
+          "RULE_e483c281afe32f788235e0a8fa782483d83e46f8bb393b79b23912cde4e12b65",
+          "RULE_998c5db02fd2e364cd29b7dfd926816f303ef2aba56758672d59dd5fc6d6dab4",
+          "RULE_b86c37db64c0c699cefa92ff591b54b1754c5ad0c9de978955642e536f76e32c",
+          "RULE_cbb876ddbf20e24c49940490a24fa2af8e856bdfaca95c03214ee7cf9d96e294"
+        ],
+        "occurred_at": "2026-09-14T03:35:56.809452Z",
+        "error": null
+      }
+    ],
+    "errors": []
+  },
+  "student_snapshot": {
+    "student_id": "E2E-02",
+    "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+    "captured_at": "2026-09-14T03:35:56.593486Z",
+    "curriculum_id": "CURRICULUM-2023",
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+    "current_semester": 6,
+    "completed_courses": [
+      "SOT381",
+      "85097",
+      "SOT301",
+      "SH1",
+      "FLS313",
+      "MAT327",
+      "FLS315",
+      "QPAD044",
+      "INT6903",
+      "MAT322",
+      "INS330",
+      "INS326",
+      "PHY311",
+      "QPAD011",
+      "SSH313",
+      "FLS314",
+      "POL309",
+      "SOT331",
+      "MAT328",
+      "FLS312",
+      "SOT355",
+      "INS335",
+      "85065",
+      "SOT345",
+      "POL310",
+      "BUA319",
+      "SOT375",
+      "SOT379",
+      "SSH379",
+      "POL307",
+      "SOT352",
+      "INT6220",
+      "NEC321",
+      "SOT347",
+      "SOT349",
+      "SOT315",
+      "QPAD02",
+      "NEC329",
+      "SSH378",
+      "POL308",
+      "INS360",
+      "QPAD033",
+      "INS325",
+      "INS339",
+      "POL333",
+      "SOT380",
+      "FLS310",
+      "PHY310",
+      "SOT332",
+      "85105"
+    ],
+    "failed_courses": [
+      "SOT320"
+    ],
+    "attempts": [
+      {
+        "course_code": "85065",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.0
+      },
+      {
+        "course_code": "FLS310",
+        "term_id": "1",
+        "outcome": "exempt",
+        "grade": null
+      },
+      {
+        "course_code": "FLS312",
+        "term_id": "1",
+        "outcome": "exempt",
+        "grade": null
+      },
+      {
+        "course_code": "FLS313",
+        "term_id": "1",
+        "outcome": "exempt",
+        "grade": null
+      },
+      {
+        "course_code": "FLS314",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 8.1
+      },
+      {
+        "course_code": "SOT301",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 9.0
+      },
+      {
+        "course_code": "SOT381",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.3
+      },
+      {
+        "course_code": "MAT327",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 5.6
+      },
+      {
+        "course_code": "SSH378",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 8.0
+      },
+      {
+        "course_code": "85105",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.5
+      },
+      {
+        "course_code": "FLS315",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.0
+      },
+      {
+        "course_code": "INS325",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.4
+      },
+      {
+        "course_code": "NEC321",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.6
+      },
+      {
+        "course_code": "SH1",
+        "term_id": "2",
+        "outcome": "exempt",
+        "grade": null
+      },
+      {
+        "course_code": "SOT315",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.7
+      },
+      {
+        "course_code": "SSH313",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 8.2
+      },
+      {
+        "course_code": "POL307",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.7
+      },
+      {
+        "course_code": "MAT328",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.7
+      },
+      {
+        "course_code": "QPAD02",
+        "term_id": "3",
+        "outcome": "passed",
+        "grade": 9.4
+      },
+      {
+        "course_code": "QPAD011",
+        "term_id": "3",
+        "outcome": "passed",
+        "grade": 6.6
+      },
+      {
+        "course_code": "QPAD033",
+        "term_id": "3",
+        "outcome": "passed",
+        "grade": 6.4
+      },
+      {
+        "course_code": "QPAD044",
+        "term_id": "3",
+        "outcome": "passed",
+        "grade": 7.8
+      },
+      {
+        "course_code": "85097",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 6.5
+      },
+      {
+        "course_code": "BUA319",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.0
+      },
+      {
+        "course_code": "INS326",
+        "term_id": "1",
+        "outcome": "failed",
+        "grade": 3.9
+      },
+      {
+        "course_code": "INS330",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 5.8
+      },
+      {
+        "course_code": "SOT320",
+        "term_id": "1",
+        "outcome": "failed",
+        "grade": 4.3
+      },
+      {
+        "course_code": "POL308",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 5.5
+      },
+      {
+        "course_code": "POL309",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.5
+      },
+      {
+        "course_code": "PHY310",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 5.4
+      },
+      {
+        "course_code": "PHY311",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 6.6
+      },
+      {
+        "course_code": "SSH379",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.6
+      },
+      {
+        "course_code": "INS339",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.5
+      },
+      {
+        "course_code": "MAT322",
+        "term_id": "2",
+        "outcome": "failed",
+        "grade": 4.8
+      },
+      {
+        "course_code": "SH1",
+        "term_id": "2",
+        "outcome": "exempt",
+        "grade": null
+      },
+      {
+        "course_code": "SOT331",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.8
+      },
+      {
+        "course_code": "SOT347",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.3
+      },
+      {
+        "course_code": "SOT375",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.7
+      },
+      {
+        "course_code": "SOT345",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.3
+      },
+      {
+        "course_code": "POL310",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.3
+      },
+      {
+        "course_code": "INS326",
+        "term_id": "3",
+        "outcome": "passed",
+        "grade": 5.3
+      },
+      {
+        "course_code": "INS335",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.3
+      },
+      {
+        "course_code": "INS360",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 6.3
+      },
+      {
+        "course_code": "NEC329",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 6.3
+      },
+      {
+        "course_code": "POL333",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.5
+      },
+      {
+        "course_code": "SOT355",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.1
+      },
+      {
+        "course_code": "INT6903",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 7.3
+      },
+      {
+        "course_code": "INT6220",
+        "term_id": "1",
+        "outcome": "passed",
+        "grade": 6.3
+      },
+      {
+        "course_code": "MAT322",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.2
+      },
+      {
+        "course_code": "SOT349",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.4
+      },
+      {
+        "course_code": "SOT352",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 7.0
+      },
+      {
+        "course_code": "SOT332",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 6.0
+      },
+      {
+        "course_code": "SOT379",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.9
+      },
+      {
+        "course_code": "SOT380",
+        "term_id": "2",
+        "outcome": "passed",
+        "grade": 5.5
+      }
+    ],
+    "earned_credits": 107.0,
+    "gpa": 6.65,
+    "gpa_scale": 10.0,
+    "academic_warnings": []
+  },
+  "knowledge_snapshot": {
+    "snapshot_id": "knowledge-7aaa7b0fdebc3ae6",
+    "versions": {
+      "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+      "curriculum_version": "CURRICULUM-2023",
+      "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+      "rule_version": "academic-constraints-v3",
+      "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+    },
+    "captured_at": "2026-09-14T03:35:56.609575Z",
+    "curriculum_id": "CURRICULUM-2023",
+    "target_term_id": "next-term",
+    "ontology_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+    "rules_ref": "standard-academic-v3",
+    "offerings_ref": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e",
+    "target_semester_type": 1,
+    "curriculum_courses": [
+      "85066",
+      "MAE3098",
+      "NEC350",
+      "MEM347",
+      "INT6210",
+      "INT6205",
+      "INT6202",
+      "INT6206",
+      "SOT375",
+      "SSH379",
+      "MAE331",
+      "NEC321",
+      "MKT372",
+      "QPAD02",
+      "INS327",
+      "QPAD033",
+      "INS325",
+      "INS339",
+      "INT6902",
+      "INT6903",
+      "MAT322",
+      "QPAD011",
+      "MAE3099",
+      "SOT331",
+      "INS336",
+      "INS335",
+      "85065",
+      "SOT345",
+      "SOT379",
+      "SOT352",
+      "SOT366",
+      "INT6204",
+      "SOT349",
+      "INT6901",
+      "SOT336",
+      "INS360",
+      "SOT341",
+      "NEC326",
+      "TRE312",
+      "INT6900",
+      "INT6236",
+      "NEC324",
+      "CCN6203",
+      "INT6209",
+      "SOT381",
+      "85097",
+      "SH1",
+      "SOT320",
+      "FLS313",
+      "FLS315",
+      "INS330",
+      "INS326",
+      "PHY311",
+      "SSH313",
+      "FLS314",
+      "INS362",
+      "INS304",
+      "MAT328",
+      "FLS312",
+      "AUE319",
+      "POL310",
+      "BUA319",
+      "INT6220",
+      "INT6211",
+      "SOT347",
+      "INT6213",
+      "MEM340",
+      "SOT344",
+      "851111",
+      "MEM341",
+      "SOT357",
+      "SSH378",
+      "INT6215",
+      "POL333",
+      "EPM320",
+      "PHY310",
+      "SOT332",
+      "SOT301",
+      "MAT327",
+      "QPAD044",
+      "INT6201",
+      "POL309",
+      "MAE3207",
+      "INT6207",
+      "SOT355",
+      "SSH380",
+      "85098",
+      "NEC331",
+      "NEC311",
+      "COS6200",
+      "POL307",
+      "INS305",
+      "SOT315",
+      "NEC329",
+      "SSH381",
+      "INT6214",
+      "INT6212",
+      "POL308",
+      "INT6221",
+      "NEC355",
+      "INS361",
+      "SOT380",
+      "FLS310",
+      "85108",
+      "85105",
+      "MEM342"
+    ],
+    "prior_study_requirements": [
+      {
+        "course_code": "85065",
+        "required_courses": []
+      },
+      {
+        "course_code": "85066",
+        "required_courses": []
+      },
+      {
+        "course_code": "85097",
+        "required_courses": []
+      },
+      {
+        "course_code": "85098",
+        "required_courses": []
+      },
+      {
+        "course_code": "85105",
+        "required_courses": []
+      },
+      {
+        "course_code": "85108",
+        "required_courses": []
+      },
+      {
+        "course_code": "851111",
+        "required_courses": []
+      },
+      {
+        "course_code": "AUE319",
+        "required_courses": []
+      },
+      {
+        "course_code": "BUA319",
+        "required_courses": []
+      },
+      {
+        "course_code": "CCN6203",
+        "required_courses": []
+      },
+      {
+        "course_code": "COS6200",
+        "required_courses": []
+      },
+      {
+        "course_code": "EPM320",
+        "required_courses": []
+      },
+      {
+        "course_code": "FLS310",
+        "required_courses": []
+      },
+      {
+        "course_code": "FLS312",
+        "required_courses": []
+      },
+      {
+        "course_code": "FLS313",
+        "required_courses": []
+      },
+      {
+        "course_code": "FLS314",
+        "required_courses": []
+      },
+      {
+        "course_code": "FLS315",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS304",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS305",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS325",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS326",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS327",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS330",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS335",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS336",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS339",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS360",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS361",
+        "required_courses": []
+      },
+      {
+        "course_code": "INS362",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6201",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6202",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6204",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6205",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6206",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6207",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6209",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6210",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6211",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6212",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6213",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6214",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6215",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6220",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6221",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6236",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6900",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6901",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6902",
+        "required_courses": []
+      },
+      {
+        "course_code": "INT6903",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAE3098",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAE3099",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAE3207",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAE331",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAT322",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAT327",
+        "required_courses": []
+      },
+      {
+        "course_code": "MAT328",
+        "required_courses": []
+      },
+      {
+        "course_code": "MEM340",
+        "required_courses": []
+      },
+      {
+        "course_code": "MEM341",
+        "required_courses": []
+      },
+      {
+        "course_code": "MEM342",
+        "required_courses": []
+      },
+      {
+        "course_code": "MEM347",
+        "required_courses": []
+      },
+      {
+        "course_code": "MKT372",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC311",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC321",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC324",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC326",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC329",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC331",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC350",
+        "required_courses": []
+      },
+      {
+        "course_code": "NEC355",
+        "required_courses": []
+      },
+      {
+        "course_code": "PHY310",
+        "required_courses": []
+      },
+      {
+        "course_code": "PHY311",
+        "required_courses": []
+      },
+      {
+        "course_code": "POL307",
+        "required_courses": []
+      },
+      {
+        "course_code": "POL308",
+        "required_courses": []
+      },
+      {
+        "course_code": "POL309",
+        "required_courses": []
+      },
+      {
+        "course_code": "POL310",
+        "required_courses": []
+      },
+      {
+        "course_code": "POL333",
+        "required_courses": []
+      },
+      {
+        "course_code": "QPAD011",
+        "required_courses": []
+      },
+      {
+        "course_code": "QPAD02",
+        "required_courses": []
+      },
+      {
+        "course_code": "QPAD033",
+        "required_courses": []
+      },
+      {
+        "course_code": "QPAD044",
+        "required_courses": []
+      },
+      {
+        "course_code": "SH1",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT301",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT315",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT320",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT331",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT332",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT336",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT341",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT344",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT345",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT347",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT349",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT352",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT355",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT357",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT366",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT375",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT379",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT380",
+        "required_courses": []
+      },
+      {
+        "course_code": "SOT381",
+        "required_courses": []
+      },
+      {
+        "course_code": "SSH313",
+        "required_courses": []
+      },
+      {
+        "course_code": "SSH378",
+        "required_courses": []
+      },
+      {
+        "course_code": "SSH379",
+        "required_courses": []
+      },
+      {
+        "course_code": "SSH380",
+        "required_courses": []
+      },
+      {
+        "course_code": "SSH381",
+        "required_courses": []
+      },
+      {
+        "course_code": "TRE312",
+        "required_courses": []
+      }
+    ],
+    "elective_quotas": [
+      {
+        "category": "foundation",
+        "max_courses": 1
+      },
+      {
+        "category": "general",
+        "max_courses": 1
+      },
+      {
+        "category": "physical",
+        "max_courses": 2
+      },
+      {
+        "category": "specialization",
+        "max_courses": 3
+      }
+    ]
+  },
+  "knowledge_context": {
+    "knowledge_snapshot": {
+      "snapshot_id": "knowledge-7aaa7b0fdebc3ae6",
+      "versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "captured_at": "2026-09-14T03:35:56.609575Z",
+      "curriculum_id": "CURRICULUM-2023",
+      "target_term_id": "next-term",
+      "ontology_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+      "rules_ref": "standard-academic-v3",
+      "offerings_ref": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e",
+      "target_semester_type": 1,
+      "curriculum_courses": [
+        "85066",
+        "MAE3098",
+        "NEC350",
+        "MEM347",
+        "INT6210",
+        "INT6205",
+        "INT6202",
+        "INT6206",
+        "SOT375",
+        "SSH379",
+        "MAE331",
+        "NEC321",
+        "MKT372",
+        "QPAD02",
+        "INS327",
+        "QPAD033",
+        "INS325",
+        "INS339",
+        "INT6902",
+        "INT6903",
+        "MAT322",
+        "QPAD011",
+        "MAE3099",
+        "SOT331",
+        "INS336",
+        "INS335",
+        "85065",
+        "SOT345",
+        "SOT379",
+        "SOT352",
+        "SOT366",
+        "INT6204",
+        "SOT349",
+        "INT6901",
+        "SOT336",
+        "INS360",
+        "SOT341",
+        "NEC326",
+        "TRE312",
+        "INT6900",
+        "INT6236",
+        "NEC324",
+        "CCN6203",
+        "INT6209",
+        "SOT381",
+        "85097",
+        "SH1",
+        "SOT320",
+        "FLS313",
+        "FLS315",
+        "INS330",
+        "INS326",
+        "PHY311",
+        "SSH313",
+        "FLS314",
+        "INS362",
+        "INS304",
+        "MAT328",
+        "FLS312",
+        "AUE319",
+        "POL310",
+        "BUA319",
+        "INT6220",
+        "INT6211",
+        "SOT347",
+        "INT6213",
+        "MEM340",
+        "SOT344",
+        "851111",
+        "MEM341",
+        "SOT357",
+        "SSH378",
+        "INT6215",
+        "POL333",
+        "EPM320",
+        "PHY310",
+        "SOT332",
+        "SOT301",
+        "MAT327",
+        "QPAD044",
+        "INT6201",
+        "POL309",
+        "MAE3207",
+        "INT6207",
+        "SOT355",
+        "SSH380",
+        "85098",
+        "NEC331",
+        "NEC311",
+        "COS6200",
+        "POL307",
+        "INS305",
+        "SOT315",
+        "NEC329",
+        "SSH381",
+        "INT6214",
+        "INT6212",
+        "POL308",
+        "INT6221",
+        "NEC355",
+        "INS361",
+        "SOT380",
+        "FLS310",
+        "85108",
+        "85105",
+        "MEM342"
+      ],
+      "prior_study_requirements": [
+        {
+          "course_code": "85065",
+          "required_courses": []
+        },
+        {
+          "course_code": "85066",
+          "required_courses": []
+        },
+        {
+          "course_code": "85097",
+          "required_courses": []
+        },
+        {
+          "course_code": "85098",
+          "required_courses": []
+        },
+        {
+          "course_code": "85105",
+          "required_courses": []
+        },
+        {
+          "course_code": "85108",
+          "required_courses": []
+        },
+        {
+          "course_code": "851111",
+          "required_courses": []
+        },
+        {
+          "course_code": "AUE319",
+          "required_courses": []
+        },
+        {
+          "course_code": "BUA319",
+          "required_courses": []
+        },
+        {
+          "course_code": "CCN6203",
+          "required_courses": []
+        },
+        {
+          "course_code": "COS6200",
+          "required_courses": []
+        },
+        {
+          "course_code": "EPM320",
+          "required_courses": []
+        },
+        {
+          "course_code": "FLS310",
+          "required_courses": []
+        },
+        {
+          "course_code": "FLS312",
+          "required_courses": []
+        },
+        {
+          "course_code": "FLS313",
+          "required_courses": []
+        },
+        {
+          "course_code": "FLS314",
+          "required_courses": []
+        },
+        {
+          "course_code": "FLS315",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS304",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS305",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS325",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS326",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS327",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS330",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS335",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS336",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS339",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS360",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS361",
+          "required_courses": []
+        },
+        {
+          "course_code": "INS362",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6201",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6202",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6204",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6205",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6206",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6207",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6209",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6210",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6211",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6212",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6213",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6214",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6215",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6220",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6221",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6236",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6900",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6901",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6902",
+          "required_courses": []
+        },
+        {
+          "course_code": "INT6903",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAE3098",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAE3099",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAE3207",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAE331",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAT322",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAT327",
+          "required_courses": []
+        },
+        {
+          "course_code": "MAT328",
+          "required_courses": []
+        },
+        {
+          "course_code": "MEM340",
+          "required_courses": []
+        },
+        {
+          "course_code": "MEM341",
+          "required_courses": []
+        },
+        {
+          "course_code": "MEM342",
+          "required_courses": []
+        },
+        {
+          "course_code": "MEM347",
+          "required_courses": []
+        },
+        {
+          "course_code": "MKT372",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC311",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC321",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC324",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC326",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC329",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC331",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC350",
+          "required_courses": []
+        },
+        {
+          "course_code": "NEC355",
+          "required_courses": []
+        },
+        {
+          "course_code": "PHY310",
+          "required_courses": []
+        },
+        {
+          "course_code": "PHY311",
+          "required_courses": []
+        },
+        {
+          "course_code": "POL307",
+          "required_courses": []
+        },
+        {
+          "course_code": "POL308",
+          "required_courses": []
+        },
+        {
+          "course_code": "POL309",
+          "required_courses": []
+        },
+        {
+          "course_code": "POL310",
+          "required_courses": []
+        },
+        {
+          "course_code": "POL333",
+          "required_courses": []
+        },
+        {
+          "course_code": "QPAD011",
+          "required_courses": []
+        },
+        {
+          "course_code": "QPAD02",
+          "required_courses": []
+        },
+        {
+          "course_code": "QPAD033",
+          "required_courses": []
+        },
+        {
+          "course_code": "QPAD044",
+          "required_courses": []
+        },
+        {
+          "course_code": "SH1",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT301",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT315",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT320",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT331",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT332",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT336",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT341",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT344",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT345",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT347",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT349",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT352",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT355",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT357",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT366",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT375",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT379",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT380",
+          "required_courses": []
+        },
+        {
+          "course_code": "SOT381",
+          "required_courses": []
+        },
+        {
+          "course_code": "SSH313",
+          "required_courses": []
+        },
+        {
+          "course_code": "SSH378",
+          "required_courses": []
+        },
+        {
+          "course_code": "SSH379",
+          "required_courses": []
+        },
+        {
+          "course_code": "SSH380",
+          "required_courses": []
+        },
+        {
+          "course_code": "SSH381",
+          "required_courses": []
+        },
+        {
+          "course_code": "TRE312",
+          "required_courses": []
+        }
+      ],
+      "elective_quotas": [
+        {
+          "category": "foundation",
+          "max_courses": 1
+        },
+        {
+          "category": "general",
+          "max_courses": 1
+        },
+        {
+          "category": "physical",
+          "max_courses": 2
+        },
+        {
+          "category": "specialization",
+          "max_courses": 3
+        }
+      ]
+    },
+    "catalog": [
+      {
+        "course_code": "85065",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Chạy)"
+      },
+      {
+        "course_code": "85066",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Bơi lội)"
+      },
+      {
+        "course_code": "85097",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Bóng đá)"
+      },
+      {
+        "course_code": "85098",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Bóng chuyền)"
+      },
+      {
+        "course_code": "85105",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Cầu lông)"
+      },
+      {
+        "course_code": "85108",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Taekwondo)"
+      },
+      {
+        "course_code": "851111",
+        "credits": 1.0,
+        "course_name": "Giáo dục thể chất (Aerobic)"
+      },
+      {
+        "course_code": "AUE319",
+        "credits": 0.0,
+        "course_name": "Nhập môn ngành Kỹ thuật ô tô"
+      },
+      {
+        "course_code": "BUA319",
+        "credits": 2.0,
+        "course_name": "Nhập môn Quản trị học"
+      },
+      {
+        "course_code": "CCN6203",
+        "credits": 3.0,
+        "course_name": "Nguyên lý máy học"
+      },
+      {
+        "course_code": "COS6200",
+        "credits": 0.0,
+        "course_name": "Nhập môn ngành Khoa học máy tính"
+      },
+      {
+        "course_code": "EPM320",
+        "credits": 2.0,
+        "course_name": "Con người và môi trường"
+      },
+      {
+        "course_code": "FLS310",
+        "credits": 4.0,
+        "course_name": "Tiếng Anh A1"
+      },
+      {
+        "course_code": "FLS312",
+        "credits": 4.0,
+        "course_name": "Tiếng Anh A2.1"
+      },
+      {
+        "course_code": "FLS313",
+        "credits": 4.0,
+        "course_name": "Tiếng Anh A2.2"
+      },
+      {
+        "course_code": "FLS314",
+        "credits": 4.0,
+        "course_name": "Tiếng Anh B1.1"
+      },
+      {
+        "course_code": "FLS315",
+        "credits": 4.0,
+        "course_name": "Tiếng Anh B1.2"
+      },
+      {
+        "course_code": "INS304",
+        "credits": 3.0,
+        "course_name": "Phân tích số liệu và Kinh doanh thông minh"
+      },
+      {
+        "course_code": "INS305",
+        "credits": 3.0,
+        "course_name": "Hệ hỗ trợ quyết định"
+      },
+      {
+        "course_code": "INS325",
+        "credits": 3.0,
+        "course_name": "Hệ điều hành"
+      },
+      {
+        "course_code": "INS326",
+        "credits": 3.0,
+        "course_name": "Cấu trúc dữ liệu và giải thuật"
+      },
+      {
+        "course_code": "INS327",
+        "credits": 3.0,
+        "course_name": "Kiến trúc máy tính và hệ điều hành"
+      },
+      {
+        "course_code": "INS330",
+        "credits": 3.0,
+        "course_name": "Cơ sở dữ liệu"
+      },
+      {
+        "course_code": "INS335",
+        "credits": 3.0,
+        "course_name": "Thống kê máy tính"
+      },
+      {
+        "course_code": "INS336",
+        "credits": 3.0,
+        "course_name": "Hệ thống thông tin địa lý (GIS)"
+      },
+      {
+        "course_code": "INS339",
+        "credits": 3.0,
+        "course_name": "Hệ quản trị cơ sở dữ liệu"
+      },
+      {
+        "course_code": "INS360",
+        "credits": 3.0,
+        "course_name": "Phân tích thiết kế hệ thống thông tin"
+      },
+      {
+        "course_code": "INS361",
+        "credits": 3.0,
+        "course_name": "Cơ sở dữ liệu phân tán"
+      },
+      {
+        "course_code": "INS362",
+        "credits": 3.0,
+        "course_name": "Khai phá dữ liệu"
+      },
+      {
+        "course_code": "INT6201",
+        "credits": 3.0,
+        "course_name": "Học sâu ứng dụng"
+      },
+      {
+        "course_code": "INT6202",
+        "credits": 3.0,
+        "course_name": "Dữ liệu đa phương tiện"
+      },
+      {
+        "course_code": "INT6204",
+        "credits": 3.0,
+        "course_name": "Hệ thống hoạch định nguồn lực doanh nghiệp"
+      },
+      {
+        "course_code": "INT6205",
+        "credits": 3.0,
+        "course_name": "Linux server và quản trị mạng"
+      },
+      {
+        "course_code": "INT6206",
+        "credits": 3.0,
+        "course_name": "Lý thuyết đồ thị trong Hệ thống mạng"
+      },
+      {
+        "course_code": "INT6207",
+        "credits": 3.0,
+        "course_name": "IoT và Ứng dụng"
+      },
+      {
+        "course_code": "INT6209",
+        "credits": 3.0,
+        "course_name": "Các chủ đề nâng cao trong công nghệ phần mềm"
+      },
+      {
+        "course_code": "INT6210",
+        "credits": 3.0,
+        "course_name": "Quản lý rủi ro"
+      },
+      {
+        "course_code": "INT6211",
+        "credits": 3.0,
+        "course_name": "Ứng dụng cơ sở dữ liệu"
+      },
+      {
+        "course_code": "INT6212",
+        "credits": 3.0,
+        "course_name": "Xử lý tín hiệu số"
+      },
+      {
+        "course_code": "INT6213",
+        "credits": 3.0,
+        "course_name": "Chuyên đề Truyền thông và Mạng máy tính"
+      },
+      {
+        "course_code": "INT6214",
+        "credits": 3.0,
+        "course_name": "Mạng thế hệ mới"
+      },
+      {
+        "course_code": "INT6215",
+        "credits": 3.0,
+        "course_name": "Kỹ thuật phát hiện và tấn công mạng"
+      },
+      {
+        "course_code": "INT6220",
+        "credits": 3.0,
+        "course_name": "Phát triển phần mềm hướng đối tượng"
+      },
+      {
+        "course_code": "INT6221",
+        "credits": 3.0,
+        "course_name": "Lập trình Python cho học máy"
+      },
+      {
+        "course_code": "INT6236",
+        "credits": 3.0,
+        "course_name": "Nhập môn trí tuệ nhân tạo"
+      },
+      {
+        "course_code": "INT6900",
+        "credits": 3.0,
+        "course_name": "Thực tập ngành nghề"
+      },
+      {
+        "course_code": "INT6901",
+        "credits": 10.0,
+        "course_name": "Đồ án tốt nghiệp(CNTT)"
+      },
+      {
+        "course_code": "INT6902",
+        "credits": 5.0,
+        "course_name": "Chuyên đề tốt nghiệp (CNTT)"
+      },
+      {
+        "course_code": "INT6903",
+        "credits": 3.0,
+        "course_name": "Đồ án cơ sở ngành"
+      },
+      {
+        "course_code": "MAE3098",
+        "credits": 0.0,
+        "course_name": "Nhập môn ngành KT Cơ khí động lực"
+      },
+      {
+        "course_code": "MAE3099",
+        "credits": 0.0,
+        "course_name": "Nhập môn ngành Khoa học hàng hải"
+      },
+      {
+        "course_code": "MAE3207",
+        "credits": 2.0,
+        "course_name": "Khoa học quản lý"
+      },
+      {
+        "course_code": "MAE331",
+        "credits": 2.0,
+        "course_name": "Kỹ thuật thủy khí"
+      },
+      {
+        "course_code": "MAT322",
+        "credits": 3.0,
+        "course_name": "Xác suất - Thống kê"
+      },
+      {
+        "course_code": "MAT327",
+        "credits": 3.0,
+        "course_name": "Toán 1"
+      },
+      {
+        "course_code": "MAT328",
+        "credits": 2.0,
+        "course_name": "Toán 2"
+      },
+      {
+        "course_code": "MEM340",
+        "credits": 4.0,
+        "course_name": "Cơ học ứng dụng"
+      },
+      {
+        "course_code": "MEM341",
+        "credits": 2.0,
+        "course_name": "Đồ họa kỹ thuật (1LT, 1TH)"
+      },
+      {
+        "course_code": "MEM342",
+        "credits": 2.0,
+        "course_name": "Vật liệu học"
+      },
+      {
+        "course_code": "MEM347",
+        "credits": 3.0,
+        "course_name": "Vẽ kỹ thuật (2LT+1TH)"
+      },
+      {
+        "course_code": "MKT372",
+        "credits": 2.0,
+        "course_name": "Nhập môn Marketing"
+      },
+      {
+        "course_code": "NEC311",
+        "credits": 3.0,
+        "course_name": "Lập trình Python"
+      },
+      {
+        "course_code": "NEC321",
+        "credits": 3.0,
+        "course_name": "Kiến trúc máy tính"
+      },
+      {
+        "course_code": "NEC324",
+        "credits": 3.0,
+        "course_name": "Mạng không dây và di động"
+      },
+      {
+        "course_code": "NEC326",
+        "credits": 3.0,
+        "course_name": "An toàn và bảo mật thông tin"
+      },
+      {
+        "course_code": "NEC329",
+        "credits": 3.0,
+        "course_name": "Mạng máy tính"
+      },
+      {
+        "course_code": "NEC331",
+        "credits": 3.0,
+        "course_name": "Lập trình Java"
+      },
+      {
+        "course_code": "NEC350",
+        "credits": 3.0,
+        "course_name": "Thiết kế và cài đặt mạng"
+      },
+      {
+        "course_code": "NEC355",
+        "credits": 3.0,
+        "course_name": "An toàn mạng"
+      },
+      {
+        "course_code": "PHY310",
+        "credits": 3.0,
+        "course_name": "Vật lý đại cương 1"
+      },
+      {
+        "course_code": "PHY311",
+        "credits": 1.0,
+        "course_name": "T.Hành Vật lý đại cương 1"
+      },
+      {
+        "course_code": "POL307",
+        "credits": 3.0,
+        "course_name": "Triết học Mâc-Lênin"
+      },
+      {
+        "course_code": "POL308",
+        "credits": 2.0,
+        "course_name": "Chủ nghĩa xã hội khoa học"
+      },
+      {
+        "course_code": "POL309",
+        "credits": 2.0,
+        "course_name": "Kinh tế Chính trị Mác - Lênin"
+      },
+      {
+        "course_code": "POL310",
+        "credits": 2.0,
+        "course_name": "Lịch sử Đảng Cộng sản Việt Nam"
+      },
+      {
+        "course_code": "POL333",
+        "credits": 2.0,
+        "course_name": "Tư tưởng Hồ Chí Minh"
+      },
+      {
+        "course_code": "QPAD011",
+        "credits": 0.0,
+        "course_name": "Giáo dục Quốc phòng - An ninh 1 (Đường lối quốc phòng của Đảng Cộng sản Việt Nam)"
+      },
+      {
+        "course_code": "QPAD02",
+        "credits": 0.0,
+        "course_name": "Giáo dục Quốc phòng - An ninh 2 (Công tác quốc phòng và an ninh)"
+      },
+      {
+        "course_code": "QPAD033",
+        "credits": 0.0,
+        "course_name": "Giáo dục Quốc phòng - An ninh 3 (Quân sự chung)"
+      },
+      {
+        "course_code": "QPAD044",
+        "credits": 0.0,
+        "course_name": "Giáo dục Quốc phòng - An ninh 4 (Kỹ thuật chiến đấu bộ binh và chiến thuật)"
+      },
+      {
+        "course_code": "SH1",
+        "credits": 0.0,
+        "course_name": "Sinh hoạt Cuối tuần"
+      },
+      {
+        "course_code": "SOT301",
+        "credits": 1.0,
+        "course_name": "Nhập môn ngành Công nghệ thông tin"
+      },
+      {
+        "course_code": "SOT315",
+        "credits": 3.0,
+        "course_name": "Nhập môn lập trình"
+      },
+      {
+        "course_code": "SOT320",
+        "credits": 3.0,
+        "course_name": "Kỹ thuật lập trình (2LT + 1LT)"
+      },
+      {
+        "course_code": "SOT331",
+        "credits": 3.0,
+        "course_name": "Lập trình hướng đối tượng"
+      },
+      {
+        "course_code": "SOT332",
+        "credits": 3.0,
+        "course_name": "Toán rời rạc"
+      },
+      {
+        "course_code": "SOT336",
+        "credits": 3.0,
+        "course_name": "Kỹ thuật đồ họa"
+      },
+      {
+        "course_code": "SOT341",
+        "credits": 3.0,
+        "course_name": "Xử lý ảnh"
+      },
+      {
+        "course_code": "SOT344",
+        "credits": 3.0,
+        "course_name": "Trí tuệ nhân tạo"
+      },
+      {
+        "course_code": "SOT345",
+        "credits": 3.0,
+        "course_name": "Lập trình thiết bị nhúng"
+      },
+      {
+        "course_code": "SOT347",
+        "credits": 3.0,
+        "course_name": "Thiết kế Web"
+      },
+      {
+        "course_code": "SOT349",
+        "credits": 3.0,
+        "course_name": "Công nghệ phần mềm"
+      },
+      {
+        "course_code": "SOT352",
+        "credits": 3.0,
+        "course_name": "Quản lý dự án phần mềm"
+      },
+      {
+        "course_code": "SOT355",
+        "credits": 3.0,
+        "course_name": "Phát triển ứng dụng Web"
+      },
+      {
+        "course_code": "SOT357",
+        "credits": 3.0,
+        "course_name": "Kiểm thử phần mềm"
+      },
+      {
+        "course_code": "SOT366",
+        "credits": 3.0,
+        "course_name": "Phát triển phần mềm mã nguồn mở"
+      },
+      {
+        "course_code": "SOT375",
+        "credits": 3.0,
+        "course_name": "Tiếng Anh chuyên ngành (CN thông tin)"
+      },
+      {
+        "course_code": "SOT379",
+        "credits": 4.0,
+        "course_name": "Lập trình thiết bị di động"
+      },
+      {
+        "course_code": "SOT380",
+        "credits": 3.0,
+        "course_name": "Kiến trúc và thiết kế phần mềm"
+      },
+      {
+        "course_code": "SOT381",
+        "credits": 3.0,
+        "course_name": "Tin học đại cương A (LT+TH)"
+      },
+      {
+        "course_code": "SSH313",
+        "credits": 2.0,
+        "course_name": "Pháp luật đại cương"
+      },
+      {
+        "course_code": "SSH378",
+        "credits": 3.0,
+        "course_name": "Tư duy phản biện"
+      },
+      {
+        "course_code": "SSH379",
+        "credits": 2.0,
+        "course_name": "Ngôn ngữ học thuật"
+      },
+      {
+        "course_code": "SSH380",
+        "credits": 2.0,
+        "course_name": "Văn hóa Việt Nam"
+      },
+      {
+        "course_code": "SSH381",
+        "credits": 2.0,
+        "course_name": "Thường thức mỹ thuật"
+      },
+      {
+        "course_code": "TRE312",
+        "credits": 3.0,
+        "course_name": "Thương mại điện tử (CNTT)"
+      }
+    ],
+    "policy_manifest": {
+      "manifest_id": "policy-7aaa7b0fdebc3ae6",
+      "version": "engine-policy-v1",
+      "content_hash": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e",
+      "curriculum_id": "CURRICULUM-2023",
+      "target_term_id": "next-term",
+      "has_catalog": true,
+      "has_prerequisite": true,
+      "has_corequisite": true,
+      "has_prior_study": false,
+      "has_category": true,
+      "has_offering": true,
+      "has_recommended_semester": true,
+      "credit_min": 10.0,
+      "credit_max": 27.0,
+      "credit_rule_id": "recommendation-engine-credit-bounds",
+      "credit_rule_version": "v1"
+    },
+    "ranking_metadata": {}
+  },
+  "course_space": {
+    "snapshot_id": "space-E2E-02-knowledge-7aaa7b0fdebc3ae6",
+    "decisions": [
+      {
+        "course_code": "85065",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "85066",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "85097",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "85098",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "85105",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "85108",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "851111",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "AUE319",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "BUA319",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "CCN6203",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "COS6200",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "EPM320",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "FLS310",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "FLS312",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "FLS313",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "FLS314",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "FLS315",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS304",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS305",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS325",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS326",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS327",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS330",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS335",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS336",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS339",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS360",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS361",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INS362",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6201",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6202",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6204",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6205",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6206",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6207",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6209",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6210",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6211",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6212",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6213",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6214",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6215",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6220",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6221",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6236",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6900",
+        "status": "eligible",
+        "reason_code": "ENGINE_ELIGIBLE",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6901",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6902",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "INT6903",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAE3098",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAE3099",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAE3207",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAE331",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAT322",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAT327",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MAT328",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MEM340",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MEM341",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MEM342",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MEM347",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "MKT372",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC311",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC321",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC324",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC326",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC329",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC331",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC350",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "NEC355",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "PHY310",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "PHY311",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "POL307",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "POL308",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "POL309",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "POL310",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "POL333",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "QPAD011",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "QPAD02",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "QPAD033",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "QPAD044",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SH1",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT301",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT315",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT320",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT331",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT332",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT336",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT341",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT344",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT345",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT347",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT349",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT352",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT355",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT357",
+        "status": "eligible",
+        "reason_code": "ENGINE_ELIGIBLE",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT366",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT375",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT379",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT380",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SOT381",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SSH313",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SSH378",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SSH379",
+        "status": "ineligible",
+        "reason_code": "ALREADY_COMPLETED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SSH380",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "SSH381",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      },
+      {
+        "course_code": "TRE312",
+        "status": "ineligible",
+        "reason_code": "ENGINE_FILTERED",
+        "evidence_ids": [],
+        "conditional_bundle": []
+      }
+    ]
+  },
+  "generation": {
+    "candidates": [
+      {
+        "plan_id": "RUN_E2E-02-plan-1",
+        "plan_version": "beam-v1",
+        "request_id": "E2E-02",
+        "student_id": "E2E-02",
+        "target_term_id": "next-term",
+        "knowledge_versions": {
+          "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+          "curriculum_version": "CURRICULUM-2023",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "rule_version": "academic-constraints-v3",
+          "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+        },
+        "plan_type": "safe",
+        "courses": [
+          {
+            "course_code": "INT6900",
+            "credits": 3.0
+          },
+          {
+            "course_code": "SOT357",
+            "credits": 3.0
+          }
+        ]
+      }
+    ],
+    "attempt_records": [
+      {
+        "attempt_id": "attempt-1",
+        "candidate_hash": "sha256:edc4ef9b40ba31608c5868f886d7a4635af429ec87ee634b089ffbe443c05370",
+        "state_count": 2,
+        "reason": "beam_selected"
+      },
+      {
+        "attempt_id": "attempt-2",
+        "candidate_hash": "sha256:edc4ef9b40ba31608c5868f886d7a4635af429ec87ee634b089ffbe443c05370",
+        "state_count": 2,
+        "reason": "duplicate_course_set"
+      },
+      {
+        "attempt_id": "attempt-3",
+        "candidate_hash": "sha256:edc4ef9b40ba31608c5868f886d7a4635af429ec87ee634b089ffbe443c05370",
+        "state_count": 2,
+        "reason": "duplicate_course_set"
+      }
+    ],
+    "seed": 42,
+    "generator_config_hash": "sha256:9c62ed972d024711414d37f8020c62bfbb77a38769b8ecff8fef8469146835b5",
+    "expanded_states": 6,
+    "generated_count": 3,
+    "duplicate_count": 2,
+    "stop_reason": "target_met"
+  },
+  "candidates": [
+    {
+      "plan_id": "RUN_E2E-02-plan-1",
+      "plan_version": "beam-v1",
+      "request_id": "E2E-02",
+      "student_id": "E2E-02",
+      "target_term_id": "next-term",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "plan_type": "safe",
+      "courses": [
+        {
+          "course_code": "INT6900",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "credits": 3.0
+        }
+      ]
+    }
+  ],
+  "validations": [
+    {
+      "plan_id": "RUN_E2E-02-plan-1",
+      "plan_version": "beam-v1",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "validator_version": "standard-academic-v3",
+      "validated_at": "2026-09-14T03:35:56.809316Z",
+      "status": "invalid",
+      "rule_checks": [
+        {
+          "rule_id": "duplicate_course",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_71a3e4fc7348c61ff23c8c2d1c68942069591ab508c8449e27de1d8d6fbf592c"
+          ]
+        },
+        {
+          "rule_id": "credit_limit",
+          "course_code": "INT6900",
+          "status": "fail",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_0f9ef9e3c325dfe52c1f528eaeeef11969384243e5d37f42500ab5420f753539"
+          ]
+        },
+        {
+          "rule_id": "completed_course_retake",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_703773c14102ab9f9ea8948f5aa3f88e2c6cb1b152839712f3c92fc6046cc26a"
+          ]
+        },
+        {
+          "rule_id": "prior_study",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_bc21c4a6c5e0f5524dcd7d0949a6c953951fb0c00c8bc5878b3a717be654126b"
+          ]
+        },
+        {
+          "rule_id": "course_existence",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_7fd10557e6ab0be93304ebfef0edc33941b81656eaa261ccdf15f842349069c6"
+          ]
+        },
+        {
+          "rule_id": "catalog_credit_match",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_e7a976aee4e24428243318b0fb46b3c481297bfd1d4b19bcd5cb185839f89add"
+          ]
+        },
+        {
+          "rule_id": "prerequisite",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_87ed3046cfba9b72b21869d4881b9f051fb84bb1050d38bfa751e8817f09651b"
+          ]
+        },
+        {
+          "rule_id": "corequisite",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_2e27cfa0f0c7e3e5077095af30bb9ff2573745cc5a37657cbf94db6d0bed3aac"
+          ]
+        },
+        {
+          "rule_id": "semester_offering",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_035690a59e6a044fd7571e717d4b0da84aff63d570319b1a59d34deca4b9f9cf"
+          ]
+        },
+        {
+          "rule_id": "curriculum_membership",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_ab4b07b6881608fa7fa37fca0e817f16ac73f20c24e7191723439148bf52edf7"
+          ]
+        },
+        {
+          "rule_id": "elective_quota",
+          "course_code": "INT6900",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_a5e4519d33bed22b22e461363e361fa2d66964c248b57d912ceba813416b0e4c"
+          ]
+        },
+        {
+          "rule_id": "duplicate_course",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_1ac51d4fda43b332365283021e6b9fb1aad0ba3773d0217e499c9b1e941177db"
+          ]
+        },
+        {
+          "rule_id": "credit_limit",
+          "course_code": "SOT357",
+          "status": "fail",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_6730ae88e45bcc95e4e7a14d1d5af9912f08e2850415367f8204d5b1fdce23cd"
+          ]
+        },
+        {
+          "rule_id": "completed_course_retake",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_ae552aad0509bef1d7b17ab9adfca309a5b9e511ec3271b7f1bec85c31ea5aca"
+          ]
+        },
+        {
+          "rule_id": "prior_study",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_26720254b15a8afe6a9328bb1f3273e16f97f5d2d68bc03dd31592a6ada6875e"
+          ]
+        },
+        {
+          "rule_id": "course_existence",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_d276a6ff00782d82b522fc16f5b0c22983130ba85fc46ebe966f3bac8d6e4308"
+          ]
+        },
+        {
+          "rule_id": "catalog_credit_match",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_8d781b48e29186d88cf9e09d70b4da4f9fcabeb31881af85cbbdc1d2cbd86385"
+          ]
+        },
+        {
+          "rule_id": "prerequisite",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_bb34826de8b2e8ed4b98f9ab223e85c5b30e4598ef3a61753db52f6d8cf98bc3"
+          ]
+        },
+        {
+          "rule_id": "corequisite",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_e483c281afe32f788235e0a8fa782483d83e46f8bb393b79b23912cde4e12b65"
+          ]
+        },
+        {
+          "rule_id": "semester_offering",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_998c5db02fd2e364cd29b7dfd926816f303ef2aba56758672d59dd5fc6d6dab4"
+          ]
+        },
+        {
+          "rule_id": "curriculum_membership",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_b86c37db64c0c699cefa92ff591b54b1754c5ad0c9de978955642e536f76e32c"
+          ]
+        },
+        {
+          "rule_id": "elective_quota",
+          "course_code": "SOT357",
+          "status": "pass",
+          "reason": null,
+          "evidence_ids": [
+            "RULE_cbb876ddbf20e24c49940490a24fa2af8e856bdfaca95c03214ee7cf9d96e294"
+          ]
+        }
+      ],
+      "checked_rules": [
+        "course_existence",
+        "duplicate_course",
+        "catalog_credit_match",
+        "prerequisite",
+        "prior_study",
+        "corequisite",
+        "curriculum_membership",
+        "semester_offering",
+        "credit_limit",
+        "completed_course_retake",
+        "elective_quota"
+      ],
+      "pending_rules": [],
+      "errors": [],
+      "ontology_evidence": [
+        {
+          "evidence_id": "ONTO_8662586a2cd546248d8f215d0b00e6b68d1dc19c545e93627a2b40802773f77f",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_COURSE_01",
+          "query_version": "sha256:6cb922d046addfa0b5fe3a7b7b871aaca286161df87439d56219f74ee01ec49f",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject ?predicate ?value .\n FILTER(?predicate = <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode>)\n FILTER(UCASE(STR(?value)) = STR(?code))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "INT6900",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.630576Z"
+        },
+        {
+          "evidence_id": "ONTO_f60e9331e5aa767df49fd84e995232e7abcd243ac428262043beb5d41ea5a612",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_CREDIT_01",
+          "query_version": "sha256:60ee777544b7aea656d758fa092ad3c8c5da026c25317e72969edcd20fb46cbf",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n ?subject ?predicate ?value .\n FILTER(?predicate IN (<http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasCredit>, <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit>))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit",
+              "object": "3",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": 3.0,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.648713Z"
+        },
+        {
+          "evidence_id": "ONTO_a8a2999768424f47a9a7feffd188e92ec8d96a6d2f21cce1fcb329c459bd1d39",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_PREREQ_01",
+          "query_version": "sha256:fa26ced4efd627d452f85763cd537d9bf5e4c5c92c0731444ebc84a682a57a67",
+          "query_text": "SELECT ?prerequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse> ?prerequisite .\n}\nORDER BY STR(?prerequisite)",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [],
+          "exists": null,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.655674Z"
+        },
+        {
+          "evidence_id": "ONTO_f73efb217b5c0890428b1ebaef8cdb9d428c77a206d0051bdb06d5ff8126c399",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_COREQ_01",
+          "query_version": "sha256:a0b570fd33763b06236b9cd3674b08554fc4845c8dbf132c1477208a31c2bbb1",
+          "query_text": "SELECT ?corequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#corequisiteWith> ?corequisite .\n}\nORDER BY STR(?corequisite)",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [],
+          "exists": null,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.662030Z"
+        },
+        {
+          "evidence_id": "ONTO_bc66d42d56b6997a142ce4c782ce94a3737eb33dc5eb81814712788828f833ca",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_SEMESTER_01",
+          "query_version": "sha256:5eb8347811c02988f55c29c1c9427e28ada22ad28412ce0849156e4417871a18",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester>\n  ))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType",
+              "object": "1",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester7",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": 1,
+          "recommended_semester": 7,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.681202Z"
+        },
+        {
+          "evidence_id": "ONTO_bcc694bb219aa2660c6ca30162e472433b46c21d7b796de5fe942878eb267f57",
+          "course_code": "INT6900",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_CATEGORY_01",
+          "query_version": "sha256:9331b0d9b92033947ec90f0420ba7adde09e81ab1650dbbdb15714916844acf2",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#FoundationCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": true,
+          "is_elective_major": false,
+          "is_required_specialization": false,
+          "is_elective_specialization": false,
+          "specializations": [],
+          "majors": [
+            "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT"
+          ],
+          "captured_at": "2026-09-14T03:35:56.702587Z"
+        },
+        {
+          "evidence_id": "ONTO_4f8ec651afafd1b48367de31dd1717c322d4d13ca0c1eb70e5b40697f0caf85e",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_COURSE_01",
+          "query_version": "sha256:6cb922d046addfa0b5fe3a7b7b871aaca286161df87439d56219f74ee01ec49f",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject ?predicate ?value .\n FILTER(?predicate = <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode>)\n FILTER(UCASE(STR(?value)) = STR(?code))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT357",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.722070Z"
+        },
+        {
+          "evidence_id": "ONTO_da730dcbba89ee230bd45027bff2411641a4f8acdd46716f31454762651863d0",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_CREDIT_01",
+          "query_version": "sha256:60ee777544b7aea656d758fa092ad3c8c5da026c25317e72969edcd20fb46cbf",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n ?subject ?predicate ?value .\n FILTER(?predicate IN (<http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasCredit>, <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit>))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit",
+              "object": "3",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": 3.0,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.740195Z"
+        },
+        {
+          "evidence_id": "ONTO_db5bfbd7f77ae0fae6bf9d6d25a4c2abbd731a92d57a2bb799830326ceac4164",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_PREREQ_01",
+          "query_version": "sha256:fa26ced4efd627d452f85763cd537d9bf5e4c5c92c0731444ebc84a682a57a67",
+          "query_text": "SELECT ?prerequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse> ?prerequisite .\n}\nORDER BY STR(?prerequisite)",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT315",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT315",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT315",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT349",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT349",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT349",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": null,
+          "catalog_credit": null,
+          "prerequisite_codes": [
+            "SOT315",
+            "SOT349"
+          ],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.747774Z"
+        },
+        {
+          "evidence_id": "ONTO_9de50a9bd4b9d5ac4a65de118e506c49600f513fe58274c61e142cc72ee53415",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_COREQ_01",
+          "query_version": "sha256:a0b570fd33763b06236b9cd3674b08554fc4845c8dbf132c1477208a31c2bbb1",
+          "query_text": "SELECT ?corequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#corequisiteWith> ?corequisite .\n}\nORDER BY STR(?corequisite)",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [],
+          "exists": null,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.757564Z"
+        },
+        {
+          "evidence_id": "ONTO_821a9bd4d2c8ba5312605a924925dafbb94ab2d919e89b6a928a1abc29df7f13",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_SEMESTER_01",
+          "query_version": "sha256:5eb8347811c02988f55c29c1c9427e28ada22ad28412ce0849156e4417871a18",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester>\n  ))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType",
+              "object": "1",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester7",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": 1,
+          "recommended_semester": 7,
+          "elective_category": null,
+          "is_required_major": null,
+          "is_elective_major": null,
+          "is_required_specialization": null,
+          "is_elective_specialization": null,
+          "specializations": [],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.779295Z"
+        },
+        {
+          "evidence_id": "ONTO_ba82eacd5862d99d3dab2eae911f9200b3aea81b1887d62de160c36a523b360d",
+          "course_code": "SOT357",
+          "source_ref": "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+          "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "query_id": "Q_CATEGORY_01",
+          "query_version": "sha256:9331b0d9b92033947ec90f0420ba7adde09e81ab1650dbbdb15714916844acf2",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "subject_uri": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "exists": true,
+          "catalog_credit": null,
+          "prerequisite_codes": [],
+          "corequisite_codes": [],
+          "open_semester_type": null,
+          "recommended_semester": null,
+          "elective_category": null,
+          "is_required_major": false,
+          "is_elective_major": false,
+          "is_required_specialization": true,
+          "is_elective_specialization": false,
+          "specializations": [
+            "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM"
+          ],
+          "majors": [],
+          "captured_at": "2026-09-14T03:35:56.808864Z"
+        }
+      ],
+      "violations": [
+        {
+          "constraint_id": "credit_limit",
+          "message": "CREDIT_BELOW_MINIMUM",
+          "course_codes": [
+            "INT6900"
+          ],
+          "evidence_ids": [
+            "RULE_0f9ef9e3c325dfe52c1f528eaeeef11969384243e5d37f42500ab5420f753539"
+          ]
+        },
+        {
+          "constraint_id": "credit_limit",
+          "message": "CREDIT_BELOW_MINIMUM",
+          "course_codes": [
+            "SOT357"
+          ],
+          "evidence_ids": [
+            "RULE_6730ae88e45bcc95e4e7a14d1d5af9912f08e2850415367f8204d5b1fdce23cd"
+          ]
+        }
+      ],
+      "warnings": [],
+      "evidence": [
+        {
+          "evidence_id": "RULE_71a3e4fc7348c61ff23c8c2d1c68942069591ab508c8449e27de1d8d6fbf592c",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/duplicate_course.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.615826Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "duplicate_course",
+          "rule_inputs": [
+            {
+              "variable": "positions",
+              "value": "[0]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Unique course"
+        },
+        {
+          "evidence_id": "RULE_0f9ef9e3c325dfe52c1f528eaeeef11969384243e5d37f42500ab5420f753539",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "fail",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/credit_limit.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.615958Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "credit_limit",
+          "rule_inputs": [
+            {
+              "variable": "max_credits",
+              "value": "27"
+            },
+            {
+              "variable": "min_credits",
+              "value": "10"
+            },
+            {
+              "variable": "total_credits",
+              "value": "6.0"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "CREDIT_BELOW_MINIMUM"
+        },
+        {
+          "evidence_id": "RULE_703773c14102ab9f9ea8948f5aa3f88e2c6cb1b152839712f3c92fc6046cc26a",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/completed_course_retake.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.616065Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "completed_course_retake",
+          "rule_inputs": [
+            {
+              "variable": "completed_courses",
+              "value": "[\"85065\", \"85097\", \"85105\", \"BUA319\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS325\", \"INS326\", \"INS330\", \"INS335\", \"INS339\", \"INS360\", \"INT6220\", \"INT6903\", \"MAT322\", \"MAT327\", \"MAT328\", \"NEC321\", \"NEC329\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT331\", \"SOT332\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Course not previously completed"
+        },
+        {
+          "evidence_id": "RULE_bc21c4a6c5e0f5524dcd7d0949a6c953951fb0c00c8bc5878b3a717be654126b",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/prior_study.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.616234Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "prior_study",
+          "rule_inputs": [
+            {
+              "variable": "missing_courses",
+              "value": "[]"
+            },
+            {
+              "variable": "required_courses",
+              "value": "[]"
+            },
+            {
+              "variable": "rules_ref",
+              "value": "\"standard-academic-v3\""
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "studied_courses",
+              "value": "[\"85065\", \"85097\", \"85105\", \"BUA319\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS325\", \"INS326\", \"INS330\", \"INS335\", \"INS339\", \"INS360\", \"INT6220\", \"INT6903\", \"MAT322\", \"MAT327\", \"MAT328\", \"NEC321\", \"NEC329\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT320\", \"SOT331\", \"SOT332\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Prior study conditions satisfied"
+        },
+        {
+          "evidence_id": "RULE_7fd10557e6ab0be93304ebfef0edc33941b81656eaa261ccdf15f842349069c6",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/course_existence.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.630756Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "INT6900",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_COURSE_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject ?predicate ?value .\n FILTER(?predicate = <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode>)\n FILTER(UCASE(STR(?value)) = STR(?code))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_8662586a2cd546248d8f215d0b00e6b68d1dc19c545e93627a2b40802773f77f"
+          ],
+          "rule_id": "course_existence",
+          "rule_inputs": [
+            {
+              "variable": "exists",
+              "value": "true"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Course found"
+        },
+        {
+          "evidence_id": "RULE_e7a976aee4e24428243318b0fb46b3c481297bfd1d4b19bcd5cb185839f89add",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/catalog_credit_match.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.648950Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit",
+              "object": "3",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            }
+          ],
+          "query_id": "Q_CREDIT_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n ?subject ?predicate ?value .\n FILTER(?predicate IN (<http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasCredit>, <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit>))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_f60e9331e5aa767df49fd84e995232e7abcd243ac428262043beb5d41ea5a612"
+          ],
+          "rule_id": "catalog_credit_match",
+          "rule_inputs": [
+            {
+              "variable": "candidate_credits",
+              "value": "[3.0]"
+            },
+            {
+              "variable": "catalog_credit",
+              "value": "3.0"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Catalog credits match"
+        },
+        {
+          "evidence_id": "RULE_87ed3046cfba9b72b21869d4881b9f051fb84bb1050d38bfa751e8817f09651b",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/prerequisite_rule.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.655674Z",
+          "triples": [],
+          "query_id": "Q_PREREQ_01",
+          "query_text": "SELECT ?prerequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse> ?prerequisite .\n}\nORDER BY STR(?prerequisite)",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_a8a2999768424f47a9a7feffd188e92ec8d96a6d2f21cce1fcb329c459bd1d39"
+          ],
+          "rule_id": "PREREQ_COMPLETED_01",
+          "rule_inputs": [
+            {
+              "variable": "student_id",
+              "value": "E2E-02"
+            },
+            {
+              "variable": "completed_courses",
+              "value": "85065,85097,85105,BUA319,FLS310,FLS312,FLS313,FLS314,FLS315,INS325,INS326,INS330,INS335,INS339,INS360,INT6220,INT6903,MAT322,MAT327,MAT328,NEC321,NEC329,PHY310,PHY311,POL307,POL308,POL309,POL310,POL333,QPAD011,QPAD02,QPAD033,QPAD044,SH1,SOT301,SOT315,SOT331,SOT332,SOT345,SOT347,SOT349,SOT352,SOT355,SOT375,SOT379,SOT380,SOT381,SSH313,SSH378,SSH379"
+            },
+            {
+              "variable": "prerequisites",
+              "value": ""
+            }
+          ],
+          "rule_result": "All recorded prerequisites completed"
+        },
+        {
+          "evidence_id": "RULE_2e27cfa0f0c7e3e5077095af30bb9ff2573745cc5a37657cbf94db6d0bed3aac",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/corequisite.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.662216Z",
+          "triples": [],
+          "query_id": "Q_COREQ_01",
+          "query_text": "SELECT ?corequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#corequisiteWith> ?corequisite .\n}\nORDER BY STR(?corequisite)",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_f73efb217b5c0890428b1ebaef8cdb9d428c77a206d0051bdb06d5ff8126c399"
+          ],
+          "rule_id": "corequisite",
+          "rule_inputs": [
+            {
+              "variable": "corequisites",
+              "value": "[]"
+            },
+            {
+              "variable": "missing",
+              "value": "[]"
+            },
+            {
+              "variable": "plan_codes",
+              "value": "[\"INT6900\", \"SOT357\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "All corequisites satisfied"
+        },
+        {
+          "evidence_id": "RULE_035690a59e6a044fd7571e717d4b0da84aff63d570319b1a59d34deca4b9f9cf",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/semester_offering.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.681385Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType",
+              "object": "1",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester7",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_SEMESTER_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_bc66d42d56b6997a142ce4c782ce94a3737eb33dc5eb81814712788828f833ca"
+          ],
+          "rule_id": "semester_offering",
+          "rule_inputs": [
+            {
+              "variable": "offerings_ref",
+              "value": "\"sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e\""
+            },
+            {
+              "variable": "open_semester_type",
+              "value": "1"
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "target_semester_type",
+              "value": "1"
+            },
+            {
+              "variable": "target_term_id",
+              "value": "\"next-term\""
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Offered in target semester"
+        },
+        {
+          "evidence_id": "RULE_ab4b07b6881608fa7fa37fca0e817f16ac73f20c24e7191723439148bf52edf7",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/curriculum_membership.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.702983Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#FoundationCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_CATEGORY_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_bcc694bb219aa2660c6ca30162e472433b46c21d7b796de5fe942878eb267f57"
+          ],
+          "rule_id": "curriculum_membership",
+          "rule_inputs": [
+            {
+              "variable": "curriculum_courses",
+              "value": "[\"85065\", \"85066\", \"85097\", \"85098\", \"85105\", \"85108\", \"851111\", \"AUE319\", \"BUA319\", \"CCN6203\", \"COS6200\", \"EPM320\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS304\", \"INS305\", \"INS325\", \"INS326\", \"INS327\", \"INS330\", \"INS335\", \"INS336\", \"INS339\", \"INS360\", \"INS361\", \"INS362\", \"INT6201\", \"INT6202\", \"INT6204\", \"INT6205\", \"INT6206\", \"INT6207\", \"INT6209\", \"INT6210\", \"INT6211\", \"INT6212\", \"INT6213\", \"INT6214\", \"INT6215\", \"INT6220\", \"INT6221\", \"INT6236\", \"INT6900\", \"INT6901\", \"INT6902\", \"INT6903\", \"MAE3098\", \"MAE3099\", \"MAE3207\", \"MAE331\", \"MAT322\", \"MAT327\", \"MAT328\", \"MEM340\", \"MEM341\", \"MEM342\", \"MEM347\", \"MKT372\", \"NEC311\", \"NEC321\", \"NEC324\", \"NEC326\", \"NEC329\", \"NEC331\", \"NEC350\", \"NEC355\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT320\", \"SOT331\", \"SOT332\", \"SOT336\", \"SOT341\", \"SOT344\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT357\", \"SOT366\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\", \"SSH380\", \"SSH381\", \"TRE312\"]"
+            },
+            {
+              "variable": "curriculum_id",
+              "value": "\"CURRICULUM-2023\""
+            },
+            {
+              "variable": "major_id",
+              "value": "\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT\""
+            },
+            {
+              "variable": "majors",
+              "value": "[\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT\"]"
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "specialization_id",
+              "value": "\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM\""
+            },
+            {
+              "variable": "specializations",
+              "value": "[]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Curriculum membership confirmed"
+        },
+        {
+          "evidence_id": "RULE_a5e4519d33bed22b22e461363e361fa2d66964c248b57d912ceba813416b0e4c",
+          "course_code": "INT6900",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/elective_quota.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.703297Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#FoundationCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#INT6900",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_CATEGORY_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_bcc694bb219aa2660c6ca30162e472433b46c21d7b796de5fe942878eb267f57"
+          ],
+          "rule_id": "elective_quota",
+          "rule_inputs": [
+            {
+              "variable": "category",
+              "value": "null"
+            },
+            {
+              "variable": "rules_ref",
+              "value": "\"standard-academic-v3\""
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Elective quota satisfied"
+        },
+        {
+          "evidence_id": "RULE_1ac51d4fda43b332365283021e6b9fb1aad0ba3773d0217e499c9b1e941177db",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/duplicate_course.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.703464Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "duplicate_course",
+          "rule_inputs": [
+            {
+              "variable": "positions",
+              "value": "[1]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Unique course"
+        },
+        {
+          "evidence_id": "RULE_6730ae88e45bcc95e4e7a14d1d5af9912f08e2850415367f8204d5b1fdce23cd",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "fail",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/credit_limit.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.703583Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "credit_limit",
+          "rule_inputs": [
+            {
+              "variable": "max_credits",
+              "value": "27"
+            },
+            {
+              "variable": "min_credits",
+              "value": "10"
+            },
+            {
+              "variable": "total_credits",
+              "value": "6.0"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "CREDIT_BELOW_MINIMUM"
+        },
+        {
+          "evidence_id": "RULE_ae552aad0509bef1d7b17ab9adfca309a5b9e511ec3271b7f1bec85c31ea5aca",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/completed_course_retake.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.703705Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "completed_course_retake",
+          "rule_inputs": [
+            {
+              "variable": "completed_courses",
+              "value": "[\"85065\", \"85097\", \"85105\", \"BUA319\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS325\", \"INS326\", \"INS330\", \"INS335\", \"INS339\", \"INS360\", \"INT6220\", \"INT6903\", \"MAT322\", \"MAT327\", \"MAT328\", \"NEC321\", \"NEC329\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT331\", \"SOT332\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Course not previously completed"
+        },
+        {
+          "evidence_id": "RULE_26720254b15a8afe6a9328bb1f3273e16f97f5d2d68bc03dd31592a6ada6875e",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/prior_study.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.704044Z",
+          "triples": [],
+          "query_id": null,
+          "query_text": null,
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": false,
+          "supporting_evidence_ids": [],
+          "rule_id": "prior_study",
+          "rule_inputs": [
+            {
+              "variable": "missing_courses",
+              "value": "[]"
+            },
+            {
+              "variable": "required_courses",
+              "value": "[]"
+            },
+            {
+              "variable": "rules_ref",
+              "value": "\"standard-academic-v3\""
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "studied_courses",
+              "value": "[\"85065\", \"85097\", \"85105\", \"BUA319\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS325\", \"INS326\", \"INS330\", \"INS335\", \"INS339\", \"INS360\", \"INT6220\", \"INT6903\", \"MAT322\", \"MAT327\", \"MAT328\", \"NEC321\", \"NEC329\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT320\", \"SOT331\", \"SOT332\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Prior study conditions satisfied"
+        },
+        {
+          "evidence_id": "RULE_d276a6ff00782d82b522fc16f5b0c22983130ba85fc46ebe966f3bac8d6e4308",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/course_existence.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.722206Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT357",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_COURSE_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject ?predicate ?value .\n FILTER(?predicate = <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode>)\n FILTER(UCASE(STR(?value)) = STR(?code))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_4f8ec651afafd1b48367de31dd1717c322d4d13ca0c1eb70e5b40697f0caf85e"
+          ],
+          "rule_id": "course_existence",
+          "rule_inputs": [
+            {
+              "variable": "exists",
+              "value": "true"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Course found"
+        },
+        {
+          "evidence_id": "RULE_8d781b48e29186d88cf9e09d70b4da4f9fcabeb31881af85cbbdc1d2cbd86385",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/catalog_credit_match.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.740374Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit",
+              "object": "3",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            }
+          ],
+          "query_id": "Q_CREDIT_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n ?subject ?predicate ?value .\n FILTER(?predicate IN (<http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasCredit>, <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#credit>))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_da730dcbba89ee230bd45027bff2411641a4f8acdd46716f31454762651863d0"
+          ],
+          "rule_id": "catalog_credit_match",
+          "rule_inputs": [
+            {
+              "variable": "candidate_credits",
+              "value": "[3.0]"
+            },
+            {
+              "variable": "catalog_credit",
+              "value": "3.0"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Catalog credits match"
+        },
+        {
+          "evidence_id": "RULE_bb34826de8b2e8ed4b98f9ab223e85c5b30e4598ef3a61753db52f6d8cf98bc3",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/prerequisite_rule.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.747774Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT315",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT315",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT315",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT349",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT349",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode",
+              "object": "SOT349",
+              "object_kind": "literal",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_PREREQ_01",
+          "query_text": "SELECT ?prerequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#hasPrerequisiteCourse> ?prerequisite .\n}\nORDER BY STR(?prerequisite)",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_db5bfbd7f77ae0fae6bf9d6d25a4c2abbd731a92d57a2bb799830326ceac4164"
+          ],
+          "rule_id": "PREREQ_COMPLETED_01",
+          "rule_inputs": [
+            {
+              "variable": "student_id",
+              "value": "E2E-02"
+            },
+            {
+              "variable": "completed_courses",
+              "value": "85065,85097,85105,BUA319,FLS310,FLS312,FLS313,FLS314,FLS315,INS325,INS326,INS330,INS335,INS339,INS360,INT6220,INT6903,MAT322,MAT327,MAT328,NEC321,NEC329,PHY310,PHY311,POL307,POL308,POL309,POL310,POL333,QPAD011,QPAD02,QPAD033,QPAD044,SH1,SOT301,SOT315,SOT331,SOT332,SOT345,SOT347,SOT349,SOT352,SOT355,SOT375,SOT379,SOT380,SOT381,SSH313,SSH378,SSH379"
+            },
+            {
+              "variable": "prerequisites",
+              "value": "SOT315,SOT349"
+            }
+          ],
+          "rule_result": "All recorded prerequisites completed"
+        },
+        {
+          "evidence_id": "RULE_e483c281afe32f788235e0a8fa782483d83e46f8bb393b79b23912cde4e12b65",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/corequisite.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.757868Z",
+          "triples": [],
+          "query_id": "Q_COREQ_01",
+          "query_text": "SELECT ?corequisite WHERE {\n  ?course <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#corequisiteWith> ?corequisite .\n}\nORDER BY STR(?corequisite)",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_9de50a9bd4b9d5ac4a65de118e506c49600f513fe58274c61e142cc72ee53415"
+          ],
+          "rule_id": "corequisite",
+          "rule_inputs": [
+            {
+              "variable": "corequisites",
+              "value": "[]"
+            },
+            {
+              "variable": "missing",
+              "value": "[]"
+            },
+            {
+              "variable": "plan_codes",
+              "value": "[\"INT6900\", \"SOT357\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "All corequisites satisfied"
+        },
+        {
+          "evidence_id": "RULE_998c5db02fd2e364cd29b7dfd926816f303ef2aba56758672d59dd5fc6d6dab4",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/semester_offering.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.779465Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType",
+              "object": "1",
+              "object_kind": "literal",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Semester7",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_SEMESTER_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#openSemesterType>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#recommendedInSemester>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_821a9bd4d2c8ba5312605a924925dafbb94ab2d919e89b6a928a1abc29df7f13"
+          ],
+          "rule_id": "semester_offering",
+          "rule_inputs": [
+            {
+              "variable": "offerings_ref",
+              "value": "\"sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e\""
+            },
+            {
+              "variable": "open_semester_type",
+              "value": "1"
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "target_semester_type",
+              "value": "1"
+            },
+            {
+              "variable": "target_term_id",
+              "value": "\"next-term\""
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Offered in target semester"
+        },
+        {
+          "evidence_id": "RULE_b86c37db64c0c699cefa92ff591b54b1754c5ad0c9de978955642e536f76e32c",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/curriculum_membership.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.809099Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_CATEGORY_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_ba82eacd5862d99d3dab2eae911f9200b3aea81b1887d62de160c36a523b360d"
+          ],
+          "rule_id": "curriculum_membership",
+          "rule_inputs": [
+            {
+              "variable": "curriculum_courses",
+              "value": "[\"85065\", \"85066\", \"85097\", \"85098\", \"85105\", \"85108\", \"851111\", \"AUE319\", \"BUA319\", \"CCN6203\", \"COS6200\", \"EPM320\", \"FLS310\", \"FLS312\", \"FLS313\", \"FLS314\", \"FLS315\", \"INS304\", \"INS305\", \"INS325\", \"INS326\", \"INS327\", \"INS330\", \"INS335\", \"INS336\", \"INS339\", \"INS360\", \"INS361\", \"INS362\", \"INT6201\", \"INT6202\", \"INT6204\", \"INT6205\", \"INT6206\", \"INT6207\", \"INT6209\", \"INT6210\", \"INT6211\", \"INT6212\", \"INT6213\", \"INT6214\", \"INT6215\", \"INT6220\", \"INT6221\", \"INT6236\", \"INT6900\", \"INT6901\", \"INT6902\", \"INT6903\", \"MAE3098\", \"MAE3099\", \"MAE3207\", \"MAE331\", \"MAT322\", \"MAT327\", \"MAT328\", \"MEM340\", \"MEM341\", \"MEM342\", \"MEM347\", \"MKT372\", \"NEC311\", \"NEC321\", \"NEC324\", \"NEC326\", \"NEC329\", \"NEC331\", \"NEC350\", \"NEC355\", \"PHY310\", \"PHY311\", \"POL307\", \"POL308\", \"POL309\", \"POL310\", \"POL333\", \"QPAD011\", \"QPAD02\", \"QPAD033\", \"QPAD044\", \"SH1\", \"SOT301\", \"SOT315\", \"SOT320\", \"SOT331\", \"SOT332\", \"SOT336\", \"SOT341\", \"SOT344\", \"SOT345\", \"SOT347\", \"SOT349\", \"SOT352\", \"SOT355\", \"SOT357\", \"SOT366\", \"SOT375\", \"SOT379\", \"SOT380\", \"SOT381\", \"SSH313\", \"SSH378\", \"SSH379\", \"SSH380\", \"SSH381\", \"TRE312\"]"
+            },
+            {
+              "variable": "curriculum_id",
+              "value": "\"CURRICULUM-2023\""
+            },
+            {
+              "variable": "major_id",
+              "value": "\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT\""
+            },
+            {
+              "variable": "majors",
+              "value": "[]"
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "specialization_id",
+              "value": "\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM\""
+            },
+            {
+              "variable": "specializations",
+              "value": "[\"http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM\"]"
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Curriculum membership confirmed"
+        },
+        {
+          "evidence_id": "RULE_cbb876ddbf20e24c49940490a24fa2af8e856bdfaca95c03214ee7cf9d96e294",
+          "course_code": "SOT357",
+          "decision": "constraint_check",
+          "result": "pass",
+          "source_type": "rule",
+          "source_ref": "backend/app/validation/rules/elective_quota.py",
+          "knowledge_versions": {
+            "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+            "curriculum_version": "CURRICULUM-2023",
+            "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "rule_version": "academic-constraints-v3",
+            "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+          },
+          "captured_at": "2026-09-14T03:35:56.809239Z",
+          "triples": [
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNPM",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CoreCourse",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#Course",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            },
+            {
+              "subject": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#SOT357",
+              "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+              "object": "http://www.w3.org/2002/07/owl#NamedIndividual",
+              "object_kind": "iri",
+              "datatype": null,
+              "language": null
+            }
+          ],
+          "query_id": "Q_CATEGORY_01",
+          "query_text": "SELECT ?subject ?predicate ?value WHERE {\n  ?subject <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#courseCode> ?catalogCode .\n  FILTER(UCASE(STR(?catalogCode)) = STR(?code))\n  ?subject ?predicate ?value .\n  FILTER(?predicate IN (\n    <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForMajor>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isRequiredForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#isElectiveForSpecialization>,\n    <http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#offeredInSpecialization>\n  ))\n}",
+          "query_rows": [],
+          "query_boolean": null,
+          "query_executed": true,
+          "supporting_evidence_ids": [
+            "ONTO_ba82eacd5862d99d3dab2eae911f9200b3aea81b1887d62de160c36a523b360d"
+          ],
+          "rule_id": "elective_quota",
+          "rule_inputs": [
+            {
+              "variable": "category",
+              "value": "null"
+            },
+            {
+              "variable": "rules_ref",
+              "value": "\"standard-academic-v3\""
+            },
+            {
+              "variable": "snapshot_id",
+              "value": "\"knowledge-7aaa7b0fdebc3ae6\""
+            },
+            {
+              "variable": "candidate_plan_id",
+              "value": "RUN_E2E-02-plan-1"
+            },
+            {
+              "variable": "candidate_plan_version",
+              "value": "beam-v1"
+            },
+            {
+              "variable": "candidate_plan_hash",
+              "value": "27935cf0f354272cd5328da3b9f1ccf92bfb85df7b04ed24bffbf6fb07430870"
+            }
+          ],
+          "rule_result": "Elective quota satisfied"
+        }
+      ]
+    }
+  ],
+  "ranking_context": null,
+  "risk": null,
+  "ranking": null,
+  "explanations": null,
+  "tool_provenance": [
+    {
+      "call_id": "CALL_d2cc9efe74d44ffbab38d0cdbd5a8919",
+      "tool_name": "load_student_context",
+      "tool_version": "capability-v1",
+      "input_hash": "sha256:a95807ddaea280eb25bbd610e9a7949b4d2a3620592bcfaa520eefab62ae1b95",
+      "output_hash": "sha256:80d17fe7a63deba2af14e34588bd432910c54952f5b524f0313d908a15818e23",
+      "knowledge_versions": null,
+      "source_refs": [
+        "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/artifacts/e2e_scenarios/20260914T033507Z/E2E-02/student_fixture.json"
+      ],
+      "evidence_ids": [],
+      "started_at": "2026-09-14T03:35:56.593486Z",
+      "finished_at": "2026-09-14T03:35:56.608911Z"
+    },
+    {
+      "call_id": "CALL_914ba2389a1847389a2575a398e8fd71",
+      "tool_name": "load_knowledge_context",
+      "tool_version": "capability-v1",
+      "input_hash": "sha256:dbfdeea6bf1fc01371c3ee79d6bb9aeaee5c68e74b0ff18f5842f33f30f82265",
+      "output_hash": "sha256:7236ba39139cb91e9f903ec6bde9e5d2afdc03193222ee024276481cc1e5902e",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "source_refs": [
+        "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf",
+        "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      ],
+      "evidence_ids": [],
+      "started_at": "2026-09-14T03:35:56.609575Z",
+      "finished_at": "2026-09-14T03:35:56.610803Z"
+    },
+    {
+      "call_id": "CALL_066b60b366d54f1b8b6ff7eb11084558",
+      "tool_name": "build_course_space",
+      "tool_version": "capability-v1",
+      "input_hash": "sha256:47f09a3c574dacd9a024aa2d464d22dd06fb2efe405338500fee0839a37874b0",
+      "output_hash": "sha256:7c82bdcf6d271b7395b05987906c37073224a59188e32f64b0dcd82df707c2c6",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "source_refs": [
+        "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+      ],
+      "evidence_ids": [],
+      "started_at": "2026-09-14T03:35:56.611895Z",
+      "finished_at": "2026-09-14T03:35:56.613277Z"
+    },
+    {
+      "call_id": "CALL_67c9e07051cc4059915b1d9a9323fc7f",
+      "tool_name": "generate_candidates",
+      "tool_version": "capability-v1",
+      "input_hash": "sha256:a0f7fbe220687b8dca116a845d076c5e6ecc7436345d6dbad1e387191983a369",
+      "output_hash": "sha256:ba9ee8c8046ca65c2e4ccacf9155d14033214620b940792dedbdb826fb743004",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "source_refs": [
+        "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+      ],
+      "evidence_ids": [],
+      "started_at": "2026-09-14T03:35:56.614120Z",
+      "finished_at": "2026-09-14T03:35:56.615450Z"
+    },
+    {
+      "call_id": "CALL_83180da2d9a04b899a86d7288ae64f62",
+      "tool_name": "validate_candidates",
+      "tool_version": "capability-v1",
+      "input_hash": "sha256:9a0866a7b87838e512135f27ae1d1abbc778fde5076f2b1b5411291be60b90dc",
+      "output_hash": "sha256:9a096f273abc027be52176fbf072c4da1d80750b687b72b33eed40e07ea00d34",
+      "knowledge_versions": {
+        "student_version": "sha256:189f5b2909d1797212f7721bbfebe32de464caef0ba8b548011f528ef4f261f4",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "source_refs": [
+        "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+      ],
+      "evidence_ids": [],
+      "started_at": "2026-09-14T03:35:56.615723Z",
+      "finished_at": "2026-09-14T03:35:56.809452Z"
+    }
+  ],
+  "elapsed_seconds": 0.2199522999999317,
+  "errors": [],
+  "budget": {
+    "candidate_attempts_used": 3,
+    "candidate_attempts_max": 60,
+    "expanded_states_used": 6,
+    "expanded_states_max": 5000
+  },
+  "trace": [
+    {
+      "call_id": "CALL_d2cc9efe74d44ffbab38d0cdbd5a8919",
+      "action": "load_student_context",
+      "tool_name": "load_student_context",
+      "iteration": 0,
+      "outcome": "ok",
+      "input_hash": "sha256:a95807ddaea280eb25bbd610e9a7949b4d2a3620592bcfaa520eefab62ae1b95",
+      "output_hash": "sha256:80d17fe7a63deba2af14e34588bd432910c54952f5b524f0313d908a15818e23",
+      "deadline_at": "2026-09-14T03:36:06.593437Z",
+      "attempt": 1,
+      "evidence_ids": [],
+      "occurred_at": "2026-09-14T03:35:56.608911Z",
+      "error": null
+    },
+    {
+      "call_id": "CALL_914ba2389a1847389a2575a398e8fd71",
+      "action": "load_knowledge_context",
+      "tool_name": "load_knowledge_context",
+      "iteration": 0,
+      "outcome": "ok",
+      "input_hash": "sha256:dbfdeea6bf1fc01371c3ee79d6bb9aeaee5c68e74b0ff18f5842f33f30f82265",
+      "output_hash": "sha256:7236ba39139cb91e9f903ec6bde9e5d2afdc03193222ee024276481cc1e5902e",
+      "deadline_at": "2026-09-14T03:36:06.609520Z",
+      "attempt": 1,
+      "evidence_ids": [],
+      "occurred_at": "2026-09-14T03:35:56.610803Z",
+      "error": null
+    },
+    {
+      "call_id": "CALL_066b60b366d54f1b8b6ff7eb11084558",
+      "action": "build_course_space",
+      "tool_name": "build_course_space",
+      "iteration": 0,
+      "outcome": "ok",
+      "input_hash": "sha256:47f09a3c574dacd9a024aa2d464d22dd06fb2efe405338500fee0839a37874b0",
+      "output_hash": "sha256:7c82bdcf6d271b7395b05987906c37073224a59188e32f64b0dcd82df707c2c6",
+      "deadline_at": "2026-09-14T03:36:06.611841Z",
+      "attempt": 1,
+      "evidence_ids": [],
+      "occurred_at": "2026-09-14T03:35:56.613277Z",
+      "error": null
+    },
+    {
+      "call_id": "CALL_67c9e07051cc4059915b1d9a9323fc7f",
+      "action": "generate_candidates",
+      "tool_name": "generate_candidates",
+      "iteration": 0,
+      "outcome": "ok",
+      "input_hash": "sha256:a0f7fbe220687b8dca116a845d076c5e6ecc7436345d6dbad1e387191983a369",
+      "output_hash": "sha256:ba9ee8c8046ca65c2e4ccacf9155d14033214620b940792dedbdb826fb743004",
+      "deadline_at": "2026-09-14T03:36:56.614090Z",
+      "attempt": 1,
+      "evidence_ids": [],
+      "occurred_at": "2026-09-14T03:35:56.615450Z",
+      "error": null
+    },
+    {
+      "call_id": "CALL_83180da2d9a04b899a86d7288ae64f62",
+      "action": "validate_candidates",
+      "tool_name": "validate_candidates",
+      "iteration": 0,
+      "outcome": "ok",
+      "input_hash": "sha256:9a0866a7b87838e512135f27ae1d1abbc778fde5076f2b1b5411291be60b90dc",
+      "output_hash": "sha256:3de00934873d0bb3574a3f21e0d7547af6945db24098aa615443983cb570ed0e",
+      "deadline_at": "2026-09-14T03:37:56.593243Z",
+      "attempt": 1,
+      "evidence_ids": [
+        "RULE_71a3e4fc7348c61ff23c8c2d1c68942069591ab508c8449e27de1d8d6fbf592c",
+        "RULE_0f9ef9e3c325dfe52c1f528eaeeef11969384243e5d37f42500ab5420f753539",
+        "RULE_703773c14102ab9f9ea8948f5aa3f88e2c6cb1b152839712f3c92fc6046cc26a",
+        "RULE_bc21c4a6c5e0f5524dcd7d0949a6c953951fb0c00c8bc5878b3a717be654126b",
+        "RULE_7fd10557e6ab0be93304ebfef0edc33941b81656eaa261ccdf15f842349069c6",
+        "RULE_e7a976aee4e24428243318b0fb46b3c481297bfd1d4b19bcd5cb185839f89add",
+        "RULE_87ed3046cfba9b72b21869d4881b9f051fb84bb1050d38bfa751e8817f09651b",
+        "RULE_2e27cfa0f0c7e3e5077095af30bb9ff2573745cc5a37657cbf94db6d0bed3aac",
+        "RULE_035690a59e6a044fd7571e717d4b0da84aff63d570319b1a59d34deca4b9f9cf",
+        "RULE_ab4b07b6881608fa7fa37fca0e817f16ac73f20c24e7191723439148bf52edf7",
+        "RULE_a5e4519d33bed22b22e461363e361fa2d66964c248b57d912ceba813416b0e4c",
+        "RULE_1ac51d4fda43b332365283021e6b9fb1aad0ba3773d0217e499c9b1e941177db",
+        "RULE_6730ae88e45bcc95e4e7a14d1d5af9912f08e2850415367f8204d5b1fdce23cd",
+        "RULE_ae552aad0509bef1d7b17ab9adfca309a5b9e511ec3271b7f1bec85c31ea5aca",
+        "RULE_26720254b15a8afe6a9328bb1f3273e16f97f5d2d68bc03dd31592a6ada6875e",
+        "RULE_d276a6ff00782d82b522fc16f5b0c22983130ba85fc46ebe966f3bac8d6e4308",
+        "RULE_8d781b48e29186d88cf9e09d70b4da4f9fcabeb31881af85cbbdc1d2cbd86385",
+        "RULE_bb34826de8b2e8ed4b98f9ab223e85c5b30e4598ef3a61753db52f6d8cf98bc3",
+        "RULE_e483c281afe32f788235e0a8fa782483d83e46f8bb393b79b23912cde4e12b65",
+        "RULE_998c5db02fd2e364cd29b7dfd926816f303ef2aba56758672d59dd5fc6d6dab4",
+        "RULE_b86c37db64c0c699cefa92ff591b54b1754c5ad0c9de978955642e536f76e32c",
+        "RULE_cbb876ddbf20e24c49940490a24fa2af8e856bdfaca95c03214ee7cf9d96e294"
+      ],
+      "occurred_at": "2026-09-14T03:35:56.809452Z",
+      "error": null
+    }
+  ]
+}

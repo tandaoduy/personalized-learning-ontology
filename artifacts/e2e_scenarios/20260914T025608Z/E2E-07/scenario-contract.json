@@ -1,0 +1,35 @@
+{
+  "scenario": {
+    "id": "E2E-07",
+    "source_student_id": "SV001",
+    "label": "specialization_httt_controlled",
+    "specialization": "Hệ thống thông tin",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "expected_violation": "curriculum_membership",
+    "replan": "replace specialization elective",
+    "confirm": false,
+    "controlled_fixture": true
+  },
+  "result_summary": {
+    "scenario_id": "E2E-07",
+    "label": "specialization_httt_controlled",
+    "controlled_fixture": true,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "passed_contract": true,
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 1.0536684999997306,
+    "expected_invalid_probe": "curriculum_membership",
+    "replan_criterion": "replace specialization elective",
+    "confirm_required": false
+  }
+}

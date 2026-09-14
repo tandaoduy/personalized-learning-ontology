@@ -1,0 +1,17 @@
+{
+  "version": "e2e-scenarios-v1",
+  "source_notice": "Fixtures are generated at runtime from anonymized copies of local sample profiles. HTTT and quota settings marked controlled_fixture are not institutional policy data.",
+  "scenarios": [
+    {"id":"E2E-01","source_student_id":"SV001","label":"on_track","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback"],"expected_violation":"completed_course_retake","replan":"replace elective","confirm":true},
+    {"id":"E2E-02","source_student_id":"SV002","label":"retake","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback","replanning","no_plan_found"],"expected_violation":"completed_course_retake","replan":"remove failed-course alternative","confirm":false},
+    {"id":"E2E-03","source_student_id":"SV010","label":"missing_prerequisite","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback","replanning","no_plan_found"],"expected_violation":"prerequisite","replan":"add eligible alternative","confirm":false},
+    {"id":"E2E-04","source_student_id":"SV001","label":"corequisite","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback"],"expected_violation":"corequisite","replan":"add corequisite or replace","confirm":false},
+    {"id":"E2E-05","source_student_id":"SV185","label":"undeclared_specialization","target_credits":12,"goal":"on_time","expected_statuses":["awaiting_feedback","replanning","no_plan_found"],"expected_violation":"curriculum_membership","replan":"exclude specialization course","confirm":false},
+    {"id":"E2E-06","source_student_id":"SV001","label":"specialization_cnpm","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback"],"expected_violation":"curriculum_membership","replan":"replace specialization elective","confirm":false},
+    {"id":"E2E-07","source_student_id":"SV001","label":"specialization_httt_controlled","specialization":"Hệ thống thông tin","target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback","no_plan_found"],"expected_violation":"curriculum_membership","replan":"replace specialization elective","confirm":false,"controlled_fixture":true},
+    {"id":"E2E-08","source_student_id":"SV001","label":"elective_quota_near_full_controlled","quota_override":{"specialization":1},"target_credits":15,"goal":"on_time","expected_statuses":["awaiting_feedback","no_plan_found"],"expected_violation":"elective_quota","replan":"remove elective","confirm":false,"controlled_fixture":true},
+    {"id":"E2E-09","source_student_id":"SV001","label":"low_credit_load","target_credits":10,"goal":"on_time","expected_statuses":["awaiting_feedback","no_plan_found"],"expected_violation":"credit_limit","replan":"increase target credits","confirm":false},
+    {"id":"E2E-10","source_student_id":"SV001","label":"high_credit_load","target_credits":24,"goal":"accelerated","expected_statuses":["awaiting_feedback","no_plan_found"],"expected_violation":"credit_limit","replan":"reduce target credits","confirm":false},
+    {"id":"E2E-11","source_student_id":"SV056","label":"accelerated_near_graduation","target_credits":18,"goal":"accelerated","expected_statuses":["awaiting_feedback","replanning","no_plan_found"],"expected_violation":"completed_course_retake","replan":"prioritize remaining requirements","confirm":false}
+  ]
+}

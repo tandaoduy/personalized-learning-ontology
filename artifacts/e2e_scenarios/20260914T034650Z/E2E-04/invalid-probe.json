@@ -1,0 +1,5 @@
+{
+  "passed": false,
+  "expected_violation": "corequisite",
+  "diagnostic": "No catalog probe triggered this rule for the scenario snapshot."
+}

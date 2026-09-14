@@ -1,0 +1,229 @@
+{
+  "matrix_version": "e2e-scenarios-v1",
+  "generated_at": "2026-09-14T03:16:15.783748+00:00",
+  "cases": [
+    {
+      "scenario_id": "E2E-01",
+      "label": "on_track",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 1.4873692000001029,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "replan_criterion": "replace elective",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": true,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-02",
+      "label": "retake",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "latency_seconds": 0.167529100000138,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "replan_criterion": "remove failed-course alternative",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null
+    },
+    {
+      "scenario_id": "E2E-03",
+      "label": "missing_prerequisite",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 2,
+      "latency_seconds": 1.0698129000002154,
+      "expected_invalid_probe": "prerequisite",
+      "invalid_probe_passed": true,
+      "replan_criterion": "add eligible alternative",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null
+    },
+    {
+      "scenario_id": "E2E-04",
+      "label": "corequisite",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 1.5450544000000264,
+      "expected_invalid_probe": "corequisite",
+      "invalid_probe_passed": false,
+      "replan_criterion": "add corequisite or replace",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-05",
+      "label": "undeclared_specialization",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 3,
+      "latency_seconds": 0.9130998000000545,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "replan_criterion": "exclude specialization course",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null
+    },
+    {
+      "scenario_id": "E2E-06",
+      "label": "specialization_cnpm",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 2.657673199999863,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "replan_criterion": "replace specialization elective",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-07",
+      "label": "specialization_httt_controlled",
+      "controlled_fixture": true,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 1.2435816000001978,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "replan_criterion": "replace specialization elective",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-08",
+      "label": "elective_quota_near_full_controlled",
+      "controlled_fixture": true,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 1,
+      "candidate_count": 1,
+      "latency_seconds": 0.30657320000000254,
+      "expected_invalid_probe": "elective_quota",
+      "invalid_probe_passed": true,
+      "replan_criterion": "remove elective",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-09",
+      "label": "low_credit_load",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 3.1620560000001205,
+      "expected_invalid_probe": "credit_limit",
+      "invalid_probe_passed": true,
+      "replan_criterion": "increase target credits",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-10",
+      "label": "high_credit_load",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 1.1351690999999846,
+      "expected_invalid_probe": "credit_limit",
+      "invalid_probe_passed": true,
+      "replan_criterion": "reduce target credits",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed"
+    },
+    {
+      "scenario_id": "E2E-11",
+      "label": "accelerated_near_graduation",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "latency_seconds": 0.2091417999999976,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "replan_criterion": "prioritize remaining requirements",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null
+    }
+  ],
+  "passed": 11,
+  "total": 11
+}

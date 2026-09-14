@@ -4,10 +4,16 @@ from hashlib import sha256
 from pathlib import Path
 from rdflib import Graph, URIRef
 from backend.app.schemas.evidence import OntologyFactEvidence, RDFTriple
+from backend.app.services.recommendation.constants import (
+    NON_GPA_ONE_CREDIT_COURSES,
+    NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT,
+    PHYSICAL_EDUCATION_REGISTRATION_CREDIT,
+)
 
 BASE = "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#"
 CODE = URIRef(BASE + "courseCode")
 PREREQ = URIRef(BASE + "hasPrerequisiteCourse")
+RDF_TYPE = URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")
 QUERY_PATH = Path(__file__).resolve().parents[3] / "knowledge" / "queries" / "prerequisites.rq"
 
 class EvidenceSourceError(ValueError):
@@ -25,6 +31,12 @@ class OntologyEvidenceService:
         self._codes = {}
         for subject, value in self._graph.subject_objects(CODE):
             self._codes.setdefault(str(value).strip().upper(), set()).add(subject)
+        # Pre-compute PhysicalEducation classification per code so the credit override
+        # in _catalog_fact uses the same rule as the generator (constants.PHYSICAL_EDUCATION_REGISTRATION_CREDIT).
+        self._physical_education_codes = frozenset(
+            code for code in self._codes
+            if any(str(t).endswith("#PhysicalEducationCourse") for t in self._graph.objects(next(iter(self._codes[code])), RDF_TYPE))
+        )
 
     def _code_bindings(self, code):
         """Constrain joins to the indexed course without changing query semantics.
@@ -101,13 +113,26 @@ class OntologyEvidenceService:
                     raise EvidenceSourceError("CATALOG_CREDIT_AMBIGUOUS")
         if credit and len(values) != 1:
             raise EvidenceSourceError("CATALOG_CREDIT_AMBIGUOUS")
+        # Apply registration-credit override so the catalog credit matches the value the
+        # generator emits for the same course. The generator uses
+        # PHYSICAL_EDUCATION_REGISTRATION_CREDIT (1) for all PhysicalEducationCourse types
+        # and NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT (1) for codes in NON_GPA_ONE_CREDIT_COURSES.
+        # Without this override, validator/generator diverge on courses like 85105/85108.
+        catalog_credit_value: float | None = None
+        if credit:
+            if code in self._physical_education_codes:
+                catalog_credit_value = float(PHYSICAL_EDUCATION_REGISTRATION_CREDIT)
+            elif code in NON_GPA_ONE_CREDIT_COURSES:
+                catalog_credit_value = float(NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT)
+            else:
+                catalog_credit_value = float(next(iter(values)))
         triples = tuple(sorted(set(triples), key=lambda t: t.model_dump_json()))
         qversion = "sha256:" + sha256(query_text.encode()).hexdigest()
         identifier = sha256((self.ontology_version + qversion + code).encode()).hexdigest()
         return OntologyFactEvidence(evidence_id="ONTO_" + identifier, course_code=code, source_ref=self.source_ref,
             ontology_version=self.ontology_version, query_id=query_id, query_version=qversion, query_text=query_text,
             subject_uri=str(next(iter(subjects))) if subjects else "urn:unresolved-course:" + code,
-            exists=bool(subjects), catalog_credit=float(next(iter(values))) if credit else None,
+            exists=bool(subjects), catalog_credit=catalog_credit_value,
             triples=triples, captured_at=datetime.now(timezone.utc))
 
     def get_corequisite_evidence(self, course_code: str, expected_ontology_version: str) -> OntologyFactEvidence:

@@ -1,0 +1,34 @@
+{
+  "scenario": {
+    "id": "E2E-06",
+    "source_student_id": "SV001",
+    "label": "specialization_cnpm",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "expected_violation": "curriculum_membership",
+    "replan": "replace specialization elective",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-06",
+    "label": "specialization_cnpm",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "passed_contract": true,
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 2.657673199999863,
+    "expected_invalid_probe": "curriculum_membership",
+    "invalid_probe_passed": true,
+    "replan_criterion": "replace specialization elective",
+    "replan_status": "awaiting_feedback",
+    "confirm_required": false,
+    "confirm_status": "confirmed"
+  }
+}

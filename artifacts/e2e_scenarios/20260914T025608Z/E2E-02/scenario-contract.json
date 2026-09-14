@@ -1,0 +1,33 @@
+{
+  "scenario": {
+    "id": "E2E-02",
+    "source_student_id": "SV002",
+    "label": "retake",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "expected_violation": "completed_course_retake",
+    "replan": "remove failed-course alternative",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-02",
+    "label": "retake",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "passed_contract": false,
+    "valid_candidates": 0,
+    "candidate_count": 1,
+    "latency_seconds": 0.14369200000010096,
+    "expected_invalid_probe": "completed_course_retake",
+    "replan_criterion": "remove failed-course alternative",
+    "confirm_required": false
+  }
+}

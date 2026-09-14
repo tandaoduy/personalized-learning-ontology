@@ -1,0 +1,38 @@
+{
+  "scenario": {
+    "id": "E2E-11",
+    "source_student_id": "SV056",
+    "label": "accelerated_near_graduation",
+    "target_credits": 18,
+    "goal": "accelerated",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "completed_course_retake",
+    "replan": "prioritize remaining requirements",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-11",
+    "label": "accelerated_near_graduation",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "passed_contract": true,
+    "valid_candidates": 0,
+    "candidate_count": 1,
+    "latency_seconds": 0.2091417999999976,
+    "expected_invalid_probe": "completed_course_retake",
+    "invalid_probe_passed": true,
+    "replan_criterion": "prioritize remaining requirements",
+    "replan_status": null,
+    "confirm_required": false,
+    "confirm_status": null
+  }
+}

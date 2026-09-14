@@ -1,0 +1,56 @@
+{
+  "scenario": {
+    "id": "E2E-02",
+    "source_student_id": "SV002",
+    "label": "retake",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "completed_course_retake",
+    "replan": "remove failed-course alternative",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-02",
+    "label": "retake",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "valid_candidates": 0,
+    "candidate_count": 1,
+    "latency_seconds": 0.15751349999936792,
+    "expected_invalid_probe": "completed_course_retake",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "SSH379",
+    "replan_status": null,
+    "confirm_required": false,
+    "confirm_status": null,
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": null,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {
+      "credit_limit": 2
+    },
+    "evidence_coverage": {
+      "total_rule_decisions": 22,
+      "decisions_with_evidence": 22,
+      "coverage": 1.0
+    },
+    "replan_criterion": "remove failed-course alternative"
+  }
+}

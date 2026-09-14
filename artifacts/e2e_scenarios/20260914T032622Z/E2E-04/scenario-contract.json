@@ -1,0 +1,50 @@
+{
+  "scenario": {
+    "id": "E2E-04",
+    "source_student_id": "SV001",
+    "label": "corequisite",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "expected_violation": "corequisite",
+    "replan": "add corequisite or replace",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-04",
+    "label": "corequisite",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 1.3742653999997856,
+    "expected_invalid_probe": "corequisite",
+    "invalid_probe_passed": false,
+    "invalid_probe_course_code": null,
+    "replan_status": "awaiting_feedback",
+    "confirm_required": false,
+    "confirm_status": "confirmed",
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": false,
+      "replan_ok": true,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": false,
+    "violation_histogram": {},
+    "evidence_coverage": {
+      "total_rule_decisions": 110,
+      "decisions_with_evidence": 110,
+      "coverage": 1.0
+    },
+    "replan_criterion": "add corequisite or replace"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "matrix_version": "e2e-scenarios-v1",
+  "generated_at": "2026-09-14T03:02:16.604366+00:00",
+  "cases": [
+    {
+      "scenario_id": "E2E-02",
+      "label": "retake",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "latency_seconds": 0.27985080000007656,
+      "expected_invalid_probe": "completed_course_retake",
+      "replan_criterion": "remove failed-course alternative",
+      "confirm_required": false
+    },
+    {
+      "scenario_id": "E2E-03",
+      "label": "missing_prerequisite",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 2,
+      "latency_seconds": 1.1055132999999842,
+      "expected_invalid_probe": "prerequisite",
+      "replan_criterion": "add eligible alternative",
+      "confirm_required": false
+    },
+    {
+      "scenario_id": "E2E-05",
+      "label": "undeclared_specialization",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 3,
+      "latency_seconds": 1.118798699999843,
+      "expected_invalid_probe": "curriculum_membership",
+      "replan_criterion": "exclude specialization course",
+      "confirm_required": false
+    },
+    {
+      "scenario_id": "E2E-11",
+      "label": "accelerated_near_graduation",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "latency_seconds": 0.2400137999998151,
+      "expected_invalid_probe": "completed_course_retake",
+      "replan_criterion": "prioritize remaining requirements",
+      "confirm_required": false
+    }
+  ],
+  "passed": 4,
+  "total": 4
+}

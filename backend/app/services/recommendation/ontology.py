@@ -24,6 +24,8 @@ from .constants import (
     ENGLISH_COURSE_PREREQUISITES,
     ENGLISH_COURSES,
     NON_GPA_ONE_CREDIT_COURSES,
+    NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT,
+    PHYSICAL_EDUCATION_REGISTRATION_CREDIT,
     EQUIVALENT_COURSES,
 )
 
@@ -328,9 +330,13 @@ class OntologyMixin:
                 self.course_data[code]['credit'] = ENGLISH_COURSE_CREDITS
 
         # Các học phần này có tải đăng ký 1 tín chỉ nhưng không tính vào GPA/tín chỉ tích lũy.
+        # Giá trị đăng ký lấy từ constants.py (single source of truth), áp dụng cho cả
+        # generator và validator/evidence để hai phía luôn đồng bộ.
         for code, cinfo in self.course_data.items():
-            if cinfo.get('is_physical_education_course') or code in NON_GPA_ONE_CREDIT_COURSES:
-                cinfo['credit'] = 1
+            if cinfo.get('is_physical_education_course'):
+                cinfo['credit'] = PHYSICAL_EDUCATION_REGISTRATION_CREDIT
+            elif code in NON_GPA_ONE_CREDIT_COURSES:
+                cinfo['credit'] = NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT
 
         for code, prereqs in ENGLISH_COURSE_PREREQUISITES.items():
             if code not in self.course_data:

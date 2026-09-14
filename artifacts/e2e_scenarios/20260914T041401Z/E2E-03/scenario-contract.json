@@ -1,0 +1,56 @@
+{
+  "scenario": {
+    "id": "E2E-03",
+    "source_student_id": "SV010",
+    "label": "missing_prerequisite",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "prerequisite",
+    "replan": "add eligible alternative",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-03",
+    "label": "missing_prerequisite",
+    "controlled_fixture": false,
+    "status": "replanning",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "valid_candidates": 0,
+    "candidate_count": 2,
+    "latency_seconds": 2.497349399999621,
+    "expected_invalid_probe": "prerequisite",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "CCN6203",
+    "replan_status": null,
+    "confirm_required": false,
+    "confirm_status": null,
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": null,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {
+      "catalog_credit_match": 2
+    },
+    "evidence_coverage": {
+      "total_rule_decisions": 132,
+      "decisions_with_evidence": 132,
+      "coverage": 1.0
+    },
+    "replan_criterion": "add eligible alternative"
+  }
+}

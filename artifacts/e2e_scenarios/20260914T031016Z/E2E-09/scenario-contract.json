@@ -1,0 +1,36 @@
+{
+  "scenario": {
+    "id": "E2E-09",
+    "source_student_id": "SV001",
+    "label": "low_credit_load",
+    "target_credits": 10,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "expected_violation": "credit_limit",
+    "replan": "increase target credits",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-09",
+    "label": "low_credit_load",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "passed_contract": true,
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 3.1620560000001205,
+    "expected_invalid_probe": "credit_limit",
+    "invalid_probe_passed": true,
+    "replan_criterion": "increase target credits",
+    "replan_status": "awaiting_feedback",
+    "confirm_required": false,
+    "confirm_status": "confirmed"
+  }
+}

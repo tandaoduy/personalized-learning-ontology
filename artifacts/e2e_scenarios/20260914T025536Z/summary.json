@@ -1,0 +1,24 @@
+{
+  "matrix_version": "e2e-scenarios-v1",
+  "generated_at": "2026-09-14T02:55:55.193905+00:00",
+  "cases": [
+    {
+      "scenario_id": "E2E-01",
+      "label": "on_track",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "passed_contract": true,
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "latency_seconds": 1.3586741999997685,
+      "expected_invalid_probe": "completed_course_retake",
+      "replan_criterion": "replace elective",
+      "confirm_required": true
+    }
+  ],
+  "passed": 1,
+  "total": 1
+}

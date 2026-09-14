@@ -1,0 +1,52 @@
+{
+  "scenario": {
+    "id": "E2E-10",
+    "source_student_id": "SV001",
+    "label": "high_credit_load",
+    "target_credits": 24,
+    "goal": "accelerated",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "expected_violation": "credit_limit",
+    "replan": "reduce target credits",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-10",
+    "label": "high_credit_load",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "no_plan_found"
+    ],
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 2.3666659000000436,
+    "expected_invalid_probe": "credit_limit",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "85065",
+    "replan_status": "awaiting_feedback",
+    "confirm_required": false,
+    "confirm_status": "confirmed",
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": true,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {},
+    "evidence_coverage": {
+      "total_rule_decisions": 110,
+      "decisions_with_evidence": 110,
+      "coverage": 1.0
+    },
+    "replan_criterion": "reduce target credits"
+  }
+}
