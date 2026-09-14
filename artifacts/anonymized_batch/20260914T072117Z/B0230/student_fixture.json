@@ -1,0 +1,198 @@
+[
+  {
+    "student_id": "B0230",
+    "name": "ANONYMIZED",
+    "year_admitted": 2025,
+    "major": "Công Nghệ Thông Tin",
+    "specialization": "Chưa chọn chuyên ngành",
+    "study_goal": "học vượt",
+    "total_credits_accumulated": 0,
+    "gpa_accumulated": 0.0,
+    "academic_class": "ANONYMIZED",
+    "current_semester": 2,
+    "next_semester": 3,
+    "passed_courses": {
+      "85065": "Giáo dục thể chất (Chạy)",
+      "FLS310": "Tiếng Anh A1",
+      "SOT301": "Nhập môn ngành Công nghệ thông tin"
+    },
+    "course_grades": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 6.5,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2025-2026",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 3.1,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH313",
+        "course_name": "Pháp luật đại cương",
+        "grade": 2.4,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 3.5,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 4.4,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 1.7,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      }
+    ],
+    "failed_courses": [
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1"
+      },
+      {
+        "course_code": "SSH313",
+        "course_name": "Pháp luật đại cương"
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin"
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)"
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1"
+      }
+    ],
+    "course_attempts": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 6.5,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 3.1,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH313",
+        "course_name": "Pháp luật đại cương",
+        "grade": 2.4,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 3.5,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 4.4,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 1.7,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      }
+    ]
+  }
+]

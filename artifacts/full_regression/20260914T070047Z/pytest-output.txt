@@ -1,0 +1,33 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-8.3.5, pluggy-1.6.0
+rootdir: D:\NTU\CNTT\NCKH\personalized-learning-ontology
+configfile: pytest.ini
+plugins: cov-6.0.0
+collected 199 items
+
+backend\tests\test_agent_api_integration.py ..                           [  1%]
+backend\tests\test_agent_orchestrator.py ......                          [  4%]
+backend\tests\test_agent_pipeline.py .........                           [  8%]
+backend\tests\test_agent_pipeline_fast.py .                              [  9%]
+backend\tests\test_agent_run_store.py ...                                [ 10%]
+backend\tests\test_capabilities.py .                                     [ 11%]
+backend\tests\test_container_healthcheck.py .......                      [ 14%]
+backend\tests\test_deep_business_rules.py ...........................    [ 28%]
+backend\tests\test_m4_scoring.py ................                        [ 36%]
+backend\tests\test_ontology_evidence.py ...........                      [ 41%]
+backend\tests\test_physical_education_credit.py .....                    [ 44%]
+backend\tests\test_progress_risk_analyzer.py .....                       [ 46%]
+backend\tests\test_project_layout.py ..                                  [ 47%]
+backend\tests\test_recommendation_api_integration.py ..                  [ 48%]
+backend\tests\test_recommendation_engine.py .......                      [ 52%]
+backend\tests\test_schemas.py ..........                                 [ 57%]
+backend\tests\test_security_controls.py ......                           [ 60%]
+backend\tests\test_standard_validator.py ............................... [ 75%]
+.............                                                            [ 82%]
+backend\tests\test_student_data_service.py .........                     [ 86%]
+backend\tests\test_student_specialization.py ...................         [ 96%]
+backend\tests\test_target_term_mapping.py ....                           [ 98%]
+backend\tests\test_ui_integration.py ...                                 [100%]
+
+- generated xml file: D:\NTU\CNTT\NCKH\personalized-learning-ontology\artifacts\full_regression\20260914T070047Z\junit.xml -
+======================= 199 passed in 135.85s (0:02:15) =======================

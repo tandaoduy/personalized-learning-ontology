@@ -1,0 +1,155 @@
+[
+  {
+    "student_id": "B0301",
+    "name": "ANONYMIZED",
+    "year_admitted": 2025,
+    "major": "Công Nghệ Thông Tin",
+    "specialization": "Chưa chọn chuyên ngành",
+    "study_goal": "đúng hạn",
+    "total_credits_accumulated": 3,
+    "gpa_accumulated": 6.3,
+    "academic_class": "ANONYMIZED",
+    "current_semester": 2,
+    "next_semester": 3,
+    "passed_courses": {
+      "POL307": "Triết học Mác - Lênin",
+      "SOT301": "Nhập môn ngành Công nghệ thông tin"
+    },
+    "course_grades": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 3.0,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 4.1,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 6.3,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 3.8,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 1.1,
+        "status": "Chưa đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      }
+    ],
+    "failed_courses": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)"
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1"
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)"
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1"
+      }
+    ],
+    "course_attempts": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 3.0,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 4.1,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 6.3,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 3.8,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 1.1,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "profile": "B0046",
+  "status": "awaiting_feedback",
+  "success": true,
+  "candidate_count": 3,
+  "valid_candidates": 3,
+  "latency_seconds": 1.466401900001074,
+  "evidence_rule_decisions": 198,
+  "evidence_linked_decisions": 198,
+  "evidence_coverage": 1.0,
+  "pairwise_diversity_count": 0,
+  "pairwise_diversity_mean": null,
+  "violation_histogram": {},
+  "artifact_complete": true
+}

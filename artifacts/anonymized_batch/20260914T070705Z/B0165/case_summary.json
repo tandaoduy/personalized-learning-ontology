@@ -1,0 +1,17 @@
+{
+  "profile": "B0165",
+  "status": "replanning",
+  "success": true,
+  "candidate_count": 1,
+  "valid_candidates": 0,
+  "latency_seconds": 0.7572193999985757,
+  "evidence_rule_decisions": 110,
+  "evidence_linked_decisions": 110,
+  "evidence_coverage": 1.0,
+  "pairwise_diversity_count": 0,
+  "pairwise_diversity_mean": null,
+  "violation_histogram": {
+    "catalog_credit_match": 1
+  },
+  "artifact_complete": true
+}

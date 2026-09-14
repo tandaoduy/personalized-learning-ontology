@@ -1,0 +1,42 @@
+[
+  {
+    "student_id": "B0168",
+    "name": "ANONYMIZED",
+    "year_admitted": 2023,
+    "major": "Công Nghệ Thông Tin",
+    "specialization": "Công nghệ phần mềm",
+    "study_goal": "học vượt",
+    "total_credits_accumulated": 0,
+    "gpa_accumulated": 0.0,
+    "academic_class": "ANONYMIZED",
+    "current_semester": 6,
+    "next_semester": 7,
+    "passed_courses": {
+      "FLS310": "Tiếng Anh A1"
+    },
+    "course_grades": [
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      }
+    ],
+    "failed_courses": [],
+    "course_attempts": [
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      }
+    ]
+  }
+]

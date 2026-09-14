@@ -5,6 +5,8 @@ from pathlib import Path
 from rdflib import Graph, URIRef
 from backend.app.schemas.evidence import OntologyFactEvidence, RDFTriple
 from backend.app.services.recommendation.constants import (
+    ENGLISH_COURSE_CREDITS,
+    ENGLISH_COURSES,
     NON_GPA_ONE_CREDIT_COURSES,
     NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT,
     PHYSICAL_EDUCATION_REGISTRATION_CREDIT,
@@ -114,13 +116,18 @@ class OntologyEvidenceService:
         if credit and len(values) != 1:
             raise EvidenceSourceError("CATALOG_CREDIT_AMBIGUOUS")
         # Apply registration-credit override so the catalog credit matches the value the
-        # generator emits for the same course. The generator uses
+        # generator emits for the same course. FLS310/FLS312/FLS313 are 4-credit
+        # registration courses (excluded from GPA); this is a registration-load
+        # policy, not a GPA or accumulated-credit calculation. The generator uses
+        # ENGLISH_COURSE_CREDITS for every code in ENGLISH_COURSES,
         # PHYSICAL_EDUCATION_REGISTRATION_CREDIT (1) for all PhysicalEducationCourse types
         # and NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT (1) for codes in NON_GPA_ONE_CREDIT_COURSES.
         # Without this override, validator/generator diverge on courses like 85105/85108.
         catalog_credit_value: float | None = None
         if credit:
-            if code in self._physical_education_codes:
+            if code in ENGLISH_COURSES:
+                catalog_credit_value = float(ENGLISH_COURSE_CREDITS)
+            elif code in self._physical_education_codes:
                 catalog_credit_value = float(PHYSICAL_EDUCATION_REGISTRATION_CREDIT)
             elif code in NON_GPA_ONE_CREDIT_COURSES:
                 catalog_credit_value = float(NON_GPA_ONE_CREDIT_REGISTRATION_CREDIT)

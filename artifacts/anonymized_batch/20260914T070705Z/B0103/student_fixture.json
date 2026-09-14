@@ -1,0 +1,1027 @@
+[
+  {
+    "student_id": "B0103",
+    "name": "ANONYMIZED",
+    "year_admitted": 2023,
+    "major": "Công Nghệ Thông Tin",
+    "specialization": "Công nghệ phần mềm",
+    "study_goal": "đúng hạn",
+    "total_credits_accumulated": 102,
+    "gpa_accumulated": 7.43,
+    "academic_class": "ANONYMIZED",
+    "current_semester": 6,
+    "next_semester": 7,
+    "passed_courses": {
+      "85065": "Giáo dục thể chất (Chạy)",
+      "FLS310": "Tiếng Anh A1",
+      "FLS312": "Tiếng Anh A2.1",
+      "FLS313": "Tiếng Anh A2.2",
+      "FLS314": "Tiếng Anh B1.1",
+      "SOT301": "Nhập môn ngành Công nghệ thông tin",
+      "MAT327": "Toán 1",
+      "SSH378": "Tư duy phản biện",
+      "85097": "Giáo dục thể chất (Bóng đá)",
+      "FLS315": "Tiếng Anh B1.2",
+      "INS325": "Hệ điều hành",
+      "NEC321": "Kiến trúc máy tính",
+      "SOT315": "Nhập môn lập trình",
+      "SSH313": "Pháp luật đại cương",
+      "POL307": "Triết học Mác - Lênin",
+      "MAT328": "Toán 2",
+      "QPAD02": "Giáo dục Quốc phòng - An ninh 2 (Công tác quốc phòng và an ninh)",
+      "QPAD011": "Giáo dục Quốc phòng - An ninh 1 (Đường lối quốc phòng của Đảng Cộng sản Việt Nam)",
+      "QPAD033": "Giáo dục Quốc phòng - An ninh 3 (Quân sự chung)",
+      "QPAD044": "Giáo dục Quốc phòng - An ninh 4 (Kỹ thuật chiến đấu bộ binh và chiến thuật)",
+      "INS326": "Cấu trúc dữ liệu và giải thuật (LT+TH)",
+      "INS330": "Cơ sở dữ liệu",
+      "SOT320": "Kỹ thuật lập trình (2LT 1LT)",
+      "PHY310": "Vật lý đại cương 1",
+      "PHY311": "T.Hành Vật lý đại cương 1",
+      "SSH379": "Ngôn ngữ học thuật",
+      "SSH381": "Thường thức mỹ thuật",
+      "INS339": "Hệ quản trị cơ sở dữ liệu",
+      "MAT322": "Xác suất - Thống kê",
+      "SOT331": "Lập trình hướng đối tượng",
+      "SOT336": "Kỹ thuật đồ họa",
+      "SOT347": "Thiết kế Web",
+      "SOT375": "Tiếng Anh chuyên ngành (CN thông tin)",
+      "POL309": "Kinh tế chính trị Mác - Lênin",
+      "POL310": "Lịch sử Đảng Cộng sản Việt Nam",
+      "85105": "Giáo dục thể chất (Cầu lông)",
+      "INS360": "Phân tích thiết kế hệ thống thông tin",
+      "NEC329": "Mạng máy tính",
+      "POL333": "Tư tưởng Hồ Chí Minh",
+      "SOT355": "Phát triển ứng dụng Web",
+      "INT6903": "Đồ án cở sở ngành",
+      "INT6220": "Phát triển phần mềm hướng đối tượng",
+      "SOT349": "Công nghệ phần mềm",
+      "SOT352": "Quản lý dự án phần mềm",
+      "SOT332": "Toán rời rạc",
+      "SOT379": "Lập trình thiết bị di động",
+      "SOT380": "Kiến trúc và thiết kế phần mềm"
+    },
+    "course_grades": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 7.0,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS313",
+        "course_name": "Tiếng Anh A2.2",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS314",
+        "course_name": "Tiếng Anh B1.1",
+        "grade": 6.1,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 4.1,
+        "status": "Chưa đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 9.7,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH378",
+        "course_name": "Tư duy phản biện",
+        "grade": 7.2,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "85097",
+        "course_name": "Giáo dục thể chất (Bóng đá)",
+        "grade": 8.0,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS315",
+        "course_name": "Tiếng Anh B1.2",
+        "grade": 6.7,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS325",
+        "course_name": "Hệ điều hành",
+        "grade": 6.0,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "NEC321",
+        "course_name": "Kiến trúc máy tính",
+        "grade": 6.7,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT315",
+        "course_name": "Nhập môn lập trình",
+        "grade": 8.4,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH313",
+        "course_name": "Pháp luật đại cương",
+        "grade": 6.9,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 7.3,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT328",
+        "course_name": "Toán 2",
+        "grade": 8.5,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD02",
+        "course_name": "Giáo dục Quốc phòng - An ninh 2 (Công tác quốc phòng và an ninh)",
+        "grade": 6.4,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD011",
+        "course_name": "Giáo dục Quốc phòng - An ninh 1 (Đường lối quốc phòng của Đảng Cộng sản Việt Nam)",
+        "grade": 6.7,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD033",
+        "course_name": "Giáo dục Quốc phòng - An ninh 3 (Quân sự chung)",
+        "grade": 8.3,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD044",
+        "course_name": "Giáo dục Quốc phòng - An ninh 4 (Kỹ thuật chiến đấu bộ binh và chiến thuật)",
+        "grade": 6.9,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS326",
+        "course_name": "Cấu trúc dữ liệu và giải thuật (LT+TH)",
+        "grade": 5.0,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS330",
+        "course_name": "Cơ sở dữ liệu",
+        "grade": 9.2,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT320",
+        "course_name": "Kỹ thuật lập trình (2LT 1LT)",
+        "grade": 8.1,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "PHY310",
+        "course_name": "Vật lý đại cương 1",
+        "grade": 7.8,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "PHY311",
+        "course_name": "T.Hành Vật lý đại cương 1",
+        "grade": 7.5,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH379",
+        "course_name": "Ngôn ngữ học thuật",
+        "grade": 7.0,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH381",
+        "course_name": "Thường thức mỹ thuật",
+        "grade": 8.4,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS339",
+        "course_name": "Hệ quản trị cơ sở dữ liệu",
+        "grade": 5.5,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT322",
+        "course_name": "Xác suất - Thống kê",
+        "grade": 9.4,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SH1",
+        "course_name": "Sinh hoạt Cuối tuần",
+        "grade": 0.0,
+        "status": "Không tính điểm",
+        "academic_year": "2024-2025",
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT331",
+        "course_name": "Lập trình hướng đối tượng",
+        "grade": 8.4,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT336",
+        "course_name": "Kỹ thuật đồ họa",
+        "grade": 7.2,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT347",
+        "course_name": "Thiết kế Web",
+        "grade": 8.1,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT375",
+        "course_name": "Tiếng Anh chuyên ngành (CN thông tin)",
+        "grade": 7.0,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL309",
+        "course_name": "Kinh tế chính trị Mác - Lênin",
+        "grade": 8.5,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL310",
+        "course_name": "Lịch sử Đảng Cộng sản Việt Nam",
+        "grade": 6.3,
+        "status": "Đạt",
+        "academic_year": "2024-2025",
+        "grade_specified": true
+      },
+      {
+        "course_code": "85105",
+        "course_name": "Giáo dục thể chất (Cầu lông)",
+        "grade": 5.5,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS360",
+        "course_name": "Phân tích thiết kế hệ thống thông tin",
+        "grade": 7.1,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "NEC329",
+        "course_name": "Mạng máy tính",
+        "grade": 6.2,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL333",
+        "course_name": "Tư tưởng Hồ Chí Minh",
+        "grade": 8.0,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT355",
+        "course_name": "Phát triển ứng dụng Web",
+        "grade": 8.4,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INT6903",
+        "course_name": "Đồ án cở sở ngành",
+        "grade": 7.0,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "INT6220",
+        "course_name": "Phát triển phần mềm hướng đối tượng",
+        "grade": 6.6,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT349",
+        "course_name": "Công nghệ phần mềm",
+        "grade": 8.4,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT352",
+        "course_name": "Quản lý dự án phần mềm",
+        "grade": 7.6,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT332",
+        "course_name": "Toán rời rạc",
+        "grade": 8.5,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT379",
+        "course_name": "Lập trình thiết bị di động",
+        "grade": 7.1,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT380",
+        "course_name": "Kiến trúc và thiết kế phần mềm",
+        "grade": 7.2,
+        "status": "Đạt",
+        "academic_year": "2025-2026",
+        "grade_specified": true
+      }
+    ],
+    "failed_courses": [
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)"
+      }
+    ],
+    "course_attempts": [
+      {
+        "course_code": "85065",
+        "course_name": "Giáo dục thể chất (Chạy)",
+        "grade": 7.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS313",
+        "course_name": "Tiếng Anh A2.2",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS314",
+        "course_name": "Tiếng Anh B1.1",
+        "grade": 6.1,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT301",
+        "course_name": "Nhập môn ngành Công nghệ thông tin",
+        "grade": 5.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 4.1,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 9.7,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH378",
+        "course_name": "Tư duy phản biện",
+        "grade": 7.2,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "85097",
+        "course_name": "Giáo dục thể chất (Bóng đá)",
+        "grade": 8.0,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "FLS315",
+        "course_name": "Tiếng Anh B1.2",
+        "grade": 6.7,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS325",
+        "course_name": "Hệ điều hành",
+        "grade": 6.0,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "NEC321",
+        "course_name": "Kiến trúc máy tính",
+        "grade": 4.2,
+        "status": "Chưa đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT315",
+        "course_name": "Nhập môn lập trình",
+        "grade": 4.9,
+        "status": "Chưa đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH313",
+        "course_name": "Pháp luật đại cương",
+        "grade": 6.9,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL307",
+        "course_name": "Triết học Mác - Lênin",
+        "grade": 7.3,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT328",
+        "course_name": "Toán 2",
+        "grade": 8.5,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2023-2024",
+        "actual_term": 2,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD02",
+        "course_name": "Giáo dục Quốc phòng - An ninh 2 (Công tác quốc phòng và an ninh)",
+        "grade": 6.4,
+        "status": "Đạt",
+        "semester_taken": 3,
+        "academic_year": "2023-2024",
+        "actual_term": 3,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD011",
+        "course_name": "Giáo dục Quốc phòng - An ninh 1 (Đường lối quốc phòng của Đảng Cộng sản Việt Nam)",
+        "grade": 6.7,
+        "status": "Đạt",
+        "semester_taken": 3,
+        "academic_year": "2023-2024",
+        "actual_term": 3,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD033",
+        "course_name": "Giáo dục Quốc phòng - An ninh 3 (Quân sự chung)",
+        "grade": 8.3,
+        "status": "Đạt",
+        "semester_taken": 3,
+        "academic_year": "2023-2024",
+        "actual_term": 3,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "QPAD044",
+        "course_name": "Giáo dục Quốc phòng - An ninh 4 (Kỹ thuật chiến đấu bộ binh và chiến thuật)",
+        "grade": 6.9,
+        "status": "Đạt",
+        "semester_taken": 3,
+        "academic_year": "2023-2024",
+        "actual_term": 3,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS326",
+        "course_name": "Cấu trúc dữ liệu và giải thuật (LT+TH)",
+        "grade": 5.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS330",
+        "course_name": "Cơ sở dữ liệu",
+        "grade": 9.2,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT320",
+        "course_name": "Kỹ thuật lập trình (2LT 1LT)",
+        "grade": 8.1,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "PHY310",
+        "course_name": "Vật lý đại cương 1",
+        "grade": 7.8,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "PHY311",
+        "course_name": "T.Hành Vật lý đại cương 1",
+        "grade": 7.5,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH379",
+        "course_name": "Ngôn ngữ học thuật",
+        "grade": 7.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH381",
+        "course_name": "Thường thức mỹ thuật",
+        "grade": 8.4,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2024-2025",
+        "actual_term": 4,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS339",
+        "course_name": "Hệ quản trị cơ sở dữ liệu",
+        "grade": 5.5,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT322",
+        "course_name": "Xác suất - Thống kê",
+        "grade": 9.4,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SH1",
+        "course_name": "Sinh hoạt Cuối tuần",
+        "grade": 0.0,
+        "status": "Không tính điểm",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "SOT331",
+        "course_name": "Lập trình hướng đối tượng",
+        "grade": 8.4,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT336",
+        "course_name": "Kỹ thuật đồ họa",
+        "grade": 7.2,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT347",
+        "course_name": "Thiết kế Web",
+        "grade": 8.1,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT375",
+        "course_name": "Tiếng Anh chuyên ngành (CN thông tin)",
+        "grade": 7.0,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL309",
+        "course_name": "Kinh tế chính trị Mác - Lênin",
+        "grade": 8.5,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL310",
+        "course_name": "Lịch sử Đảng Cộng sản Việt Nam",
+        "grade": 6.3,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2024-2025",
+        "actual_term": 5,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "85105",
+        "course_name": "Giáo dục thể chất (Cầu lông)",
+        "grade": 5.5,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INS360",
+        "course_name": "Phân tích thiết kế hệ thống thông tin",
+        "grade": 7.1,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "NEC329",
+        "course_name": "Mạng máy tính",
+        "grade": 6.2,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "POL333",
+        "course_name": "Tư tưởng Hồ Chí Minh",
+        "grade": 8.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT355",
+        "course_name": "Phát triển ứng dụng Web",
+        "grade": 8.4,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INT6903",
+        "course_name": "Đồ án cở sở ngành",
+        "grade": 7.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "INT6220",
+        "course_name": "Phát triển phần mềm hướng đối tượng",
+        "grade": 6.6,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2025-2026",
+        "actual_term": 7,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "NEC321",
+        "course_name": "Kiến trúc máy tính",
+        "grade": 6.7,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 2,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT315",
+        "course_name": "Nhập môn lập trình",
+        "grade": 8.4,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 2,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT349",
+        "course_name": "Công nghệ phần mềm",
+        "grade": 8.4,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT352",
+        "course_name": "Quản lý dự án phần mềm",
+        "grade": 7.6,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT332",
+        "course_name": "Toán rời rạc",
+        "grade": 8.5,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT379",
+        "course_name": "Lập trình thiết bị di động",
+        "grade": 7.1,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT380",
+        "course_name": "Kiến trúc và thiết kế phần mềm",
+        "grade": 7.2,
+        "status": "Đạt",
+        "semester_taken": 2,
+        "academic_year": "2025-2026",
+        "actual_term": 8,
+        "attempt_number": 1,
+        "grade_specified": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,172 @@
+[
+  {
+    "student_id": "B0149",
+    "name": "ANONYMIZED",
+    "year_admitted": 2023,
+    "major": "Công Nghệ Thông Tin",
+    "specialization": "Công nghệ phần mềm",
+    "study_goal": "đúng hạn",
+    "total_credits_accumulated": 3,
+    "gpa_accumulated": 5.0,
+    "academic_class": "ANONYMIZED",
+    "current_semester": 6,
+    "next_semester": 7,
+    "passed_courses": {
+      "FLS310": "Tiếng Anh A1",
+      "FLS312": "Tiếng Anh A2.1",
+      "FLS313": "Tiếng Anh A2.2",
+      "SSH378": "Tư duy phản biện"
+    },
+    "course_grades": [
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS313",
+        "course_name": "Tiếng Anh A2.2",
+        "grade": 0.0,
+        "status": "Miễn",
+        "academic_year": "2023-2024",
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS314",
+        "course_name": "Tiếng Anh B1.1",
+        "grade": 2.7,
+        "status": "Chưa đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 2.2,
+        "status": "Chưa đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 4.2,
+        "status": "Chưa đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH378",
+        "course_name": "Tư duy phản biện",
+        "grade": 5.0,
+        "status": "Đạt",
+        "academic_year": "2023-2024",
+        "grade_specified": true
+      }
+    ],
+    "failed_courses": [
+      {
+        "course_code": "FLS314",
+        "course_name": "Tiếng Anh B1.1"
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)"
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1"
+      }
+    ],
+    "course_attempts": [
+      {
+        "course_code": "FLS310",
+        "course_name": "Tiếng Anh A1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS312",
+        "course_name": "Tiếng Anh A2.1",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS313",
+        "course_name": "Tiếng Anh A2.2",
+        "grade": 0.0,
+        "status": "Miễn",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": false
+      },
+      {
+        "course_code": "FLS314",
+        "course_name": "Tiếng Anh B1.1",
+        "grade": 2.7,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SOT381",
+        "course_name": "Tin học đại cương A (LT+TH)",
+        "grade": 2.2,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "MAT327",
+        "course_name": "Toán 1",
+        "grade": 4.2,
+        "status": "Chưa đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      },
+      {
+        "course_code": "SSH378",
+        "course_name": "Tư duy phản biện",
+        "grade": 5.0,
+        "status": "Đạt",
+        "semester_taken": 1,
+        "academic_year": "2023-2024",
+        "actual_term": 1,
+        "attempt_number": 1,
+        "grade_specified": true
+      }
+    ]
+  }
+]
