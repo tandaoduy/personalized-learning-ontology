@@ -129,6 +129,7 @@ def main() -> int:
     write_json(run_dir / "manifest.json", manifest)
 
     rows: list[dict] = []
+    knowledge_source_manifest: dict | None = None
     statuses: Counter[str] = Counter()
     violations: Counter[str] = Counter()
     candidate_count = valid_count = evidence_total = evidence_linked = 0
@@ -153,6 +154,8 @@ def main() -> int:
         except Exception as exc:  # Preserve the batch and expose a per-case diagnostic.
             result = {"success": False, "status": "runner_error", "error": {"message": str(exc)}}
         write_json(case_dir / "result.json", result)
+        if knowledge_source_manifest is None:
+            knowledge_source_manifest = (result.get("knowledge_snapshot") or {}).get("source_manifest")
 
         candidate_n = len(result.get("candidates") or [])
         valid_n = sum(item.get("status") == "valid" for item in result.get("validations") or [])
@@ -186,6 +189,8 @@ def main() -> int:
         if row["latency_seconds"] is not None:
             latencies.append(float(row["latency_seconds"]))
 
+    manifest["knowledge_source_manifest"] = knowledge_source_manifest
+    write_json(run_dir / "manifest.json", manifest)
     summary = {
         "manifest": manifest,
         "profiles": rows,

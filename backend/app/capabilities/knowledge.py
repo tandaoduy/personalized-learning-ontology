@@ -7,6 +7,7 @@ from backend.app.schemas import (CourseInfo, ElectiveQuota, KnowledgeContext, Kn
     KnowledgeVersion, PlanningRequest, PolicyManifest, StudentSnapshot, ToolCallContext, ToolError, ToolResult)
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
+from backend.app.services.source_manifest_service import resolve_source_manifest
 from backend.app.validation.prerequisite_rule import RULE_VERSION
 from .student_context import NEXT_TERM_ID
 from ._envelope import fail, now, ok
@@ -21,7 +22,9 @@ def load_knowledge_context(context: ToolCallContext, request: PlanningRequest, s
             raise ValueError("TARGET_TERM_UNSUPPORTED")
         if Path(engine.ontology_path).resolve().as_uri() != evidence.source_ref:
             raise ValueError("ONTOLOGY_SOURCE_MISMATCH")
-        policy = {"min": engine.min_credits, "max": engine.max_credits, "quotas": engine.elective_quotas}
+        source_manifest = resolve_source_manifest()
+        policy = {"min": engine.min_credits, "max": engine.max_credits, "quotas": engine.elective_quotas,
+                  "source_manifest_hash": source_manifest.content_hash}
         policy_hash = "sha256:" + sha256(json.dumps(policy, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
         versions = KnowledgeVersion(student_version=student.student_version,
             curriculum_version=student.curriculum_id, ontology_version=evidence.ontology_version,
@@ -33,10 +36,13 @@ def load_knowledge_context(context: ToolCallContext, request: PlanningRequest, s
             rules_ref="standard-academic-v3", offerings_ref=policy_hash,
             target_semester_type=1 if (student.current_semester + 1) % 2 else 2,
             curriculum_courses=codes,
-            # The legacy data has no separate prior-study policy. Empty requirements
-            # are explicit for this baseline and are recorded in the manifest below.
-            prior_study_requirements=tuple({"course_code": code, "required_courses": ()} for code in sorted(codes)),
-            elective_quotas=tuple(ElectiveQuota(category=k, max_courses=v) for k, v in sorted(engine.elective_quotas.items())))
+            # Do not assert an empty prior-study baseline. Reuse the available,
+            # versioned prerequisite relation from ontology_v23; a distinct policy
+            # source is still declared unavailable in source_manifest.json.
+            prior_study_requirements=tuple({"course_code": code,
+                "required_courses": tuple(engine.course_data[code].get("prereqs", ())) } for code in sorted(codes)),
+            elective_quotas=tuple(ElectiveQuota(category=k, max_courses=v) for k, v in sorted(engine.elective_quotas.items())),
+            source_manifest=source_manifest)
         catalog = tuple(CourseInfo(course_code=code, credits=float(info.get("credit", 0)),
                                    course_name=str(info.get("name") or code))
                         for code, info in sorted(engine.course_data.items()))
@@ -48,6 +54,6 @@ def load_knowledge_context(context: ToolCallContext, request: PlanningRequest, s
             credit_rule_id="recommendation-engine-credit-bounds", credit_rule_version="v1")
         return ok(context, "load_knowledge_context", KnowledgeContext(knowledge_snapshot=knowledge, catalog=catalog,
             policy_manifest=manifest), started_at=started, knowledge_versions=versions,
-            source_refs=(evidence.source_ref, policy_hash))
+            source_refs=(evidence.source_ref, policy_hash, source_manifest.manifest_ref))
     except Exception as exc:
         return fail(context, "load_knowledge_context", ToolError(code="KNOWLEDGE_CONTEXT_ERROR", message=str(exc)), started_at=started)

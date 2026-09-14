@@ -1,0 +1,70 @@
+{
+  "protocol": "stage3-anonymized-agent-batch-v1",
+  "created_at": "2026-09-14T07:52:32.857434+00:00",
+  "source_data_sha256": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+  "source_profile_count": 1,
+  "source_ids_are_not_exported": true,
+  "target_term_id": "next-term",
+  "target_credits": 18.0,
+  "seed": 42,
+  "beam_width": 8,
+  "validator": "StandardValidator",
+  "limitations": [
+    "next-term is a system proxy, not a mapped institutional calendar.",
+    "Academic Risk is a proxy and not an official academic warning.",
+    "This batch measures pipeline behaviour, not student outcomes or policy completeness."
+  ],
+  "knowledge_source_manifest": {
+    "manifest_id": "academic-policy-source-manifest",
+    "manifest_ref": "knowledge/source_manifest.json",
+    "version": "source-manifest-v1",
+    "content_hash": "sha256:c928959f9339276b5945cda16fa00082658731b7b180fe9fad6f69ea5c113708",
+    "sources": [
+      {
+        "domain": "curriculum_catalog",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "Versioned/hash-bound repository ontology; official curriculum publication and effective date are not attached."
+      },
+      {
+        "domain": "prerequisite_and_corequisite",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "Rules are read from RDF; formal institutional source verification remains pending."
+      },
+      {
+        "domain": "elective_quota_and_credit_policy",
+        "source_ref": "backend/app/config.py+backend/app/services/recommendation/constants.py",
+        "version": "mvp-policy-v1",
+        "effective_date": null,
+        "content_hash": "sha256:961d3b69bb8ded735179abe3f63871a677dc524f94d71193bebe552f3579e886",
+        "authority_status": "proxy",
+        "limitation": "Quota and registration-credit overrides are MVP configuration, not asserted as university regulations."
+      },
+      {
+        "domain": "course_offering",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "openSemesterType is not a verified term-by-term institutional offering schedule."
+      },
+      {
+        "domain": "academic_calendar",
+        "source_ref": "unavailable-academic-calendar",
+        "version": "unavailable",
+        "effective_date": null,
+        "content_hash": null,
+        "authority_status": "unavailable",
+        "limitation": "next-term means current_semester + 1; no versioned academic-calendar mapping exists."
+      }
+    ]
+  }
+}

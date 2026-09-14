@@ -15,6 +15,8 @@ Hệ thống web Flask hỗ trợ sinh viên và cố vấn học tập theo dõ
 
 ## Phạm vi Agent pilot
 
+Nguồn dữ liệu, hash snapshot và các limitation được công bố tại [Nguồn dữ liệu và limitation](docs/DATA_LIMITATIONS_AND_SOURCES.md). Không diễn giải ontology/config MVP như quy định chính thức của Trường khi source manifest chưa có nguồn `official`.
+
 Luồng Agent hiện dùng dữ liệu và luật deterministic; không dùng LLM để quyết định học vụ.
 Sau Validator, pipeline tính Risk/Safety, sáu feature Ranking, ba bộ trọng số
 Safe/Balanced/Accelerated và chọn tối đa ba phương án với khoảng cách Jaccard tối thiểu 0.30.

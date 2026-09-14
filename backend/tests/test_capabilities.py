@@ -45,6 +45,12 @@ def test_adapters_read_project_sources_and_validate_generated_candidates(sources
     knowledge = knowledge_result.output.knowledge_snapshot
     assert knowledge.versions.ontology_version == evidence.ontology_version
     assert knowledge_result.output.catalog
+    assert knowledge.source_manifest is not None
+    assert knowledge.source_manifest.content_hash.startswith("sha256:")
+    assert {item.domain for item in knowledge.source_manifest.sources} >= {
+        "curriculum_catalog", "prerequisite_and_corequisite", "academic_calendar",
+    }
+    assert any(item.authority_status == "unavailable" for item in knowledge.source_manifest.sources)
 
     profile = students.get_student(planning_request.student_id)
     eligibility = build_course_space(context("build_course_space"), student, knowledge, profile, engine)

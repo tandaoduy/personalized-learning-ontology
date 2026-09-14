@@ -1,0 +1,50 @@
+{
+  "scenario": {
+    "id": "E2E-01",
+    "source_student_id": "SV001",
+    "label": "on_track",
+    "target_credits": 15,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "expected_violation": "completed_course_retake",
+    "replan": "replace elective",
+    "confirm": true
+  },
+  "result_summary": {
+    "scenario_id": "E2E-01",
+    "label": "on_track",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback"
+    ],
+    "valid_candidates": 2,
+    "candidate_count": 2,
+    "latency_seconds": 1.5099633999998332,
+    "expected_invalid_probe": "completed_course_retake",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "SOT345",
+    "replan_status": "awaiting_feedback",
+    "confirm_required": true,
+    "confirm_status": "confirmed",
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": true,
+      "confirm_ok": true,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {},
+    "evidence_coverage": {
+      "total_rule_decisions": 110,
+      "decisions_with_evidence": 110,
+      "coverage": 1.0
+    },
+    "replan_criterion": "replace elective"
+  }
+}

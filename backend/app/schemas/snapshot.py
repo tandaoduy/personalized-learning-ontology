@@ -41,6 +41,24 @@ class ElectiveQuota(SchemaModel):
     category: Identifier
     max_courses: int = Field(ge=0, strict=True)
 
+class PolicySource(SchemaModel):
+    """A resolved policy source used by one knowledge snapshot."""
+    domain: Identifier
+    source_ref: Identifier
+    version: Identifier
+    effective_date: str | None = None
+    content_hash: Identifier | None = None
+    authority_status: Identifier
+    limitation: str | None = None
+
+class SourceManifest(SchemaModel):
+    """Versioned and hashed inventory of curriculum-policy sources."""
+    manifest_id: Identifier
+    manifest_ref: Identifier
+    version: Identifier
+    content_hash: Identifier
+    sources: tuple[PolicySource, ...] = Field(min_length=1)
+
 class KnowledgeSnapshot(SchemaModel):
     snapshot_id: Identifier
     versions: KnowledgeVersion
@@ -54,6 +72,7 @@ class KnowledgeSnapshot(SchemaModel):
     curriculum_courses: frozenset[CourseCode] | None = None
     prior_study_requirements: tuple[PriorStudyRequirement, ...] = ()
     elective_quotas: tuple[ElectiveQuota, ...] = ()
+    source_manifest: SourceManifest | None = None
 
     @model_validator(mode="after")
     def unique_policies(self):

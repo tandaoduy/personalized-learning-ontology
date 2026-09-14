@@ -1,0 +1,12 @@
+{
+  "manifest_id": "academic-policy-source-manifest",
+  "version": "source-manifest-v1",
+  "sources": [
+    {"domain": "curriculum_catalog", "source_ref": "knowledge/ontology/ontology_v23.rdf", "source_path": "knowledge/ontology/ontology_v23.rdf", "version": "ontology-v23", "effective_date": null, "authority_status": "provisional", "limitation": "Versioned/hash-bound repository ontology; official curriculum publication and effective date are not attached."},
+    {"domain": "prerequisite_and_corequisite", "source_ref": "knowledge/ontology/ontology_v23.rdf", "source_path": "knowledge/ontology/ontology_v23.rdf", "version": "ontology-v23", "effective_date": null, "authority_status": "provisional", "limitation": "Rules are read from RDF; formal institutional source verification remains pending."},
+    {"domain": "elective_quota", "source_ref": "backend/app/config.py", "source_path": "backend/app/config.py", "version": "mvp-quota-v1", "effective_date": null, "authority_status": "proxy", "limitation": "Quota is MVP configuration, not asserted as a university regulation."},
+    {"domain": "credit_policy", "source_ref": "backend/app/services/recommendation/constants.py", "source_path": "backend/app/services/recommendation/constants.py", "version": "mvp-credit-policy-v1", "effective_date": null, "authority_status": "proxy", "limitation": "Registration-credit overrides are MVP configuration, not asserted as university regulation."},
+    {"domain": "course_offering", "source_ref": "knowledge/ontology/ontology_v23.rdf", "source_path": "knowledge/ontology/ontology_v23.rdf", "version": "ontology-v23", "effective_date": null, "authority_status": "provisional", "limitation": "openSemesterType is not a verified term-by-term institutional offering schedule."},
+    {"domain": "academic_calendar", "source_ref": "unavailable-academic-calendar", "version": "unavailable", "effective_date": null, "authority_status": "unavailable", "limitation": "next-term means current_semester + 1; no versioned academic-calendar mapping exists."}
+  ]
+}
