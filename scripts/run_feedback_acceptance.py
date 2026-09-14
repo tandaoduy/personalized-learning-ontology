@@ -58,6 +58,9 @@ def main() -> int:
         if "SOT366" not in codes or "INT6209" in codes:
             raise RuntimeError("Re-planning did not honour the replacement adjustment")
     write_json(folder / "replanned.json", replanned)
+    write_json(folder / "adjustment.json", replanned["feedback_normalization"]["adjustment"])
+    write_json(folder / "replanning-validations.json", replanned["validations"])
+    write_json(folder / "replanning-evidence.json", replanned["explanations"])
 
     confirm = FeedbackRequest(
         feedback_id="feedback-SV001-confirm", run_id=replanned["run_id"],
@@ -70,6 +73,25 @@ def main() -> int:
     if confirmed["status"] != "confirmed" or confirmed["confirmation"]["validation"]["status"] != "valid":
         raise RuntimeError("Final validation did not confirm a valid plan")
     write_json(folder / "confirmed.json", confirmed)
+
+    manifest = {
+        "artifact_version": "feedback-acceptance-v2",
+        "run_lineage": {"initial_run_id": initial["run_id"], "replanned_run_id": replanned["run_id"]},
+        "request": initial["request"],
+        "snapshot_hashes": {
+            "initial_student": initial["state"]["student_snapshot_hash"],
+            "initial_knowledge": initial["state"]["knowledge_snapshot_hash"],
+            "replanned_student": replanned["state"]["student_snapshot_hash"],
+            "replanned_knowledge": replanned["state"]["knowledge_snapshot_hash"],
+        },
+        "files": {
+            "initial": "initial.json", "feedback": "feedback.json", "adjustment": "adjustment.json",
+            "replanned": "replanned.json", "validations": "replanning-validations.json",
+            "evidence": "replanning-evidence.json", "confirmed": "confirmed.json",
+        },
+        "final_validation": confirmed["confirmation"]["validation"],
+    }
+    write_json(folder / "manifest.json", manifest)
 
     summary = {
         "student_id": "SV001",
@@ -92,7 +114,8 @@ def main() -> int:
         "- Hệ thống chạy lại Generation → Validator → Risk → Ranking → Explanation ở iteration 1.\n"
         "- Candidate mới có `SOT366`, không có `INT6209`; tất cả candidate xuất ra đều `valid`.\n"
         "- Phản hồi `confirm` kích hoạt StandardValidator lần cuối trước trạng thái `confirmed`.\n\n"
-        "Chi tiết JSON, trace và explanation ở `initial.json`, `feedback.json`, `replanned.json`, `confirmed.json` và `summary.json`.\n",
+        "`manifest.json` liên kết request, snapshot hashes, adjustment, candidates, validations, evidence, trace và confirmation.\n"
+        "Chi tiết ở `initial.json`, `feedback.json`, `adjustment.json`, `replanned.json`, `replanning-validations.json`, `replanning-evidence.json`, `confirmed.json` và `summary.json`.\n",
         encoding="utf-8",
     )
     print(folder)

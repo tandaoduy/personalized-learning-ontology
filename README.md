@@ -71,9 +71,9 @@ python -m pip install -r requirements-dev.txt
 python experiments/run_benchmark.py
 ```
 
-Lệnh trên sẽ chạy toàn bộ các bài kiểm thử tự động thông qua `pytest` (bao gồm unit test và integration test giao diện/API) và tự động sinh ra một file báo cáo Markdown tại `benchmark_results/test_report.md` thể hiện rõ môi trường chạy, phiên bản Python, số ca đạt/không đạt và các ánh xạ tới yêu cầu nghiệp vụ.
+Lệnh trên tạo báo cáo benchmark lịch sử tại `benchmark_results/test_report.md`; không phải full-regression report hiện hành.
 
-Lệnh `experiments/run_benchmark.py` chạy toàn bộ pytest (unit, API integration và UI integration), đồng thời tạo `benchmark_results/test_report.md`. Có thể chạy pytest trực tiếp bằng `python -m pytest` hoặc tạo báo cáo coverage bằng `python -m pytest --cov=backend.app.services --cov-report=term-missing`.
+`experiments/run_benchmark.py` là báo cáo benchmark lịch sử, không dùng làm kết quả full regression hiện hành. Chạy toàn bộ pytest (kể cả test `integration`) và lưu báo cáo theo từng lần chạy bằng `python scripts/run_full_regression.py`; báo cáo được tạo tại `artifacts/full_regression/<UTC timestamp>/REPORT.md`. Có thể chạy pytest trực tiếp bằng `python -m pytest` hoặc tạo báo cáo coverage bằng `python -m pytest --cov=backend.app.services --cov-report=term-missing`.
 
 ## Bảo mật và dữ liệu mẫu
 

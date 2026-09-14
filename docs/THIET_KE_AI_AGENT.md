@@ -49,7 +49,7 @@ Agent Orchestrator không trực tiếp quyết định quy tắc học vụ. On
 
 | Lớp | Công nghệ | Trạng thái |
 |---|---|---|
-| Agent | LangGraph, Pydantic | Schemas Pydantic thành phần đã có; Orchestrator/LangGraph chưa triển khai |
+| Agent | Python state machine tự xây dựng, Pydantic | `AgentOrchestrator`, capability adapters, trace và API Agent đã triển khai; không sử dụng LangGraph |
 | Knowledge | RDF/OWL, Protégé, RDFLib, SPARQL | Đang dùng một phần |
 | Planning | Python, Beam Search, heuristic | Đang dùng |
 | Validation | Python Rule Engine + Ontology | StandardValidator v3 độc lập đã có; chưa nối capability/Agent |
@@ -76,7 +76,7 @@ Danh sách trên mô tả capability logic. Mapping module/tool và schema tri�
 
 ### 3.3. Đặc tả Capability và Tool Contract
 
-Mỗi capability là một đơn vị chức năng do Agent Orchestrator điều phối, phải công bố **input schema, output schema, precondition, postcondition, timeout, error handling và provenance**. Capability chỉ trả output thuộc phạm vi trách nhiệm; Orchestrator là thành phần duy nhất áp dụng output vào Agent State và quyết định chuyển trạng thái. Contract độc lập với cách gọi Python, LangGraph hoặc adapter tool của LLM.
+Mỗi capability là một đơn vị chức năng do Agent Orchestrator điều phối, phải công bố **input schema, output schema, precondition, postcondition, timeout, error handling và provenance**. Capability chỉ trả output thuộc phạm vi trách nhiệm; Orchestrator là thành phần duy nhất áp dụng output vào Agent State và quyết định chuyển trạng thái. Bản triển khai dùng Python typed adapters; không dùng LangGraph. Contract vẫn độc lập với cơ chế gọi tool trong các mở rộng sau này.
 
 | Capability | Input chính | Output chính | Precondition | Postcondition | Provenance chính |
 |---|---|---|---|---|---|

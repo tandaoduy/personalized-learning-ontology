@@ -22,7 +22,7 @@ Source đã được chuyển sang cấu trúc MVP:
 
 Điểm gọi Python mới là `backend.app.services.recommendation_engine.RecommendationEngine`. Bốn nhóm Ontology, Eligibility, Candidate Generation và Plan Risk được giữ trong services/recommendation; xem [README module](../backend/app/services/recommendation/README.md).
 
-Các nhóm này vẫn dùng context chung qua mixin, chưa phải capability độc lập. Agent, schemas và validation mới có khung package. Lệnh chạy tại gốc vẫn là `python run_app.py`; kiểm thử bằng `python -m pytest`; build tài nguyên bằng `npm run build:ui`.
+RecommendationEngine cũ vẫn có các mixin dùng context chung, nhưng Agent pipeline không còn chỉ là khung package: state machine, schemas, capability adapters, trace, run store và API Agent đã được nối. Lệnh chạy tại gốc vẫn là `python run_app.py`; full regression dùng `python scripts/run_full_regression.py`; build tài nguyên bằng `npm run build:ui`.
 
 ## 2. Mốc đối chiếu trước thay đổi
 
@@ -48,7 +48,7 @@ Commit này là mốc truy xuất thuật toán Beam Search hiện tại cho BL-
 
 Khung Orchestrator có thể được xây song song từ bước schema; chỉ kết nối capability thật khi hợp đồng và các kiểm tra tương ứng đã sẵn sàng.
 
-Đã có `AgentState`, capability envelope, feedback/adjustment schema, trace, run store và khung Orchestrator kiểm tra chuyển trạng thái, budget, timeout, retry, version/hash và validation gate; chưa có adapter capability hoặc API Agent. Ưu tiên tiếp theo là loader snapshot có manifest, rồi nối một hồ sơ qua Ontology → Eligibility → Generation → Validator → Risk → Ranking → Explanation → Feedback/Re-planning. Ranking thực hiện theo PDF v3 tại mục 6 đặc tả MVP, hiệu chỉnh khi có validation data. Chuẩn bị trace end-to-end thật cho lần báo cáo tới; công thức trong đặc tả không thay thế trace đó.
+Đã có `AgentState`, capability envelope, feedback/adjustment schema, trace, run store, Orchestrator, typed adapters và API Agent. Pipeline đã chạy Ontology → Eligibility → Generation → Validator → Risk → Ranking → Explanation → Feedback/Re-planning/Confirm. Ưu tiên tiếp theo là E2E đa hồ sơ và source manifest chính thức cho snapshot, đặc biệt academic calendar/CTĐT/credit policy. Ranking cần được hiệu chỉnh khi có validation data; trace SV001 chỉ là acceptance case, không thay thế E2E đa dạng hay thực nghiệm.
 
 Phân biệt môn không đủ điều kiện và môn đủ điều kiện nhưng không được chọn. Quyết định do Ranking phải truy vết được tới đặc trưng/điểm và dữ kiện hỗ trợ, không diễn đạt thành vi phạm học vụ.
 

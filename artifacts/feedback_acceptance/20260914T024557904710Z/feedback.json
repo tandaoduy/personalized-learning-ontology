@@ -1,0 +1,21 @@
+{
+  "feedback_id": "feedback-SV001-replace",
+  "run_id": "RUN_feedback-SV001",
+  "displayed_result_hash": "sha256:392339825eac2a33e8ab0f31569b8bb1b730ddf05e09131bea683b12fc741b59",
+  "actor_pseudonym": "advisor-001",
+  "actor_role": "advisor",
+  "action": "modify",
+  "selected_plan_id": "RUN_feedback-SV001-plan-1",
+  "ordered_plan_ids": [],
+  "operations": [
+    {
+      "kind": "replace",
+      "course_code": "INT6209",
+      "replacement_course_code": "SOT366",
+      "target_credits": null,
+      "goal": null
+    }
+  ],
+  "reason": "Thay học phần theo phản hồi của cố vấn.",
+  "created_at": "2026-09-14T02:46:17.557814Z"
+}

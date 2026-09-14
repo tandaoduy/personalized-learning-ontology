@@ -181,9 +181,23 @@ class AgentPipeline:
             candidate_limit=3, seed=state.seed, course_space=eligibility_result.output, adjustment=adjustment)
         logger.info("Status: %s", generation.status)
         if generation.status == "error" or not generation.output or not generation.output.candidates:
-            error = generation.error or ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
+            if generation.status == "error" or generation.output is None:
+                error = generation.error or ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
+            elif adjustment is not None:
+                reasons = sorted({item.reason for item in generation.output.attempt_records if item.reason})
+                error = ToolError(
+                    code="ADJUSTMENT_UNSATISFIED",
+                    message="No generated candidate satisfies the requested adjustment"
+                            + (f" (generation outcomes: {', '.join(reasons)})" if reasons else ""),
+                )
+            else:
+                error = ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
             logger.error("Generation failed: %s", error.message)
-            return self._error_response(state, error)
+            response = self._error_response(state, error)
+            if adjustment is not None and generation.output is not None:
+                response["adjustment"] = adjustment.model_dump(mode="json")
+                response["generation"] = generation.output.model_dump(mode="json")
+            return response
 
         hashes = tuple("sha256:" + sha256(plan.model_dump_json().encode()).hexdigest() for plan in generation.output.candidates)
         state = self.orchestrator.apply_generation_result(

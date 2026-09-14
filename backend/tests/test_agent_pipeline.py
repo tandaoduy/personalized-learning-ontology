@@ -11,6 +11,7 @@ from backend.app.agent.pipeline import AgentPipeline
 from backend.app.config import Config
 from backend.app.schemas import FeedbackOperation, FeedbackRequest, PlanningRequest, RankingResult
 from backend.app.services.grounded_explanation_service import ranking_hash
+from backend.app.services.feedback_service import normalize_feedback
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
@@ -182,6 +183,91 @@ def test_sv001_replans_then_confirms_after_advisor_replacement(pipeline):
     assert confirmed["confirmation"]["validation"]["status"] == "valid"
     assert confirmed["state"]["final_validation_hash"]
     assert confirmed["trace"][-1]["action"] == "confirm"
+
+
+def test_modify_goal_and_target_credits_start_a_new_versioned_planning_round(pipeline):
+    """Non-course feedback is converted to an adjustment, never patched into a displayed plan."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-feedback-goal-credits", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    feedback = FeedbackRequest(
+        feedback_id="fb-sv001-goal-credits", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify",
+        selected_plan_id=initial["ranking"]["recommended_plan_id"],
+        operations=(
+            FeedbackOperation(kind="change_target_credits", target_credits=18),
+            FeedbackOperation(kind="change_goal", goal="accelerated"),
+        ),
+        reason="Tăng tải để hỗ trợ mục tiêu học vượt.", created_at=datetime.now(timezone.utc),
+    )
+    replanned = pipeline.replan_from_feedback(initial, feedback)
+
+    assert replanned["status"] == "awaiting_feedback"
+    assert replanned["request"]["target_credits"] == 18
+    assert replanned["request"]["goal"] == "accelerated"
+    adjustment = replanned["feedback_normalization"]["adjustment"]
+    assert adjustment["new_target_credits"] == 18
+    assert adjustment["new_goal"] == "accelerated"
+    assert all(item["status"] == "valid" for item in replanned["validations"])
+
+
+def test_add_and_remove_feedback_normalize_to_hard_adjustment_without_mutating_plan(pipeline):
+    """Add/remove are represented as a request for the next round, not a plan edit."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-feedback-add-remove", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    feedback = FeedbackRequest(
+        feedback_id="fb-sv001-add-remove", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify",
+        selected_plan_id=initial["ranking"]["recommended_plan_id"],
+        operations=(
+            FeedbackOperation(kind="add", course_code="SOT366"),
+            FeedbackOperation(kind="remove", course_code="INT6209"),
+        ),
+        reason="Điều chỉnh theo mục tiêu cố vấn.", created_at=datetime.now(timezone.utc),
+    )
+
+    candidates_before = deepcopy(initial["candidates"])
+    normalized = normalize_feedback(feedback, RankingResult.model_validate(initial["ranking"]))
+    assert normalized.adjustment.must_include == {"SOT366"}
+    assert normalized.adjustment.must_exclude == {"INT6209"}
+    assert initial["candidates"] == candidates_before  # Normalization is pure; it cannot patch candidates.
+
+
+def test_unsatisfied_adjustment_returns_structured_diagnostic(pipeline, monkeypatch):
+    """An adjustment that yields no candidate is surfaced, rather than silently ignored."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-feedback-unsatisfied", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    original_generate = pipeline_module.generate_candidates
+
+    def reject_adjusted_generation(*args, **kwargs):
+        result = original_generate(*args, **kwargs)
+        if kwargs.get("adjustment") is None:
+            return result
+        output = result.output.model_copy(update={"candidates": ()})
+        return result.model_copy(update={"output": output})
+
+    monkeypatch.setattr(pipeline_module, "generate_candidates", reject_adjusted_generation)
+    feedback = FeedbackRequest(
+        feedback_id="fb-sv001-unsatisfied", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify",
+        selected_plan_id=initial["ranking"]["recommended_plan_id"],
+        operations=(FeedbackOperation(kind="add", course_code="SOT366"),),
+        reason="Yêu cầu thêm học phần.", created_at=datetime.now(timezone.utc),
+    )
+    result = pipeline.replan_from_feedback(initial, feedback)
+
+    assert result["success"] is False
+    assert result["error"]["code"] == "ADJUSTMENT_UNSATISFIED"
+    assert result["adjustment"]["must_include"] == ["SOT366"]
+    assert result["generation"]["candidates"] == []
 
 
 def test_confirm_refreshes_changed_sources_and_requires_new_selection(pipeline, monkeypatch):

@@ -1,0 +1,162 @@
+{
+  "ranking_hash": "sha256:062ec47ee6a880ca35b107243922da6e543f0e61d36a9794fcea7025f5cdc73a",
+  "explanations": [
+    {
+      "plan_id": "RUN_feedback-SV001-replan-1-plan-2",
+      "plan_hash": "sha256:9f9106a9dea035d8ad85044a3f7fa74bdd1eb9444853981e046201b94d7e98e6",
+      "validation_hash": "sha256:3ad8c62376432a8ee0c511db7975911e00e379b3fbf80db8c3d5c20782d97fed",
+      "ranking_hash": "sha256:062ec47ee6a880ca35b107243922da6e543f0e61d36a9794fcea7025f5cdc73a",
+      "knowledge_versions": {
+        "student_version": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+        "curriculum_version": "CURRICULUM-2023",
+        "ontology_version": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "rule_version": "academic-constraints-v3",
+        "offering_version": "sha256:7aaa7b0fdebc3ae67653ed117243669b0c5ff4dbfb7c06035327dcb465b71f5e"
+      },
+      "template_version": "grounded-explanation-vi-v1",
+      "locale": "vi-VN",
+      "claims": [
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-INT6900-classification",
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "decision_ids": [
+            "classification:INT6900"
+          ],
+          "evidence_ids": [
+            "ONTO_bcc694bb219aa2660c6ca30162e472433b46c21d7b796de5fe942878eb267f57"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+          ],
+          "course_code": "INT6900"
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-NEC326-classification",
+          "kind": "course_classification",
+          "text": "NEC326 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "decision_ids": [
+            "classification:NEC326"
+          ],
+          "evidence_ids": [
+            "ONTO_1d32e5bd7ea87cc16408151ce57af9c0c7ad08dcd83e7e5fec45d27cdcd0641b"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+          ],
+          "course_code": "NEC326"
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-SOT344-classification",
+          "kind": "course_classification",
+          "text": "SOT344 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "decision_ids": [
+            "classification:SOT344"
+          ],
+          "evidence_ids": [
+            "ONTO_582d662b05d020ecda7aa0ff1196a76e681ae8bd434532ece496080e50fb1e03"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+          ],
+          "course_code": "SOT344"
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-SOT357-classification",
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "decision_ids": [
+            "classification:SOT357"
+          ],
+          "evidence_ids": [
+            "ONTO_ba82eacd5862d99d3dab2eae911f9200b3aea81b1887d62de160c36a523b360d"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+          ],
+          "course_code": "SOT357"
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-SOT366-classification",
+          "kind": "course_classification",
+          "text": "SOT366 (3 tín chỉ) là học phần tự chọn chuyên ngành.",
+          "decision_ids": [
+            "classification:SOT366"
+          ],
+          "evidence_ids": [
+            "ONTO_e43410e3d791d419ffd794a5266af3bf5a63d0f83baf0109f658db8d759fb49e"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf"
+          ],
+          "course_code": "SOT366"
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-validation",
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "decision_ids": [
+            "validation:RUN_feedback-SV001-replan-1-plan-2:valid"
+          ],
+          "evidence_ids": [
+            "RULE_62e11ca8323b840a6e8d7d43da0dca0ddf41c2b5c841516ff742326a6d046302",
+            "RULE_9a9660c35864b094692f9f30be4d5d0752c89d98f44739420297b86bf1b00bba",
+            "RULE_84366836afb3c3f82ea34a0e37715416c64e4745a5bce3e722a31b6260988dc6",
+            "RULE_596286163466e76e41391273d478c5602a7122c41ad51babd8ebb402cfa8b509",
+            "RULE_cc2fe62a6ef51e6b941094f293672050bde2695128d23122e7a1fd0c7b4b84bb"
+          ],
+          "source_refs": [
+            "backend/app/validation/rules/credit_limit.py"
+          ],
+          "course_code": null
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-risk",
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.1176 (low); độ an toàn là 88.24%.",
+          "decision_ids": [
+            "risk:sha256:9f9106a9dea035d8ad85044a3f7fa74bdd1eb9444853981e046201b94d7e98e6"
+          ],
+          "evidence_ids": [
+            "RULE_62e11ca8323b840a6e8d7d43da0dca0ddf41c2b5c841516ff742326a6d046302",
+            "RULE_9a9660c35864b094692f9f30be4d5d0752c89d98f44739420297b86bf1b00bba",
+            "RULE_84366836afb3c3f82ea34a0e37715416c64e4745a5bce3e722a31b6260988dc6",
+            "RULE_596286163466e76e41391273d478c5602a7122c41ad51babd8ebb402cfa8b509",
+            "RULE_cc2fe62a6ef51e6b941094f293672050bde2695128d23122e7a1fd0c7b4b84bb"
+          ],
+          "source_refs": [
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf#sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "student:sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/backend/app/services/progress_risk_analyzer.py#sha256=56f8416cd5dfdeef23526f79c18afea0d3b15ff90ac59510fe676c7329cd39c8",
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/rules/ranking_pdf3_v1.json#sha256=255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+            "config:sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903"
+          ],
+          "course_code": null
+        },
+        {
+          "claim_id": "claim-RUN_feedback-SV001-replan-1-plan-2-ranking",
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.9706.",
+          "decision_ids": [
+            "ranking:RUN_feedback-SV001-replan-1-plan-2:safe"
+          ],
+          "evidence_ids": [
+            "RULE_62e11ca8323b840a6e8d7d43da0dca0ddf41c2b5c841516ff742326a6d046302",
+            "RULE_9a9660c35864b094692f9f30be4d5d0752c89d98f44739420297b86bf1b00bba",
+            "RULE_84366836afb3c3f82ea34a0e37715416c64e4745a5bce3e722a31b6260988dc6",
+            "RULE_596286163466e76e41391273d478c5602a7122c41ad51babd8ebb402cfa8b509",
+            "RULE_cc2fe62a6ef51e6b941094f293672050bde2695128d23122e7a1fd0c7b4b84bb"
+          ],
+          "source_refs": [
+            "config:sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/backend/app/services/progress_risk_analyzer.py#sha256=56f8416cd5dfdeef23526f79c18afea0d3b15ff90ac59510fe676c7329cd39c8",
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/ontology/ontology_v23.rdf#sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+            "file:///D:/NTU/CNTT/NCKH/personalized-learning-ontology/knowledge/rules/ranking_pdf3_v1.json#sha256=255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+            "student:sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae"
+          ],
+          "course_code": null
+        }
+      ]
+    }
+  ]
+}

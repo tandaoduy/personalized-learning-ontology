@@ -6,10 +6,10 @@
 
 | Lớp | Công nghệ | Trạng thái |
 |---|---|---|
-| Agent | LangGraph, Pydantic | Có schemas Pydantic thành phần; Orchestrator/LangGraph chưa triển khai |
+| Agent | Python state machine tự xây dựng, Pydantic | `AgentOrchestrator`, typed capability adapters, trace và API Agent đã triển khai; không sử dụng LangGraph |
 | Knowledge | RDF/OWL, Protégé, RDFLib, SPARQL | Đang dùng một phần |
 | Planning | Python, Beam Search, heuristic | Đang dùng |
-| Validation | Python Rule Engine + Ontology | StandardValidator v3 độc lập đã có; adapter capability chưa có |
+| Validation | Python Rule Engine + Ontology | StandardValidator v3 được gọi bởi capability trong Agent pipeline, gồm validation lại sau re-planning và Final Validation |
 | Data | PostgreSQL, SQLAlchemy | Kiến trúc đích; hiện dùng JSON/CSV |
 | Backend | Flask | Đang dùng |
 | Testing | Pytest | Đang dùng |
@@ -29,7 +29,7 @@
 | Explanation | Giải thích từ evidence | Explanations |
 | Feedback/Re-planning | Chuẩn hóa phản hồi và lập lại | Feedback, Adjustment Request |
 
-Danh sách trên là capability logic. Mapping tên tool → adapter → module tái sử dụng, schema, timeout, error handling và provenance được chốt ở [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md). Tên module mới trong đó là đích triển khai, chưa phải source đã có. Risk chạy trước Ranking; Feedback trả adjustment, Re-planning do Orchestrator điều phối.
+Danh sách trên là capability logic đã được nối qua `AgentPipeline`. Mapping tên tool → adapter → module tái sử dụng, schema, timeout, error handling và provenance được chốt ở [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md). Risk chạy trước Ranking; Feedback trả adjustment, Re-planning do Orchestrator điều phối và chạy lại toàn bộ validation/risk/ranking/explanation phụ thuộc.
 
 ## 3. Hợp đồng tool và cập nhật State
 

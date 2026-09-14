@@ -59,6 +59,12 @@ def test_agent_api_stores_feedback_idempotently_and_exposes_trace(client):
     assert retry.status_code == 200
     assert retry.get_json()["data"]["receipt"]["duplicate"] is True
 
+    conflicting_retry = dict(feedback)
+    conflicting_retry["reason"] = "Payload changed under the same idempotency key."
+    conflict_response = client.post(f"/api/agent/runs/{run_id}/feedback", json=conflicting_retry)
+    assert conflict_response.status_code == 409
+    assert conflict_response.get_json()["error"] == "IDEMPOTENCY_CONFLICT"
+
     stale = feedback_for(result, "select", "feedback-api-stale", displayed_result_hash="sha256:stale")
     stale_response = client.post(f"/api/agent/runs/{run_id}/feedback", json=stale)
     assert stale_response.status_code == 422

@@ -142,7 +142,7 @@ Mỗi phương án gồm loại/mục tiêu, danh sách và phân loại môn, t
 
 Ba đóng góp dự kiến là Ontology-constrained AI Agent, Grounded Explanation dựa trên Ontology Evidence và Human-in-the-loop Preference Learning.
 
-- LangGraph/Pydantic dự kiến cho MVP; LTR, pgvector/RAG và LLM là phần mở rộng theo PDF.
+- Agent hiện dùng state machine/orchestrator tự xây dựng bằng Python và Pydantic schemas; **không sử dụng LangGraph**. LTR, pgvector/RAG và LLM là các hướng mở rộng; LTR chỉ bắt đầu sau khi có Preference Dataset đủ phản hồi cố vấn/sinh viên.
 - So sánh BL-01 Rule-based, BL-02 Greedy, BL-03 Beam Search hiện tại, BL-04 Agent không Ontology chỉ chạy offline, BL-05 Agent có Ontology và BL-06 Agent có Ontology + Preference Learning/LTR.
 - BL-04 không dùng tri thức quan hệ/ràng buộc Ontology hoặc phản hồi Ontology Validator trong generation; đầu ra được hậu kiểm bằng cùng Standard Validator như các baseline khác.
 - So sánh EX-ABL-01 không explanation và EX-ABL-02 có grounded explanation, giữ nguyên candidate plans, Validation và Ranking.

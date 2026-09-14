@@ -2,15 +2,18 @@
 
 `AgentOrchestrator` quản lý State của một planning run. Nó không gọi Flask, `RecommendationEngine`, LLM hoặc rule học vụ; các capability được nối vào sau qua contract ở `schemas/capability.py`.
 
-Luồng đã được khung hóa:
+Luồng production của một planning run:
 
 ```text
 received → loading_context → loading_knowledge → building_course_space
 → generating → validating → assessing_risk → ranking → explaining
-→ awaiting_feedback → final_validating → confirmed
+→ awaiting_feedback
+  ├─ modify → normalize_feedback → replanning → generating → validating
+  │          → assessing_risk → ranking → explaining → awaiting_feedback
+  └─ confirm → normalize_feedback → final_validating → confirmed
 ```
 
-Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning` khi còn budget, hoặc `no_plan_found` khi hết budget. Tool error dừng run với `failed`; dữ liệu nguồn thiếu dùng `needs_data`. Chỉ `apply_validations` nhận `ValidationResult`; chỉ status `valid` mới được chuyển tới `assessing_risk`.
+`normalize_feedback` chỉ tạo selection intent hoặc `AdjustmentRequest`; không sửa candidate, knowledge snapshot hay luật. Nhánh re-planning chạy lại Generation → Standard Validator → Risk → Ranking → Grounded Explanation, nên mọi candidate mới đều được validation lại. Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning` khi còn budget, hoặc `no_plan_found` khi hết budget. Tool error dừng run với `failed`; dữ liệu nguồn thiếu dùng `needs_data`. Chỉ `apply_validations` nhận `ValidationResult`; chỉ status `valid` mới được chuyển tới `assessing_risk`. Nhánh confirm tải lại snapshot nguồn; nếu version đổi, nó tạo planning round mới và yêu cầu chọn lại thay vì xác nhận plan cũ.
 
 ## Capability Adapters
 

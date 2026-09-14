@@ -1,0 +1,14 @@
+{
+  "adjustment_id": "adjustment-2b97ac593bdbce90",
+  "parent_result_hash": "sha256:392339825eac2a33e8ab0f31569b8bb1b730ddf05e09131bea683b12fc741b59",
+  "request_version": "feedback-normalization-v1",
+  "must_include": [
+    "SOT366"
+  ],
+  "must_exclude": [
+    "INT6209"
+  ],
+  "new_target_credits": null,
+  "new_goal": null,
+  "source_feedback_id": "feedback-SV001-replace"
+}

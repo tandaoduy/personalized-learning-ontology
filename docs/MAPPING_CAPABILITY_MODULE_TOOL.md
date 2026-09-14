@@ -1,6 +1,6 @@
 # Sơ đồ mapping capability → tool → module
 
-Cập nhật theo source ngày 2026-09-08. Sơ đồ phục vụ báo cáo kiến trúc MVP; khung Orchestrator, State, trace và run store đã được triển khai. Các tool/adapter nghiệp vụ bên dưới vẫn chưa được nối; module ghi “đã có” là phần tái sử dụng, chưa đồng nghĩa đã đáp ứng capability contract.
+Cập nhật theo source ngày 2026-09-14. Sơ đồ phục vụ báo cáo kiến trúc MVP; Orchestrator, State, trace, run store, capability adapters và AgentPipeline đã được triển khai. Module ghi “đã có” là phần tái sử dụng hoặc capability đã nối; giới hạn dữ liệu nguồn vẫn được nêu riêng, không suy diễn thành chính sách chính thức.
 
 Đường dẫn Python tính từ `backend/app/`; đường dẫn `knowledge/` tính từ gốc repository. Mỗi sơ đồ đọc từ trái sang phải: **capability và tên tool → adapter → module nghiệp vụ/nguồn**.
 
@@ -67,10 +67,10 @@ Validator độc lập, không gọi LLM/Agent/Generator; chỉ `valid` trên đ
 
 ```mermaid
 flowchart LR
-    FB["Feedback<br/>normalize_feedback / persist_feedback<br/>DỰ KIẾN"] --> FBA["capabilities/feedback.py<br/>DỰ KIẾN"]
-    FBA --> FBS["services/feedback_service.py<br/>Chuẩn hóa và lưu phản hồi<br/>DỰ KIẾN"]
+    FB["Feedback<br/>normalize_feedback / persist_feedback<br/>ĐÃ NỐI"] --> FBA["capabilities/feedback.py<br/>ĐÃ NỐI"]
+    FBA --> FBS["services/feedback_service.py<br/>Chuẩn hóa và lưu phản hồi<br/>ĐÃ NỐI"]
 
-    RP["Re-planning / Confirm<br/>Nhánh replan / confirm<br/>DỰ KIẾN"] --> OR["agent/orchestrator.py<br/>State, budget, revision<br/>ĐÃ CÓ — KHUNG"]
+    RP["Re-planning / Confirm<br/>Nhánh replan / confirm<br/>ĐÃ NỐI"] --> OR["agent/orchestrator.py<br/>State, budget, revision<br/>ĐÃ TRIỂN KHAI"]
     OR --> CT["Gọi lại các capability<br/>Generation → Validation → Risk<br/>→ Ranking → Explanation<br/>DỰ KIẾN"]
     OR --> FV["Refresh snapshots<br/>→ validate_candidate → Confirm<br/>DỰ KIẾN"]
     OR --> ST["services/agent_run_store.py<br/>Run, State và artifact<br/>DỰ KIẾN"]
@@ -95,13 +95,13 @@ Re-planning là nhánh điều phối của Orchestrator, không phải generato
 | Envelope, lỗi, provenance | `schemas/capability.py` | Đã có |
 | Agent State | `schemas/agent_state.py` | Đã có |
 | Features và Ranking Result | `schemas/ranking.py` | Dự kiến |
-| Feedback và adjustment | `schemas/feedback.py` | Dự kiến |
+| Feedback và adjustment | `schemas/feedback.py`, `capabilities/feedback.py`, `services/feedback_service.py` | Đã nối qua AgentPipeline |
 
 Mỗi tool phải có input/output schema, precondition, postcondition, xử lý lỗi và provenance. Quyết định học vụ lưu nguồn/version và evidence từ triple, query hoặc rule; explanation tham chiếu lại evidence. Bảng contract chi tiết nằm tại [đặc tả MVP, mục 3–5](DAC_TA_TRIEN_KHAI_MVP.md).
 
 ## 5. Phạm vi hoàn thành của tài liệu
 
-**Đã hoàn thành sơ đồ mapping thiết kế để đưa vào báo cáo.** Source hiện có ontology, engine, schemas thành phần, StandardValidator, AgentState, feedback schema, trace, run store và khung Orchestrator; chưa có các adapter capability và luồng Agent tích hợp. API hiện tại vẫn gọi RecommendationEngine cũ.
+**Source hiện có ontology, engine, schemas, StandardValidator, AgentState, feedback schema, trace, run store, adapters và AgentPipeline tích hợp.** API Agent tại `/api/agent/runs` dùng AgentPipeline; endpoint recommendation cũ vẫn giữ RecommendationEngine cho tương thích và không phải bằng chứng thay thế pipeline Agent.
 
 Khi một capability được code: đối chiếu đường dẫn thực tế, cập nhật trạng thái node, bổ sung tên test và run/trace chứng minh đã tích hợp. Không đổi nhãn sang “đã có” chỉ vì tạo file rỗng.
 

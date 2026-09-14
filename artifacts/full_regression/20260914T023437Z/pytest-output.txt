@@ -1,0 +1,1 @@
+D:\NTU\CNTT\NCKH\personalized-learning-ontology\.venv\Scripts\python.exe: No module named pytest
