@@ -233,6 +233,7 @@ def main() -> int:
     folder = ROOT / "artifacts" / "e2e_scenarios" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     folder.mkdir(parents=True)
     rows: list[dict] = []
+    knowledge_source_manifest: dict | None = None
     scenarios = [item for item in matrix["scenarios"] if not args.scenario_ids or item["id"] in args.scenario_ids]
     if args.scenario_ids and len(scenarios) != len(set(args.scenario_ids)):
         raise ValueError("Unknown scenario ID")
@@ -269,6 +270,8 @@ def main() -> int:
         )
         result = pipeline.run_planning_flow(request)
         write_json(case_dir / "result.json", result)
+        if knowledge_source_manifest is None:
+            knowledge_source_manifest = (result.get("knowledge_snapshot") or {}).get("source_manifest")
         probe = invalid_probe(result, engine, pipeline.evidence, scenario["expected_violation"])
         write_json(case_dir / "invalid-probe.json", probe)
         replan = confirmation = None
@@ -386,6 +389,7 @@ def main() -> int:
     summary = {
         "matrix_version": matrix["version"],
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "knowledge_source_manifest": knowledge_source_manifest,
         "cases": rows,
         "passed": passed,
         "total": total,
