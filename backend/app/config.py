@@ -29,6 +29,7 @@ class Config:
     ONTOLOGY_PATH = os.path.join(BASE_DIR, 'knowledge', 'ontology', 'ontology_v23.rdf')
     STUDENT_DATA_JSON = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.json')
     STUDENT_DATA_CSV = os.path.join(BASE_DIR, 'data', 'DanhSachSinhVien.csv')
+    AGENT_RUN_STORE = os.path.join(BASE_DIR, 'artifacts', 'agent_runs')
     
     # Tham số bộ máy gợi ý
     BEAM_WIDTH = 8

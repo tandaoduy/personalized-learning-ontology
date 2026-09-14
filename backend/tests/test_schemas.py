@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from backend.app.schemas.validation import REQUIRED_RULES
 from backend.app.schemas import (
     KnowledgeVersion, PlanningRequest, StudentSnapshot, CandidatePlan,
-    EvidenceRecord, ValidationResult,
+    EvidenceRecord, FeedbackOperation, FeedbackRequest, ValidationResult,
 )
 
 VERSIONS = dict(student_version="s1", curriculum_version="c1", ontology_version="o1", rule_version="r1", offering_version="f1")
@@ -76,5 +76,28 @@ def test_validation_roundtrip_and_reference_integrity():
     with pytest.raises(ValidationError): result(evidence=[evidence(knowledge_versions=VERSIONS | {"ontology_version":"o2"})])
 
 def test_contracts_export_json_schema():
-    for schema in [KnowledgeVersion, PlanningRequest, StudentSnapshot, CandidatePlan, EvidenceRecord, ValidationResult]:
+    for schema in [KnowledgeVersion, PlanningRequest, StudentSnapshot, CandidatePlan, EvidenceRecord, FeedbackRequest, ValidationResult]:
         assert schema.model_json_schema()["type"] == "object"
+
+
+def test_feedback_contract_covers_selection_and_explained_adjustments():
+    select = FeedbackRequest(feedback_id="fb-select", run_id="run-1", displayed_result_hash="sha256:shown",
+        actor_pseudonym="student-001", actor_role="student", action="select", selected_plan_id="plan-1", created_at=NOW)
+    assert select.selected_plan_id == "plan-1"
+
+    modify = FeedbackRequest(feedback_id="fb-modify", run_id="run-1", displayed_result_hash="sha256:shown",
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify", selected_plan_id="plan-1",
+        operations=[FeedbackOperation(kind="replace", course_code="INT6209", replacement_course_code="SOT366")],
+        reason="Ưu tiên học phần tự chọn thay thế phù hợp với cố vấn.", created_at=NOW)
+    assert modify.operations[0].course_code == "INT6209"
+    assert modify.operations[0].replacement_course_code == "SOT366"
+
+    common = dict(feedback_id="fb-invalid", run_id="run-1", displayed_result_hash="sha256:shown",
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify",
+        operations=[dict(kind="remove", course_code="INT6209")], created_at=NOW)
+    with pytest.raises(ValidationError):
+        FeedbackRequest(**common, selected_plan_id="plan-1")
+    with pytest.raises(ValidationError):
+        FeedbackRequest(**common, reason="Cần chỉnh sửa")
+    with pytest.raises(ValidationError):
+        FeedbackOperation(kind="add", course_code="SOT366", goal="on_time")

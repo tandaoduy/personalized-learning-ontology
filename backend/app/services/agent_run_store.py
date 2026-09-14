@@ -2,15 +2,22 @@
 from __future__ import annotations
 
 from hashlib import sha256
+import json
 from pathlib import Path
 from threading import RLock
+from datetime import datetime, timezone
 from uuid import uuid4
 import re
 
+from backend.app.schemas import FeedbackNormalization, FeedbackReceipt, FeedbackRequest
 from backend.app.schemas.agent_state import AgentState, ArtifactReference
 
 
 class RunRevisionConflict(ValueError):
+    pass
+
+
+class FeedbackIdempotencyConflict(ValueError):
     pass
 
 
@@ -31,9 +38,69 @@ class AgentRunStore:
                 raise RunRevisionConflict("State revision must increase")
             self._atomic_write(path, state.model_dump_json(indent=2).encode("utf-8"))
 
+    def save_result(self, result: dict, expected_revision: int | None = None) -> None:
+        """Persist the complete API result and its state as one locked run update."""
+        state = AgentState.model_validate(result["state"])
+        if result.get("run_id") != state.run_id:
+            raise ValueError("Result run_id does not match state")
+        with self._lock:
+            self.save_state(state, expected_revision=expected_revision)
+            payload = json.dumps(result, ensure_ascii=False, sort_keys=True,
+                                 separators=(",", ":"), default=str).encode("utf-8")
+            self._atomic_write(self._result_path(state.run_id), payload)
+
     def load_state(self, run_id: str) -> AgentState:
         path = self._state_path(run_id)
         return AgentState.model_validate_json(path.read_text(encoding="utf-8"))
+
+    def load_result(self, run_id: str) -> dict:
+        path = self._result_path(run_id)
+        result = json.loads(path.read_text(encoding="utf-8"))
+        state = AgentState.model_validate(result["state"])
+        if state.run_id != run_id or result.get("run_id") != run_id:
+            raise ValueError("Stored result run_id mismatch")
+        return result
+
+    def save_feedback(self, run_id: str, feedback: FeedbackRequest,
+                      normalization: FeedbackNormalization, provenance: dict) -> FeedbackReceipt:
+        """Store one normalized feedback record; identical retries are acknowledged once."""
+        if feedback.run_id != run_id:
+            raise ValueError("Feedback run_id does not match storage run_id")
+        if normalization.feedback_id != feedback.feedback_id:
+            raise ValueError("Feedback normalization does not match feedback")
+        payload = {
+            "feedback": feedback.model_dump(mode="json"),
+            "normalization": normalization.model_dump(mode="json"),
+            "provenance": provenance,
+        }
+        encoded_payload = json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")
+        record_hash = "sha256:" + sha256(encoded_payload).hexdigest()
+        path = self._feedback_path(run_id, feedback.feedback_id)
+        with self._lock:
+            if path.exists():
+                existing = json.loads(path.read_text(encoding="utf-8"))
+                if existing.get("record_hash") != record_hash:
+                    raise FeedbackIdempotencyConflict("Feedback ID already exists with different payload")
+                return FeedbackReceipt(feedback_id=feedback.feedback_id,
+                                       record_hash=record_hash,
+                                       stored_at=datetime.fromisoformat(existing["stored_at"]), duplicate=True)
+            record = {**payload, "record_hash": record_hash,
+                      "stored_at": datetime.now(timezone.utc).isoformat()}
+            self._atomic_write(path, json.dumps(record, ensure_ascii=False, sort_keys=True,
+                                                 separators=(",", ":")).encode("utf-8"))
+            return FeedbackReceipt(feedback_id=feedback.feedback_id, record_hash=record_hash,
+                                   stored_at=datetime.fromisoformat(record["stored_at"]), duplicate=False)
+
+    def load_feedback(self, run_id: str, feedback_id: str) -> dict:
+        path = self._feedback_path(run_id, feedback_id)
+        record = json.loads(path.read_text(encoding="utf-8"))
+        payload = {key: record[key] for key in ("feedback", "normalization", "provenance")}
+        encoded_payload = json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")
+        if "sha256:" + sha256(encoded_payload).hexdigest() != record.get("record_hash"):
+            raise ValueError("Feedback record hash mismatch")
+        return record
 
     def save_artifact(self, run_id: str, kind: str, content: bytes) -> ArtifactReference:
         self._safe(run_id)
@@ -56,6 +123,15 @@ class AgentRunStore:
     def _state_path(self, run_id: str) -> Path:
         self._safe(run_id)
         return self.root / "runs" / run_id / "state.json"
+
+    def _result_path(self, run_id: str) -> Path:
+        self._safe(run_id)
+        return self.root / "runs" / run_id / "result.json"
+
+    def _feedback_path(self, run_id: str, feedback_id: str) -> Path:
+        self._safe(run_id)
+        self._safe(feedback_id)
+        return self.root / "runs" / run_id / "feedback" / f"{feedback_id}.json"
 
     def _safe(self, value: str) -> None:
         if not self._SAFE_ID.fullmatch(value):

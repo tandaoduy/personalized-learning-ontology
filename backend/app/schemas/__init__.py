@@ -5,7 +5,7 @@ from .planning import PlanningRequest, CandidateCourse, CandidatePlan
 from .evidence import RDFTriple, QueryBinding, EvidenceRecord, OntologyFactEvidence
 from .validation import ValidationIssue, ValidationResult
 from .capability import ToolCallContext, ToolError, Provenance, ToolResult
-from .feedback import AdjustmentRequest, FeedbackOperation, FeedbackReceipt, FeedbackRequest
+from .feedback import AdjustmentRequest, ConfirmationResult, FeedbackNormalization, FeedbackOperation, FeedbackReceipt, FeedbackRequest
 from .agent_state import AgentState, ToolTraceEvent, ValidationSummary
 from .ranking import (
     RankingContext, RiskComponents, RiskInputs, RiskResult, RiskBatch,
@@ -24,7 +24,7 @@ __all__ = [
     "EvidenceRecord", "OntologyFactEvidence", "ValidationIssue", "ValidationResult",
     "ToolCallContext", "ToolError", "Provenance", "ToolResult", "AgentState",
     "ToolTraceEvent", "ValidationSummary", "FeedbackOperation", "FeedbackRequest",
-    "AdjustmentRequest", "FeedbackReceipt",
+    "AdjustmentRequest", "ConfirmationResult", "FeedbackNormalization", "FeedbackReceipt",
     "StudentContextOutput", "KnowledgeContext", "PolicyManifest", "CourseInfo",
     "CourseSpace", "EligibilityDecision", "GenerationResult", "GenerationAttemptRecord", "ValidatedPlan",
     "RankingContext", "RiskComponents", "RiskInputs", "RiskResult", "RiskBatch",

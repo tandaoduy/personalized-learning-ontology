@@ -5,19 +5,27 @@ from hashlib import sha256
 import json
 import logging
 from time import perf_counter
+from datetime import datetime, timedelta, timezone
+from uuid import uuid4
 
 from backend.app.agent.orchestrator import AgentOrchestrator
 from backend.app.capabilities import (
     build_course_space,
+    confirm_plan,
     generate_candidates,
     load_knowledge_context,
     load_student_context,
     assess_plan_risks,
     explain_plans,
+    normalize_feedback,
     rank_plans,
     validate_candidate,
 )
-from backend.app.schemas import PlanningRequest, Provenance, ToolError, ToolResult, ValidatedPlan
+from backend.app.schemas import (
+    AdjustmentRequest, AgentState, CandidatePlan, FeedbackRequest, KnowledgeSnapshot,
+    PlanningRequest, Provenance, RankingResult, StudentSnapshot,
+    ToolCallContext, ToolError, ToolResult, ValidatedPlan,
+)
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.ranking_context_service import build_ranking_context
 from backend.app.services.recommendation_engine import RecommendationEngine
@@ -63,8 +71,15 @@ class AgentPipeline:
         self.evidence = evidence
         self.orchestrator = orchestrator or AgentOrchestrator()
 
-    def run_planning_flow(self, request: PlanningRequest) -> dict:
+    def run_planning_flow(self, request: PlanningRequest, *, adjustment: AdjustmentRequest | None = None,
+                          parent_state: AgentState | None = None) -> dict:
         """Execute full planning flow: context → eligibility → generation → validation."""
+        if adjustment is not None:
+            request = request.model_copy(update={
+                "request_id": request.request_id + f"-replan-{parent_state.iteration + 1 if parent_state else 1}",
+                "target_credits": adjustment.new_target_credits or request.target_credits,
+                "goal": adjustment.new_goal or request.goal,
+            })
         run_id = f"RUN_{request.request_id}"
         run_started = perf_counter()
         tool_provenance = []
@@ -74,6 +89,17 @@ class AgentPipeline:
         logger.info("Student ID: %s, Target: %s, Goal: %s", request.student_id, request.target_term_id, request.goal)
 
         state = self.orchestrator.create_run(request, run_id=run_id)
+        if parent_state is not None:
+            state = AgentState.model_validate({
+                **state.model_dump(mode="python"),
+                "iteration": parent_state.iteration + 1,
+                "state_revision": parent_state.state_revision + 1,
+                "trace": parent_state.trace,
+                "feedback_hashes": parent_state.feedback_hashes,
+                "latest_adjustment": adjustment,
+                "candidate_attempts_used": parent_state.candidate_attempts_used,
+                "expanded_states_used": parent_state.expanded_states_used,
+            })
         state = self.orchestrator.start(state)
         logger.info("Initial state: %s (revision=%d)", state.status, state.state_revision)
 
@@ -152,7 +178,7 @@ class AgentPipeline:
         logger.info("Call ID: %s, Seed: %d, Beam width: %d", context.call_id, state.seed, self.engine.beam_width)
 
         generation = generate_candidates(context, request, student, knowledge, profile, self.engine,
-            candidate_limit=3, seed=state.seed, course_space=eligibility_result.output)
+            candidate_limit=3, seed=state.seed, course_space=eligibility_result.output, adjustment=adjustment)
         logger.info("Status: %s", generation.status)
         if generation.status == "error" or not generation.output or not generation.output.candidates:
             error = generation.error or ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
@@ -313,6 +339,117 @@ class AgentPipeline:
             generation, validation_results, tool_provenance, run_started,
             ranking_context=ranking_context, risk_batch=risk_batch, ranking_result=ranking_result,
             explanations=explanations)
+
+    def replan_from_feedback(self, previous_result: dict, feedback: FeedbackRequest) -> dict:
+        """Normalize a displayed modification and run a new versioned planning round."""
+        state = AgentState.model_validate(previous_result["state"])
+        ranking = RankingResult.model_validate(previous_result["ranking"])
+        if state.status != "awaiting_feedback":
+            raise ValueError("REPLAN_REQUIRES_AWAITING_FEEDBACK")
+        if feedback.run_id != state.run_id:
+            raise ValueError("FEEDBACK_RUN_MISMATCH")
+        context = self.orchestrator.create_call_context(state, "normalize_feedback",
+            digest({"feedback": feedback.model_dump(mode="json"), "ranking": ranking.model_dump(mode="json")}))
+        normalized = normalize_feedback(context, feedback, ranking, state.knowledge_versions)
+        state = self.orchestrator.apply_result(state, "normalize_feedback", context, normalized)
+        if normalized.status == "error" or state.status != "replanning":
+            raise ValueError(normalized.error.message if normalized.error else "FEEDBACK_DOES_NOT_REQUEST_REPLAN")
+        result = self.run_planning_flow(PlanningRequest.model_validate(previous_result["request"]),
+            adjustment=normalized.output.adjustment, parent_state=state)
+        result["feedback_normalization"] = normalized.output.model_dump(mode="json")
+        result["parent_run_id"] = previous_result["run_id"]
+        return result
+
+    def confirm_from_feedback(self, previous_result: dict, feedback: FeedbackRequest) -> dict:
+        """Refresh sources, normalize confirmation and re-run StandardValidator."""
+        state = AgentState.model_validate(previous_result["state"])
+        ranking = RankingResult.model_validate(previous_result["ranking"])
+        if state.status != "awaiting_feedback":
+            raise ValueError("CONFIRM_REQUIRES_AWAITING_FEEDBACK")
+        if feedback.action != "confirm":
+            raise ValueError("CONFIRM_REQUIRES_CONFIRM_FEEDBACK")
+        if feedback.run_id != state.run_id:
+            raise ValueError("FEEDBACK_RUN_MISMATCH")
+        feedback_context = self.orchestrator.create_call_context(
+            state, "normalize_feedback",
+            digest({"feedback": feedback.model_dump(mode="json"), "ranking": ranking.model_dump(mode="json")}),
+        )
+        normalized = normalize_feedback(feedback_context, feedback, ranking, state.knowledge_versions)
+        state = self.orchestrator.apply_result(state, "normalize_feedback", feedback_context, normalized)
+        if normalized.status == "error" or state.status != "final_validating":
+            raise ValueError(normalized.error.message if normalized.error else "FEEDBACK_DOES_NOT_CONFIRM")
+
+        candidates = {item.plan_id: item for item in
+                      (CandidatePlan.model_validate(value) for value in previous_result["candidates"])}
+        candidate = candidates.get(feedback.selected_plan_id)
+        if candidate is None:
+            raise ValueError("SELECTED_PLAN_NOT_AVAILABLE")
+        previous_student = StudentSnapshot.model_validate(previous_result["student_snapshot"])
+        previous_knowledge = KnowledgeSnapshot.model_validate(previous_result["knowledge_snapshot"])
+        current_student, current_knowledge = self._refresh_confirmation_context(
+            state, PlanningRequest.model_validate(previous_result["request"]))
+        if (current_student.student_version != previous_student.student_version
+                or current_knowledge.versions != previous_knowledge.versions):
+            refreshed_request = PlanningRequest.model_validate(previous_result["request"]).model_copy(update={
+                "request_id": PlanningRequest.model_validate(previous_result["request"]).request_id
+                + f"-refresh-{state.iteration + 1}",
+            })
+            refreshed = self.run_planning_flow(refreshed_request, parent_state=state)
+            refreshed.update({
+                "confirmation_refresh_required": True,
+                "parent_run_id": previous_result["run_id"],
+                "source_versions_before": {
+                    "student_version": previous_student.student_version,
+                    "knowledge_versions": previous_knowledge.versions.model_dump(mode="json"),
+                },
+                "source_versions_after": {
+                    "student_version": current_student.student_version,
+                    "knowledge_versions": current_knowledge.versions.model_dump(mode="json"),
+                },
+            })
+            return refreshed
+        confirmation_context = self.orchestrator.create_call_context(
+            state, "confirm", digest({"candidate": candidate.model_dump(mode="json"),
+                                       "student": current_student.model_dump(mode="json"),
+                                       "knowledge": current_knowledge.model_dump(mode="json")}))
+        confirmation = confirm_plan(confirmation_context, candidate, current_student, current_knowledge, self.evidence,
+                                    min_credits=self.engine.min_credits, max_credits=self.engine.max_credits)
+        state = self.orchestrator.apply_result(state, "confirm", confirmation_context, confirmation)
+        if confirmation.status == "error" or state.status != "confirmed":
+            raise ValueError(confirmation.error.message if confirmation.error else "CONFIRMATION_FAILED")
+
+        result = dict(previous_result)
+        result.update({
+            "success": True,
+            "status": state.status,
+            "state": state.model_dump(mode="json"),
+            "trace": [event.model_dump(mode="json") for event in state.trace],
+            "errors": [error.model_dump(mode="json") for error in state.errors],
+            "confirmation": confirmation.output.model_dump(mode="json"),
+            "feedback_normalization": normalized.output.model_dump(mode="json"),
+        })
+        return result
+
+    def _refresh_confirmation_context(self, state: AgentState,
+                                      request: PlanningRequest) -> tuple[StudentSnapshot, KnowledgeSnapshot]:
+        """Reload source snapshots outside the old plan before the final validator runs."""
+        deadline = datetime.now(timezone.utc) + timedelta(seconds=20)
+        student_context = ToolCallContext(
+            run_id=state.run_id, call_id=f"CALL_REFRESH_STUDENT_{uuid4().hex}", iteration=state.iteration,
+            contract_version=self.orchestrator.CONTRACT_VERSION, deadline_at=deadline,
+            attempt=1, input_hash=digest({"refresh": "student", "request": request.model_dump(mode="json")}))
+        student_result = load_student_context(student_context, request, self.student_service)
+        if student_result.status == "error" or student_result.output is None:
+            raise ValueError(student_result.error.message if student_result.error else "CURRENT_STUDENT_CONTEXT_ERROR")
+        student = student_result.output.student_snapshot
+        knowledge_context = ToolCallContext(
+            run_id=state.run_id, call_id=f"CALL_REFRESH_KNOWLEDGE_{uuid4().hex}", iteration=state.iteration,
+            contract_version=self.orchestrator.CONTRACT_VERSION, deadline_at=deadline,
+            attempt=1, input_hash=digest({"refresh": "knowledge", "student": student.model_dump(mode="json")}))
+        knowledge_result = load_knowledge_context(knowledge_context, request, student, self.engine, self.evidence)
+        if knowledge_result.status == "error" or knowledge_result.output is None:
+            raise ValueError(knowledge_result.error.message if knowledge_result.error else "CURRENT_KNOWLEDGE_CONTEXT_ERROR")
+        return student, knowledge_result.output.knowledge_snapshot
 
     def _result(self, state, request, student, knowledge_result, eligibility_result,
                 generation, validation_results, tool_provenance, run_started, *,

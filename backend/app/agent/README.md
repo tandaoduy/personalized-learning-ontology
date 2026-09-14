@@ -14,7 +14,7 @@ Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning`
 
 ## Capability Adapters
 
-7 adapter được nối với service thật qua `AgentPipeline` trong `pipeline.py`:
+10 adapter được nối với service thật qua `AgentPipeline` trong `pipeline.py`:
 - `load_student_context`: StudentContextOutput
 - `load_knowledge_context`: KnowledgeContext  
 - `build_course_space`: CourseSpace
@@ -22,6 +22,9 @@ Nếu toàn bộ candidate không valid, Orchestrator chuyển sang `replanning`
 - `validate_candidate`: ValidatedPlan
 - `assess_plan_risk`: RiskBatch
 - `rank_valid_plans`: RankingResult
+- `explain_plans`: GroundedExplanationBatch
+- `normalize_feedback`: FeedbackNormalization
+- `confirm_plan`: ConfirmationResult
 
 Mỗi adapter nhận `ToolCallContext` + typed parameters, trả về `ToolResult[OutputSchema]` với `Provenance`. Orchestrator gọi adapter qua `create_call_context()` → adapter function → `apply_result()` / `apply_generation_result()` / `apply_validations()`.
 
@@ -46,4 +49,4 @@ python scripts/run_m4_acceptance.py --with-tests
 ```
 
 Xem [mapping capability](../../../docs/MAPPING_CAPABILITY_MODULE_TOOL.md) và
-[kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md). Pipeline đã nối Risk, Ranking và Grounded Explanation. Trạng thái học vụ dùng proxy `ProgressRiskAnalyzer` có version và được đánh dấu không phải cảnh báo học vụ chính thức. Các nhánh Feedback/Re-planning/Confirm còn cần triển khai.
+[kế hoạch MVP](../../../docs/KE_HOACH_TRIEN_KHAI_AGENT_MVP.md). Pipeline đã nối Risk, Ranking, Grounded Explanation, Feedback, Re-planning và Final Validation/Confirm. `AgentRunStore` lưu run/result/feedback JSON với hash và idempotency key `(run_id, feedback_id)`; API nằm tại `/api/agent/runs`. Confirm tải lại snapshot nguồn, tạo vòng mới nếu version thay đổi. Ca tái lập SV001 chạy bằng `scripts/run_feedback_acceptance.py`; JSON được xuất vào `artifacts/feedback_acceptance/`. Trạng thái học vụ dùng proxy `ProgressRiskAnalyzer` có version và được đánh dấu không phải cảnh báo học vụ chính thức.

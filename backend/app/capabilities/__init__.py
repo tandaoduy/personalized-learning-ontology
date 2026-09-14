@@ -7,6 +7,8 @@ from .validation import validate_candidate
 from .risk import assess_plan_risks
 from .ranking import rank_plans
 from .explanation import explain_plans
+from .feedback import normalize_feedback
+from .confirmation import confirm_plan
 
 __all__ = [
     "load_student_context",
@@ -17,4 +19,6 @@ __all__ = [
     "assess_plan_risks",
     "rank_plans",
     "explain_plans",
+    "normalize_feedback",
+    "confirm_plan",
 ]

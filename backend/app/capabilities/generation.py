@@ -5,7 +5,7 @@ import random
 
 from backend.app.models.student import StudentProfile
 from backend.app.schemas import (CandidateCourse, CandidatePlan, GenerationAttemptRecord, GenerationResult,
-    CourseSpace, KnowledgeSnapshot, PlanningRequest, StudentSnapshot, ToolCallContext, ToolError, ToolResult)
+    AdjustmentRequest, CourseSpace, KnowledgeSnapshot, PlanningRequest, StudentSnapshot, ToolCallContext, ToolError, ToolResult)
 from backend.app.services.recommendation_engine import RecommendationEngine
 from ._envelope import fail, now, ok
 
@@ -13,7 +13,8 @@ from ._envelope import fail, now, ok
 def generate_candidates(context: ToolCallContext, request: PlanningRequest, student_snapshot: StudentSnapshot,
                         knowledge_snapshot: KnowledgeSnapshot, profile: StudentProfile,
                         engine: RecommendationEngine, *, candidate_limit: int = 3, seed: int = 42,
-                        course_space: CourseSpace | None = None) -> ToolResult[GenerationResult]:
+                        course_space: CourseSpace | None = None,
+                        adjustment: AdjustmentRequest | None = None) -> ToolResult[GenerationResult]:
     started = now()
     try:
         plans, attempts, seen = [], [], set()
@@ -33,6 +34,11 @@ def generate_candidates(context: ToolCallContext, request: PlanningRequest, stud
             courses = tuple(CandidateCourse(course_code=item.code, credits=float(item.credits)) for item in selected)
             if not courses:
                 attempts.append(GenerationAttemptRecord(attempt_id=f"attempt-{offset + 1}", state_count=0, reason="empty_beam_result"))
+                continue
+            selected_codes = {course.course_code for course in courses}
+            if adjustment and (not adjustment.must_include.issubset(selected_codes)
+                               or adjustment.must_exclude & selected_codes):
+                attempts.append(GenerationAttemptRecord(attempt_id=f"attempt-{offset + 1}", state_count=len(courses), reason="adjustment_not_satisfied"))
                 continue
             plan_type = "accelerated" if request.goal == "accelerated" else ("safe" if offset == 0 else "balanced")
             course_set_hash = "sha256:" + sha256(

@@ -1,9 +1,10 @@
 """Persistence isolation and integrity tests for AgentRunStore."""
+from datetime import datetime, timezone
 import pytest
 
 from backend.app.agent import AgentOrchestrator
-from backend.app.schemas import PlanningRequest
-from backend.app.services.agent_run_store import AgentRunStore, RunRevisionConflict
+from backend.app.schemas import FeedbackNormalization, FeedbackRequest, PlanningRequest
+from backend.app.services.agent_run_store import AgentRunStore, FeedbackIdempotencyConflict, RunRevisionConflict
 
 
 def request(request_id: str) -> PlanningRequest:
@@ -45,3 +46,26 @@ def test_runs_and_artifacts_are_isolated_and_hash_checked(tmp_path):
     artifact_path.write_bytes(b"changed")
     with pytest.raises(ValueError, match="hash mismatch"):
         store.read_artifact(reference)
+
+
+def test_feedback_is_idempotent_and_conflicting_reuse_is_rejected(tmp_path):
+    store = AgentRunStore(tmp_path / "agent-runs")
+    feedback = FeedbackRequest(
+        feedback_id="feedback-1", run_id="RUN_A", displayed_result_hash="sha256:ranking",
+        actor_pseudonym="advisor-1", actor_role="advisor", action="select",
+        selected_plan_id="plan-1", created_at=datetime.now(timezone.utc),
+    )
+    normalization = FeedbackNormalization(
+        feedback_id=feedback.feedback_id, feedback_hash="sha256:feedback",
+        parent_result_hash="sha256:ranking", action="select", selected_plan_id="plan-1",
+    )
+    first = store.save_feedback("RUN_A", feedback, normalization, {"tool_name": "normalize_feedback"})
+    duplicate = store.save_feedback("RUN_A", feedback, normalization, {"tool_name": "normalize_feedback"})
+    assert first.duplicate is False
+    assert duplicate.duplicate is True
+    assert store.load_feedback("RUN_A", "feedback-1")["normalization"]["feedback_hash"] == "sha256:feedback"
+
+    changed = feedback.model_copy(update={"selected_plan_id": "plan-2"})
+    changed_normalization = normalization.model_copy(update={"selected_plan_id": "plan-2"})
+    with pytest.raises(FeedbackIdempotencyConflict):
+        store.save_feedback("RUN_A", changed, changed_normalization, {"tool_name": "normalize_feedback"})

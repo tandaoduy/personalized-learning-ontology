@@ -1,5 +1,6 @@
 """Build Vietnamese explanations only from Validator, Risk and Ranking evidence."""
 from hashlib import sha256
+import json
 
 from backend.app.schemas import (
     GroundedClaim, GroundedExplanation, GroundedExplanationBatch,
@@ -10,7 +11,10 @@ TEMPLATE_VERSION = "grounded-explanation-vi-v1"
 
 
 def ranking_hash(ranking: RankingResult) -> str:
-    return "sha256:" + sha256(ranking.model_dump_json().encode("utf-8")).hexdigest()
+    """Stable result identity across API JSON serialization and process restart."""
+    payload = json.dumps(ranking.model_dump(mode="json"), sort_keys=True,
+                         separators=(",", ":"), ensure_ascii=False)
+    return "sha256:" + sha256(payload.encode("utf-8")).hexdigest()
 
 
 def _classification(fact) -> str:

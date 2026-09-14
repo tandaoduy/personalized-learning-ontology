@@ -62,8 +62,8 @@ def get_recommendation():
             return jsonify({"success": False, "error": "Bạn chỉ được tạo gợi ý cho hồ sơ của mình."}), 403
 
         logger.info(
-            "Recommendation request: endpoint=%s student_id=%s",
-            request.path, student_id,
+            "Recommendation request: endpoint=%s",
+            request.path,
         )
 
         student_service = current_app.student_data_service

@@ -78,15 +78,18 @@ def create_app():
     # Khởi tạo evidence service cho agent pipeline
     try:
         from backend.app.services.ontology_evidence_service import OntologyEvidenceService
+        from backend.app.services.agent_run_store import AgentRunStore
         from backend.app.agent import AgentOrchestrator
 
         app.ontology_evidence_service = OntologyEvidenceService(Config.ONTOLOGY_PATH)
         app.agent_orchestrator = AgentOrchestrator()
+        app.agent_run_store = AgentRunStore(Config.AGENT_RUN_STORE)
         print("Agent pipeline initialized successfully")
     except Exception as exc:
         print(f"Cảnh báo: lỗi khi khởi tạo agent pipeline components: {exc}")
         app.ontology_evidence_service = None
         app.agent_orchestrator = None
+        app.agent_run_store = None
 
     app.explanation_generator = ExplanationGenerator()
     app.progress_risk_analyzer = ProgressRiskAnalyzer(app.recommendation_engine)
@@ -94,6 +97,7 @@ def create_app():
     # Đăng ký các blueprint cho API.
     from backend.app.routes import (
         advisor_role_routes,
+        agent_routes,
         auth_routes,
         recommendation_routes,
         student_role_routes,
@@ -106,6 +110,7 @@ def create_app():
     app.register_blueprint(student_role_routes.bp)
     app.register_blueprint(advisor_role_routes.bp)
     app.register_blueprint(advisor_role_routes.api_bp)
+    app.register_blueprint(agent_routes.bp)
 
     @app.before_request
     def enforce_role_access():

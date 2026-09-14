@@ -95,6 +95,13 @@ class AgentOrchestrator:
         if result.status == "error":
             return self._handle_tool_error(state, action, context, result)
         changes = {"status": self._NEXT_STATUS[action]}
+        if action == "normalize_feedback":
+            if result.output.adjustment is not None:
+                changes["status"] = "replanning"
+            elif result.output.action == "confirm":
+                changes["status"] = "final_validating"
+            else:
+                changes["status"] = "awaiting_feedback"
         output_hash = result.provenance.output_hash
         if action == "load_student_context":
             changes["student_snapshot_hash"] = output_hash
@@ -111,6 +118,9 @@ class AgentOrchestrator:
             changes["explanation_hashes"] = state.explanation_hashes + (output_hash,)
         elif action == "normalize_feedback":
             changes["feedback_hashes"] = state.feedback_hashes + (output_hash,)
+            changes["latest_adjustment"] = result.output.adjustment
+            if result.output.selected_plan_id is not None:
+                changes["selected_plan_id"] = result.output.selected_plan_id
         elif action == "confirm":
             changes["final_result_hash"] = output_hash
             changes["final_validation_hash"] = output_hash

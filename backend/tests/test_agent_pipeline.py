@@ -1,12 +1,16 @@
 """End-to-end integration test for AgentPipeline through orchestrator."""
+from copy import deepcopy
+from datetime import datetime, timezone
 import pytest
 
 pytestmark = pytest.mark.integration
 
 from backend.app.agent import AgentOrchestrator
+import backend.app.agent.pipeline as pipeline_module
 from backend.app.agent.pipeline import AgentPipeline
 from backend.app.config import Config
-from backend.app.schemas import PlanningRequest
+from backend.app.schemas import FeedbackOperation, FeedbackRequest, PlanningRequest, RankingResult
+from backend.app.services.grounded_explanation_service import ranking_hash
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
@@ -129,3 +133,103 @@ def test_pipeline_trace_records_capability_outcomes(pipeline):
     # A valid pool is assessed, ranked and explained before awaiting feedback,
     # or replanning / no_plan_found when all candidates fail validation.
     assert result["status"] in {"awaiting_feedback", "replanning", "no_plan_found"}
+
+
+def test_sv001_replans_then_confirms_after_advisor_replacement(pipeline):
+    """SV001 replaces INT6209 with SOT366; each new plan is validated and explained."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-feedback-sv001", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    assert initial["status"] == "awaiting_feedback"
+    selected = initial["ranking"]["recommended_plan_id"]
+    feedback = FeedbackRequest(
+        feedback_id="fb-sv001-replace", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="modify",
+        selected_plan_id=selected,
+        operations=(FeedbackOperation(kind="replace", course_code="INT6209", replacement_course_code="SOT366"),),
+        reason="Thay học phần tự chọn theo ý kiến cố vấn.",
+        created_at=datetime.now(timezone.utc),
+    )
+    replanned = pipeline.replan_from_feedback(initial, feedback)
+
+    assert replanned["status"] == "awaiting_feedback"
+    assert replanned["iteration"] == initial["iteration"] + 1
+    assert replanned["parent_run_id"] == initial["run_id"]
+    assert replanned["feedback_normalization"]["adjustment"]["must_include"] == ["SOT366"]
+    assert replanned["feedback_normalization"]["adjustment"]["must_exclude"] == ["INT6209"]
+    assert all(item["status"] == "valid" for item in replanned["validations"])
+    assert replanned["explanations"]["explanations"]
+    for candidate in replanned["candidates"]:
+        course_codes = {course["course_code"] for course in candidate["courses"]}
+        assert "SOT366" in course_codes
+        assert "INT6209" not in course_codes
+
+    actions = [event["action"] for event in replanned["trace"]]
+    feedback_index = actions.index("normalize_feedback")
+    assert {"generate_candidates", "validate_candidates", "assess_plan_risk", "rank_valid_plans", "explain_plans"}.issubset(actions[feedback_index + 1:])
+
+    confirm_feedback = FeedbackRequest(
+        feedback_id="fb-sv001-confirm", run_id=replanned["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(replanned["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="confirm",
+        selected_plan_id=replanned["ranking"]["recommended_plan_id"],
+        created_at=datetime.now(timezone.utc),
+    )
+    confirmed = pipeline.confirm_from_feedback(replanned, confirm_feedback)
+    assert confirmed["status"] == "confirmed"
+    assert confirmed["confirmation"]["validation"]["status"] == "valid"
+    assert confirmed["state"]["final_validation_hash"]
+    assert confirmed["trace"][-1]["action"] == "confirm"
+
+
+def test_confirm_refreshes_changed_sources_and_requires_new_selection(pipeline, monkeypatch):
+    """A changed current student source invalidates the displayed selection before confirm."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-confirm-refresh", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    feedback = FeedbackRequest(
+        feedback_id="fb-confirm-refresh", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="confirm",
+        selected_plan_id=initial["ranking"]["recommended_plan_id"],
+        created_at=datetime.now(timezone.utc),
+    )
+    original_load_student = pipeline_module.load_student_context
+
+    def changed_only_when_refresh(context, *args, **kwargs):
+        result = original_load_student(context, *args, **kwargs)
+        if context.call_id.startswith("CALL_REFRESH_STUDENT_"):
+            snapshot = result.output.student_snapshot.model_copy(update={"student_version": "sha256:changed-source"})
+            return result.model_copy(update={"output": result.output.model_copy(update={"student_snapshot": snapshot})})
+        return result
+
+    monkeypatch.setattr(pipeline_module, "load_student_context", changed_only_when_refresh)
+    refreshed = pipeline.confirm_from_feedback(initial, feedback)
+    assert refreshed["confirmation_refresh_required"] is True
+    assert refreshed["status"] == "awaiting_feedback"
+    assert refreshed["parent_run_id"] == initial["run_id"]
+    assert refreshed["source_versions_before"]["student_version"] != refreshed["source_versions_after"]["student_version"]
+    assert refreshed["state"]["selected_plan_id"] is None
+
+
+def test_confirm_rejects_plan_that_fails_final_validation(pipeline):
+    """A valid displayed result cannot bypass the deterministic final validator."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-confirm-invalid", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    tampered = deepcopy(initial)
+    selected = tampered["ranking"]["recommended_plan_id"]
+    candidate = next(item for item in tampered["candidates"] if item["plan_id"] == selected)
+    candidate["courses"][0]["credits"] = 99
+    feedback = FeedbackRequest(
+        feedback_id="fb-confirm-invalid", run_id=tampered["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(tampered["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="confirm",
+        selected_plan_id=selected, created_at=datetime.now(timezone.utc),
+    )
+    with pytest.raises(ValueError, match="no longer valid"):
+        pipeline.confirm_from_feedback(tampered, feedback)
