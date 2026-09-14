@@ -6,6 +6,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+/.test-tmp/
 
 # Local environment
 .venv/
@@ -16,6 +17,12 @@ tmptq0ti21_/
 StudentDataStandardization/reports/
 legacy/outputs/
 legacy/reports/
+
+# Generated test and experiment artifacts. Keep only each run's aggregate
+# manifest/summary/report when explicitly added; never version per-profile
+# fixtures/results or pytest's temporary working trees.
+/artifacts/**/pytest-tmp/
+/artifacts/anonymized_batch/**/B*/
 
 # Frontend dependencies
 node_modules/
