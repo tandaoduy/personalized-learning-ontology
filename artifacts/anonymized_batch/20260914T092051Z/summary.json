@@ -1,0 +1,203 @@
+{
+  "manifest": {
+    "protocol": "stage5-anonymized-agent-batch-v1",
+    "created_at": "2026-09-14T09:21:21.145711+00:00",
+    "source_data_sha256": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+    "source_profile_count": 2,
+    "source_ids_are_not_exported": true,
+    "target_term_id": "next-term",
+    "target_credits": 18.0,
+    "seed": 42,
+    "search_config": {
+      "beam_width": 8,
+      "min_credits": 10,
+      "max_credits": 27,
+      "elective_quotas": {
+        "general": 1,
+        "physical": 2,
+        "foundation": 1,
+        "specialization": 3
+      },
+      "max_generation_rounds": 3,
+      "max_candidate_attempts": 60,
+      "max_expanded_states": 5000,
+      "max_active_seconds": 120
+    },
+    "runtime": {
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "implementation": "CPython"
+    },
+    "configuration_hashes": {
+      "ontology": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+      "student_data": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+      "config": "sha256:961d3b69bb8ded735179abe3f63871a677dc524f94d71193bebe552f3579e886",
+      "recommendation_constants": "sha256:9537e9916c435fd05857d21bfcda5a7bd1faedb66d0f8803452515d5474a823e",
+      "ranking": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903"
+    },
+    "validator": "StandardValidator",
+    "limitations": [
+      "next-term is a system proxy, not a mapped institutional calendar.",
+      "Academic Risk is a proxy and not an official academic warning.",
+      "This batch measures pipeline behaviour, not student outcomes or policy completeness."
+    ],
+    "knowledge_source_manifest": {
+      "manifest_id": "academic-policy-source-manifest",
+      "manifest_ref": "knowledge/source_manifest.json",
+      "version": "source-manifest-v1",
+      "content_hash": "sha256:8f7bccd48c23901a708938ccc7734f121a13f5cfaff8c66f49f905c72f033650",
+      "sources": [
+        {
+          "domain": "curriculum_catalog",
+          "source_ref": "knowledge/ontology/ontology_v23.rdf",
+          "version": "ontology-v23",
+          "effective_date": null,
+          "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "authority_status": "provisional",
+          "limitation": "Versioned/hash-bound repository ontology; official curriculum publication and effective date are not attached."
+        },
+        {
+          "domain": "prerequisite_and_corequisite",
+          "source_ref": "knowledge/ontology/ontology_v23.rdf",
+          "version": "ontology-v23",
+          "effective_date": null,
+          "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "authority_status": "provisional",
+          "limitation": "Rules are read from RDF; formal institutional source verification remains pending."
+        },
+        {
+          "domain": "elective_quota",
+          "source_ref": "backend/app/config.py",
+          "version": "mvp-quota-v1",
+          "effective_date": null,
+          "content_hash": "sha256:961d3b69bb8ded735179abe3f63871a677dc524f94d71193bebe552f3579e886",
+          "authority_status": "proxy",
+          "limitation": "Quota is MVP configuration, not asserted as a university regulation."
+        },
+        {
+          "domain": "credit_policy",
+          "source_ref": "backend/app/services/recommendation/constants.py",
+          "version": "mvp-credit-policy-v1",
+          "effective_date": null,
+          "content_hash": "sha256:9537e9916c435fd05857d21bfcda5a7bd1faedb66d0f8803452515d5474a823e",
+          "authority_status": "proxy",
+          "limitation": "Registration-credit overrides are MVP configuration, not asserted as university regulation."
+        },
+        {
+          "domain": "course_offering",
+          "source_ref": "knowledge/ontology/ontology_v23.rdf",
+          "version": "ontology-v23",
+          "effective_date": null,
+          "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+          "authority_status": "provisional",
+          "limitation": "openSemesterType is not a verified term-by-term institutional offering schedule."
+        },
+        {
+          "domain": "academic_calendar",
+          "source_ref": "unavailable-academic-calendar",
+          "version": "unavailable",
+          "effective_date": null,
+          "content_hash": null,
+          "authority_status": "unavailable",
+          "limitation": "next-term means current_semester + 1; no versioned academic-calendar mapping exists."
+        }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "profile": "B0001",
+      "status": "awaiting_feedback",
+      "success": true,
+      "candidate_count": 2,
+      "candidate_attempts": 3,
+      "valid_candidates": 2,
+      "latency_seconds": 2.5037961000016367,
+      "evidence_rule_decisions": 110,
+      "evidence_linked_decisions": 110,
+      "evidence_coverage": 1.0,
+      "pairwise_diversity_count": 1,
+      "pairwise_diversity_mean": 0.3333,
+      "violation_histogram": {},
+      "artifact_complete": true,
+      "replan_status": "awaiting_feedback",
+      "confirm_status": "confirmed"
+    },
+    {
+      "profile": "B0002",
+      "status": "replanning",
+      "success": true,
+      "candidate_count": 1,
+      "candidate_attempts": 3,
+      "valid_candidates": 0,
+      "latency_seconds": 0.3232776000004378,
+      "evidence_rule_decisions": 22,
+      "evidence_linked_decisions": 22,
+      "evidence_coverage": 1.0,
+      "pairwise_diversity_count": 0,
+      "pairwise_diversity_mean": null,
+      "violation_histogram": {
+        "credit_limit": 2
+      },
+      "artifact_complete": true,
+      "replan_status": null,
+      "confirm_status": null
+    }
+  ],
+  "status_histogram": {
+    "awaiting_feedback": 1,
+    "replanning": 1
+  },
+  "validity": {
+    "candidate_count": 3,
+    "candidate_attempts": 6,
+    "valid_candidates": 2,
+    "validity_rate": 0.3333
+  },
+  "violation_histogram": {
+    "credit_limit": 2
+  },
+  "violation_categories": {
+    "prerequisite": 0,
+    "corequisite": 0,
+    "curriculum_membership": 0,
+    "semester_offering": 0,
+    "elective_quota": 0,
+    "credit_limit": 2
+  },
+  "violation_categories_requested": {
+    "prerequisite": 0,
+    "corequisite": 0,
+    "specialization": 0,
+    "offering_term": 0,
+    "quota": 0,
+    "credit": 2
+  },
+  "diversity": {
+    "pairwise_count": 1,
+    "mean": 0.3333
+  },
+  "latency": {
+    "mean_seconds": 1.4135,
+    "max_seconds": 2.5038
+  },
+  "evidence_coverage": {
+    "rule_decisions": 132,
+    "linked_decisions": 132,
+    "coverage": 1.0
+  },
+  "artifact_complete": {
+    "complete": 2,
+    "total": 2
+  },
+  "replanning": {
+    "passed": 1,
+    "attempted": 1,
+    "rate": 1.0
+  },
+  "confirm": {
+    "passed": 1,
+    "attempted": 1,
+    "rate": 1.0
+  }
+}

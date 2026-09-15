@@ -23,6 +23,8 @@ legacy/reports/
 # fixtures/results or pytest's temporary working trees.
 /artifacts/**/pytest-tmp/
 /artifacts/anonymized_batch/**/B*/
+/artifacts/stage6_baselines/
+/artifacts/preference_dataset_check/
 
 # Frontend dependencies
 node_modules/

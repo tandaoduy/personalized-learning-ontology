@@ -12,6 +12,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from hashlib import sha256
 import json
+import platform
 from pathlib import Path
 from statistics import mean
 import sys
@@ -22,7 +23,8 @@ sys.path.insert(0, str(ROOT))
 from backend.app.agent.orchestrator import AgentOrchestrator
 from backend.app.agent.pipeline import AgentPipeline
 from backend.app.config import Config
-from backend.app.schemas import PlanningRequest
+from backend.app.schemas import FeedbackOperation, FeedbackRequest, PlanningRequest, RankingResult
+from backend.app.services.grounded_explanation_service import ranking_hash
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
@@ -85,7 +87,7 @@ def artifact_complete(result: dict) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Stage 3 anonymised Agent batch")
+    parser = argparse.ArgumentParser(description="Stage 5 reproducible anonymised Agent batch")
     parser.add_argument("--limit", type=int, default=0, help="Run only the first N sorted source records (0 = all).")
     parser.add_argument("--target-credits", type=float, default=18.0)
     parser.add_argument("--seed", type=int, default=42)
@@ -110,7 +112,7 @@ def main() -> int:
     )
     evidence = OntologyEvidenceService(Config.ONTOLOGY_PATH)
     manifest = {
-        "protocol": "stage3-anonymized-agent-batch-v1",
+        "protocol": "stage5-anonymized-agent-batch-v1",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "source_data_sha256": source_hash(source_path),
         "source_profile_count": len(records),
@@ -118,7 +120,28 @@ def main() -> int:
         "target_term_id": "next-term",
         "target_credits": args.target_credits,
         "seed": args.seed,
-        "beam_width": Config.BEAM_WIDTH,
+        "search_config": {
+            "beam_width": Config.BEAM_WIDTH,
+            "min_credits": Config.REGISTER_MIN_CREDITS,
+            "max_credits": Config.REGISTER_MAX_CREDITS,
+            "elective_quotas": Config.ELECTIVE_QUOTAS,
+            "max_generation_rounds": 3,
+            "max_candidate_attempts": 60,
+            "max_expanded_states": 5000,
+            "max_active_seconds": 120,
+        },
+        "runtime": {
+            "python": sys.version.splitlines()[0],
+            "platform": platform.platform(),
+            "implementation": platform.python_implementation(),
+        },
+        "configuration_hashes": {
+            "ontology": source_hash(Path(Config.ONTOLOGY_PATH)),
+            "student_data": source_hash(source_path),
+            "config": source_hash(ROOT / "backend" / "app" / "config.py"),
+            "recommendation_constants": source_hash(ROOT / "backend" / "app" / "services" / "recommendation" / "constants.py"),
+            "ranking": source_hash(ROOT / "knowledge" / "rules" / "ranking_pdf3_v1.json"),
+        },
         "validator": "StandardValidator",
         "limitations": [
             "next-term is a system proxy, not a mapped institutional calendar.",
@@ -132,9 +155,10 @@ def main() -> int:
     knowledge_source_manifest: dict | None = None
     statuses: Counter[str] = Counter()
     violations: Counter[str] = Counter()
-    candidate_count = valid_count = evidence_total = evidence_linked = 0
+    candidate_count = candidate_attempt_count = valid_count = evidence_total = evidence_linked = 0
     diversity: list[float] = []
     latencies: list[float] = []
+    replan_attempted = replan_passed = confirm_attempted = confirm_passed = 0
 
     for index, record in enumerate(records, start=1):
         pseudonym = f"B{index:04d}"
@@ -157,7 +181,34 @@ def main() -> int:
         if knowledge_source_manifest is None:
             knowledge_source_manifest = (result.get("knowledge_snapshot") or {}).get("source_manifest")
 
+        replan = confirmation = None
+        if result.get("status") == "awaiting_feedback":
+            replan_attempted += 1
+            feedback = FeedbackRequest(
+                feedback_id=f"{pseudonym}-modify", run_id=result["run_id"],
+                displayed_result_hash=ranking_hash(RankingResult.model_validate(result["ranking"])),
+                actor_pseudonym="batch-advisor", actor_role="advisor", action="modify",
+                selected_plan_id=result["ranking"]["recommended_plan_id"],
+                operations=(FeedbackOperation(kind="change_goal", goal=request.goal),),
+                reason="Controlled Stage 5 re-planning verification.", created_at=datetime.now(timezone.utc),
+            )
+            replan = pipeline.replan_from_feedback(result, feedback)
+            write_json(case_dir / "replanned.json", replan)
+            if replan.get("status") == "awaiting_feedback":
+                replan_passed += 1
+                confirm_attempted += 1
+                confirm = FeedbackRequest(
+                    feedback_id=f"{pseudonym}-confirm", run_id=replan["run_id"],
+                    displayed_result_hash=ranking_hash(RankingResult.model_validate(replan["ranking"])),
+                    actor_pseudonym="batch-advisor", actor_role="advisor", action="confirm",
+                    selected_plan_id=replan["ranking"]["recommended_plan_id"], created_at=datetime.now(timezone.utc),
+                )
+                confirmation = pipeline.confirm_from_feedback(replan, confirm)
+                write_json(case_dir / "confirmed.json", confirmation)
+                confirm_passed += confirmation.get("status") == "confirmed"
+
         candidate_n = len(result.get("candidates") or [])
+        attempt_n = len((result.get("generation") or {}).get("attempt_records") or [])
         valid_n = sum(item.get("status") == "valid" for item in result.get("validations") or [])
         decisions, linked = evidence_coverage(result)
         distances = diversity_values(result)
@@ -167,6 +218,7 @@ def main() -> int:
             "status": result.get("status", "runner_error"),
             "success": bool(result.get("success")),
             "candidate_count": candidate_n,
+            "candidate_attempts": attempt_n,
             "valid_candidates": valid_n,
             "latency_seconds": result.get("elapsed_seconds"),
             "evidence_rule_decisions": decisions,
@@ -176,12 +228,15 @@ def main() -> int:
             "pairwise_diversity_mean": round(mean(distances), 4) if distances else None,
             "violation_histogram": dict(per_case_violations),
             "artifact_complete": artifact_complete(result),
+            "replan_status": replan.get("status") if replan else None,
+            "confirm_status": confirmation.get("status") if confirmation else None,
         }
         write_json(case_dir / "case_summary.json", row)
         rows.append(row)
         statuses[row["status"]] += 1
         violations.update(per_case_violations)
         candidate_count += candidate_n
+        candidate_attempt_count += attempt_n
         valid_count += valid_n
         evidence_total += decisions
         evidence_linked += linked
@@ -197,24 +252,40 @@ def main() -> int:
         "status_histogram": dict(statuses),
         "validity": {
             "candidate_count": candidate_count,
+            "candidate_attempts": candidate_attempt_count,
             "valid_candidates": valid_count,
-            "validity_rate": round(valid_count / candidate_count, 4) if candidate_count else 0.0,
+            "validity_rate": round(valid_count / candidate_attempt_count, 4) if candidate_attempt_count else 0.0,
         },
         "violation_histogram": dict(violations),
+        "violation_categories": {key: violations.get(key, 0) for key in (
+            "prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")},
+        "violation_categories_requested": {
+            "prerequisite": violations.get("prerequisite", 0),
+            "corequisite": violations.get("corequisite", 0),
+            "specialization": violations.get("curriculum_membership", 0),
+            "offering_term": violations.get("semester_offering", 0),
+            "quota": violations.get("elective_quota", 0),
+            "credit": violations.get("credit_limit", 0),
+        },
         "diversity": {"pairwise_count": len(diversity), "mean": round(mean(diversity), 4) if diversity else None},
         "latency": {"mean_seconds": round(mean(latencies), 4) if latencies else None, "max_seconds": round(max(latencies), 4) if latencies else None},
         "evidence_coverage": {"rule_decisions": evidence_total, "linked_decisions": evidence_linked,
                               "coverage": round(evidence_linked / evidence_total, 4) if evidence_total else 0.0},
         "artifact_complete": {"complete": sum(row["artifact_complete"] for row in rows), "total": len(rows)},
+        "replanning": {"passed": replan_passed, "attempted": replan_attempted,
+                       "rate": round(replan_passed / replan_attempted, 4) if replan_attempted else None},
+        "confirm": {"passed": confirm_passed, "attempted": confirm_attempted,
+                    "rate": round(confirm_passed / confirm_attempted, 4) if confirm_attempted else None},
     }
     write_json(run_dir / "summary.json", summary)
-    report = ["# Stage 3 anonymized Agent batch", "", f"- Profiles: **{len(rows)}**", f"- Statuses: `{dict(statuses)}`",
-              f"- Validity: **{valid_count}/{candidate_count}** ({summary['validity']['validity_rate']:.2%})",
+    report = ["# Stage 5 anonymized Agent batch", "", f"- Profiles: **{len(rows)}**", f"- Statuses: `{dict(statuses)}`",
+              f"- Validity: **{valid_count}/{candidate_attempt_count} attempts** ({summary['validity']['validity_rate']:.2%}); generated candidates: **{candidate_count}**",
               f"- Evidence coverage: **{summary['evidence_coverage']['coverage']:.2%}** ({evidence_linked}/{evidence_total})",
               f"- Mean pairwise diversity: **{summary['diversity']['mean']}**", f"- Latency mean/max: **{summary['latency']['mean_seconds']}s / {summary['latency']['max_seconds']}s**",
               f"- Complete artifacts: **{summary['artifact_complete']['complete']}/{len(rows)}**", "", "## Violations", "",
               "| Rule | Count |", "|---|---:|"]
     report.extend(f"| {key} | {value} |" for key, value in sorted(violations.items()))
+    report.extend(["", f"- Re-planning: **{replan_passed}/{replan_attempted}**", f"- Confirm: **{confirm_passed}/{confirm_attempted}**"])
     report.extend(["", "Each case artifact is pseudonymised; source student IDs and names are not exported.",
                    "These results describe system behaviour under the stated proxy policies, not official academic decisions or student outcome accuracy."])
     (run_dir / "REPORT.md").write_text("\n".join(report) + "\n", encoding="utf-8")
