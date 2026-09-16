@@ -6,7 +6,7 @@ Kế hoạch công việc, module cần tạo và tiêu chí nghiệm thu từng
 
 Đầu ra báo cáo đã có: [sơ đồ mapping capability → tool → module](MAPPING_CAPABILITY_MODULE_TOOL.md), kèm trạng thái triển khai từng thành phần.
 
-**Cập nhật thiết kế 2026-09-08:** [mapping capability/tool và contracts](DAC_TA_TRIEN_KHAI_MVP.md) được giữ; Ranking thống nhất theo PDF v3 với sáu feature, bảng trọng số PDF và diversity 0.30. JSON bảy feature trước đây không còn là cấu hình áp dụng. Đây là tài liệu để triển khai, chưa phải capability/Ranking đã code và chưa có kết quả thực nghiệm. Các mô tả “khung package” dưới đây là lịch sử; schemas thành phần, OntologyEvidenceService và StandardValidator v3 hiện đã có.
+**Cập nhật trạng thái source 2026-09-16:** [mapping capability/tool và contracts](DAC_TA_TRIEN_KHAI_MVP.md) được giữ; Ranking thống nhất theo PDF v3 với sáu feature, bảng trọng số PDF và diversity 0.30. AgentPipeline, typed capability adapters, StandardValidator, Risk/Ranking, Grounded Explanation, Feedback/Re-planning và Final Validation/Confirm đã được nối. Các mô tả “khung package” và mốc chưa hoàn thành bên dưới là lịch sử/kế hoạch, không phải trạng thái source hiện tại; kết quả thực nghiệm chính thức vẫn chưa được kết luận.
 
 ## 1. Tổ chức source đã thực hiện
 
@@ -74,4 +74,4 @@ So sánh explanation có/không grounded trên cùng candidate, Validation và R
 
 ## Cập nhật rule toàn vẹn candidate
 
-Validator v3 kiểm tra REQUIRED_RULES, gồm học trước, quota từ lịch sử/candidate, ngành/chuyên ngành và học kỳ đích. Thiếu chính sách hoặc dữ kiện không trả valid; rule giữ pending kèm error. Agent và API chưa nối vào Validator, chưa phải kết quả end-to-end của MVP.
+Validator v3 kiểm tra REQUIRED_RULES, gồm học trước, quota từ lịch sử/candidate, ngành/chuyên ngành và học kỳ đích. Thiếu chính sách hoặc dữ kiện không trả valid; rule giữ pending kèm error. AgentPipeline và API Agent đã gọi cùng Validator ở generation, re-planning và Final Validation; điều này chưa tự chứng minh tính đầy đủ của policy hoặc kết quả nghiên cứu.

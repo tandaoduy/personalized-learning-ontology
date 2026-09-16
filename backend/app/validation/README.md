@@ -28,4 +28,4 @@ Mỗi môn có audit pass/fail/skipped/error. Rule còn skipped/error nằm tron
 
 Evidence chứa rule inputs, candidate hash, snapshot/version và triple/query của fact được sử dụng. Quota lưu ID các fact phân nhóm (bao gồm môn đã hoàn thành) trong rule_inputs và lưu fact gốc trong ontology_evidence. Không nối chúng vào supporting_evidence_ids của môn khác vì schema yêu cầu liên kết trực tiếp cùng môn. Query và ontology có hash nội dung; timestamps có thể khác nhưng kết luận/định danh với cùng đầu vào giữ ổn định.
 
-API và Agent chưa nối vào Validator. Kiểm thử: `python -m pytest backend/tests/test_standard_validator.py`.
+`AgentPipeline` gọi Validator sau generation, sau mỗi re-planning và một lần Final Validation trước confirm; API Agent dùng cùng pipeline. Kiểm thử đơn vị: `python -m pytest backend/tests/test_standard_validator.py`; kiểm thử tích hợp luồng này nằm trong `test_agent_pipeline.py` và `test_agent_api_integration.py`.

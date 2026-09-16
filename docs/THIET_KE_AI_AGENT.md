@@ -1,6 +1,6 @@
 # THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP
 
-> Nguồn thiết kế gốc: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>). Cập nhật ngày 2026-09-08: thống nhất Ranking theo PDF v3; contract triển khai được bổ sung trong Markdown. Chi tiết đủ để code và các tham số **đề xuất, chưa kiểm chứng thực nghiệm** nằm trong [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md).
+> Nguồn thiết kế gốc: [TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf](<TÀI LIỆU THIẾT KẾ AI AGENT LẬP KẾ HOẠCH HỌC TẬP_v3.pdf>). Cập nhật trạng thái source ngày 2026-09-16: AgentPipeline đã nối capability, StandardValidator, Feedback/Re-planning và Final Validation/Confirm; không dùng LangGraph. Chi tiết đủ để code và các tham số **đề xuất, chưa kiểm chứng thực nghiệm** nằm trong [đặc tả triển khai MVP](DAC_TA_TRIEN_KHAI_MVP.md).
 
 ## 1. Mục đích
 
@@ -52,7 +52,7 @@ Agent Orchestrator không trực tiếp quyết định quy tắc học vụ. On
 | Agent | Python state machine tự xây dựng, Pydantic | `AgentOrchestrator`, capability adapters, trace và API Agent đã triển khai; không sử dụng LangGraph |
 | Knowledge | RDF/OWL, Protégé, RDFLib, SPARQL | Đang dùng một phần |
 | Planning | Python, Beam Search, heuristic | Đang dùng |
-| Validation | Python Rule Engine + Ontology | StandardValidator v3 độc lập đã có; chưa nối capability/Agent |
+| Validation | Python Rule Engine + Ontology | StandardValidator v3 được AgentPipeline gọi sau generation, re-planning và trước confirm |
 | Data | PostgreSQL, SQLAlchemy | Kiến trúc đích; hiện dùng JSON/CSV |
 | Backend | Flask | Đang dùng |
 | Testing | Pytest | Đang dùng |
@@ -72,7 +72,7 @@ Agent Orchestrator không trực tiếp quyết định quy tắc học vụ. On
 | Explanation | Giải thích từ evidence | Explanations |
 | Feedback/Re-planning | Chuẩn hóa phản hồi và lập lại | Feedback, Adjustment Request |
 
-Danh sách trên mô tả capability logic. Mapping module/tool và schema triển khai dự kiến được chốt tại mục 3.3 và tài liệu liên kết; không đồng nghĩa các capability đã được code.
+Danh sách trên mô tả capability logic đang được `AgentPipeline` điều phối. Mapping module/tool, contract và giới hạn dữ liệu nguồn nằm tại mục 3.3 và tài liệu liên kết; điều này không đồng nghĩa mọi policy học vụ đã có nguồn chính thức.
 
 ### 3.3. Đặc tả Capability và Tool Contract
 

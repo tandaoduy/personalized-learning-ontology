@@ -1,6 +1,6 @@
 # Kế hoạch triển khai Agent MVP
 
-Ngày lập: 2026-09-08. Kế hoạch dựa trên source hiện tại và [đặc tả MVP đã đối chiếu PDF v3](DAC_TA_TRIEN_KHAI_MVP.md). Các đường dẫn ghi “mới” là đầu ra dự kiến, chưa phải chức năng đã triển khai.
+> **Tài liệu kế hoạch lưu trữ.** Ngày lập: 2026-09-08; trạng thái source đã được cập nhật ngày 2026-09-16. Các mốc M1–M7 về AgentPipeline, capability adapters, Validator, Feedback/Re-planning, Final Validation/Confirm và API Agent đã có triển khai. Các mô tả “tạo mới”, “đề xuất API” hoặc “chưa triển khai” bên dưới chỉ phản ánh kế hoạch ban đầu; xem [đối chiếu review](DOI_CHIEU_REVIEW_HUONG_DAN_2026-09-08.md) để biết trạng thái hiện hành.
 
 ## 1. Mục tiêu và phạm vi
 

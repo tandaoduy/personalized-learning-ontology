@@ -1,6 +1,6 @@
 # Đặc tả triển khai Agent MVP: capability, contract và Ranking
 
-Phiên bản thiết kế: `mvp-contracts-v2-pdf3`, cập nhật ngày 2026-09-08. Tài liệu bổ sung cho [thiết kế tổng thể](THIET_KE_AI_AGENT.md), [nghiệp vụ](BA_AI_AGENT.md), [công nghệ](CONG_NGHE_VA_TOOLS.md) và [lộ trình](LO_TRINH_MVP.md); không sửa bản PDF nguồn. Đây là quyết định thiết kế để bắt đầu code, không phải báo cáo chức năng đã hoàn thành hay kết quả thực nghiệm.
+Phiên bản thiết kế: `mvp-contracts-v2-pdf3`, cập nhật trạng thái source ngày 2026-09-16. Tài liệu bổ sung cho [thiết kế tổng thể](THIET_KE_AI_AGENT.md), [nghiệp vụ](BA_AI_AGENT.md), [công nghệ](CONG_NGHE_VA_TOOLS.md) và [lộ trình](LO_TRINH_MVP.md); không sửa bản PDF nguồn. AgentPipeline, typed capability adapters, Validator, Feedback/Re-planning và Final Validation/Confirm hiện đã được triển khai; các đoạn dùng “dự kiến” giữ vai trò contract/thiết kế lịch sử hoặc hạng mục còn thiếu, không phải phủ nhận source hiện hành.
 
 **Tất cả trọng số, ngưỡng risk/diversity và ngân sách dưới đây là đề xuất khởi tạo chưa được hiệu chỉnh hoặc kiểm chứng thực nghiệm.** Chúng phải có phiên bản, được đánh giá trên validation theo sinh viên và đóng băng trước test. `StandardValidator` là kiểm tra học vụ; tập validation là dữ liệu hiệu chỉnh, hai khái niệm khác nhau.
 

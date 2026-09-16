@@ -157,7 +157,7 @@ docs/
 run_app.py           điểm khởi động từ thư mục gốc
 ```
 
-`agent/`, `schemas/`, `validation/`, `knowledge/queries/` và `knowledge/rules/` mới là khung thư mục; chức năng MVP tương ứng chưa được triển khai. `frontend/` hiện chỉ chứa công cụ build, không phải ứng dụng frontend độc lập.
+`agent/`, `schemas/`, `validation/`, `knowledge/queries/` và `knowledge/rules/` là các module MVP đang được sử dụng: AgentPipeline đã nối capability, StandardValidator, trace và API Agent. Chi tiết trạng thái và giới hạn nguồn xem [đối chiếu review](docs/DOI_CHIEU_REVIEW_HUONG_DAN_2026-09-08.md). `frontend/` hiện chỉ chứa công cụ build, không phải ứng dụng frontend độc lập.
 
 Chạy từ thư mục gốc: `python run_app.py`, `python -m pytest`, `npm run build:ui`. Khi dùng Flask CLI: `python -m flask --app backend.app.app:app run`. Điểm WSGI là `backend.app.app:app`.
 

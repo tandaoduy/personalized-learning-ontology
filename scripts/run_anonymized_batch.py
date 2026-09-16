@@ -192,7 +192,10 @@ def main() -> int:
                 operations=(FeedbackOperation(kind="change_goal", goal=request.goal),),
                 reason="Controlled Stage 5 re-planning verification.", created_at=datetime.now(timezone.utc),
             )
-            replan = pipeline.replan_from_feedback(result, feedback)
+            try:
+                replan = pipeline.replan_from_feedback(result, feedback)
+            except Exception as exc:
+                replan = {"success": False, "status": "replan_error", "error": {"message": str(exc)}}
             write_json(case_dir / "replanned.json", replan)
             if replan.get("status") == "awaiting_feedback":
                 replan_passed += 1
@@ -203,7 +206,10 @@ def main() -> int:
                     actor_pseudonym="batch-advisor", actor_role="advisor", action="confirm",
                     selected_plan_id=replan["ranking"]["recommended_plan_id"], created_at=datetime.now(timezone.utc),
                 )
-                confirmation = pipeline.confirm_from_feedback(replan, confirm)
+                try:
+                    confirmation = pipeline.confirm_from_feedback(replan, confirm)
+                except Exception as exc:
+                    confirmation = {"success": False, "status": "confirm_error", "error": {"message": str(exc)}}
                 write_json(case_dir / "confirmed.json", confirmation)
                 confirm_passed += confirmation.get("status") == "confirmed"
 
