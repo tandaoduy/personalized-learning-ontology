@@ -6,8 +6,9 @@ from pydantic import ValidationError
 
 from backend.app.agent.pipeline import AgentPipeline
 from backend.app.schemas import FeedbackRequest, PlanningRequest, RankingResult
-from backend.app.services.agent_run_store import FeedbackIdempotencyConflict
+from backend.app.services.agent_run_store import FeedbackIdempotencyConflict, RunRevisionConflict
 from backend.app.services.feedback_service import NORMALIZATION_VERSION, normalize_feedback
+from backend.app.services.source_lock import exclusive_source_lock
 
 bp = Blueprint("agent", __name__, url_prefix="/api/agent")
 
@@ -123,17 +124,28 @@ def replan(run_id: str):
 @bp.post("/runs/<run_id>/confirm")
 def confirm(run_id: str):
     try:
-        result = _load_result(run_id)
-        feedback, normalization, receipt = _feedback_and_receipt(run_id, result, request.get_json(silent=True) or {})
-        if receipt.duplicate:
-            return jsonify(success=True, duplicate=True, data={"receipt": receipt.model_dump(mode="json")})
-        confirmed = _pipeline().confirm_from_feedback(result, feedback)
-        current_app.agent_run_store.save_result(confirmed)
+        # Keep the read → final validation → write sequence on one run revision.
+        # A second worker can neither overwrite nor confirm that same revision.
+        # StudentDataService writers use this same lock and atomically replace the
+        # JSON file, so a profile update cannot land between final validation and
+        # persistence of a confirmed plan.
+        with exclusive_source_lock(current_app.student_data_service.json_path):
+            with current_app.agent_run_store.confirmation_transaction(run_id):
+                result = _load_result(run_id)
+                expected_revision = result["state"]["state_revision"]
+                feedback, normalization, receipt = _feedback_and_receipt(
+                    run_id, result, request.get_json(silent=True) or {})
+                if receipt.duplicate:
+                    return jsonify(success=True, duplicate=True, data={"receipt": receipt.model_dump(mode="json")})
+                confirmed = _pipeline().confirm_from_feedback(result, feedback)
+                current_app.agent_run_store.save_result(confirmed, expected_revision=expected_revision)
         return jsonify(success=True, data={"receipt": receipt.model_dump(mode="json"), "result": confirmed},), 201
     except ValidationError as exc:
         return jsonify(success=False, error="INVALID_FEEDBACK", details=exc.errors()), 400
     except FeedbackIdempotencyConflict as exc:
         return jsonify(success=False, error="IDEMPOTENCY_CONFLICT", details=str(exc)), 409
+    except RunRevisionConflict as exc:
+        return jsonify(success=False, error="RUN_REVISION_CONFLICT", details=str(exc)), 409
     except (ValueError, PermissionError) as exc:
         return jsonify(success=False, error=str(exc)), 422 if isinstance(exc, ValueError) else 403
     except FileNotFoundError:

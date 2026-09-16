@@ -301,6 +301,44 @@ def test_confirm_refreshes_changed_sources_and_requires_new_selection(pipeline, 
     assert refreshed["state"]["selected_plan_id"] is None
 
 
+def test_confirm_rechecks_sources_after_final_validation(pipeline, monkeypatch):
+    """A source change during Final Validation must not be committed as confirmed."""
+    initial = pipeline.run_planning_flow(PlanningRequest(
+        request_id="test-confirm-post-validation-refresh", student_id="SV001", target_term_id="next-term",
+        goal="on_time", target_credits=15,
+    ))
+    feedback = FeedbackRequest(
+        feedback_id="fb-confirm-post-validation-refresh", run_id=initial["run_id"],
+        displayed_result_hash=ranking_hash(RankingResult.model_validate(initial["ranking"])),
+        actor_pseudonym="advisor-001", actor_role="advisor", action="confirm",
+        selected_plan_id=initial["ranking"]["recommended_plan_id"],
+        created_at=datetime.now(timezone.utc),
+    )
+    original_load_student = pipeline_module.load_student_context
+    refresh_count = 0
+
+    def change_on_second_refresh(context, *args, **kwargs):
+        nonlocal refresh_count
+        result = original_load_student(context, *args, **kwargs)
+        if context.call_id.startswith("CALL_REFRESH_STUDENT_"):
+            refresh_count += 1
+            if refresh_count == 2:
+                snapshot = result.output.student_snapshot.model_copy(
+                    update={"student_version": "sha256:changed-during-final-validation"})
+                return result.model_copy(update={
+                    "output": result.output.model_copy(update={"student_snapshot": snapshot})
+                })
+        return result
+
+    monkeypatch.setattr(pipeline_module, "load_student_context", change_on_second_refresh)
+    refreshed = pipeline.confirm_from_feedback(initial, feedback)
+
+    assert refresh_count == 2
+    assert refreshed["confirmation_refresh_required"] is True
+    assert refreshed["status"] == "awaiting_feedback"
+    assert refreshed["state"]["selected_plan_id"] is None
+
+
 def test_confirm_rejects_plan_that_fails_final_validation(pipeline):
     """A valid displayed result cannot bypass the deterministic final validator."""
     initial = pipeline.run_planning_flow(PlanningRequest(

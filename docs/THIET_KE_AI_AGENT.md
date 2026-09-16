@@ -246,10 +246,39 @@ Top-3 chỉ xét plan đã valid: duyệt theo score giảm dần và chỉ thê
 
 ### 5.4. Re-planning
 
-- **Kích hoạt bởi Validation:** candidate vi phạm; Agent ghi lỗi, điều chỉnh không gian tìm kiếm, tăng iteration và chạy lại Planning.
-- **Kích hoạt bởi người dùng:** yêu cầu Add, Remove, Replace, Change Target Credits hoặc Change Goal.
+Sau khi các plan `valid` được xếp hạng và giải thích, Agent chuyển sang `awaiting_feedback`. Người dùng có thể `select`, `rank`, `modify` hoặc `confirm`; chỉ `modify` kích hoạt Re-planning. Các thao tác sửa hợp lệ là Add, Remove, Replace, Change Target Credits và Change Goal.
 
-Yêu cầu sai bị từ chối kèm giải thích. Agent dừng khi có plan hợp lệ, đạt giới hạn vòng hoặc hết không gian tìm kiếm. Agent không được nới luật để tạo đủ ba phương án.
+Phản hồi không sửa trực tiếp `CandidatePlan`, `KnowledgeSnapshot`, Ontology hoặc Rule Engine. Capability `normalize_feedback` kiểm tra `displayed_result_hash`, plan được chọn có nằm trong kết quả đã hiển thị và chuẩn hóa phản hồi thành `AdjustmentRequest`. Add/Replace tạo `must_include`; Remove/Replace tạo `must_exclude`; thay đổi mục tiêu/tín chỉ cập nhật request của vòng mới. Các yêu cầu này là ràng buộc người dùng, không phải hard constraint học vụ; một plan `valid` nhưng không đáp ứng adjustment không được coi là kết quả Re-planning thành công.
+
+Re-planning là **nhánh điều phối của Orchestrator**, không phải generator hoặc capability luật thứ hai. Nó tạo iteration/version mới, giữ lineage/trace của vòng trước và gọi lại cùng pipeline trên snapshot hiện hành:
+
+```text
+Feedback (modify) → Normalize Feedback → Adjustment Request → Re-planning
+→ Candidate Generation → Standard Validation → Risk Assessment → Ranking
+→ Diversity Selection → Explanation → awaiting_feedback
+```
+
+Mọi candidate của vòng mới được `StandardValidator` kiểm tra lại; không kế thừa trạng thái `valid` từ candidate cũ. Validator kiểm tra, khi có đủ nguồn, các ràng buộc về tồn tại học phần, CTĐT/chuyên ngành, học kỳ mở, prerequisite/prior-study/corequisite, tín chỉ, học lại/cải thiện và quota. Kết quả `invalid`, `partially_validated` hoặc `error` chỉ được giữ làm chẩn đoán/trace, không đi vào Ranking hoặc Explanation như một đề xuất.
+
+Nếu adjustment mâu thuẫn, feedback stale, hoặc không sinh được candidate thỏa adjustment, Agent trả lỗi/chẩn đoán có cấu trúc (ví dụ `ADJUSTMENT_CONFLICT`, `STALE_FEEDBACK`, `ADJUSTMENT_UNSATISFIED` hoặc `NO_PLAN_FOUND`). Agent chỉ sinh lại khi còn budget và có thay đổi search/diagnostics cụ thể; không lặp cùng input/seed để chờ kết quả khác và không nới hard constraints để đủ ba phương án.
+
+#### 5.4.1. Final Validation và Confirmation
+
+`confirm` không xác nhận ngay plan do người dùng chọn. Capability `confirm` trước hết tải lại Student Context và Knowledge Snapshot hiện hành. Nếu student version hoặc knowledge version khác bản dùng để hiển thị plan, kết quả cũ bị vô hiệu hóa: pipeline tạo một vòng planning mới và yêu cầu người dùng chọn lại. Nếu phiên bản không đổi, `confirm` gọi `StandardValidator` lần cuối trên candidate đã chọn.
+
+```text
+Feedback (confirm) → Refresh snapshots → Final Validation
+→ valid → Confirmed
+                 └→ invalid/error → không xác nhận
+
+Snapshot changed → Rebuild planning result → awaiting_feedback
+```
+
+Ngay sau Final Validation, pipeline refresh snapshot thêm lần nữa để phát hiện nguồn thay đổi trong lúc validator chạy. API Confirm giữ khóa chung với JSON profile source, khóa theo run và compare-and-swap `state_revision` khi ghi kết quả; vì vậy hai worker không thể cùng xác nhận hoặc ghi đè cùng một revision. `FinalResult` chỉ được tạo khi Final Validation trả `valid`; một lựa chọn của người dùng không thể bỏ qua Validator hoặc hard constraints.
+
+#### 5.4.2. Nguyên tắc Human-in-the-loop
+
+Human-in-the-loop cho phép người dùng thay đổi mục tiêu, preference và không gian tìm kiếm; Ontology, Academic Rules và `StandardValidator` vẫn quyết định tính hợp lệ. `select`/`rank` được lưu cho preference dataset nhưng không tự sửa candidate hoặc kích hoạt generation. Feedback chỉ có thể ảnh hưởng thứ tự ưu tiên của plan đã valid hoặc tạo Adjustment Request cho một vòng mới; nó không được sửa hard constraints hay biến plan invalid thành valid.
 
 ### 5.5. Ontology Evidence và Grounded Explanation
 

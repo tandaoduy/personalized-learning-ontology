@@ -16,12 +16,15 @@ from __future__ import annotations
 from collections import Counter
 from datetime import datetime, timezone
 import argparse
+from hashlib import sha256
 import json
+import logging
 from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+LOG = logging.getLogger("e2e")
 
 from backend.app.agent.pipeline import AgentPipeline
 from backend.app.config import Config
@@ -223,21 +226,63 @@ def _evidence_coverage(result: dict) -> dict[str, float | int]:
     }
 
 
+def _percentile(values: list[float], percentile: float) -> float | None:
+    """Nearest-rank percentile without adding a numerical dependency."""
+    if not values:
+        return None
+    ordered = sorted(values)
+    index = max(0, min(len(ordered) - 1, int((len(ordered) - 1) * percentile)))
+    return round(ordered[index], 4)
+
+
+def _valid_attempt_count(result: dict) -> int:
+    """Count valid generation attempts, including a duplicate that spent budget.
+
+    A duplicate has no second Validator call, so it inherits validity from the
+    identical course-set candidate whose hash is recorded in the attempt trace.
+    Empty/adjustment-rejected attempts remain unsuccessful attempts.
+    """
+    validation_by_course_set: dict[str, bool] = {}
+    candidates = {item["plan_id"]: item for item in result.get("candidates", [])}
+    for validation in result.get("validations", []):
+        candidate = candidates.get(validation.get("plan_id"))
+        if candidate is None:
+            continue
+        codes = sorted(course["course_code"] for course in candidate.get("courses", []))
+        course_set_hash = "sha256:" + sha256(",".join(codes).encode()).hexdigest()
+        validation_by_course_set[course_set_hash] = validation.get("status") == "valid"
+    return sum(
+        validation_by_course_set.get(attempt.get("candidate_hash"), False)
+        for attempt in result.get("generation", {}).get("attempt_records", [])
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--scenario", action="append", dest="scenario_ids", help="Run only one or more scenario IDs")
+    parser.add_argument("--verbose", action="store_true", help="Show every Agent capability call and validation detail")
+    parser.add_argument("--output-dir", type=Path, help="Directory for artifacts; default is a UTC timestamped folder")
     args = parser.parse_args()
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(name)s | %(message)s")
+    logging.getLogger("backend").setLevel(logging.INFO if args.verbose else logging.WARNING)
     matrix = json.loads((ROOT / "experiments" / "e2e_scenario_matrix.json").read_text(encoding="utf-8"))
     source = json.loads(Path(Config.STUDENT_DATA_JSON).read_text(encoding="utf-8"))
     by_id = {item["student_id"]: item for item in source}
-    folder = ROOT / "artifacts" / "e2e_scenarios" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    folder.mkdir(parents=True)
+    folder = args.output_dir or ROOT / "artifacts" / "e2e_scenarios" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    folder = folder.resolve()
+    if folder.exists() and any(folder.iterdir()):
+        raise ValueError(f"Output directory is not empty: {folder}")
+    folder.mkdir(parents=True, exist_ok=True)
     rows: list[dict] = []
     knowledge_source_manifest: dict | None = None
     scenarios = [item for item in matrix["scenarios"] if not args.scenario_ids or item["id"] in args.scenario_ids]
     if args.scenario_ids and len(scenarios) != len(set(args.scenario_ids)):
         raise ValueError("Unknown scenario ID")
+    LOG.info("E2E start: %d scenario(s), verbose=%s, artifacts=%s", len(scenarios), args.verbose, folder)
     for scenario in scenarios:
+        started_at = datetime.now(timezone.utc)
+        LOG.info("[%s] start | profile=%s | goal=%s | target_credits=%s", scenario["id"],
+                 scenario["source_student_id"], scenario["goal"], scenario["target_credits"])
         raw = dict(by_id[scenario["source_student_id"]])
         raw["student_id"] = scenario["id"]
         raw["name"] = "ANONYMIZED"
@@ -270,10 +315,17 @@ def main() -> int:
         )
         result = pipeline.run_planning_flow(request)
         write_json(case_dir / "result.json", result)
+        LOG.info("[%s] planning=%s | candidates=%d | attempts=%d | valid_candidates=%d | latency=%.2fs",
+                 scenario["id"], result.get("status"), len(result.get("candidates", [])),
+                 len(result.get("generation", {}).get("attempt_records", [])),
+                 sum(item.get("status") == "valid" for item in result.get("validations", [])),
+                 result.get("elapsed_seconds") or 0)
         if knowledge_source_manifest is None:
             knowledge_source_manifest = (result.get("knowledge_snapshot") or {}).get("source_manifest")
         probe = invalid_probe(result, engine, pipeline.evidence, scenario["expected_violation"])
         write_json(case_dir / "invalid-probe.json", probe)
+        LOG.info("[%s] negative probe | expected=%s | passed=%s | course=%s", scenario["id"],
+                 scenario["expected_violation"], probe["passed"], probe.get("course_code", "-"))
         replan = confirmation = None
         if result.get("status") == "awaiting_feedback":
             feedback = FeedbackRequest(
@@ -290,6 +342,7 @@ def main() -> int:
             )
             replan = pipeline.replan_from_feedback(result, feedback)
             write_json(case_dir / "replanned.json", replan)
+            LOG.info("[%s] replan=%s", scenario["id"], replan.get("status"))
             if replan.get("status") == "awaiting_feedback":
                 confirm = FeedbackRequest(
                     feedback_id=f"{scenario['id']}-confirm",
@@ -303,6 +356,7 @@ def main() -> int:
                 )
                 confirmation = pipeline.confirm_from_feedback(replan, confirm)
                 write_json(case_dir / "confirmed.json", confirmation)
+                LOG.info("[%s] confirm=%s", scenario["id"], confirmation.get("status"))
 
         # ---- Strict pass criteria -----------------------------------------------
         status_ok = result["status"] in scenario["expected_statuses"]
@@ -342,6 +396,8 @@ def main() -> int:
             "expected_statuses": scenario["expected_statuses"],
             "valid_candidates": sum(v["status"] == "valid" for v in result.get("validations", [])),
             "candidate_count": len(result.get("candidates", [])),
+            "candidate_attempts_before_filter": len(result.get("generation", {}).get("attempt_records", [])),
+            "valid_candidate_attempts": _valid_attempt_count(result),
             "latency_seconds": result.get("elapsed_seconds"),
             "expected_invalid_probe": scenario["expected_violation"],
             "invalid_probe_passed": probe_ok,
@@ -359,12 +415,18 @@ def main() -> int:
         }
         write_json(case_dir / "scenario-contract.json", {"scenario": scenario, "result_summary": row})
         rows.append(row)
+        LOG.info("[%s] %s | evidence=%.0f%% | violations=%s | duration=%.2fs", scenario["id"],
+                 "PASS" if passed_contract else "FAIL", row["evidence_coverage"]["coverage"] * 100,
+                 row["violation_histogram"] or "none",
+                 (datetime.now(timezone.utc) - started_at).total_seconds())
 
     # ---- Aggregate metrics -----------------------------------------------------
     total = len(rows)
     passed = sum(1 for r in rows if r["passed_contract"])
-    validity_attempts = sum(r["candidate_count"] for r in rows)
-    validity_valid = sum(r["valid_candidates"] for r in rows)
+    # Candidate attempts (including duplicates/invalid attempts) are the
+    # denominator required by the baseline protocol, not the output cap of 3.
+    validity_attempts = sum(r["candidate_attempts_before_filter"] for r in rows)
+    validity_valid = sum(r["valid_candidate_attempts"] for r in rows)
     validity_rate = round(validity_valid / validity_attempts, 4) if validity_attempts else 0.0
     violation_counter: Counter[str] = Counter()
     for r in rows:
@@ -384,7 +446,6 @@ def main() -> int:
     overall_coverage = round(sum(coverage_values) / len(coverage_values), 4) if coverage_values else 0.0
     latency_vals = [r["latency_seconds"] for r in rows if r["latency_seconds"] is not None]
     latency_avg = round(sum(latency_vals) / len(latency_vals), 4) if latency_vals else 0.0
-    latency_max = round(max(latency_vals), 4) if latency_vals else 0.0
 
     summary = {
         "matrix_version": matrix["version"],
@@ -405,7 +466,8 @@ def main() -> int:
         "replan": {"passed": replan_pass, "total": replan_total},
         "confirm": {"passed": confirm_pass, "total": confirm_total},
         "evidence_coverage_avg": overall_coverage,
-        "latency": {"avg_seconds": latency_avg, "max_seconds": latency_max},
+        "latency": {"avg_seconds": latency_avg, "p50_seconds": _percentile(latency_vals, 0.50),
+                    "p95_seconds": _percentile(latency_vals, 0.95), "max_seconds": _percentile(latency_vals, 1.0)},
     }
     write_json(folder / "summary.json", summary)
 
@@ -421,7 +483,7 @@ def main() -> int:
         lines.append(
             f"| {r['scenario_id']} — {r['label']} | {r['status']} | "
             f"{'PASS' if r['passed_contract'] else 'FAIL'} | "
-            f"{r['valid_candidates']}/{r['candidate_count']} | "
+            f"{r['valid_candidate_attempts']}/{r['candidate_attempts_before_filter']} | "
             f"{'PASS' if r['invalid_probe_passed'] else 'FAIL'} | "
             f"{replan_m} | {confirm_m} | "
             f"{r['latency_seconds'] or 0:.2f} | {cov:.0%} |"
@@ -439,7 +501,7 @@ def main() -> int:
     if confirm_total:
         lines.append(f"- Confirm pass rate (when required): **{confirm_pass}/{confirm_total}**")
     lines.append(f"- Average evidence coverage: **{overall_coverage:.2%}**")
-    lines.append(f"- Latency avg / max: **{latency_avg:.2f}s / {latency_max:.2f}s**")
+    lines.append(f"- Latency avg / p50 / p95 / max: **{latency_avg:.2f}s / {summary['latency']['p50_seconds']:.2f}s / {summary['latency']['p95_seconds']:.2f}s / {summary['latency']['max_seconds']:.2f}s**")
     lines.append(f"- Controlled fixtures: **{controlled_count}**; data-derived: **{data_derived_count}**")
     if violation_counter:
         lines.append("")
@@ -452,6 +514,7 @@ def main() -> int:
     lines.append("")
     lines.append("Controlled fixtures are explicitly labelled and are not institutional policy data.")
     (folder / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    LOG.info("E2E complete: %d/%d contracts passed; report=%s", passed, total, folder / "REPORT.md")
     print(folder)
     return 0 if passed == total else 1
 

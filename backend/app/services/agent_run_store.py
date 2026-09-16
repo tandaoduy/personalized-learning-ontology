@@ -4,10 +4,16 @@ from __future__ import annotations
 from hashlib import sha256
 import json
 from pathlib import Path
-from threading import RLock
+from threading import RLock, local
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from uuid import uuid4
 import re
+
+try:  # POSIX is the deployment target (Docker/Linux and macOS development).
+    import fcntl
+except ImportError:  # pragma: no cover - retained for non-POSIX local tooling.
+    fcntl = None
 
 from backend.app.schemas import FeedbackNormalization, FeedbackReceipt, FeedbackRequest
 from backend.app.schemas.agent_state import AgentState, ArtifactReference
@@ -27,6 +33,7 @@ class AgentRunStore:
     def __init__(self, root: str | Path):
         self.root = Path(root).resolve()
         self._lock = RLock()
+        self._held_run_locks = local()
 
     def save_state(self, state: AgentState, expected_revision: int | None = None) -> None:
         with self._lock:
@@ -43,11 +50,24 @@ class AgentRunStore:
         state = AgentState.model_validate(result["state"])
         if result.get("run_id") != state.run_id:
             raise ValueError("Result run_id does not match state")
-        with self._lock:
+        with self._run_lock(state.run_id):
             self.save_state(state, expected_revision=expected_revision)
             payload = json.dumps(result, ensure_ascii=False, sort_keys=True,
                                  separators=(",", ":"), default=str).encode("utf-8")
             self._atomic_write(self._result_path(state.run_id), payload)
+
+    @contextmanager
+    def confirmation_transaction(self, run_id: str):
+        """Serialize final-validation and persistence for one run across processes.
+
+        The caller must reload the result *inside* this context, final-validate it,
+        then save it with the loaded revision as its compare-and-swap value.  This
+        prevents two web workers from confirming/replanning the same revision.
+        Source snapshots are rechecked by ``AgentPipeline`` immediately after final
+        validation; source writers must use their corresponding source lock.
+        """
+        with self._run_lock(run_id):
+            yield
 
     def load_state(self, run_id: str) -> AgentState:
         path = self._state_path(run_id)
@@ -136,6 +156,29 @@ class AgentRunStore:
     def _safe(self, value: str) -> None:
         if not self._SAFE_ID.fullmatch(value):
             raise ValueError("Run and artifact IDs must be safe path components")
+
+    @contextmanager
+    def _run_lock(self, run_id: str):
+        """Use an advisory per-run file lock in addition to the in-process lock."""
+        self._safe(run_id)
+        held = getattr(self._held_run_locks, "run_ids", set())
+        if run_id in held:
+            # ``save_result`` is deliberately called from inside a confirmation
+            # transaction. Do not acquire flock twice through a second FD.
+            yield
+            return
+        lock_path = self.root / "runs" / run_id / ".lock"
+        lock_path.parent.mkdir(parents=True, exist_ok=True)
+        with self._lock, lock_path.open("a+") as lock_file:
+            if fcntl is not None:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+            self._held_run_locks.run_ids = held | {run_id}
+            try:
+                yield
+            finally:
+                self._held_run_locks.run_ids = held
+                if fcntl is not None:
+                    fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
     @staticmethod
     def _atomic_write(path: Path, content: bytes) -> None:

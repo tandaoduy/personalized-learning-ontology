@@ -1,0 +1,56 @@
+{
+  "scenario": {
+    "id": "E2E-05",
+    "source_student_id": "SV185",
+    "label": "undeclared_specialization",
+    "target_credits": 12,
+    "goal": "on_time",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "expected_violation": "curriculum_membership",
+    "replan": "exclude specialization course",
+    "confirm": false
+  },
+  "result_summary": {
+    "scenario_id": "E2E-05",
+    "label": "undeclared_specialization",
+    "controlled_fixture": false,
+    "status": "awaiting_feedback",
+    "expected_statuses": [
+      "awaiting_feedback",
+      "replanning",
+      "no_plan_found"
+    ],
+    "valid_candidates": 3,
+    "candidate_count": 3,
+    "candidate_attempts_before_filter": 3,
+    "valid_candidate_attempts": 3,
+    "latency_seconds": 0.4541147079999064,
+    "expected_invalid_probe": "curriculum_membership",
+    "invalid_probe_passed": true,
+    "invalid_probe_course_code": "CCN6203",
+    "replan_status": "awaiting_feedback",
+    "confirm_required": false,
+    "confirm_status": "confirmed",
+    "artifact_complete": true,
+    "artifact_missing": [],
+    "criteria": {
+      "status_ok": true,
+      "invalid_probe_passed": true,
+      "replan_ok": true,
+      "confirm_ok": null,
+      "artifact_complete": true
+    },
+    "passed_contract": true,
+    "violation_histogram": {},
+    "evidence_coverage": {
+      "total_rule_decisions": 330,
+      "decisions_with_evidence": 330,
+      "coverage": 1.0
+    },
+    "replan_criterion": "exclude specialization course"
+  }
+}

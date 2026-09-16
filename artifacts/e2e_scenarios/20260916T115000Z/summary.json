@@ -1,0 +1,522 @@
+{
+  "matrix_version": "e2e-scenarios-v1",
+  "generated_at": "2026-09-16T11:51:44.904069+00:00",
+  "knowledge_source_manifest": {
+    "manifest_id": "academic-policy-source-manifest",
+    "manifest_ref": "knowledge/source_manifest.json",
+    "version": "source-manifest-v1",
+    "content_hash": "sha256:8f7bccd48c23901a708938ccc7734f121a13f5cfaff8c66f49f905c72f033650",
+    "sources": [
+      {
+        "domain": "curriculum_catalog",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "Versioned/hash-bound repository ontology; official curriculum publication and effective date are not attached."
+      },
+      {
+        "domain": "prerequisite_and_corequisite",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "Rules are read from RDF; formal institutional source verification remains pending."
+      },
+      {
+        "domain": "elective_quota",
+        "source_ref": "backend/app/config.py",
+        "version": "mvp-quota-v1",
+        "effective_date": null,
+        "content_hash": "sha256:961d3b69bb8ded735179abe3f63871a677dc524f94d71193bebe552f3579e886",
+        "authority_status": "proxy",
+        "limitation": "Quota is MVP configuration, not asserted as a university regulation."
+      },
+      {
+        "domain": "credit_policy",
+        "source_ref": "backend/app/services/recommendation/constants.py",
+        "version": "mvp-credit-policy-v1",
+        "effective_date": null,
+        "content_hash": "sha256:9537e9916c435fd05857d21bfcda5a7bd1faedb66d0f8803452515d5474a823e",
+        "authority_status": "proxy",
+        "limitation": "Registration-credit overrides are MVP configuration, not asserted as university regulation."
+      },
+      {
+        "domain": "course_offering",
+        "source_ref": "knowledge/ontology/ontology_v23.rdf",
+        "version": "ontology-v23",
+        "effective_date": null,
+        "content_hash": "sha256:55b896f5c832eb7403700e4605568259540d02e23472565c4cd29f8e31c94cad",
+        "authority_status": "provisional",
+        "limitation": "openSemesterType is not a verified term-by-term institutional offering schedule."
+      },
+      {
+        "domain": "academic_calendar",
+        "source_ref": "unavailable-academic-calendar",
+        "version": "unavailable",
+        "effective_date": null,
+        "content_hash": null,
+        "authority_status": "unavailable",
+        "limitation": "next-term means current_semester + 1; no versioned academic-calendar mapping exists."
+      }
+    ]
+  },
+  "cases": [
+    {
+      "scenario_id": "E2E-01",
+      "label": "on_track",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.5818071670000791,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "SOT379",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": true,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": true,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "replace elective"
+    },
+    {
+      "scenario_id": "E2E-02",
+      "label": "retake",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 0,
+      "latency_seconds": 0.07948341600058484,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "SOT379",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null,
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": null,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {
+        "credit_limit": 2
+      },
+      "evidence_coverage": {
+        "total_rule_decisions": 22,
+        "decisions_with_evidence": 22,
+        "coverage": 1.0
+      },
+      "replan_criterion": "remove failed-course alternative"
+    },
+    {
+      "scenario_id": "E2E-03",
+      "label": "missing_prerequisite",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.39714058300160104,
+      "expected_invalid_probe": "prerequisite",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "CCN6203",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 132,
+        "decisions_with_evidence": 132,
+        "coverage": 1.0
+      },
+      "replan_criterion": "add eligible alternative"
+    },
+    {
+      "scenario_id": "E2E-04",
+      "label": "corequisite",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.5064870000005612,
+      "expected_invalid_probe": "corequisite",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "INS325",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "add corequisite or replace"
+    },
+    {
+      "scenario_id": "E2E-05",
+      "label": "undeclared_specialization",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "valid_candidates": 3,
+      "candidate_count": 3,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.4541147079999064,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "CCN6203",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 330,
+        "decisions_with_evidence": 330,
+        "coverage": 1.0
+      },
+      "replan_criterion": "exclude specialization course"
+    },
+    {
+      "scenario_id": "E2E-06",
+      "label": "specialization_cnpm",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.5032268750001094,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "CCN6203",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "replace specialization elective"
+    },
+    {
+      "scenario_id": "E2E-07",
+      "label": "specialization_httt_controlled",
+      "controlled_fixture": true,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.4882833750016289,
+      "expected_invalid_probe": "curriculum_membership",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "CCN6203",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "replace specialization elective"
+    },
+    {
+      "scenario_id": "E2E-08",
+      "label": "elective_quota_near_full_controlled",
+      "controlled_fixture": true,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "valid_candidates": 1,
+      "candidate_count": 1,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.12767954199989617,
+      "expected_invalid_probe": "elective_quota",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "85066",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 44,
+        "decisions_with_evidence": 44,
+        "coverage": 1.0
+      },
+      "replan_criterion": "remove elective"
+    },
+    {
+      "scenario_id": "E2E-09",
+      "label": "low_credit_load",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.4949564590006048,
+      "expected_invalid_probe": "credit_limit",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "85065",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "increase target credits"
+    },
+    {
+      "scenario_id": "E2E-10",
+      "label": "high_credit_load",
+      "controlled_fixture": false,
+      "status": "awaiting_feedback",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "no_plan_found"
+      ],
+      "valid_candidates": 2,
+      "candidate_count": 2,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 3,
+      "latency_seconds": 0.5130908330011152,
+      "expected_invalid_probe": "credit_limit",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "85065",
+      "replan_status": "awaiting_feedback",
+      "confirm_required": false,
+      "confirm_status": "confirmed",
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": true,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {},
+      "evidence_coverage": {
+        "total_rule_decisions": 110,
+        "decisions_with_evidence": 110,
+        "coverage": 1.0
+      },
+      "replan_criterion": "reduce target credits"
+    },
+    {
+      "scenario_id": "E2E-11",
+      "label": "accelerated_near_graduation",
+      "controlled_fixture": false,
+      "status": "replanning",
+      "expected_statuses": [
+        "awaiting_feedback",
+        "replanning",
+        "no_plan_found"
+      ],
+      "valid_candidates": 0,
+      "candidate_count": 1,
+      "candidate_attempts_before_filter": 3,
+      "valid_candidate_attempts": 0,
+      "latency_seconds": 0.10761966700010817,
+      "expected_invalid_probe": "completed_course_retake",
+      "invalid_probe_passed": true,
+      "invalid_probe_course_code": "SOT379",
+      "replan_status": null,
+      "confirm_required": false,
+      "confirm_status": null,
+      "artifact_complete": true,
+      "artifact_missing": [],
+      "criteria": {
+        "status_ok": true,
+        "invalid_probe_passed": true,
+        "replan_ok": null,
+        "confirm_ok": null,
+        "artifact_complete": true
+      },
+      "passed_contract": true,
+      "violation_histogram": {
+        "credit_limit": 3
+      },
+      "evidence_coverage": {
+        "total_rule_decisions": 33,
+        "decisions_with_evidence": 33,
+        "coverage": 1.0
+      },
+      "replan_criterion": "prioritize remaining requirements"
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "controlled_fixture_count": 2,
+  "data_derived_fixture_count": 9,
+  "validity": {
+    "candidate_attempts": 33,
+    "valid_candidates": 27,
+    "validity_rate": 0.8182
+  },
+  "violation_histogram": {
+    "credit_limit": 5
+  },
+  "invalid_probe": {
+    "passed": 11,
+    "total": 11
+  },
+  "replan": {
+    "passed": 9,
+    "total": 9
+  },
+  "confirm": {
+    "passed": 1,
+    "total": 1
+  },
+  "evidence_coverage_avg": 1.0,
+  "latency": {
+    "avg_seconds": 0.3867,
+    "p50_seconds": 0.4883,
+    "p95_seconds": 0.5131,
+    "max_seconds": 0.5818
+  }
+}

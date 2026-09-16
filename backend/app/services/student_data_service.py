@@ -10,6 +10,7 @@ import re
 from typing import Any, Dict, List, Optional, Set
 
 from backend.app.models.student import CourseAttempt, StudentProfile
+from backend.app.services.source_lock import exclusive_source_lock
 
 NON_ACCUMULATED_ENGLISH_COURSES = frozenset({'FLS310', 'FLS312', 'FLS313'})
 NON_ACCUMULATED_FIXED_COURSES = frozenset({'SOT301'})
@@ -372,8 +373,7 @@ class StudentDataService:
                 break
 
         if updated:
-            with open(self.json_path, "w", encoding="utf-8") as file:
-                json.dump(existing_data, file, ensure_ascii=False, indent=4)
+            self._write_json_source(existing_data)
             self._students_cache = None
             self.logger.info("Đã cập nhật tên sinh viên")
 
@@ -400,8 +400,7 @@ class StudentDataService:
         if not deleted:
             raise ValueError(f"Không tìm thấy sinh viên {student_id} để xóa")
 
-        with open(self.json_path, "w", encoding="utf-8") as file:
-            json.dump(filtered_data, file, ensure_ascii=False, indent=4)
+        self._write_json_source(filtered_data)
 
         self._students_cache = None
         self.logger.info("Đã xóa sinh viên và làm mới cache")
@@ -458,8 +457,7 @@ class StudentDataService:
 
         existing_data.append(self._build_student_json_record(student, course_catalog))
 
-        with open(self.json_path, "w", encoding="utf-8") as file:
-            json.dump(existing_data, file, ensure_ascii=False, indent=4)
+        self._write_json_source(existing_data)
 
     def _update_student_in_json(
         self,
@@ -490,8 +488,15 @@ class StudentDataService:
         if not updated:
             raise ValueError(f"Không tìm thấy sinh viên {student.student_id} trong cơ sở dữ liệu để cập nhật.")
 
-        with open(self.json_path, "w", encoding="utf-8") as file:
-            json.dump(updated_data, file, ensure_ascii=False, indent=4)
+        self._write_json_source(updated_data)
+
+    def _write_json_source(self, data: List[Dict[str, Any]]) -> None:
+        """Write the mutable profile source under the same lock used by Confirm."""
+        with exclusive_source_lock(self.json_path):
+            temporary = f"{self.json_path}.tmp"
+            with open(temporary, "w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+            os.replace(temporary, self.json_path)
 
     def _build_student_json_record(
         self,

@@ -13,6 +13,7 @@ __pycache__/
 venv/
 
 # Generated or temporary artifacts
+*.lock
 tmptq0ti21_/
 StudentDataStandardization/reports/
 legacy/outputs/

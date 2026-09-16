@@ -428,6 +428,31 @@ class AgentPipeline:
                                        "knowledge": current_knowledge.model_dump(mode="json")}))
         confirmation = confirm_plan(confirmation_context, candidate, current_student, current_knowledge, self.evidence,
                                     min_credits=self.engine.min_credits, max_credits=self.engine.max_credits)
+        # A refresh before validation is not enough: a source may change while
+        # StandardValidator is running.  Re-read both snapshots immediately before
+        # committing confirmation and force the user to choose from a new run.
+        confirmed_student, confirmed_knowledge = self._refresh_confirmation_context(
+            state, PlanningRequest.model_validate(previous_result["request"]))
+        if (confirmed_student.student_version != current_student.student_version
+                or confirmed_knowledge.versions != current_knowledge.versions):
+            refreshed_request = PlanningRequest.model_validate(previous_result["request"]).model_copy(update={
+                "request_id": PlanningRequest.model_validate(previous_result["request"]).request_id
+                + f"-refresh-{state.iteration + 1}",
+            })
+            refreshed = self.run_planning_flow(refreshed_request, parent_state=state)
+            refreshed.update({
+                "confirmation_refresh_required": True,
+                "parent_run_id": previous_result["run_id"],
+                "source_versions_before": {
+                    "student_version": current_student.student_version,
+                    "knowledge_versions": current_knowledge.versions.model_dump(mode="json"),
+                },
+                "source_versions_after": {
+                    "student_version": confirmed_student.student_version,
+                    "knowledge_versions": confirmed_knowledge.versions.model_dump(mode="json"),
+                },
+            })
+            return refreshed
         state = self.orchestrator.apply_result(state, "confirm", confirmation_context, confirmation)
         if confirmation.status == "error" or state.status != "confirmed":
             raise ValueError(confirmation.error.message if confirmation.error else "CONFIRMATION_FAILED")
