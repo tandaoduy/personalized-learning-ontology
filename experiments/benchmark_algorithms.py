@@ -108,9 +108,9 @@ def greedy_plan(engine, student):
 
 
 # Phương pháp đề tài: gọi luồng heuristic kết hợp Beam Search hiện hành.
-def beam_search_plan(engine, student):
+def beam_search_plan(engine, student, seed_offset: int = 0):
     # Gọi đúng luồng sản phẩm hiện tại; kết quả này là phương pháp đề tài.
-    return engine.get_recommendation(student, seed_offset=0).recommended_courses
+    return engine.get_recommendation(student, seed_offset=seed_offset).recommended_courses
 
 
 # Tính các chỉ số so sánh: ràng buộc, bắt buộc, điểm, quota, tín chỉ và giải thích.
