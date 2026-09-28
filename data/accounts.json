@@ -40,6 +40,24 @@
       "full_name": "65133141",
       "status": "approved",
       "created_at": "2026-08-21T09:46:45"
+    },
+    {
+      "username": "65134444",
+      "password_hash": "scrypt:32768:8:1$Dj2QNb8eEaC7saEW$6b1feddc4a1d2aa1ba317390dad758a1d509cf981a9b705b8e9d63481afc7044f3e7b7c65b1f1aa23237857d914b665c67d53bfa10330507db8968c322a1071a",
+      "role": "student",
+      "display_name": "nguyễn văn a",
+      "full_name": "nguyễn văn a",
+      "status": "approved",
+      "created_at": "2026-09-28T18:35:14"
+    },
+    {
+      "username": "2026001",
+      "password_hash": "scrypt:32768:8:1$gN5AGn0vs7wXwquT$76e757867715fc908fa2ff5a485b7cd4d37d03b607d856336fc90b9b4d054d90e415541a36fe3ba039385c8769edd1ada22bea14513e2169d12a29c036deebc2",
+      "role": "advisor",
+      "display_name": "Nguyễn Văn A",
+      "full_name": "Nguyễn Văn A",
+      "status": "approved",
+      "created_at": "2026-09-28T19:11:18"
     }
   ]
 }

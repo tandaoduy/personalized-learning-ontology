@@ -13,6 +13,18 @@ html {
     text-rendering: optimizeLegibility;
 }
 
+/* Giữ khả năng cuộn nhưng ẩn thanh cuộn trên toàn ứng dụng. */
+html,
+body,
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
 :root {
     --primary-color: #1976d2;
     --secondary-color: #388e3c;

@@ -8,6 +8,17 @@
 
 {% block content %}
 <section class="home-dashboard--advisor" data-role="advisor">
+    <section class="advisor-carousel" aria-label="Thông tin nổi bật">
+        <div class="advisor-carousel__track">
+            <figure class="advisor-carousel__slide is-active"><img src="{{ url_for('static', filename='images/c1.png') }}" alt="Thông tin nổi bật 1"></figure>
+            <figure class="advisor-carousel__slide"><img src="{{ url_for('static', filename='images/c2.png') }}" alt="Thông tin nổi bật 2"></figure>
+        </div>
+        <div class="advisor-carousel__dots" role="tablist" aria-label="Chọn ảnh hiển thị">
+            {% for i in range(2) %}
+            <button class="advisor-carousel__dot{% if i == 0 %} is-active{% endif %}" type="button" aria-label="Hiển thị ảnh {{ i + 1 }}" aria-selected="{{ 'true' if i == 0 else 'false' }}"></button>
+            {% endfor %}
+        </div>
+    </section>
     <!-- SVG Navigation Cards Grid (Giống trang sinh viên) -->
     <div class="home-grid">
         <!-- Card 1: Tìm kiếm & Lọc SV -->
@@ -122,4 +133,25 @@
 </section>
 
 <script src="{{ url_for('static', filename='js/advisor/dashboard.js', v='dashboard-cache-2') }}" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.advisor-carousel');
+    if (!carousel || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const slides = [...carousel.querySelectorAll('.advisor-carousel__slide')];
+    const dots = [...carousel.querySelectorAll('.advisor-carousel__dot')];
+    let current = 0;
+    let timer;
+    const show = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
+        dots.forEach((dot, i) => { dot.classList.toggle('is-active', i === current); dot.setAttribute('aria-selected', String(i === current)); });
+    };
+    const start = () => { timer = window.setInterval(() => show(current + 1), 5000); };
+    const stop = () => window.clearInterval(timer);
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); stop(); start(); }));
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    start();
+});
+</script>
 {% endblock %}

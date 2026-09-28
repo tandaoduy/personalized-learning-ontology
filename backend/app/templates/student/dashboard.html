@@ -4,43 +4,60 @@
 
 {% block content %}
 <section class="home-dashboard home-dashboard--student" data-role="student">
+    <section class="dashboard-carousel reveal-up" aria-label="Thông tin nổi bật">
+        <div class="dashboard-carousel__track">
+            <figure class="dashboard-carousel__slide is-active">
+                <img src="{{ url_for('static', filename='images/c1.png') }}" alt="Thông tin nổi bật 1">
+            </figure>
+            <figure class="dashboard-carousel__slide">
+                <img src="{{ url_for('static', filename='images/c2.png') }}" alt="Thông tin nổi bật 2">
+            </figure>
+        </div>
+        <div class="dashboard-carousel__dots" role="tablist" aria-label="Chọn ảnh hiển thị">
+            {% for i in range(2) %}
+            <button class="dashboard-carousel__dot{% if i == 0 %} is-active{% endif %}" type="button" aria-label="Hiển thị ảnh {{ i + 1 }}" aria-selected="{{ 'true' if i == 0 else 'false' }}"></button>
+            {% endfor %}
+        </div>
+    </section>
     <div class="home-grid">
-        <a class="ui-card home-card reveal-up delay-100" href="/student/profile">
+        <a class="ui-card home-card home-card--profile reveal-up delay-100" href="/student/profile">
             <div class="ui-card__body">
                 <span class="home-card__icon home-card__icon--blue" aria-hidden="true">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-                        <path d="M10 14h17a7 7 0 0 1 7 7v31a6 6 0 0 0-6-6H10V14Z" fill="#dbeafe" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
-                        <path d="M54 14H37a7 7 0 0 0-7 7v31a6 6 0 0 1 6-6h18V14Z" fill="#eff6ff" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
-                        <path d="M17 24h9M17 32h9M39 24h8M39 32h8" stroke="#2563eb" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M10 17h18a6 6 0 0 1 6 6v28a7 7 0 0 0-7-7H10V17Z" fill="#DBEAFE"/>
+                        <path d="M54 17H36a6 6 0 0 0-6 6v28a7 7 0 0 1 7-7h17V17Z" fill="#BFDBFE"/>
+                        <path d="M10 17h18a6 6 0 0 1 6 6v28a7 7 0 0 0-7-7H10V17ZM54 17H36a6 6 0 0 0-6 6v28a7 7 0 0 1 7-7h17V17Z" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M17 28h10M17 35h7M38 28h9M38 35h9" stroke="#60A5FA" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
                 </span>
                 <h2 class="ui-card__title">Hồ sơ học tập</h2>
             </div>
         </a>
 
-        <a class="ui-card home-card reveal-up delay-200" href="/student/plan">
-            <div class="ui-card__body">
-                <span class="home-card__icon home-card__icon--green" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-                        <rect x="15" y="8" width="34" height="48" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
-                        <path d="M24 22h16M24 32h16M24 42h9" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
-                        <path d="m42 40 4 4 8-10" stroke="#15803d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                <h2 class="ui-card__title">Sinh kế hoạch học tập</h2>
-            </div>
-        </a>
-
-        <a class="ui-card home-card reveal-up delay-300" href="/student/history">
+        <a class="ui-card home-card home-card--history reveal-up delay-200" href="/student/history">
             <div class="ui-card__body">
                 <span class="home-card__icon home-card__icon--purple" aria-hidden="true">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-                        <circle cx="32" cy="32" r="22" fill="#faf5ff" stroke="#a855f7" stroke-width="3"/>
-                        <path d="M32 16v16l10 10" stroke="#a855f7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="32" cy="32" r="4" fill="#a855f7"/>
+                        <rect x="11" y="12" width="42" height="42" rx="11" fill="#F3E8FF"/>
+                        <path d="M21 41V31M32 41V24M43 41v-7" stroke="#A855F7" stroke-width="4" stroke-linecap="round"/>
+                        <path d="m19 25 11-7 9 5 7-8" stroke="#EC4899" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M42 15h4v4" stroke="#EC4899" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
                 <h2 class="ui-card__title">Kết quả học tập</h2>
+            </div>
+        </a>
+        <a class="ui-card home-card home-card--plan reveal-up delay-300" href="/student/plan">
+            <div class="ui-card__body">
+                <span class="home-card__icon home-card__icon--green" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+                        <rect x="14" y="12" width="36" height="42" rx="9" fill="#DCFCE7"/>
+                        <path d="M23 9v8M41 9v8M14 24h36" stroke="#16A34A" stroke-width="2.8" stroke-linecap="round"/>
+                        <rect x="14" y="12" width="36" height="42" rx="9" stroke="#16A34A" stroke-width="2.5"/>
+                        <path d="m23 36 5 5 13-14" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <h2 class="ui-card__title">Lập kế hoạch học tập</h2>
             </div>
         </a>
     </div>
@@ -107,6 +124,30 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/student/dashboard.css') }}">
 <script src="{{ url_for('static', filename='js/student/dashboard.js') }}" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.dashboard-carousel');
+    if (!carousel || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const slides = [...carousel.querySelectorAll('.dashboard-carousel__slide')];
+    const dots = [...carousel.querySelectorAll('.dashboard-carousel__dot')];
+    let current = 0;
+    let timer;
+    const show = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === current));
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('is-active', i === current);
+            dot.setAttribute('aria-selected', String(i === current));
+        });
+    };
+    const start = () => { timer = window.setInterval(() => show(current + 1), 5000); };
+    const stop = () => window.clearInterval(timer);
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); stop(); start(); }));
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    start();
+});
+</script>
 {% endblock %}
 
 {% block extra_scripts %}
