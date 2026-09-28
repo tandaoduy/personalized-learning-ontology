@@ -357,6 +357,12 @@ window.AdvisorWorkspace = (function() {
             }
         });
         loadCommunityEvaluations();
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePrereqModal();
+            }
+        });
     }
 
     // --- 1. Load Stats ---
@@ -1408,42 +1414,16 @@ window.AdvisorWorkspace = (function() {
         if (!modal || !body) return;
 
         modal.style.display = 'flex';
-        body.innerHTML = `<div class="loading-state">⏳ Đang truy vấn cây ontology chuỗi tiên quyết cho học phần ${courseCode}...</div>`;
+        document.body.style.overflow = 'hidden';
+        body.innerHTML = `<div class="loading-state" style="text-align:center;padding:24px;color:#64748b;">⏳ Đang truy vấn cây ontology chuỗi tiên quyết cho học phần <strong>${escapeAdvisorHtml(courseCode)}</strong>...</div>`;
 
         try {
             const res = await fetch(`/api/courses/${courseCode}/prerequisite-chain?student_id=${selectedStudent.student_id}`);
             const json = await res.json();
             if (json.success && json.data) {
                 renderAdvisorPrerequisiteTimeline(json.data, body);
-                return;
-                const chain = json.data.prerequisite_chain || [];
-                const guidance = json.data.guidance || "Hoàn thành các môn trong chuỗi đúng thứ tự.";
-                
-                let chainHTML = "";
-                if (chain.length === 0) {
-                    chainHTML = `<div class="p-3 bg-green-50 text-green-700 rounded-lg">🟢 Học phần này không yêu cầu môn tiên quyết hoặc sinh viên đã hoàn thành toàn bộ chuỗi.</div>`;
-                } else {
-                    chainHTML = `
-                        <div class="p-3 bg-blue-50 text-blue-800 rounded-lg mb-3"><strong>💡 Hướng dẫn học vụ:</strong> ${guidance}</div>
-                        <table class="advisor-table table-sm">
-                            <thead>
-                                <tr><th>Mã học phần</th><th>Tên môn học</th><th>Tình trạng của SV</th></tr>
-                            </thead>
-                            <tbody>
-                                ${chain.map(item => `
-                                    <tr>
-                                        <td><strong>${item.course_code}</strong></td>
-                                        <td>${item.course_name || item.course_code}</td>
-                                        <td><span class="badge-status ${item.status === 'Đã hoàn thành' ? 'normal' : 'risk'}">${item.status || 'Chưa đạt'}</span></td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    `;
-                }
-                body.innerHTML = chainHTML;
             } else {
-                body.innerHTML = `<div class="p-3 bg-red-50 text-red-700 rounded-lg">Không thể phân tích chuỗi tiên quyết: ${json.error || "Lỗi máy chủ"}</div>`;
+                body.innerHTML = `<div class="p-3 bg-red-50 text-red-700 rounded-lg">Không thể phân tích chuỗi tiên quyết: ${escapeAdvisorHtml(json.error || "Lỗi máy chủ")}</div>`;
             }
         } catch (err) {
             console.error("Lỗi lấy chuỗi tiên quyết:", err);
@@ -1454,6 +1434,7 @@ window.AdvisorWorkspace = (function() {
     function closePrereqModal() {
         const modal = document.getElementById('prereqModal');
         if (modal) modal.style.display = 'none';
+        document.body.style.overflow = '';
     }
 
     // --- 6. Plan Confirmation & Consultation Saving (Chức năng 7 & 8) ---

@@ -494,6 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
 window.closePrerequisiteModal = function() {
     const modal = document.getElementById("prerequisiteModal");
     if(modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
 };
 
 window.openPrerequisiteModal = function(courseCode) {
@@ -504,6 +505,7 @@ window.openPrerequisiteModal = function(courseCode) {
     if(!modal || !body || !studentId) return;
 
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
     body.innerHTML = `<div style="text-align: center; padding: 20px; color: #6b7280;">Đang phân tích đồ thị môn học...</div>`;
 
     fetch(`/api/courses/${courseCode}/prerequisite-chain?student_id=${studentId}`)
@@ -519,6 +521,15 @@ window.openPrerequisiteModal = function(courseCode) {
             body.innerHTML = `<div style="color: #ef4444; text-align: center; padding: 20px;">Lỗi kết nối máy chủ.</div>`;
         });
 };
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById("prerequisiteModal");
+        if (modal && modal.style.display !== 'none') {
+            window.closePrerequisiteModal();
+        }
+    }
+});
 
 function renderPrerequisiteTimeline(data, container) {
     let html = `

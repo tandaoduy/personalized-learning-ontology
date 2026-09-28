@@ -281,103 +281,135 @@ select.tomselected {
 .custom-modal {
     position: fixed;
     inset: 0;
-    /* Modal must sit above the sticky navigation bar on every viewport. */
+    /* Modal sits above navigation bar and all fixed elements */
     z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    overflow: auto;
+    padding: 24px 16px;
+    overflow-y: auto;
     overscroll-behavior: contain;
     box-sizing: border-box;
+    animation: fadeInModal 0.2s ease-out;
 }
 
 .custom-modal__backdrop {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: transparent;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+    z-index: 1;
 }
 
 .custom-modal__content {
     position: relative;
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
     width: 100%;
-    max-width: 680px;
-    max-height: calc(100dvh - 32px);
+    max-width: 640px;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.05);
     z-index: 2;
     overflow: hidden;
-    animation: zoomModal 0.25s ease;
+    cursor: default;
+    animation: zoomModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Modal chuỗi tiên quyết của CVHT cần không gian rộng để hiển thị timeline. */
+/* Modal chuỗi tiên quyết: Kích thước vừa vặn, không gian gọn gàng, tự co giãn theo nội dung */
 #prereqModal .custom-modal__content {
-    width: min(960px, calc(100vw - 32px));
-    max-width: 960px;
-    /* Keep the title and Close button inside the viewport; the timeline scrolls. */
-    height: min(760px, calc(100dvh - 32px));
-    max-height: calc(100dvh - 32px);
+    width: min(640px, calc(100vw - 32px));
+    max-width: 640px;
+    height: auto;
+    max-height: min(85vh, 680px);
     flex: 0 1 auto;
 }
 
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 @keyframes zoomModal {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from { transform: scale(0.96) translateY(-8px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .custom-modal__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--adv-border);
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--adv-border, #e2e8f0);
     background: #f8fafc;
     flex-shrink: 0;
 }
 
 .custom-modal__header h3 {
     margin: 0;
-    font-size: 1.25rem;
-    color: var(--adv-dark);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--adv-dark, #0f172a);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-close {
-    background: transparent;
-    border: none;
-    font-size: 1.2rem;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
     cursor: pointer;
-    color: var(--adv-muted);
+    color: #64748b;
+    transition: all 0.15s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.btn-close:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #ef4444;
+    transform: scale(1.05);
 }
 
 .custom-modal__body {
-    padding: 24px;
+    padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 auto;
     min-height: 0;
     overscroll-behavior: contain;
 }
 
 .custom-modal__footer {
-    padding: 16px 24px;
-    border-top: 1px solid var(--adv-border);
+    padding: 14px 20px;
+    border-top: 1px solid var(--adv-border, #e2e8f0);
     background: #f8fafc;
     text-align: right;
     flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 @media (max-width: 640px) {
     .custom-modal {
-        align-items: flex-start;
-        padding: 8px;
+        padding: 12px;
     }
 
     #prereqModal .custom-modal__content {
         width: 100%;
-        height: calc(100dvh - 16px);
-        max-height: calc(100dvh - 16px);
+        max-height: calc(100dvh - 24px);
         border-radius: 14px;
     }
 

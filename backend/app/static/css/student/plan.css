@@ -311,33 +311,41 @@
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: transparent !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
-    padding: 16px;
-    overflow: hidden;
+    padding: 24px 16px;
+    overflow-y: auto;
     box-sizing: border-box;
+    cursor: pointer;
     animation: fadeIn 0.2s ease;
 }
 
 .modal-content {
     background: white;
-    border-radius: 12px;
-    width: 90%;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    width: 100%;
     max-width: 500px;
-    max-height: calc(100dvh - 32px);
+    margin: auto;
+    max-height: min(85vh, 680px);
     display: flex;
     flex-direction: column;
     min-height: 0;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    cursor: default;
 }
 
-/* Chuỗi tiên quyết cần không gian rộng hơn để đọc timeline và tên học phần dài. */
+/* Chuỗi tiên quyết: Kích thước vừa vặn, không gian gọn gàng */
 #prerequisiteModal .modal-content {
-    width: min(960px, calc(100vw - 32px));
-    max-width: 960px;
+    width: min(640px, calc(100vw - 32px));
+    max-width: 640px;
+    height: auto;
+    max-height: min(85vh, 680px);
 }
 .modal-lg { max-width: 700px; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--border-color, #e5e7eb); }

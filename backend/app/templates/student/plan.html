@@ -240,10 +240,10 @@
 
 {% block modal_layer %}
 <!-- Modal Chuỗi Tiên Quyết: đặt ngoài main để position: fixed luôn bám theo viewport. -->
-<div id="prerequisiteModal" class="modal-overlay" style="display: none;">
+<div id="prerequisiteModal" class="modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="prereqStudentModalTitle" onclick="if(event.target === this) closePrerequisiteModal()">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Phân tích Chuỗi Tiên quyết</h3>
+            <h3 id="prereqStudentModalTitle">Phân tích Chuỗi Tiên quyết</h3>
             <button type="button" class="modal-close" onclick="closePrerequisiteModal()" aria-label="Đóng">&times;</button>
         </div>
         <div class="modal-body" id="prerequisiteModalBody">

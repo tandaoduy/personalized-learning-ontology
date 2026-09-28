@@ -126,8 +126,11 @@ body > main > *:nth-child(3n) { animation-delay: 0.28s; }
 
 /* Dialogs are initially hidden and must never inherit the page-entry opacity. */
 body > main > .modal-overlay,
-body > main > .modal {
-    animation: none !important;
+body > main > .modal,
+body > main > .custom-modal,
+.custom-modal,
+.modal-overlay {
+    animation: none;
     opacity: 1;
     transform: none;
 }

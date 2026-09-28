@@ -535,7 +535,9 @@ function openCourseModal() {
     courseGrade.value = '';
     courseGrade.disabled = false;
     courseStatusSelect.value = 'auto';
-    courseModalBackdrop.style.display = 'block';
+    // The backdrop is a flex layout so the dialog stays within the visual viewport
+    // on mobile (including when the on-screen keyboard is open).
+    courseModalBackdrop.style.display = 'flex';
 }
 
 function closeCourseModal() {

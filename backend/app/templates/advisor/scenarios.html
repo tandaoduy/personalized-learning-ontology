@@ -160,15 +160,16 @@
         </div>
     </div>
 </section>
+{% endblock %}
 
 {% block modal_layer %}
 <!-- MODAL CHUỖI TIÊN QUYẾT -->
-<div class="custom-modal" id="prereqModal" style="display: none;">
-    <div class="custom-modal__backdrop" onclick="AdvisorWorkspace.closePrereqModal()"></div>
+<div class="custom-modal" id="prereqModal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="prereqModalTitle" onclick="if (event.target === this) AdvisorWorkspace.closePrereqModal()">
+    <div class="custom-modal__backdrop" onclick="AdvisorWorkspace.closePrereqModal()" aria-hidden="true"></div>
     <div class="custom-modal__content">
         <div class="custom-modal__header">
-            <h3>🔗 Phân tích chuỗi môn tiên quyết</h3>
-            <button type="button" class="btn-close" onclick="AdvisorWorkspace.closePrereqModal()">✖</button>
+            <h3 id="prereqModalTitle">🔗 Phân tích chuỗi môn tiên quyết</h3>
+            <button type="button" class="btn-close" onclick="AdvisorWorkspace.closePrereqModal()" aria-label="Đóng">✖</button>
         </div>
         <div class="custom-modal__body" id="prereqModalBody">
             <div class="loading-state">⏳ Đang nạp phân tích ontology...</div>
@@ -180,5 +181,6 @@
 </div>
 {% endblock %}
 
+{% block extra_scripts %}
 <script src="{{ url_for('static', filename='js/advisor/dashboard.js') }}" defer></script>
 {% endblock %}
