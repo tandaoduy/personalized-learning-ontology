@@ -22,6 +22,16 @@
         #toastContainer > * {
             pointer-events: auto;
         }
+        @media (max-width: 768px) {
+            #toastContainer {
+                top: max(0.85rem, env(safe-area-inset-top));
+                right: 0.75rem;
+                left: 0.75rem;
+                bottom: auto;
+                margin: 0 auto;
+                width: min(420px, calc(100vw - 1.5rem));
+            }
+        }
     </style>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/app.css') }}">
