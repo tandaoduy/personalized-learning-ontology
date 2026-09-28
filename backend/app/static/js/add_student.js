@@ -251,7 +251,7 @@ function bindEvents() {
     // Hỗ trợ nhấn Enter trong modal xác nhận thay đổi điểm
     window.addEventListener('keydown', (e) => {
         const gradeChangeModal = document.getElementById('gradeChangeModalBackdrop');
-        if (gradeChangeModal && gradeChangeModal.style.display === 'block') {
+        if (gradeChangeModal && gradeChangeModal.style.display === 'flex') {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 document.getElementById('confirmGradeChangeBtn').click();
@@ -645,7 +645,7 @@ function showGradeChangeModal(existing, newData) {
             </div>
         `;
 
-        document.getElementById('gradeChangeModalBackdrop').style.display = 'block';
+        document.getElementById('gradeChangeModalBackdrop').style.display = 'flex';
         console.log("showGradeChangeModal displayed successfully");
     } catch (e) {
         console.error("Error in showGradeChangeModal:", e);

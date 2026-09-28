@@ -404,11 +404,15 @@ select.tomselected {
 
 @media (max-width: 640px) {
     .custom-modal {
-        padding: 12px;
+        padding: 16px 12px;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
     #prereqModal .custom-modal__content {
         width: 100%;
+        margin: auto;
         max-height: calc(100dvh - 24px);
         border-radius: 14px;
     }

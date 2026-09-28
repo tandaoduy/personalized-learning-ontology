@@ -121,6 +121,9 @@
     </section>
 </div>
 
+{% endblock %}
+
+{% block modal_layer %}
 <div class="course-modal-backdrop" id="courseModalBackdrop" style="display: none;">
     <div class="course-modal">
         <button type="button" class="course-modal-close" id="closeCourseModalBtn" title="Đóng">×</button>
@@ -191,7 +194,9 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_scripts %}
 <script>
     const EDIT_MODE_ID = "{{ edit_student_id if edit_student_id else '' }}";
 </script>

@@ -140,8 +140,8 @@ body:has(.modal-overlay[style*="display: flex"]),
 body:has(.custom-modal[style*="display: flex"]),
 body:has(.ui-modal-backdrop),
 body:has(.course-attempt-dialog[open]),
-body:has(.course-modal-backdrop[style*="display: block"]),
-body:has(.grade-change-modal-backdrop[style*="display: block"]) {
+body:has(.course-modal-backdrop[style*="display: flex"]),
+body:has(.grade-change-modal-backdrop[style*="display: flex"]) {
     overflow: hidden;
 }
 
