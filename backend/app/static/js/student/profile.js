@@ -94,7 +94,10 @@
         document.getElementById("cancelCourseAttempt")?.addEventListener("click", closeAttemptModal);
         modalCourseSearch?.addEventListener("input", renderCourseOptions);
         modalCourseSearch?.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowDown") {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                modalCourseCode?.focus();
+            } else if (e.key === "ArrowDown") {
                 e.preventDefault();
                 modalCourseCode?.focus();
             }
@@ -425,9 +428,20 @@
 
     function syncAcademicTermFields() {
         if (!modalAcademicYear || !modalSemesterTaken || !modalActualTerm) return;
-        const selected = modalAcademicYear.selectedOptions?.[0];
-        modalSemesterTaken.value = selected?.dataset.semester || "";
-        modalActualTerm.value = selected?.dataset.actualTerm || "";
+        const selected = modalAcademicYear.selectedOptions?.[0]
+            || (modalAcademicYear.selectedIndex >= 0 ? modalAcademicYear.options[modalAcademicYear.selectedIndex] : null);
+
+        let semester = selected?.dataset?.semester;
+        let actualTerm = selected?.dataset?.actualTerm;
+
+        if (!semester && modalAcademicYear.value) {
+            const parts = modalAcademicYear.value.split(":");
+            semester = parts[0];
+            actualTerm = parts[1];
+        }
+
+        modalSemesterTaken.value = semester || "";
+        modalActualTerm.value = actualTerm || "";
     }
 
     function renderCourseOptions() {
@@ -480,24 +494,40 @@
         event.preventDefault();
         clearModalErrors();
 
-        const code = modalCourseCode.value.trim().toUpperCase();
+        const code = (modalCourseCode?.value || "").trim().toUpperCase();
         const course = courseMap.get(code);
         const statusChoice = getSelectedModalStatus();
-        const grade = Number(modalGrade.value || 0);
-        const semesterTaken = Number(modalSemesterTaken.value || 0);
-        const actualTerm = Number(modalActualTerm?.value || 0);
-        const academicYear = modalAcademicYear.selectedOptions?.[0]?.dataset?.academicYear || "";
+        const rawGrade = String(modalGrade?.value || "").trim().replace(',', '.');
+        const grade = Number(rawGrade);
 
-        if (!course) {
+        if (!modalSemesterTaken?.value && modalAcademicYear) {
+            syncAcademicTermFields();
+        }
+        let semesterTaken = Number(modalSemesterTaken?.value || 0);
+        let actualTerm = Number(modalActualTerm?.value || 0);
+        const selectedOpt = modalAcademicYear?.selectedOptions?.[0]
+            || (modalAcademicYear?.selectedIndex >= 0 ? modalAcademicYear.options[modalAcademicYear.selectedIndex] : null);
+        let academicYear = selectedOpt?.dataset?.academicYear || "";
+
+        if (!semesterTaken && modalAcademicYear?.value) {
+            const parts = modalAcademicYear.value.split(":");
+            semesterTaken = Number(parts[0] || 0);
+            actualTerm = Number(parts[1] || semesterTaken);
+        }
+
+        if (!code || !course) {
             setFieldError(modalCourseCode, "Vui lòng chọn môn học.");
+            showAlert("Vui lòng chọn môn học.", "error");
             return;
         }
         if (!semesterTaken) {
             setFieldError(modalAcademicYear, "Vui lòng chọn học kỳ theo năm học.");
+            showAlert("Vui lòng chọn học kỳ theo năm học.", "error");
             return;
         }
-        if (!NO_GRADE_STATUSES.has(statusChoice) && (modalGrade.value === "" || grade < 0 || grade > 10)) {
+        if (!NO_GRADE_STATUSES.has(statusChoice) && (rawGrade === "" || Number.isNaN(grade) || grade < 0 || grade > 10)) {
             setFieldError(modalGrade, "Điểm phải từ 0 đến 10.");
+            showAlert("Điểm môn học phải từ 0 đến 10.", "error");
             return;
         }
 
@@ -531,18 +561,8 @@
         renumberAttempts(code);
         renderAttempts();
         
-        if (modalCourseSearch) modalCourseSearch.value = "";
-        renderCourseOptions();
-        if (modalGrade) {
-            modalGrade.value = "";
-            modalGrade.disabled = false;
-        }
-        const statusRadios = modalForm.querySelectorAll('input[name="modalStatus"]');
-        if (statusRadios.length > 0) statusRadios[0].checked = true;
-        updateAttemptPreview();
-        
+        closeAttemptModal();
         showAlert(`Đã thêm môn ${course.name || code} thành công!`, "success");
-        if (modalCourseSearch) modalCourseSearch.focus();
     }
 
     function normalizeAttempt(attempt) {

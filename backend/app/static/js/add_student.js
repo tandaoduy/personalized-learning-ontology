@@ -242,6 +242,11 @@ function bindEvents() {
     // Hỗ trợ nhấn Enter để lưu môn học nhanh trong cả modal thêm môn học
     document.querySelector('.course-modal').addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
+            if (e.target === courseSearch) {
+                e.preventDefault();
+                courseSelect?.focus();
+                return;
+            }
             e.preventDefault();
             e.stopPropagation(); // Ngăn sự kiện nổi bọt lên window gây tự động xác nhận ở modal sau
             document.getElementById('saveCourseBtn').click();
@@ -563,8 +568,9 @@ function saveCourseFromModal() {
         grade = statusVal === 'Đạt' ? 5.0 : 0.0;
         finalStatus = statusVal;
     } else {
-        grade = Number(courseGrade.value);
-        if (courseGrade.value.trim() === '' || Number.isNaN(grade) || grade < 0 || grade > 10) {
+        const rawGrade = String(courseGrade.value || "").trim().replace(',', '.');
+        grade = Number(rawGrade);
+        if (rawGrade === '' || Number.isNaN(grade) || grade < 0 || grade > 10) {
             showCreateError('Điểm môn học phải nằm trong khoảng 0-10');
             return;
         }
@@ -598,6 +604,7 @@ function saveCourseFromModal() {
 
     // Môn mới → thêm trực tiếp
     addCourseAndReset(newCourseData, `Đã thêm môn ${course.name || course.code} thành công!`);
+    closeCourseModal();
 }
 
 function showGradeChangeModal(existing, newData) {
@@ -679,6 +686,7 @@ function confirmGradeChange() {
     showToast(`Đã cập nhật điểm môn ${newData.code} thành công!`, 'success');
 
     resetCourseModalInputs();
+    closeCourseModal();
 }
 
 function addNewAttempt() {
@@ -696,6 +704,7 @@ function addNewAttempt() {
     showToast(`Đã thêm lần học ${newData.attemptNumber} của môn ${newData.code} thành công!`, 'success');
 
     resetCourseModalInputs();
+    closeCourseModal();
 }
 
 function cancelGradeChange() {
