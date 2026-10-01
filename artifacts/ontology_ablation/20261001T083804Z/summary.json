@@ -1,0 +1,236 @@
+{
+  "full_ontology": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 3,
+        "valid_candidate_attempts": 3,
+        "candidate_attempt_validity": 1.0,
+        "final_recommendation_coverage": 1.0,
+        "no_plan_rate": 0.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 0
+    }
+  },
+  "without_prerequisite": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 3,
+        "valid_candidate_attempts": 3,
+        "candidate_attempt_validity": 1.0,
+        "final_recommendation_coverage": 1.0,
+        "no_plan_rate": 0.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 0
+    }
+  },
+  "without_corequisite": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 3,
+        "valid_candidate_attempts": 3,
+        "candidate_attempt_validity": 1.0,
+        "final_recommendation_coverage": 1.0,
+        "no_plan_rate": 0.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 0
+    }
+  },
+  "without_curriculum_relation": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 3,
+        "valid_candidate_attempts": 0,
+        "candidate_attempt_validity": 0.0,
+        "final_recommendation_coverage": 0.0,
+        "no_plan_rate": 1.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 8,
+      "semester_offering": 0,
+      "elective_quota": 10,
+      "credit_limit": 0
+    }
+  },
+  "without_semester_offering": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 3,
+        "valid_candidate_attempts": 2,
+        "candidate_attempt_validity": 0.6666666666666666,
+        "final_recommendation_coverage": 1.0,
+        "no_plan_rate": 0.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.666667,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 1,
+      "elective_quota": 0,
+      "credit_limit": 0
+    }
+  },
+  "without_elective_quota": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 1,
+        "candidate_attempts_before_filter": 2,
+        "valid_candidate_attempts": 0,
+        "candidate_attempt_validity": 0.0,
+        "final_recommendation_coverage": 0.0,
+        "no_plan_rate": 1.0
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "no_plan_rate": {
+      "mean": 1.0,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 1
+    },
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 4,
+      "credit_limit": 0
+    }
+  }
+}
