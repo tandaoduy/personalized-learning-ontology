@@ -18,6 +18,7 @@ from backend.app.services.explanation_generator import ExplanationGenerator
 from backend.app.services.progress_risk_analyzer import ProgressRiskAnalyzer
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
+from backend.app.services.training_office_service import TrainingOfficeService
 
 
 def create_app():
@@ -93,6 +94,16 @@ def create_app():
 
     app.explanation_generator = ExplanationGenerator()
     app.progress_risk_analyzer = ProgressRiskAnalyzer(app.recommendation_engine)
+    app.training_office_service = TrainingOfficeService(Config.ONTOLOGY_PATH, os.path.join(Config.BASE_DIR, "data"), Config.AGENT_RUN_STORE)
+
+    def reload_ontology_services():
+        """Activate the newly published ontology for future requests only."""
+        app.recommendation_engine = RecommendationEngine(Config.ONTOLOGY_PATH, Config.BEAM_WIDTH, Config.REGISTER_MAX_CREDITS,
+            Config.REGISTER_MIN_CREDITS, elective_quotas=Config.ELECTIVE_QUOTAS)
+        from backend.app.services.ontology_evidence_service import OntologyEvidenceService
+        app.ontology_evidence_service = OntologyEvidenceService(Config.ONTOLOGY_PATH)
+        app.progress_risk_analyzer = ProgressRiskAnalyzer(app.recommendation_engine)
+    app.reload_ontology_services = reload_ontology_services
 
     # Đăng ký các blueprint cho API.
     from backend.app.routes import (
@@ -101,6 +112,7 @@ def create_app():
         auth_routes,
         recommendation_routes,
         student_role_routes,
+        training_office_routes,
         student_routes,
     )
 
@@ -111,6 +123,7 @@ def create_app():
     app.register_blueprint(advisor_role_routes.bp)
     app.register_blueprint(advisor_role_routes.api_bp)
     app.register_blueprint(agent_routes.bp)
+    app.register_blueprint(training_office_routes.bp)
 
     @app.before_request
     def enforce_role_access():
@@ -132,7 +145,9 @@ def create_app():
             return None
         if path.startswith("/api/auth/") or path == "/api/health":
             return None
-        if role not in {"student", "advisor"}:
+        if path.startswith("/api/training-office/") and role != "training_office":
+            return jsonify({"success": False, "error": "Chỉ Phòng Đào tạo được phép truy cập."}), 403
+        if role not in {"student", "advisor", "training_office"}:
             return jsonify({"success": False, "error": "Bạn cần đăng nhập để truy cập tài nguyên này."}), 401
         if path.startswith("/api/advisor/") and role != "advisor":
             return jsonify({"success": False, "error": "Chỉ cố vấn học tập được phép truy cập."}), 403
@@ -159,6 +174,8 @@ def create_app():
             return redirect(url_for("student_role.dashboard"))
         if session.get("role") == "advisor":
             return redirect(url_for("advisor_role.dashboard"))
+        if session.get("role") == "training_office":
+            return redirect("/training-office")
         return render_template("index.html")
 
     @app.route("/register")
@@ -172,6 +189,27 @@ def create_app():
         if not session.get("role"):
             return redirect(url_for("index"))
         return render_template("account.html")
+
+    @app.route("/training-office")
+    def training_office_page():
+        if session.get("role") != "training_office":
+            return redirect(url_for("index"))
+        return render_template("training_office/dashboard.html", workspace="home")
+
+    @app.route("/training-office/<workspace>")
+    def training_office_workspace(workspace):
+        if session.get("role") != "training_office":
+            return redirect(url_for("index"))
+        pages = {
+            "relations": ("Quan hệ học phần", "Quản lý các quan hệ tiên quyết và song hành trong ontology."),
+            "programs": ("Chương trình đào tạo", "Tạo, cập nhật và lưu trữ chương trình đào tạo."),
+            "assignments": ("Phân công cố vấn", "Quản lý cố vấn phụ trách theo lớp hành chính."),
+        }
+        if workspace not in pages:
+            abort(404)
+        title, description = pages[workspace]
+        return render_template("training_office/dashboard.html", workspace=workspace,
+                               workspace_title=title, workspace_description=description)
 
     @app.route("/components")
     def components_page():

@@ -58,6 +58,15 @@
       "full_name": "Nguyễn Văn A",
       "status": "approved",
       "created_at": "2026-09-28T19:11:18"
+    },
+    {
+      "username": "phongdaotao",
+      "password_hash": "scrypt:32768:8:1$mD8M0uFq92DDBJjd$188193d5438d2310888fd095f97b76a7e4d6035991298be5086ee7921631f637f59c58b31b10c897c674b47b1ca318eaab7afb316a3f6a1aae4f3a790138f577",
+      "role": "training_office",
+      "display_name": "Phòng Đào tạo",
+      "full_name": "Phòng Đào tạo",
+      "status": "approved",
+      "created_at": "2026-10-02T10:15:00"
     }
   ]
 }

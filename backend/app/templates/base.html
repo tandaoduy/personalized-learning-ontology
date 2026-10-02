@@ -75,7 +75,7 @@
     {% if session.get("role") %}
     <nav class="app-navbar" aria-label="Điều hướng chính">
         <div class="app-navbar__inner">
-            <a class="app-navbar__brand" href="{{ url_for('student_role.dashboard') if session.get('role') == 'student' else url_for('advisor_role.dashboard') }}">
+            <a class="app-navbar__brand" href="{{ url_for('student_role.dashboard') if session.get('role') == 'student' else (url_for('advisor_role.dashboard') if session.get('role') == 'advisor' else '/training-office') }}">
                 <img src="{{ url_for('static', filename='images/Logo_NTU.png') }}" alt="NTU">
                 <span class="app-navbar__brand-copy">
                     <strong>Hệ thống gợi ý kế hoạch học tập</strong>

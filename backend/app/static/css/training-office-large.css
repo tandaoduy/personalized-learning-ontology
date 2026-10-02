@@ -1,0 +1,20 @@
+@media (min-width: 1024px) {
+  .training-office-main { max-width: none; }
+  .to-dashboard { max-width: 1480px; padding-top: 42px; }
+  .to-hero { gap: 48px; padding: 28px 0 34px; }
+  .to-hero h1 { font-size: clamp(2.4rem, 3vw, 3.5rem); }
+  .to-hero > div > p:last-child { font-size: 1.15rem; }
+  .to-hero__notice { max-width: 390px; padding: 18px 20px; font-size: .98rem; }
+  .to-shortcuts { gap: 24px; }
+  .to-shortcuts a { min-height: 152px; padding: 26px; border-radius: 18px; }
+  .to-shortcuts__icon { width: 62px; height: 62px; border-radius: 15px; }
+  .to-shortcuts__icon svg { width: 29px; height: 29px; }
+  .to-shortcuts strong { font-size: 1.16rem; }
+  .to-shortcuts small { margin-top: 6px; font-size: .95rem; }
+  .to-shortcuts a > svg { width: 23px; height: 23px; }
+}
+
+@media (min-width: 1500px) {
+  .to-dashboard { max-width: 1680px; }
+  .to-shortcuts a { min-height: 178px; padding: 30px; }
+}
