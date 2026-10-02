@@ -1,20 +1,421 @@
 {% extends "base.html" %}
 {% block title %}Quản trị học vụ | Phòng Đào tạo{% endblock %}
 {% block main_class %}training-office-main mx-auto w-full px-4 py-6 sm:px-6 lg:px-8{% endblock %}
-{% block extra_head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office.css', v='1') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-large.css', v='1') }}">{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office.css', v='7') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-large.css', v='7') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-assignments.css', v='7') }}">
+{% endblock %}
 {% block content %}
 <section class="to-dashboard" data-training-office-dashboard>
-  <header class="to-hero"><div><p class="to-eyebrow"><span></span> QUẢN TRỊ HỌC VỤ</p><h1>{{ workspace_title or 'Xin chào, Phòng Đào tạo' }}</h1><p>{{ workspace_description or 'Chọn một chức năng để bắt đầu phiên làm việc.' }}</p></div><div class="to-hero__notice"><i data-lucide="shield-check"></i><span>Thay đổi được sao lưu và ghi nhận audit log trước khi áp dụng.</span></div></header>
+  <header class="to-hero">
+    <div>
+      <p class="to-eyebrow"><span></span> QUẢN TRỊ HỌC VỤ</p>
+      <h1>{{ workspace_title or 'Xin chào, Phòng Đào tạo' }}</h1>
+      <p>{{ workspace_description or 'Chọn một chức năng để bắt đầu phiên làm việc.' }}</p>
+    </div>
+    <div class="to-hero__notice">
+      <i data-lucide="shield-check"></i>
+      <span>Thay đổi được sao lưu và ghi nhận audit log trước khi áp dụng.</span>
+    </div>
+  </header>
+
   {% if workspace == 'home' %}
-  <nav class="to-shortcuts" aria-label="Danh mục quản trị"><a href="/training-office/relations"><span class="to-shortcuts__icon blue"><i data-lucide="git-branch"></i></span><span><strong>Quan hệ học phần</strong><small>Tiên quyết, song hành</small></span><i data-lucide="arrow-up-right"></i></a><a href="/training-office/programs"><span class="to-shortcuts__icon violet"><i data-lucide="graduation-cap"></i></span><span><strong>Chương trình đào tạo</strong><small>Tạo, cập nhật, lưu trữ CTĐT</small></span><i data-lucide="arrow-up-right"></i></a><a href="/training-office/assignments"><span class="to-shortcuts__icon emerald"><i data-lucide="users-round"></i></span><span><strong>Phân công cố vấn</strong><small>Theo lớp hành chính</small></span><i data-lucide="arrow-up-right"></i></a></nav>
-  {% else %}<a class="to-back" href="/training-office"><i data-lucide="arrow-left"></i> Quay lại dashboard</a><div class="to-layout">{% endif %}
-    {% if workspace == 'relations' %}<section class="to-panel" id="relations"><div class="to-panel__head"><div><span class="to-panel__icon blue"><i data-lucide="git-branch"></i></span><div><h2>Quan hệ học phần</h2><p>Quản lý ràng buộc giữa các môn học trong ontology.</p></div></div><button class="to-button to-button--primary" data-dialog-open="relation"><i data-lucide="plus"></i> Thêm quan hệ</button></div><div class="to-toolbar"><div class="to-search"><i data-lucide="search"></i><input type="search" placeholder="Tìm theo mã học phần" data-filter="relations"></div><span class="to-count" data-count="relations">Đang tải...</span></div><div class="to-table-wrap"><table><thead><tr><th>Loại quan hệ</th><th>Học phần</th><th>Học phần liên quan</th><th></th></tr></thead><tbody data-rows="relations"><tr><td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td></tr></tbody></table></div></section>{% endif %}
-    {% if workspace == 'programs' %}<section class="to-panel" id="programs"><div class="to-panel__head"><div><span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span><div><h2>Chương trình đào tạo</h2><p>Tạo mới, cập nhật hoặc lưu trữ chương trình đào tạo.</p></div></div><button class="to-button to-button--primary" data-dialog-open="program"><i data-lucide="plus"></i> Tạo CTĐT</button></div><div class="to-toolbar"><div class="to-search"><i data-lucide="search"></i><input type="search" placeholder="Tìm mã hoặc tên chương trình" data-filter="programs"></div><span class="to-count" data-count="programs">Đang tải...</span></div><div class="to-table-wrap"><table><thead><tr><th>Mã CTĐT</th><th>Tên chương trình</th><th>Trạng thái</th><th></th></tr></thead><tbody data-rows="programs"><tr><td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td></tr></tbody></table></div></section>{% endif %}
-    {% if workspace == 'assignments' %}<section class="to-panel" id="assignments"><div class="to-panel__head"><div><span class="to-panel__icon emerald"><i data-lucide="users-round"></i></span><div><h2>Phân công cố vấn</h2><p>Gán quyền cố vấn theo lớp hành chính.</p></div></div><button class="to-button to-button--primary" data-dialog-open="assignment"><i data-lucide="user-plus"></i> Phân công</button></div><div class="to-table-wrap"><table><thead><tr><th>Tài khoản cố vấn</th><th>Lớp hành chính</th><th>Thời điểm phân công</th><th></th></tr></thead><tbody data-rows="assignments"><tr><td colspan="4" class="to-loading">Đang nạp dữ liệu...</td></tr></tbody></table></div></section>{% endif %}
-  {% if workspace != 'home' %}</div>{% endif %}
+  <nav class="to-shortcuts" aria-label="Danh mục quản trị">
+    <a href="/training-office/relations">
+      <span class="to-shortcuts__icon blue"><i data-lucide="git-branch"></i></span>
+      <span><strong>Quan hệ học phần</strong><small>Tiên quyết, song hành</small></span>
+      <i data-lucide="arrow-up-right"></i>
+    </a>
+    <a href="/training-office/programs">
+      <span class="to-shortcuts__icon violet"><i data-lucide="graduation-cap"></i></span>
+      <span><strong>Chương trình đào tạo</strong><small>Tạo, cập nhật, lưu trữ CTĐT</small></span>
+      <i data-lucide="arrow-up-right"></i>
+    </a>
+    <a href="/training-office/assignments">
+      <span class="to-shortcuts__icon emerald"><i data-lucide="users-round"></i></span>
+      <span><strong>Phân công cố vấn</strong><small>Theo lớp hành chính</small></span>
+      <i data-lucide="arrow-up-right"></i>
+    </a>
+  </nav>
+  {% else %}
+  <a class="to-back" href="/training-office"><i data-lucide="arrow-left"></i> Quay lại dashboard</a>
+  <div class="to-layout">
+  {% endif %}
+
+    {% if workspace == 'relations' %}
+    <section class="to-panel" id="relations">
+      <div class="to-panel__head">
+        <div>
+          <span class="to-panel__icon blue"><i data-lucide="git-branch"></i></span>
+          <div>
+            <h2>Quan hệ học phần</h2>
+            <p>Quản lý ràng buộc giữa các môn học trong ontology.</p>
+          </div>
+        </div>
+        <button class="to-button to-button--primary" data-dialog-open="relation">
+          <i data-lucide="plus"></i> Thêm quan hệ
+        </button>
+      </div>
+      <div class="to-toolbar">
+        <div class="to-search">
+          <i data-lucide="search"></i>
+          <input type="search" placeholder="Tìm theo mã học phần" data-filter="relations">
+        </div>
+        <span class="to-count" data-count="relations">Đang tải...</span>
+      </div>
+      <div class="to-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Loại quan hệ</th><th>Học phần</th><th>Học phần liên quan</th><th></th></tr>
+          </thead>
+          <tbody data-rows="relations">
+            <tr><td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if workspace == 'programs' %}
+    <section class="to-panel" id="programs">
+      <div class="to-panel__head">
+        <div>
+          <span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span>
+          <div>
+            <h2>Chương trình đào tạo</h2>
+            <p>Tạo mới, cập nhật hoặc lưu trữ chương trình đào tạo.</p>
+          </div>
+        </div>
+        <button class="to-button to-button--primary" data-dialog-open="program">
+          <i data-lucide="plus"></i> Tạo CTĐT
+        </button>
+      </div>
+      <div class="to-toolbar">
+        <div class="to-search">
+          <i data-lucide="search"></i>
+          <input type="search" placeholder="Tìm mã hoặc tên chương trình" data-filter="programs">
+        </div>
+        <span class="to-count" data-count="programs">Đang tải...</span>
+      </div>
+      <div class="to-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Mã CTĐT</th><th>Tên chương trình</th><th>Trạng thái</th><th></th></tr>
+          </thead>
+          <tbody data-rows="programs">
+            <tr><td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if workspace == 'assignments' %}
+    <!-- KHU VỰC PHÂN CÔNG CỐ VẤN HỌC TẬP HIỆN ĐẠI -->
+    <div class="to-assignments-workspace" data-assignment-workspace>
+      <!-- MAIN PANEL -->
+      <section class="to-panel" id="assignments">
+        <div class="to-panel__head to-panel__head--modern">
+          <div class="to-panel__title-wrapper">
+            <span class="to-panel__icon to-panel__icon--modern emerald">
+              <i data-lucide="users-round"></i>
+            </span>
+            <div>
+              <div class="to-panel__title-row">
+                <h2>Danh sách lớp hành chính & Cố vấn phụ trách</h2>
+                <span class="to-title-count-chip" data-stat="total-classes-pill">-- lớp</span>
+              </div>
+              <p>Quản lý phân công và điều phối cố vấn học tập theo từng lớp sinh viên chính quy.</p>
+            </div>
+          </div>
+          <div class="to-panel__head-actions">
+            <button class="to-btn-refresh-modern" data-action="refresh-assignments" title="Làm mới dữ liệu từ hệ thống">
+              <i data-lucide="refresh-cw"></i>
+              <span>Làm mới</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SMART FILTER BAR -->
+        <div class="to-filter-bar to-filter-bar--modern">
+          <div class="to-filter-bar__left">
+            <div class="to-search-box to-search-box--modern">
+              <i data-lucide="search"></i>
+              <input type="search" placeholder="Tìm theo mã lớp, cố vấn, sinh viên..." data-filter="assignments">
+            </div>
+
+            <div class="to-filter-pills to-filter-pills--modern" role="tablist">
+              <button class="to-filter-pill to-filter-pill--modern active" data-filter-status="all">
+                <span>Tất cả</span>
+                <span class="to-filter-pill__count" data-pill-count="all">0</span>
+              </button>
+              <button class="to-filter-pill to-filter-pill--modern" data-filter-status="unassigned" data-filter-value="unassigned">
+                <span class="to-pulse-dot" style="width:7px;height:7px;"></span>
+                <span>Chưa phân công</span>
+                <span class="to-filter-pill__count" data-pill-count="unassigned">0</span>
+              </button>
+              <button class="to-filter-pill to-filter-pill--modern" data-filter-status="assigned" data-filter-value="assigned">
+                <span class="to-dot-green"></span>
+                <span>Đã phân công</span>
+                <span class="to-filter-pill__count" data-pill-count="assigned">0</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="to-filter-bar__right">
+            <div class="to-cohort-select-wrap">
+              <i data-lucide="filter" class="to-cohort-icon"></i>
+              <select class="to-select-cohort to-select-cohort--modern" data-filter-cohort aria-label="Lọc theo khóa học">
+                <option value="all">Tất cả các khóa</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE OF CLASSES -->
+        <div class="to-classes-table-container">
+          <table class="to-classes-table">
+            <thead>
+              <tr>
+                <th>Lớp hành chính</th>
+                <th style="text-align:center;">Số lượng sinh viên</th>
+                <th style="text-align:center;">Cố vấn phụ trách</th>
+                <th style="text-align:center;">Thao tác</th>
+                <th style="width:56px;text-align:center;padding-right:24px;">
+                  <input type="checkbox" class="to-checkbox" data-select-all-classes title="Chọn tất cả các lớp">
+                </th>
+              </tr>
+            </thead>
+            <tbody data-rows="assignments">
+              <tr>
+                <td colspan="5" class="to-loading">Đang nạp danh sách lớp...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- FLOATING BATCH ACTIONS BAR -->
+    <div class="to-batch-bar" data-batch-bar>
+      <div class="to-batch-bar__info">
+        <i data-lucide="check-square" style="width:18px;height:18px;color:#10b981;"></i>
+        <span>Đã chọn <strong class="to-batch-bar__badge" data-batch-count>0</strong> lớp</span>
+      </div>
+      <div class="to-batch-bar__actions">
+        <button class="to-btn to-btn--primary" data-action="open-batch-assign" style="height:34px;padding:0 14px;font-size:0.78rem;">
+          <i data-lucide="user-plus" style="width:14px;height:14px;"></i> Phân công hàng loạt
+        </button>
+        <button class="to-btn to-btn--ghost" data-action="clear-batch-selection" style="height:34px;padding:0 12px;font-size:0.78rem;background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);">
+          Bỏ chọn
+        </button>
+      </div>
+    </div>
+    {% endif %}
+
+  {% if workspace != 'home' %}
+  </div>
+  {% endif %}
 </section>
-<dialog class="to-dialog" data-dialog="relation"><form method="dialog" class="to-form" data-form="relation"><header><div><span class="to-panel__icon blue"><i data-lucide="git-branch"></i></span><h2>Thêm quan hệ học phần</h2></div><button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button></header><p>Thay đổi sẽ được phiên bản hóa trước khi áp dụng.</p><label>Loại quan hệ<select name="relation" required><option value="prerequisite">Tiên quyết</option><option value="corequisite">Song hành</option></select></label><label>Mã học phần<input name="course_code" required placeholder="Ví dụ: INT6900"></label><label>Mã học phần liên quan<input name="related_course_code" required placeholder="Ví dụ: INT6001"></label><footer><button class="to-button to-button--ghost" value="cancel">Hủy</button><button class="to-button to-button--primary" type="submit">Lưu quan hệ</button></footer></form></dialog>
-<dialog class="to-dialog" data-dialog="program"><form method="dialog" class="to-form" data-form="program"><header><div><span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span><h2 data-program-dialog-title>Tạo chương trình đào tạo</h2></div><button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button></header><p>Nhập mã duy nhất và tên hiển thị của chương trình.</p><input type="hidden" name="mode" value="create"><label>Mã chương trình<input name="program_id" required maxlength="64" placeholder="Ví dụ: CNTT_2026"></label><label>Tên chương trình<input name="name" required maxlength="200" placeholder="Ví dụ: Công nghệ thông tin 2026"></label><footer><button class="to-button to-button--ghost" value="cancel">Hủy</button><button class="to-button to-button--primary" type="submit" data-program-submit>Tạo chương trình</button></footer></form></dialog>
-<dialog class="to-dialog" data-dialog="assignment"><form method="dialog" class="to-form" data-form="assignment"><header><div><span class="to-panel__icon emerald"><i data-lucide="users-round"></i></span><h2>Phân công cố vấn</h2></div><button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button></header><p>Gán cố vấn phụ trách một lớp hành chính.</p><label>Tài khoản cố vấn<input name="advisor_username" required maxlength="64" placeholder="Ví dụ: CV001"></label><label>Lớp hành chính<input name="academic_class" required maxlength="100" placeholder="Ví dụ: 65.CNTT-1"></label><footer><button class="to-button to-button--ghost" value="cancel">Hủy</button><button class="to-button to-button--primary" type="submit">Xác nhận phân công</button></footer></form></dialog>
-<script defer src="{{ url_for('static', filename='js/training-office/dashboard.js', v='1') }}"></script>
+
+<!-- DIALOG THÊM QUAN HỆ HỌC PHẦN -->
+<dialog class="to-dialog" data-dialog="relation">
+  <form method="dialog" class="to-form" data-form="relation">
+    <header>
+      <div><span class="to-panel__icon blue"><i data-lucide="git-branch"></i></span><h2>Thêm quan hệ học phần</h2></div>
+      <button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button>
+    </header>
+    <p>Thay đổi sẽ được phiên bản hóa trước khi áp dụng.</p>
+    <label>Loại quan hệ
+      <select name="relation" required>
+        <option value="prerequisite">Tiên quyết</option>
+        <option value="corequisite">Song hành</option>
+      </select>
+    </label>
+    <label>Mã học phần<input name="course_code" required placeholder="Ví dụ: INT6900"></label>
+    <label>Mã học phần liên quan<input name="related_course_code" required placeholder="Ví dụ: INT6001"></label>
+    <footer>
+      <button class="to-button to-button--ghost" value="cancel">Hủy</button>
+      <button class="to-button to-button--primary" type="submit">Lưu quan hệ</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- DIALOG TẠO/CẬP NHẬT CTĐT -->
+<dialog class="to-dialog" data-dialog="program">
+  <form method="dialog" class="to-form" data-form="program">
+    <header>
+      <div><span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span><h2 data-program-dialog-title>Tạo chương trình đào tạo</h2></div>
+      <button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button>
+    </header>
+    <p>Nhập mã duy nhất và tên hiển thị của chương trình.</p>
+    <input type="hidden" name="mode" value="create">
+    <label>Mã chương trình<input name="program_id" required maxlength="64" placeholder="Ví dụ: CNTT_2026"></label>
+    <label>Tên chương trình<input name="name" required maxlength="200" placeholder="Ví dụ: Công nghệ thông tin 2026"></label>
+    <footer>
+      <button class="to-button to-button--ghost" value="cancel">Hủy</button>
+      <button class="to-button to-button--primary" type="submit" data-program-submit>Tạo chương trình</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- DIALOG CHI TIẾT LỚP & PHÂN CÔNG CỐ VẤN HIỆN ĐẠI (WOW FACTOR) -->
+<dialog class="to-modal-dialog" data-dialog="assignment">
+  <div class="to-modal-container">
+    <!-- Modal Header -->
+    <div class="to-modal-header">
+      <div class="to-modal-header__title-box">
+        <div class="to-modal-header__icon">
+          <i data-lucide="users-round"></i>
+        </div>
+        <div>
+          <h2 data-modal-class-title>Lớp 65.CNTT-1</h2>
+          <div class="to-modal-header__badges">
+            <span class="to-stat-card__badge to-stat-card__badge--blue" data-modal-student-badge>
+              <i data-lucide="users" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;"></i>
+              <span data-modal-student-count>0</span> sinh viên
+            </span>
+            <span data-modal-status-badge></span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="to-modal-close-btn" data-modal-close aria-label="Đóng">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <!-- Modal Tab Switcher -->
+    <div class="to-modal-tabs" role="tablist">
+      <button type="button" class="to-modal-tab-btn active" data-modal-tab="assign">
+        <i data-lucide="user-check"></i> Phân công Cố vấn
+      </button>
+      <button type="button" class="to-modal-tab-btn" data-modal-tab="students">
+        <i data-lucide="list"></i> Danh sách Sinh viên (<span data-modal-tab-student-count>0</span>)
+      </button>
+    </div>
+
+    <!-- Modal Tab 1: Form Phân Công Cố Vấn -->
+    <form class="to-modal-body" data-tab-content="assign" data-form="assignment">
+      <input type="hidden" name="academic_class" data-input-class>
+
+      <!-- Banner cố vấn hiện tại nếu đã có -->
+      <div class="to-current-advisor-banner" data-current-advisor-banner style="display:none;">
+        <div class="to-current-advisor-banner__info">
+          <div class="to-advisor-avatar to-advisor-avatar--emerald" data-current-advisor-avatar>CV</div>
+          <div>
+            <div style="font-size:0.73rem;color:#047857;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;">Cố vấn đang phụ trách</div>
+            <div style="font-weight:800;color:#0f172a;font-size:0.92rem;" data-current-advisor-name>--</div>
+            <div style="font-size:0.75rem;color:#64748b;" data-current-advisor-user>--</div>
+          </div>
+        </div>
+        <button type="button" class="to-current-advisor-banner__revoke-btn" data-remove-current-advisor>
+          <i data-lucide="user-minus" style="width:14px;height:14px;"></i> Gỡ cố vấn
+        </button>
+      </div>
+
+      <!-- Khu vực chọn cố vấn mới -->
+      <div style="margin-top:14px;">
+        <label class="to-advisor-selection-label">
+          Chọn Cố vấn học tập phụ trách:
+        </label>
+        <div class="to-advisor-cards-list" data-advisor-cards-list>
+          <!-- Dynamic cards populated by JS -->
+          <div class="to-loading" style="padding:20px;">Đang nạp danh sách cố vấn...</div>
+        </div>
+        <!-- Hidden select for form submission compatibility -->
+        <select name="advisor_username" required data-advisor-select style="display:none;"></select>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="to-modal-footer" style="margin:24px -24px -20px;padding:16px 24px;">
+        <button type="button" class="to-btn to-btn--ghost" data-modal-close>Đóng</button>
+        <button type="submit" class="to-btn to-btn--primary" data-btn-save-assignment>
+          <i data-lucide="check" style="width:16px;height:16px;"></i> Lưu phân công
+        </button>
+      </div>
+    </form>
+
+    <!-- Modal Tab 2: Danh Sách Sinh Viên Trong Lớp -->
+    <div class="to-modal-body" data-tab-content="students" style="display:none;">
+      <div class="to-search-box to-roster-search" style="max-width:none;width:100%;">
+        <i data-lucide="search"></i>
+        <input type="search" placeholder="Tìm sinh viên theo MSSV hoặc họ tên..." data-roster-filter>
+      </div>
+
+      <div class="to-roster-table-container">
+        <table class="to-roster-table">
+          <thead>
+            <tr>
+              <th style="width:45px;">STT</th>
+              <th>MSSV</th>
+              <th>Họ và tên</th>
+              <th>Ngành</th>
+              <th style="text-align:center;">Học kỳ</th>
+            </tr>
+          </thead>
+          <tbody data-roster-rows>
+            <!-- Populated dynamically by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="to-modal-footer" style="margin:20px -24px -20px;padding:16px 24px;">
+        <button type="button" class="to-btn to-btn--ghost" data-modal-close>Đóng</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- DIALOG PHÂN CÔNG HÀNG LOẠT (BATCH ASSIGNMENT) -->
+<dialog class="to-modal-dialog" data-dialog="batch-assignment">
+  <div class="to-modal-container">
+    <div class="to-modal-header">
+      <div class="to-modal-header__title-box">
+        <div class="to-modal-header__icon">
+          <i data-lucide="layers"></i>
+        </div>
+        <div>
+          <h2>Phân công cố vấn hàng loạt</h2>
+          <div class="to-modal-header__badges">
+            <span class="to-stat-card__badge to-stat-card__badge--emerald">
+              Đang chọn <span data-batch-modal-count>0</span> lớp
+            </span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="to-modal-close-btn" data-modal-close aria-label="Đóng">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <form class="to-modal-body" data-form="batch-assignment">
+      <div style="margin-bottom:16px;">
+        <label style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;">Các lớp được chọn:</label>
+        <div class="to-modal-header__badges" style="flex-wrap:wrap;margin-top:6px;" data-batch-class-tags>
+          <!-- Dynamic class tags -->
+        </div>
+      </div>
+
+      <div>
+        <label class="to-advisor-selection-label">
+          Chọn Cố vấn sẽ phụ trách tất cả các lớp trên:
+        </label>
+        <div class="to-advisor-cards-list" data-batch-advisor-cards-list>
+          <!-- Dynamic advisor cards -->
+        </div>
+        <select name="batch_advisor_username" required data-batch-advisor-select style="display:none;"></select>
+      </div>
+
+      <div class="to-modal-footer" style="margin:24px -24px -20px;padding:16px 24px;">
+        <button type="button" class="to-btn to-btn--ghost" data-modal-close>Hủy</button>
+        <button type="submit" class="to-btn to-btn--primary" data-btn-save-batch>
+          <i data-lucide="check-check" style="width:16px;height:16px;"></i> Xác nhận phân công
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script defer src="{{ url_for('static', filename='js/training-office/dashboard.js', v='7') }}"></script>
 {% endblock %}

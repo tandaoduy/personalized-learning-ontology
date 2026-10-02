@@ -124,7 +124,8 @@ class TrainingOfficeService:
     def assign_advisor(self, actor: str, advisor_username: str, academic_class: str) -> dict:
         advisor_username, academic_class = str(advisor_username or "").strip(), str(academic_class or "").strip()
         if not advisor_username or not academic_class: raise ValueError("ADVISOR_AND_CLASS_REQUIRED")
-        rows = [row for row in self.assignments() if not (row["advisor_username"] == advisor_username and row["academic_class"] == academic_class)]
+        # A class has one active advisor; assigning again replaces the previous advisor.
+        rows = [row for row in self.assignments() if row["academic_class"] != academic_class]
         record = {"advisor_username": advisor_username, "academic_class": academic_class,
                   "assigned_by": actor, "assigned_at": datetime.now(timezone.utc).isoformat()}
         rows.append(record); self._write_json(self.assignment_path, rows)

@@ -1,5 +1,7 @@
 """Restricted Training Office API."""
 from flask import Blueprint, current_app, jsonify, request, session
+from backend.app.routes.auth_routes import ACCOUNTS_PATH
+import json
 
 bp = Blueprint("training_office", __name__, url_prefix="/api/training-office")
 
@@ -48,6 +50,46 @@ def archive_program(program_id):
 
 @bp.get("/advisor-assignments")
 def assignments(): return jsonify(success=True, data=_service().assignments()) if session.get("role") == "training_office" else _deny()
+
+@bp.get("/academic-classes")
+def academic_classes():
+    if session.get("role") != "training_office": return _deny()
+    students = current_app.student_data_service.get_all_students()
+    all_assignments = _service().assignments()
+    assigned = {row["academic_class"]: row for row in all_assignments}
+    accounts = json.loads(ACCOUNTS_PATH.read_text(encoding="utf-8")).get("accounts", [])
+    advisor_names = {acc["username"]: acc.get("display_name") or acc["username"] for acc in accounts}
+    grouped = {}
+    for student in students:
+        code = str(student.academic_class or "Chưa xếp lớp").strip()
+        if code == "Chưa xếp lớp": continue
+        grouped.setdefault(code, []).append({"student_id": student.student_id, "name": student.name,
+                                             "major": student.major, "semester": student.current_semester})
+    rows = []
+    for code, items in sorted(grouped.items()):
+        asg = assigned.get(code)
+        if asg:
+            asg = dict(asg)
+            asg["advisor_name"] = advisor_names.get(asg.get("advisor_username"), asg.get("advisor_username"))
+        rows.append({"academic_class": code, "student_count": len(items), "students": items,
+                     "assignment": asg})
+    return jsonify(success=True, data=rows)
+
+@bp.get("/advisors")
+def advisors():
+    if session.get("role") != "training_office": return _deny()
+    accounts = json.loads(ACCOUNTS_PATH.read_text(encoding="utf-8")).get("accounts", [])
+    assignments = _service().assignments()
+    workload = {}
+    for row in assignments:
+        u = row.get("advisor_username")
+        if u:
+            workload[u] = workload.get(u, 0) + 1
+    rows = [{"username": account["username"],
+             "name": account.get("display_name") or account["username"],
+             "assigned_classes_count": workload.get(account["username"], 0)}
+            for account in accounts if account.get("role") == "advisor" and account.get("status") == "approved"]
+    return jsonify(success=True, data=rows)
 
 @bp.post("/advisor-assignments")
 def assign():
