@@ -12,6 +12,25 @@ def _reload(): current_app.reload_ontology_services()
 @bp.get("/relations")
 def relations(): return jsonify(success=True, data=_service().list_relations()) if session.get("role") == "training_office" else _deny()
 
+@bp.get("/courses")
+def courses(): return jsonify(success=True, data=_service().list_courses()) if session.get("role") == "training_office" else _deny()
+
+@bp.get("/courses/<course_code>")
+def course_detail(course_code):
+    if session.get("role") != "training_office": return _deny()
+    try: return jsonify(success=True, data=_service().course_detail(course_code))
+    except ValueError as exc: return jsonify(success=False, error=str(exc)), 404
+
+@bp.put("/courses/<course_code>")
+def update_course(course_code):
+    if session.get("role") != "training_office": return _deny()
+    try:
+        body = request.get_json(silent=True) or {}
+        record = _service().update_course(session["username"], course_code, body.get("name"), body.get("credits"),
+                                          body.get("prerequisites"), body.get("corequisites"))
+        _reload(); return jsonify(success=True, data=record)
+    except ValueError as exc: return jsonify(success=False, error=str(exc)), 400
+
 @bp.put("/relations/<relation>")
 def relation(relation):
     if session.get("role") != "training_office": return _deny()

@@ -25,6 +25,398 @@
       "status": "approved"
     },
     {
+      "username": "CV02",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 02",
+      "full_name": "Cố vấn 02",
+      "status": "approved"
+    },
+    {
+      "username": "CV03",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 03",
+      "full_name": "Cố vấn 03",
+      "status": "approved"
+    },
+    {
+      "username": "CV04",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 04",
+      "full_name": "Cố vấn 04",
+      "status": "approved"
+    },
+    {
+      "username": "CV05",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 05",
+      "full_name": "Cố vấn 05",
+      "status": "approved"
+    },
+    {
+      "username": "CV06",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 06",
+      "full_name": "Cố vấn 06",
+      "status": "approved"
+    },
+    {
+      "username": "CV07",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 07",
+      "full_name": "Cố vấn 07",
+      "status": "approved"
+    },
+    {
+      "username": "CV08",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 08",
+      "full_name": "Cố vấn 08",
+      "status": "approved"
+    },
+    {
+      "username": "CV09",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 09",
+      "full_name": "Cố vấn 09",
+      "status": "approved"
+    },
+    {
+      "username": "CV10",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 10",
+      "full_name": "Cố vấn 10",
+      "status": "approved"
+    },
+    {
+      "username": "CV11",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 11",
+      "full_name": "Cố vấn 11",
+      "status": "approved"
+    },
+    {
+      "username": "CV12",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 12",
+      "full_name": "Cố vấn 12",
+      "status": "approved"
+    },
+    {
+      "username": "CV13",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 13",
+      "full_name": "Cố vấn 13",
+      "status": "approved"
+    },
+    {
+      "username": "CV14",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 14",
+      "full_name": "Cố vấn 14",
+      "status": "approved"
+    },
+    {
+      "username": "CV15",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 15",
+      "full_name": "Cố vấn 15",
+      "status": "approved"
+    },
+    {
+      "username": "CV16",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 16",
+      "full_name": "Cố vấn 16",
+      "status": "approved"
+    },
+    {
+      "username": "CV17",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 17",
+      "full_name": "Cố vấn 17",
+      "status": "approved"
+    },
+    {
+      "username": "CV18",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 18",
+      "full_name": "Cố vấn 18",
+      "status": "approved"
+    },
+    {
+      "username": "CV19",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 19",
+      "full_name": "Cố vấn 19",
+      "status": "approved"
+    },
+    {
+      "username": "CV20",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 20",
+      "full_name": "Cố vấn 20",
+      "status": "approved"
+    },
+    {
+      "username": "CV21",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 21",
+      "full_name": "Cố vấn 21",
+      "status": "approved"
+    },
+    {
+      "username": "CV22",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 22",
+      "full_name": "Cố vấn 22",
+      "status": "approved"
+    },
+    {
+      "username": "CV23",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 23",
+      "full_name": "Cố vấn 23",
+      "status": "approved"
+    },
+    {
+      "username": "CV24",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 24",
+      "full_name": "Cố vấn 24",
+      "status": "approved"
+    },
+    {
+      "username": "CV25",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 25",
+      "full_name": "Cố vấn 25",
+      "status": "approved"
+    },
+    {
+      "username": "CV26",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 26",
+      "full_name": "Cố vấn 26",
+      "status": "approved"
+    },
+    {
+      "username": "CV27",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 27",
+      "full_name": "Cố vấn 27",
+      "status": "approved"
+    },
+    {
+      "username": "CV28",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 28",
+      "full_name": "Cố vấn 28",
+      "status": "approved"
+    },
+    {
+      "username": "CV29",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 29",
+      "full_name": "Cố vấn 29",
+      "status": "approved"
+    },
+    {
+      "username": "CV30",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 30",
+      "full_name": "Cố vấn 30",
+      "status": "approved"
+    },
+    {
+      "username": "CV31",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 31",
+      "full_name": "Cố vấn 31",
+      "status": "approved"
+    },
+    {
+      "username": "CV32",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 32",
+      "full_name": "Cố vấn 32",
+      "status": "approved"
+    },
+    {
+      "username": "CV33",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 33",
+      "full_name": "Cố vấn 33",
+      "status": "approved"
+    },
+    {
+      "username": "CV34",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 34",
+      "full_name": "Cố vấn 34",
+      "status": "approved"
+    },
+    {
+      "username": "CV35",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 35",
+      "full_name": "Cố vấn 35",
+      "status": "approved"
+    },
+    {
+      "username": "CV36",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 36",
+      "full_name": "Cố vấn 36",
+      "status": "approved"
+    },
+    {
+      "username": "CV37",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 37",
+      "full_name": "Cố vấn 37",
+      "status": "approved"
+    },
+    {
+      "username": "CV38",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 38",
+      "full_name": "Cố vấn 38",
+      "status": "approved"
+    },
+    {
+      "username": "CV39",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 39",
+      "full_name": "Cố vấn 39",
+      "status": "approved"
+    },
+    {
+      "username": "CV40",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 40",
+      "full_name": "Cố vấn 40",
+      "status": "approved"
+    },
+    {
+      "username": "CV41",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 41",
+      "full_name": "Cố vấn 41",
+      "status": "approved"
+    },
+    {
+      "username": "CV42",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 42",
+      "full_name": "Cố vấn 42",
+      "status": "approved"
+    },
+    {
+      "username": "CV43",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 43",
+      "full_name": "Cố vấn 43",
+      "status": "approved"
+    },
+    {
+      "username": "CV44",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 44",
+      "full_name": "Cố vấn 44",
+      "status": "approved"
+    },
+    {
+      "username": "CV45",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 45",
+      "full_name": "Cố vấn 45",
+      "status": "approved"
+    },
+    {
+      "username": "CV46",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 46",
+      "full_name": "Cố vấn 46",
+      "status": "approved"
+    },
+    {
+      "username": "CV47",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 47",
+      "full_name": "Cố vấn 47",
+      "status": "approved"
+    },
+    {
+      "username": "CV48",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 48",
+      "full_name": "Cố vấn 48",
+      "status": "approved"
+    },
+    {
+      "username": "CV49",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 49",
+      "full_name": "Cố vấn 49",
+      "status": "approved"
+    },
+    {
+      "username": "CV50",
+      "password_hash": "scrypt:32768:8:1$ImSCVWYrpd8PabfE$e9e9a53358212d4223c6f9f1b501740b33c94901b26d6a28f4338186d479211f264178722ae448eb51b7589ad72f824fa55c90f854baf030634c748231420dc3",
+      "role": "advisor",
+      "display_name": "Cố vấn 50",
+      "full_name": "Cố vấn 50",
+      "status": "approved"
+    },
+    {
       "username": "SV056",
       "password_hash": "scrypt:32768:8:1$O7XOYeNwIuWfFQvL$13a8a190eeea5ffd4377bac23ba2d28a96c19cfd1a05a3f6d711f0e9d3be83748fc0690f6b8f31f943feac75b18d3edd6828608cbdf6f61f0f2a04a5a03b1579",
       "role": "student",

@@ -2,9 +2,10 @@
 {% block title %}Quản trị học vụ | Phòng Đào tạo{% endblock %}
 {% block main_class %}training-office-main mx-auto w-full px-4 py-6 sm:px-6 lg:px-8{% endblock %}
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office.css', v='7') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-large.css', v='7') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-assignments.css', v='7') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office.css', v='13') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-large.css', v='12') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-assignments.css', v='12') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-relations.css', v='1') }}">
 {% endblock %}
 {% block content %}
 <section class="to-dashboard" data-training-office-dashboard>
@@ -13,10 +14,6 @@
       <p class="to-eyebrow"><span></span> QUẢN TRỊ HỌC VỤ</p>
       <h1>{{ workspace_title or 'Xin chào, Phòng Đào tạo' }}</h1>
       <p>{{ workspace_description or 'Chọn một chức năng để bắt đầu phiên làm việc.' }}</p>
-    </div>
-    <div class="to-hero__notice">
-      <i data-lucide="shield-check"></i>
-      <span>Thay đổi được sao lưu và ghi nhận audit log trước khi áp dụng.</span>
     </div>
   </header>
 
@@ -39,7 +36,7 @@
     </a>
   </nav>
   {% else %}
-  <a class="to-back" href="/training-office"><i data-lucide="arrow-left"></i> Quay lại dashboard</a>
+  <nav class="ui-breadcrumb to-breadcrumb" aria-label="Breadcrumb" data-breadcrumb='[{"label":"Dashboard","href":"/training-office","icon":"home"},{"label":"{{ workspace_title }}"}]'></nav>
   <div class="to-layout">
   {% endif %}
 
@@ -49,30 +46,23 @@
         <div>
           <span class="to-panel__icon blue"><i data-lucide="git-branch"></i></span>
           <div>
-            <h2>Quan hệ học phần</h2>
-            <p>Quản lý ràng buộc giữa các môn học trong ontology.</p>
+            <h2>Tra cứu & quản lý học phần</h2>
+            <p>Tìm môn, xem chuỗi tiên quyết/song hành và cập nhật trực tiếp ontology.</p>
           </div>
         </div>
-        <button class="to-button to-button--primary" data-dialog-open="relation">
-          <i data-lucide="plus"></i> Thêm quan hệ
-        </button>
       </div>
-      <div class="to-toolbar">
-        <div class="to-search">
+      <div class="to-course-explorer">
+        <aside class="to-course-picker">
+          <label class="to-course-search">
           <i data-lucide="search"></i>
-          <input type="search" placeholder="Tìm theo mã học phần" data-filter="relations">
-        </div>
-        <span class="to-count" data-count="relations">Đang tải...</span>
-      </div>
-      <div class="to-table-wrap">
-        <table>
-          <thead>
-            <tr><th>Loại quan hệ</th><th>Học phần</th><th>Học phần liên quan</th><th></th></tr>
-          </thead>
-          <tbody data-rows="relations">
-            <tr><td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td></tr>
-          </tbody>
-        </table>
+            <input type="search" placeholder="Tìm mã hoặc tên học phần..." data-course-search>
+          </label>
+          <p class="to-course-picker__count" data-course-count>Đang nạp học phần...</p>
+          <div class="to-course-results" data-course-results></div>
+        </aside>
+        <section class="to-course-detail" data-course-detail>
+          <div class="to-course-empty"><i data-lucide="search"></i><h3>Chọn một học phần</h3><p>Tìm theo mã hoặc tên để xem và chỉnh sửa thông tin.</p></div>
+        </section>
       </div>
     </section>
     {% endif %}
@@ -140,11 +130,6 @@
         <!-- SMART FILTER BAR -->
         <div class="to-filter-bar to-filter-bar--modern">
           <div class="to-filter-bar__left">
-            <div class="to-search-box to-search-box--modern">
-              <i data-lucide="search"></i>
-              <input type="search" placeholder="Tìm theo mã lớp, cố vấn, sinh viên..." data-filter="assignments">
-            </div>
-
             <div class="to-filter-pills to-filter-pills--modern" role="tablist">
               <button class="to-filter-pill to-filter-pill--modern active" data-filter-status="all">
                 <span>Tất cả</span>
@@ -169,6 +154,10 @@
               <select class="to-select-cohort to-select-cohort--modern" data-filter-cohort aria-label="Lọc theo khóa học">
                 <option value="all">Tất cả các khóa</option>
               </select>
+            </div>
+            <div class="to-search-box to-search-box--modern">
+              <i data-lucide="search"></i>
+              <input type="search" placeholder="Tìm theo mã lớp, cố vấn, sinh viên..." data-filter="assignments">
             </div>
           </div>
         </div>
@@ -260,14 +249,14 @@
   </form>
 </dialog>
 
-<!-- DIALOG CHI TIẾT LỚP & PHÂN CÔNG CỐ VẤN HIỆN ĐẠI (WOW FACTOR) -->
+<!-- DIALOG PHÂN CÔNG CỐ VẤN HỌC TẬP (CHUYÊN BIỆT, NHANH & GỌN) -->
 <dialog class="to-modal-dialog" data-dialog="assignment">
   <div class="to-modal-container">
     <!-- Modal Header -->
     <div class="to-modal-header">
       <div class="to-modal-header__title-box">
         <div class="to-modal-header__icon">
-          <i data-lucide="users-round"></i>
+          <i data-lucide="user-check"></i>
         </div>
         <div>
           <h2 data-modal-class-title>Lớp 65.CNTT-1</h2>
@@ -285,18 +274,8 @@
       </button>
     </div>
 
-    <!-- Modal Tab Switcher -->
-    <div class="to-modal-tabs" role="tablist">
-      <button type="button" class="to-modal-tab-btn active" data-modal-tab="assign">
-        <i data-lucide="user-check"></i> Phân công Cố vấn
-      </button>
-      <button type="button" class="to-modal-tab-btn" data-modal-tab="students">
-        <i data-lucide="list"></i> Danh sách Sinh viên (<span data-modal-tab-student-count>0</span>)
-      </button>
-    </div>
-
-    <!-- Modal Tab 1: Form Phân Công Cố Vấn -->
-    <form class="to-modal-body" data-tab-content="assign" data-form="assignment">
+    <!-- Form Phân Công Cố Vấn (Trực tiếp, không cần tabs) -->
+    <form class="to-modal-body" data-form="assignment">
       <input type="hidden" name="academic_class" data-input-class>
 
       <!-- Banner cố vấn hiện tại nếu đã có -->
@@ -335,23 +314,52 @@
         </button>
       </div>
     </form>
+  </div>
+</dialog>
 
-    <!-- Modal Tab 2: Danh Sách Sinh Viên Trong Lớp -->
-    <div class="to-modal-body" data-tab-content="students" style="display:none;">
-      <div class="to-search-box to-roster-search" style="max-width:none;width:100%;">
-        <i data-lucide="search"></i>
-        <input type="search" placeholder="Tìm sinh viên theo MSSV hoặc họ tên..." data-roster-filter>
+<!-- DIALOG DANH SÁCH SINH VIÊN CỦA LỚP HÀNH CHÍNH (DEDICATED ROSTER MODAL) -->
+<dialog class="to-modal-dialog to-modal-dialog--large" data-dialog="roster">
+  <div class="to-modal-container to-modal-container--large">
+    <!-- Modal Header -->
+    <div class="to-modal-header">
+      <div class="to-modal-header__title-box">
+        <div class="to-modal-header__icon to-modal-header__icon--indigo">
+          <i data-lucide="graduation-cap"></i>
+        </div>
+        <div>
+          <h2 data-roster-class-title>Danh sách sinh viên</h2>
+          <div class="to-modal-header__badges">
+            <span class="to-stat-card__badge to-stat-card__badge--blue">
+              <i data-lucide="users" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;"></i>
+              <span data-roster-student-count>0</span> sinh viên
+            </span>
+            <span class="to-stat-card__badge to-stat-card__badge--gray" data-roster-cohort-badge>Khóa --</span>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="to-modal-close-btn" data-modal-close aria-label="Đóng">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body: Search Toolbar & Table -->
+    <div class="to-modal-body" style="padding-top:16px;">
+      <div class="to-roster-toolbar" style="margin-bottom:12px;">
+        <div class="to-search-box to-search-box--modern" style="width:100%;max-width:none;">
+          <i data-lucide="search"></i>
+          <input type="search" placeholder="Tìm kiếm sinh viên theo MSSV hoặc họ tên..." data-roster-filter>
+        </div>
       </div>
 
       <div class="to-roster-table-container">
         <table class="to-roster-table">
           <thead>
             <tr>
-              <th style="width:45px;">STT</th>
-              <th>MSSV</th>
+              <th style="width:50px;text-align:center;">STT</th>
+              <th style="width:130px;">MSSV</th>
               <th>Họ và tên</th>
-              <th>Ngành</th>
-              <th style="text-align:center;">Học kỳ</th>
+              <th>Ngành đào tạo</th>
+              <th style="width:95px;text-align:center;">Học kỳ</th>
             </tr>
           </thead>
           <tbody data-roster-rows>
@@ -360,7 +368,11 @@
         </table>
       </div>
 
-      <div class="to-modal-footer" style="margin:20px -24px -20px;padding:16px 24px;">
+      <!-- Action Footer -->
+      <div class="to-modal-footer" style="margin:20px -24px -20px;padding:16px 24px;justify-content:space-between;">
+        <span class="to-roster-footer-count" data-roster-footer-summary>
+          Hiển thị <strong>0</strong> sinh viên
+        </span>
         <button type="button" class="to-btn to-btn--ghost" data-modal-close>Đóng</button>
       </div>
     </div>
@@ -417,5 +429,5 @@
   </div>
 </dialog>
 
-<script defer src="{{ url_for('static', filename='js/training-office/dashboard.js', v='7') }}"></script>
+<script defer src="{{ url_for('static', filename='js/training-office/dashboard.js', v='12') }}"></script>
 {% endblock %}

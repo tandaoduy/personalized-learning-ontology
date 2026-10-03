@@ -74,6 +74,75 @@ class TrainingOfficeService:
                     if code and target_code: rows.append({"type": kind, "course_code": code, "related_course_code": target_code})
         return sorted(rows, key=lambda item: (item["type"], item["course_code"], item["related_course_code"]))
 
+    def list_courses(self) -> list[dict]:
+        graph = self._graph()
+        rows = []
+        for course in graph.subjects(BASE.courseCode, None):
+            code = str(graph.value(course, BASE.courseCode) or "").strip().upper()
+            if code:
+                rows.append({"code": code, "name": str(graph.value(course, BASE.courseName) or "").strip(),
+                             "credits": float(graph.value(course, BASE.credit) or 0)})
+        return sorted(rows, key=lambda item: item["code"])
+
+    def course_detail(self, course_code: str) -> dict:
+        graph = self._graph(); course = self._course(graph, course_code)
+        def code_of(node): return str(graph.value(node, BASE.courseCode) or "").strip().upper()
+        prerequisites = sorted({code_of(node) for node in graph.objects(course, BASE.hasPrerequisiteCourse) if code_of(node)})
+        corequisites = sorted({code_of(node) for node in graph.objects(course, BASE.corequisiteWith) if code_of(node)})
+        required_by = sorted({code_of(node) for node in graph.subjects(BASE.hasPrerequisiteCourse, course) if code_of(node)})
+        # All transitive prerequisite edges, used by the UI to display the dependency chain.
+        chain, visited, queue = [], {str(course)}, [course]
+        while queue:
+            source = queue.pop(0); source_code = code_of(source)
+            for target in graph.objects(source, BASE.hasPrerequisiteCourse):
+                target_code = code_of(target)
+                if not target_code: continue
+                chain.append({"from": source_code, "to": target_code})
+                if str(target) not in visited:
+                    visited.add(str(target)); queue.append(target)
+        return {"code": code_of(course), "name": str(graph.value(course, BASE.courseName) or "").strip(),
+                "credits": float(graph.value(course, BASE.credit) or 0), "prerequisites": prerequisites,
+                "corequisites": corequisites, "required_by": required_by, "prerequisite_chain": chain}
+
+    def update_course(self, actor: str, course_code: str, name: str, credits, prerequisites, corequisites) -> dict:
+        graph = self._graph(); course = self._course(graph, course_code)
+        name = str(name or "").strip()
+        try: credits = float(credits)
+        except (TypeError, ValueError): raise ValueError("INVALID_CREDITS")
+        if not name or credits < 0 or credits > 30: raise ValueError("INVALID_COURSE_DATA")
+        def resolve_many(values):
+            nodes = []
+            for value in values or []:
+                node = self._course(graph, value)
+                if node == course: raise ValueError("SELF_RELATION_NOT_ALLOWED")
+                if node not in nodes: nodes.append(node)
+            return nodes
+        prereq_nodes, coreq_nodes = resolve_many(prerequisites), resolve_many(corequisites)
+        # Avoid adding any prerequisite edge that closes a cycle.
+        def reaches(start, wanted):
+            seen, queue = set(), [start]
+            while queue:
+                node = queue.pop()
+                if node == wanted: return True
+                if node in seen: continue
+                seen.add(node); queue.extend(graph.objects(node, BASE.hasPrerequisiteCourse))
+            return False
+        if any(reaches(node, course) for node in prereq_nodes): raise ValueError("PREREQUISITE_CYCLE_NOT_ALLOWED")
+        graph.set((course, BASE.courseName, Literal(name)))
+        graph.set((course, BASE.credit, Literal(credits)))
+        graph.remove((course, BASE.hasPrerequisiteCourse, None))
+        graph.addN((course, BASE.hasPrerequisiteCourse, node) for node in prereq_nodes)
+        # Keep corequisite links symmetric while replacing the selected course's links.
+        old_coreqs = list(graph.objects(course, BASE.corequisiteWith))
+        graph.remove((course, BASE.corequisiteWith, None))
+        for node in old_coreqs: graph.remove((node, BASE.corequisiteWith, course))
+        for node in coreq_nodes:
+            graph.add((course, BASE.corequisiteWith, node)); graph.add((node, BASE.corequisiteWith, course))
+        self._publish(graph, actor, "course_updated", {"course_code": course_code.upper(), "name": name,
+                      "credits": credits, "prerequisites": [code_of for code_of in (str(graph.value(n, BASE.courseCode)) for n in prereq_nodes)],
+                      "corequisites": [code_of for code_of in (str(graph.value(n, BASE.courseCode)) for n in coreq_nodes)]})
+        return self.course_detail(course_code)
+
     def set_relation(self, actor: str, relation: str, course_code: str, related_course_code: str, enabled: bool) -> dict:
         if relation not in {"prerequisite", "corequisite"}: raise ValueError("INVALID_RELATION")
         graph = self._graph(); course, related = self._course(graph, course_code), self._course(graph, related_course_code)

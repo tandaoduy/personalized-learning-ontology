@@ -6,6 +6,8 @@
   const api = '/api/training-office';
   const state = {
     relations: [],
+    courses: [],
+    selectedCourse: null,
     programs: [],
     assignments: [],
     advisors: [],
@@ -109,6 +111,9 @@
     if (elWorkload) elWorkload.textContent = avgWorkload;
     if (elFill) elFill.style.width = `${pct}%`;
     if (elPct) elPct.textContent = `${pct}%`;
+
+    const elTotalPill = $('[data-stat="total-classes-pill"]');
+    if (elTotalPill) elTotalPill.textContent = `${totalClasses} lớp`;
 
     // Cập nhật số đếm trên filter pills
     const countAll = $('[data-pill-count="all"]');
@@ -246,10 +251,11 @@
             </div>
           </td>
           <td style="text-align:center;">
-            <div class="to-student-pill">
+            <button type="button" class="to-student-pill to-student-pill--clickable" data-action="view-roster" data-class="${esc(item.academic_class)}" title="Bấm để xem danh sách ${item.student_count} sinh viên lớp ${esc(item.academic_class)}">
               <i data-lucide="users"></i>
               <span>${item.student_count} sinh viên</span>
-            </div>
+              <i data-lucide="arrow-up-right" class="to-pill-arrow"></i>
+            </button>
           </td>
           <td style="text-align:center;">
             ${advisorHtml}
@@ -296,14 +302,12 @@
     }
   }
 
-  // Mở Modal Chi tiết & Phân công Lớp
-  function openClassModal(academicClass, defaultTab = 'assign') {
+  // Mở Modal Phân công Cố vấn cho Lớp (Chuyên biệt, không có tab)
+  function openClassModal(academicClass) {
     const row = state.assignments.find(x => x.academic_class === academicClass);
     if (!row) return;
 
     state.currentClass = row;
-    state.currentTab = defaultTab;
-    state.rosterQuery = '';
 
     const dialog = $('[data-dialog="assignment"]');
     if (!dialog) return;
@@ -311,7 +315,6 @@
     // Header thông tin
     $('[data-modal-class-title]').textContent = `Lớp ${row.academic_class}`;
     $('[data-modal-student-count]').textContent = row.student_count;
-    $('[data-modal-tab-student-count]').textContent = row.student_count;
     $('[data-input-class]').value = row.academic_class;
 
     const statusBadge = $('[data-modal-status-badge]');
@@ -340,11 +343,34 @@
     // Render danh sách Thẻ chọn Cố vấn (Advisor Cards)
     renderAdvisorSelectionCards(row.assignment ? row.assignment.advisor_username : '');
 
-    // Render Danh sách sinh viên
-    renderStudentRoster(row.students || []);
+    refreshIcons();
+    dialog.showModal();
+  }
 
-    // Active tab
-    switchModalTab(defaultTab);
+  // Mở Modal Danh sách Sinh viên chuyên biệt
+  function openRosterModal(academicClass) {
+    const row = state.assignments.find(x => x.academic_class === academicClass);
+    if (!row) return;
+
+    state.currentRosterClass = row;
+    state.rosterQuery = '';
+
+    const dialog = $('[data-dialog="roster"]');
+    if (!dialog) return;
+
+    $('[data-roster-class-title]').textContent = `Danh sách sinh viên lớp ${row.academic_class}`;
+    $('[data-roster-student-count]').textContent = row.student_count;
+
+    const cohortMatch = row.academic_class.match(/^(\d{2})/);
+    const cohortBadge = $('[data-roster-cohort-badge]');
+    if (cohortBadge) {
+      cohortBadge.textContent = cohortMatch ? `Khóa K${cohortMatch[1]}` : 'Lớp chính quy';
+    }
+
+    const filterInput = $('[data-roster-filter]');
+    if (filterInput) filterInput.value = '';
+
+    renderStudentRoster(row.students || []);
 
     refreshIcons();
     dialog.showModal();
@@ -405,11 +431,16 @@
     const tbody = $('[data-roster-rows]');
     if (!tbody) return;
 
-    const q = state.rosterQuery.toLowerCase().trim();
+    const q = (state.rosterQuery || '').toLowerCase().trim();
     const filtered = (students || []).filter(s => {
       if (!q) return true;
       return (s.name || '').toLowerCase().includes(q) || (s.student_id || '').toLowerCase().includes(q);
     });
+
+    const summary = $('[data-roster-footer-summary]');
+    if (summary) {
+      summary.innerHTML = `Hiển thị <strong>${filtered.length}</strong> / ${students.length} sinh viên`;
+    }
 
     if (!filtered.length) {
       tbody.innerHTML = '<tr><td colspan="5" class="to-loading">Không tìm thấy sinh viên phù hợp.</td></tr>';
@@ -418,27 +449,13 @@
 
     tbody.innerHTML = filtered.map((s, idx) => `
       <tr>
-        <td style="color:#64748b;font-weight:600;">${idx + 1}</td>
-        <td><strong style="color:#0f172a;font-family:monospace;">${esc(s.student_id)}</strong></td>
-        <td><strong>${esc(s.name)}</strong></td>
-        <td>${esc(s.major || 'Công nghệ thông tin')}</td>
-        <td style="text-align:center;"><span class="to-badge to-badge--blue">Kỳ ${esc(s.semester || 1)}</span></td>
+        <td style="text-align:center;color:#64748b;font-weight:600;">${idx + 1}</td>
+        <td><span class="to-student-id-badge">${esc(s.student_id)}</span></td>
+        <td><strong style="color:#0f172a;font-size:0.87rem;">${esc(s.name)}</strong></td>
+        <td><span style="color:#475569;">${esc(s.major || 'Công nghệ thông tin')}</span></td>
+        <td style="text-align:center;"><span class="to-semester-badge">Kỳ ${esc(s.semester || 1)}</span></td>
       </tr>
     `).join('');
-  }
-
-  function switchModalTab(tabName) {
-    state.currentTab = tabName;
-    $$('[data-modal-tab]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.modalTab === tabName);
-    });
-
-    const assignContent = $('[data-tab-content="assign"]');
-    const studentsContent = $('[data-tab-content="students"]');
-    if (assignContent && studentsContent) {
-      assignContent.style.display = tabName === 'assign' ? 'block' : 'none';
-      studentsContent.style.display = tabName === 'students' ? 'block' : 'none';
-    }
   }
 
   // Mở Modal Phân công hàng loạt
@@ -552,6 +569,35 @@
     }
   }
 
+  function renderCourseResults() {
+    const root = $('[data-course-results]');
+    if (!root) return;
+    const query = ($('[data-course-search]')?.value || '').trim().toLowerCase();
+    const rows = state.courses.filter(course => !query || `${course.code} ${course.name}`.toLowerCase().includes(query)).slice(0, 80);
+    const count = $('[data-course-count]');
+    if (count) count.textContent = `${rows.length}${query ? ` / ${state.courses.length}` : ''} học phần`;
+    root.innerHTML = rows.length ? rows.map(course => `<button type="button" class="to-course-result ${state.selectedCourse?.code === course.code ? 'is-active' : ''}" data-select-course="${esc(course.code)}"><strong>${esc(course.code)} · ${Number(course.credits || 0)} TC</strong><span>${esc(course.name || 'Chưa có tên')}</span></button>`).join('') : '<p class="to-loading">Không tìm thấy học phần.</p>';
+  }
+
+  function renderCourseDetail(course) {
+    const root = $('[data-course-detail]');
+    if (!root) return;
+    const chain = course.prerequisite_chain || [];
+    root.innerHTML = `<div class="to-course-detail__head"><div><h3>${esc(course.code)} — ${esc(course.name)}</h3><p>${course.required_by?.length ? `Là tiên quyết của: ${esc(course.required_by.join(', '))}` : 'Chưa là điều kiện tiên quyết của học phần nào.'}</p></div><span class="to-badge to-badge--blue">Ontology</span></div>
+      <form class="to-course-form" data-course-form>
+        <div class="to-course-fields"><label>Tên học phần<input name="name" required value="${esc(course.name)}"></label><label>Số tín chỉ<input name="credits" type="number" min="0" max="30" step="0.5" required value="${esc(course.credits)}"></label></div>
+        <div class="to-course-relation-grid"><section class="to-course-relation"><h4>Tiên quyết</h4><p>Nhập mã môn, cách nhau bằng dấu phẩy.</p><textarea name="prerequisites" placeholder="Ví dụ: INT6001, MAT101">${esc((course.prerequisites || []).join(', '))}</textarea></section><section class="to-course-relation"><h4>Song hành</h4><p>Liên kết được tự động đồng bộ hai chiều.</p><textarea name="corequisites" placeholder="Ví dụ: INT6002">${esc((course.corequisites || []).join(', '))}</textarea></section></div>
+        <section class="to-course-chain"><h4>Chuỗi tiên quyết</h4>${chain.length ? `<ol>${chain.map(edge => `<li><strong>${esc(edge.from)}</strong> <i data-lucide="arrow-right"></i> ${esc(edge.to)}</li>`).join('')}</ol>` : '<p class="to-course-related">Học phần này chưa có môn tiên quyết.</p>'}</section>
+        <footer><button class="to-button to-button--primary" type="submit"><i data-lucide="save"></i> Lưu vào ontology</button></footer>
+      </form>`;
+    refreshIcons();
+  }
+
+  async function selectCourse(code) {
+    state.selectedCourse = await request(`/courses/${encodeURIComponent(code)}`);
+    renderCourseResults(); renderCourseDetail(state.selectedCourse);
+  }
+
   async function loadAll() {
     try {
       // Tải danh sách cố vấn trước để có thông tin workload và tên
@@ -562,6 +608,7 @@
       await Promise.all([
         load('relations', '/relations'),
         load('programs', '/programs'),
+        request('/courses').then(rows => { state.courses = rows; renderCourseResults(); }),
         advisorsPromise
       ]);
 
@@ -577,6 +624,35 @@
   // =========================================================================
 
   document.addEventListener('DOMContentLoaded', () => {
+    $('[data-course-search]')?.addEventListener('input', renderCourseResults);
+
+    document.addEventListener('click', async (e) => {
+      const button = e.target.closest('[data-select-course]');
+      if (!button) return;
+      try { await selectCourse(button.dataset.selectCourse); }
+      catch (err) { message(err.message, 'error'); }
+    });
+
+    document.addEventListener('submit', async (e) => {
+      const form = e.target.closest('[data-course-form]');
+      if (!form || !state.selectedCourse) return;
+      e.preventDefault();
+      const submit = form.querySelector('[type="submit"]');
+      const parseCodes = value => String(value || '').split(',').map(code => code.trim().toUpperCase()).filter(Boolean);
+      try {
+        if (submit) submit.disabled = true;
+        const data = await request(`/courses/${encodeURIComponent(state.selectedCourse.code)}`, { method: 'PUT', body: JSON.stringify({
+          name: form.name.value, credits: form.credits.value,
+          prerequisites: parseCodes(form.prerequisites.value), corequisites: parseCodes(form.corequisites.value)
+        }) });
+        state.selectedCourse = data;
+        await Promise.all([request('/courses').then(rows => { state.courses = rows; }), load('relations', '/relations')]);
+        renderCourseResults(); renderCourseDetail(data);
+        message('Đã lưu học phần và các quan hệ vào ontology.');
+      } catch (err) { message(err.message, 'error'); }
+      finally { if (submit) submit.disabled = false; }
+    });
+
     // 1. Mở modal thêm quan hệ / CTĐT
     $$('[data-dialog-open]').forEach(b => b.addEventListener('click', () => {
       const dialog = $(`[data-dialog="${b.dataset.dialogOpen}"]`);
@@ -599,18 +675,11 @@
       });
     });
 
-    // 3. Chuyển tab trong Assignment Modal
-    $$('[data-modal-tab]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchModalTab(btn.dataset.modalTab);
-      });
-    });
-
-    // 4. Lọc tìm kiếm sinh viên trong Roster Tab
+    // 3. Lọc tìm kiếm sinh viên trong Roster Modal
     $('[data-roster-filter]')?.addEventListener('input', (e) => {
       state.rosterQuery = e.target.value;
-      if (state.currentClass) {
-        renderStudentRoster(state.currentClass.students || []);
+      if (state.currentRosterClass) {
+        renderStudentRoster(state.currentRosterClass.students || []);
       }
     });
 
@@ -808,19 +877,20 @@
       });
     });
 
-    // 18. Các sự kiện Click tổng hợp: Chi tiết lớp, Xem SV, Gỡ cố vấn, v.v.
+    // 18. Các sự kiện Click tổng hợp: Phân công lớp, Xem DS SV, Gỡ cố vấn, v.v.
     document.addEventListener('click', async e => {
-      // Mở modal phân công / chi tiết
+      // Mở modal phân công cố vấn
       const detailBtn = e.target.closest('[data-class-detail]');
       if (detailBtn) {
-        openClassModal(detailBtn.dataset.classDetail, 'assign');
+        openClassModal(detailBtn.dataset.classDetail);
         return;
       }
 
-      // Xem danh sách sinh viên
-      const viewStudentsBtn = e.target.closest('[data-view-students]');
-      if (viewStudentsBtn) {
-        openClassModal(viewStudentsBtn.dataset.viewStudents, 'students');
+      // Xem danh sách sinh viên khi bấm vào số lượng sinh viên hoặc nút xem
+      const viewRosterBtn = e.target.closest('[data-action="view-roster"]') || e.target.closest('[data-view-students]');
+      if (viewRosterBtn) {
+        const cls = viewRosterBtn.dataset.class || viewRosterBtn.dataset.viewStudents;
+        openRosterModal(cls);
         return;
       }
 
