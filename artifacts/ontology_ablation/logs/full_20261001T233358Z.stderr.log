@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "D:\NTU\CNTT\NCKH\personalized-learning-ontology\experiments\run_ontology_ablation.py", line 182, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "D:\NTU\CNTT\NCKH\personalized-learning-ontology\experiments\run_ontology_ablation.py", line 158, in main
+    checked = validate_candidate(context(run_id, f"validate-{attempt}", plan.model_dump()), plan, student, knowledge, evidence,
+        min_credits=full_engine.min_credits, max_credits=full_engine.max_credits)
+  File "D:\NTU\CNTT\NCKH\personalized-learning-ontology\backend\app\capabilities\validation.py", line 27, in validate_candidate
+    return fail(context, "validate_candidates", ToolError(code="VALIDATOR_ERROR", message=str(exc)), started_at=started)
+  File "D:\NTU\CNTT\NCKH\personalized-learning-ontology\backend\app\capabilities\_envelope.py", line 47, in fail
+    provenance=Provenance(
+               ~~~~~~~~~~^
+        call_id=context.call_id,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        finished_at=finished_at or now(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "D:\NTU\CNTT\NCKH\personalized-learning-ontology\.venv\Lib\site-packages\pydantic\main.py", line 263, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Provenance
+  Value error, Provenance finished_at must not precede started_at [type=value_error, input_value={'call_id': 'validate-1',...=datetime.timezone.utc)}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/value_error

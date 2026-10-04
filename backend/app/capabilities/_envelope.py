@@ -12,6 +12,17 @@ def now() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def finish_at(started_at: datetime, finished_at: datetime | None = None) -> datetime:
+    """Return a finish time that preserves the provenance time ordering.
+
+    Wall clocks may be adjusted backwards while a capability is running (for
+    example by NTP on Windows).  Provenance must still represent a valid
+    interval in that case.
+    """
+    finished = finished_at or now()
+    return max(started_at, finished)
+
+
 def output_hash(output: SchemaModel) -> str:
     return "sha256:" + sha256(output.model_dump_json().encode("utf-8")).hexdigest()
 
@@ -20,7 +31,7 @@ def ok(context: ToolCallContext, tool_name: str, output: SchemaModel, *,
        started_at: datetime, finished_at: datetime | None = None,
        knowledge_versions=None, source_refs: tuple[str, ...] = (),
        evidence_ids: tuple[str, ...] = ()) -> ToolResult:
-    finished = finished_at or now()
+    finished = finish_at(started_at, finished_at)
     return ToolResult(
         status="ok",
         output=output,
@@ -50,6 +61,6 @@ def fail(context: ToolCallContext, tool_name: str, error: ToolError, *,
             tool_version=TOOL_VERSION,
             input_hash=context.input_hash,
             started_at=started_at,
-            finished_at=finished_at or now(),
+            finished_at=finish_at(started_at, finished_at),
         ),
     )

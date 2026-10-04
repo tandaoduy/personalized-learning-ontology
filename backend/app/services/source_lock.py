@@ -2,9 +2,13 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+import os
 from pathlib import Path
 
-import fcntl
+if os.name == "nt":
+    import msvcrt
+else:
+    import fcntl
 
 
 @contextmanager
@@ -19,8 +23,20 @@ def exclusive_source_lock(path: str | Path):
     lock_path = source.with_name(f".{source.name}.lock")
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("a+") as lock_file:
-        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        # Windows locks a byte range; ensure the range exists before locking.
+        if os.name == "nt":
+            lock_file.seek(0)
+            lock_file.write("0")
+            lock_file.flush()
+            lock_file.seek(0)
+            msvcrt.locking(lock_file.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
         try:
             yield
         finally:
-            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+            if os.name == "nt":
+                lock_file.seek(0)
+                msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)

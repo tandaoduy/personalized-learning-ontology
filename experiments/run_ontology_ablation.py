@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
-from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
@@ -24,7 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 from backend.app.capabilities import generate_candidates, load_knowledge_context, load_student_context, validate_candidate
 from backend.app.config import Config
-from backend.app.schemas import PlanningRequest, ToolCallContext, ValidationResult
+from backend.app.schemas import PlanningRequest, ToolCallContext
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
@@ -47,7 +46,23 @@ def digest(value: object) -> str:
 
 
 def write_json(path: Path, value: object) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+    temporary.replace(path)
+
+
+def require_output(result):
+    if result.status == "error":
+        raise RuntimeError(f"{result.provenance.tool_name}: {result.error.code}: {result.error.message}")
+    return result.output
+
+
+def validation_outcome(checked):
+    if checked.status == "error":
+        return "error", [], f"{checked.error.code}: {checked.error.message}"
+    validation = checked.output.validation if hasattr(checked.output, "validation") else checked.output
+    errors = "; ".join(f"{item.code}: {item.message}" for item in validation.errors)
+    return validation.status, [item.constraint_id for item in validation.violations], errors or None
 
 
 def parse_seeds(value: str) -> tuple[int, ...]:
@@ -103,19 +118,20 @@ def summarize(rows: list[dict], seeds: tuple[int, ...]) -> dict:
         per_seed, rates, coverage, violations = [], [], [], Counter()
         for seed in seeds:
             items = grouped[(configuration, seed)]
-            attempts = len(items)
+            attempts = sum(item["attempt"] > 0 for item in items)
             valid = sum(item["validation_status"] == "valid" for item in items)
             delivered = sum(item["released"] for item in items if item["request_marker"])
             profile_count = sum(item["request_marker"] for item in items)
             rate = valid / attempts if attempts else 0.0
             cover = delivered / profile_count if profile_count else 0.0
             per_seed.append({"seed": seed, "profiles": profile_count, "candidate_attempts_before_filter": attempts,
-                "valid_candidate_attempts": valid, "candidate_attempt_validity": rate,
+                "valid_candidate_attempts": valid, "validator_errors": sum(item["validation_status"] == "error" for item in items), "candidate_attempt_validity": rate,
                 "final_recommendation_coverage": cover, "no_plan_rate": 1 - cover})
             rates.append(rate); coverage.append(cover)
             for item in items: violations.update(item["violations"])
         output[configuration] = {"per_seed": per_seed, "candidate_attempt_validity": metric(rates),
             "final_recommendation_coverage": metric(coverage), "no_plan_rate": metric([1 - value for value in coverage]),
+            "validator_errors": sum(item["validator_errors"] for item in per_seed),
             "violations_by_rule": {rule: violations[rule] for rule in RULES}}
     return output
 
@@ -136,8 +152,9 @@ def main() -> int:
     full_engine = make_engine(args.target_credits, None)
     evidence = OntologyEvidenceService(Config.ONTOLOGY_PATH)
     generation_engines = {name: make_engine(args.target_credits, disabled) for name, disabled in CONFIGS}
-    run_dir = ROOT / "artifacts" / "ontology_ablation" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_dir = ROOT / "artifacts" / "ontology_ablation" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir.mkdir(parents=True)
+    print(f"[ablation] artifacts: {run_dir}", flush=True)
     rows = []
     for name, disabled in CONFIGS:
         for seed in args.seeds:
@@ -148,23 +165,32 @@ def main() -> int:
                     target_term_id="next-term", goal=goal(profile), target_credits=args.target_credits)
                 run_id = f"RUN_ABL_{name}_{seed}_{number:04d}"
                 student_result = load_student_context(context(run_id, "student", request.model_dump()), request, service)
+                student = require_output(student_result).student_snapshot
                 knowledge_result = load_knowledge_context(context(run_id, "knowledge", request.model_dump()), request,
-                    student_result.output.student_snapshot, full_engine, evidence)
-                student, knowledge = student_result.output.student_snapshot, knowledge_result.output.knowledge_snapshot
+                    student, full_engine, evidence)
+                knowledge = require_output(knowledge_result).knowledge_snapshot
                 generated = generate_candidates(context(run_id, "generate", request.model_dump()), request, student, knowledge,
                     profile, generation_engines[name], candidate_limit=3, seed=seed)
                 validations = []
-                for attempt, plan in enumerate(generated.output.candidates, 1):
+                for attempt, plan in enumerate(require_output(generated).candidates, 1):
                     checked = validate_candidate(context(run_id, f"validate-{attempt}", plan.model_dump()), plan, student, knowledge, evidence,
                         min_credits=full_engine.min_credits, max_credits=full_engine.max_credits)
-                    validation = checked.output.validation if hasattr(checked.output, "validation") else checked.output
-                    validations.append(validation)
-                released = any(item.status == "valid" for item in validations)
-                for attempt, validation in enumerate(validations):
-                    rows.append({"configuration": name, "disabled_relation": disabled or "none", "seed": seed,
-                        "student": f"B{number:04d}", "attempt": attempt + 1, "validation_status": validation.status,
-                        "violations": [item.constraint_id for item in validation.violations],
+                    validations.append(validation_outcome(checked))
+                    if validations[-1][0] == "error":
+                        print(f"[ablation] {run_id}, attempt {attempt}: {validations[-1][2]}", file=sys.stderr, flush=True)
+                released = any(status == "valid" for status, _, _ in validations)
+                profile_rows = []
+                if not validations:
+                    validations.append(("no_candidates", [], None))
+                for attempt, (validation_status, violations, validator_error) in enumerate(validations):
+                    profile_rows.append({"configuration": name, "disabled_relation": disabled or "none", "seed": seed,
+                        "student": f"B{number:04d}", "attempt": 0 if validation_status == "no_candidates" else attempt + 1, "validation_status": validation_status,
+                        "violations": violations, "validator_error": validator_error,
                         "released": released, "request_marker": attempt == 0})
+                # One complete profile per line, preserved even if a later call fails.
+                with (run_dir / "completed_profiles.jsonl").open("a", encoding="utf-8") as journal:
+                    journal.write(json.dumps(profile_rows, ensure_ascii=False) + "\n")
+                rows.extend(profile_rows)
                 if args.progress_every and (number % args.progress_every == 0 or number == len(profiles)):
                     elapsed = perf_counter() - started
                     print(f"[ablation] {name}, seed {seed}: {number}/{len(profiles)}; elapsed {elapsed:.0f}s", flush=True)
@@ -175,7 +201,10 @@ def main() -> int:
         "source_profile_data_sha256": "sha256:" + sha256(Path(Config.STUDENT_DATA_JSON).read_bytes()).hexdigest()}
     write_json(run_dir / "manifest.json", manifest); write_json(run_dir / "candidate_results.json", rows); write_json(run_dir / "summary.json", summary)
     print(run_dir)
-    return 0
+    error_count = sum(item["validation_status"] == "error" for item in rows)
+    if error_count:
+        print(f"[ablation] WARNING: {error_count} validator errors; inspect results before reporting metrics.", file=sys.stderr)
+    return 1 if error_count else 0
 
 
 if __name__ == "__main__":

@@ -1,0 +1,235 @@
+[
+  {
+    "configuration": "full_ontology",
+    "disabled_relation": "none",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": true
+  },
+  {
+    "configuration": "full_ontology",
+    "disabled_relation": "none",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "full_ontology",
+    "disabled_relation": "none",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 3,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_prerequisite",
+    "disabled_relation": "prerequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": true
+  },
+  {
+    "configuration": "without_prerequisite",
+    "disabled_relation": "prerequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_prerequisite",
+    "disabled_relation": "prerequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 3,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_corequisite",
+    "disabled_relation": "corequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": true
+  },
+  {
+    "configuration": "without_corequisite",
+    "disabled_relation": "corequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_corequisite",
+    "disabled_relation": "corequisite",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 3,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_curriculum_relation",
+    "disabled_relation": "curriculum",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "invalid",
+    "violations": [
+      "curriculum_membership",
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota",
+      "curriculum_membership"
+    ],
+    "validator_error": null,
+    "released": false,
+    "request_marker": true
+  },
+  {
+    "configuration": "without_curriculum_relation",
+    "disabled_relation": "curriculum",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "invalid",
+    "violations": [
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota",
+      "elective_quota"
+    ],
+    "validator_error": null,
+    "released": false,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_curriculum_relation",
+    "disabled_relation": "curriculum",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 3,
+    "validation_status": "invalid",
+    "violations": [
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota",
+      "curriculum_membership",
+      "elective_quota"
+    ],
+    "validator_error": null,
+    "released": false,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_semester_offering",
+    "disabled_relation": "offering",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": true
+  },
+  {
+    "configuration": "without_semester_offering",
+    "disabled_relation": "offering",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "invalid",
+    "violations": [
+      "semester_offering"
+    ],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_semester_offering",
+    "disabled_relation": "offering",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 3,
+    "validation_status": "valid",
+    "violations": [],
+    "validator_error": null,
+    "released": true,
+    "request_marker": false
+  },
+  {
+    "configuration": "without_elective_quota",
+    "disabled_relation": "quota",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 1,
+    "validation_status": "invalid",
+    "violations": [
+      "elective_quota",
+      "elective_quota"
+    ],
+    "validator_error": null,
+    "released": false,
+    "request_marker": true
+  },
+  {
+    "configuration": "without_elective_quota",
+    "disabled_relation": "quota",
+    "seed": 41,
+    "student": "B0001",
+    "attempt": 2,
+    "validation_status": "invalid",
+    "violations": [
+      "elective_quota",
+      "elective_quota"
+    ],
+    "validator_error": null,
+    "released": false,
+    "request_marker": false
+  }
+]

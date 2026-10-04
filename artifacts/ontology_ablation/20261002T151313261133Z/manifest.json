@@ -1,0 +1,46 @@
+{
+  "protocol": "stage7-ontology-component-ablation-v1",
+  "profiles": 364,
+  "seeds": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "target_credits": 18.0,
+  "candidate_output_cap": 3,
+  "generator_ablation": "One relation family removed only from generation; full ontology StandardValidator remains the evaluator.",
+  "configurations": [
+    {
+      "name": "full_ontology",
+      "disabled_relation": null
+    },
+    {
+      "name": "without_prerequisite",
+      "disabled_relation": "prerequisite"
+    },
+    {
+      "name": "without_corequisite",
+      "disabled_relation": "corequisite"
+    },
+    {
+      "name": "without_curriculum_relation",
+      "disabled_relation": "curriculum"
+    },
+    {
+      "name": "without_semester_offering",
+      "disabled_relation": "offering"
+    },
+    {
+      "name": "without_elective_quota",
+      "disabled_relation": "quota"
+    }
+  ],
+  "source_profile_data_sha256": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae"
+}

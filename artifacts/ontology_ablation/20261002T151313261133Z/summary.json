@@ -1,0 +1,788 @@
+{
+  "full_ontology": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 903,
+        "valid_candidate_attempts": 832,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9213732004429679,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 707,
+        "valid_candidate_attempts": 656,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9278642149929278,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 687,
+        "valid_candidate_attempts": 637,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9272197962154294,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 689,
+        "valid_candidate_attempts": 638,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9259796806966618,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 767,
+        "valid_candidate_attempts": 714,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9308996088657105,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 550,
+        "valid_candidate_attempts": 513,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9327272727272727,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 714,
+        "valid_candidate_attempts": 661,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9257703081232493,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 915,
+        "valid_candidate_attempts": 846,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9245901639344263,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 752,
+        "valid_candidate_attempts": 700,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9308510638297872,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 720,
+        "valid_candidate_attempts": 668,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.9277777777777778,
+        "final_recommendation_coverage": 0.9148351648351648,
+        "no_plan_rate": 0.0851648351648352
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.927505,
+      "sd": 0.003362,
+      "ci95_half_width": 0.002084,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.914835,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.085165,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 1500
+    }
+  },
+  "without_prerequisite": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 769,
+        "valid_candidate_attempts": 311,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.4044213263979194,
+        "final_recommendation_coverage": 0.3434065934065934,
+        "no_plan_rate": 0.6565934065934066
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 630,
+        "valid_candidate_attempts": 220,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3492063492063492,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 630,
+        "valid_candidate_attempts": 218,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.346031746031746,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 623,
+        "valid_candidate_attempts": 215,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3451043338683788,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 654,
+        "valid_candidate_attempts": 224,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3425076452599388,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 510,
+        "valid_candidate_attempts": 133,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.2607843137254902,
+        "final_recommendation_coverage": 0.3324175824175824,
+        "no_plan_rate": 0.6675824175824177
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 628,
+        "valid_candidate_attempts": 217,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.34554140127388533,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 783,
+        "valid_candidate_attempts": 307,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.39208173690932313,
+        "final_recommendation_coverage": 0.33791208791208793,
+        "no_plan_rate": 0.6620879120879121
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 655,
+        "valid_candidate_attempts": 226,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3450381679389313,
+        "final_recommendation_coverage": 0.33516483516483514,
+        "no_plan_rate": 0.6648351648351649
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 632,
+        "valid_candidate_attempts": 221,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.34968354430379744,
+        "final_recommendation_coverage": 0.34065934065934067,
+        "no_plan_rate": 0.6593406593406593
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.34804,
+      "sd": 0.037704,
+      "ci95_half_width": 0.023369,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.337912,
+      "sd": 0.002896,
+      "ci95_half_width": 0.001795,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.662088,
+      "sd": 0.002896,
+      "ci95_half_width": 0.001795,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 10179,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 455
+    }
+  },
+  "without_corequisite": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 821,
+        "valid_candidate_attempts": 714,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8696711327649208,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 690,
+        "valid_candidate_attempts": 607,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8797101449275362,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 667,
+        "valid_candidate_attempts": 587,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8800599700149925,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 675,
+        "valid_candidate_attempts": 594,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.88,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 729,
+        "valid_candidate_attempts": 642,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8806584362139918,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 545,
+        "valid_candidate_attempts": 478,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8770642201834863,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 684,
+        "valid_candidate_attempts": 598,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8742690058479532,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 833,
+        "valid_candidate_attempts": 727,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8727490996398559,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 711,
+        "valid_candidate_attempts": 626,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8804500703234881,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 701,
+        "valid_candidate_attempts": 616,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.8787446504992867,
+        "final_recommendation_coverage": 0.8681318681318682,
+        "no_plan_rate": 0.13186813186813184
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.877338,
+      "sd": 0.003832,
+      "ci95_half_width": 0.002375,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.868132,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.131868,
+      "sd": 0.0,
+      "ci95_half_width": 0.0,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 381,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 0,
+      "credit_limit": 1431
+    }
+  },
+  "without_curriculum_relation": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 984,
+        "valid_candidate_attempts": 528,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5365853658536586,
+        "final_recommendation_coverage": 0.5879120879120879,
+        "no_plan_rate": 0.41208791208791207
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 867,
+        "valid_candidate_attempts": 411,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.4740484429065744,
+        "final_recommendation_coverage": 0.5824175824175825,
+        "no_plan_rate": 0.41758241758241754
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 861,
+        "valid_candidate_attempts": 402,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.46689895470383275,
+        "final_recommendation_coverage": 0.5851648351648352,
+        "no_plan_rate": 0.4148351648351648
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 882,
+        "valid_candidate_attempts": 412,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.4671201814058957,
+        "final_recommendation_coverage": 0.5824175824175825,
+        "no_plan_rate": 0.41758241758241754
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 925,
+        "valid_candidate_attempts": 462,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.49945945945945946,
+        "final_recommendation_coverage": 0.6043956043956044,
+        "no_plan_rate": 0.39560439560439564
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 798,
+        "valid_candidate_attempts": 349,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.43734335839599,
+        "final_recommendation_coverage": 0.6126373626373627,
+        "no_plan_rate": 0.3873626373626373
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 878,
+        "valid_candidate_attempts": 443,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5045558086560364,
+        "final_recommendation_coverage": 0.6126373626373627,
+        "no_plan_rate": 0.3873626373626373
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 990,
+        "valid_candidate_attempts": 541,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5464646464646464,
+        "final_recommendation_coverage": 0.6071428571428571,
+        "no_plan_rate": 0.3928571428571429
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 914,
+        "valid_candidate_attempts": 461,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5043763676148797,
+        "final_recommendation_coverage": 0.6071428571428571,
+        "no_plan_rate": 0.3928571428571429
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 892,
+        "valid_candidate_attempts": 443,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.4966367713004484,
+        "final_recommendation_coverage": 0.6208791208791209,
+        "no_plan_rate": 0.3791208791208791
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.493349,
+      "sd": 0.033137,
+      "ci95_half_width": 0.020539,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.600275,
+      "sd": 0.014378,
+      "ci95_half_width": 0.008911,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.399725,
+      "sd": 0.014378,
+      "ci95_half_width": 0.008911,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 12492,
+      "semester_offering": 0,
+      "elective_quota": 9119,
+      "credit_limit": 0
+    }
+  },
+  "without_semester_offering": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 906,
+        "valid_candidate_attempts": 527,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5816777041942605,
+        "final_recommendation_coverage": 0.5961538461538461,
+        "no_plan_rate": 0.40384615384615385
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 711,
+        "valid_candidate_attempts": 384,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.540084388185654,
+        "final_recommendation_coverage": 0.5934065934065934,
+        "no_plan_rate": 0.4065934065934066
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 711,
+        "valid_candidate_attempts": 393,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5527426160337553,
+        "final_recommendation_coverage": 0.6098901098901099,
+        "no_plan_rate": 0.39010989010989006
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 718,
+        "valid_candidate_attempts": 389,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.541782729805014,
+        "final_recommendation_coverage": 0.6098901098901099,
+        "no_plan_rate": 0.39010989010989006
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 820,
+        "valid_candidate_attempts": 453,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.552439024390244,
+        "final_recommendation_coverage": 0.6098901098901099,
+        "no_plan_rate": 0.39010989010989006
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 614,
+        "valid_candidate_attempts": 326,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5309446254071661,
+        "final_recommendation_coverage": 0.6071428571428571,
+        "no_plan_rate": 0.3928571428571429
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 720,
+        "valid_candidate_attempts": 410,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5694444444444444,
+        "final_recommendation_coverage": 0.6043956043956044,
+        "no_plan_rate": 0.39560439560439564
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 904,
+        "valid_candidate_attempts": 552,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.6106194690265486,
+        "final_recommendation_coverage": 0.6016483516483516,
+        "no_plan_rate": 0.3983516483516484
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 805,
+        "valid_candidate_attempts": 455,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5652173913043478,
+        "final_recommendation_coverage": 0.5989010989010989,
+        "no_plan_rate": 0.4010989010989011
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 727,
+        "valid_candidate_attempts": 396,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.5447042640990372,
+        "final_recommendation_coverage": 0.6016483516483516,
+        "no_plan_rate": 0.3983516483516484
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.558966,
+      "sd": 0.023698,
+      "ci95_half_width": 0.014688,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.603297,
+      "sd": 0.005963,
+      "ci95_half_width": 0.003696,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.396703,
+      "sd": 0.005963,
+      "ci95_half_width": 0.003696,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 4736,
+      "elective_quota": 0,
+      "credit_limit": 1305
+    }
+  },
+  "without_elective_quota": {
+    "per_seed": [
+      {
+        "seed": 41,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 950,
+        "valid_candidate_attempts": 450,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.47368421052631576,
+        "final_recommendation_coverage": 0.5192307692307693,
+        "no_plan_rate": 0.4807692307692307
+      },
+      {
+        "seed": 42,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 832,
+        "valid_candidate_attempts": 325,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.390625,
+        "final_recommendation_coverage": 0.5192307692307693,
+        "no_plan_rate": 0.4807692307692307
+      },
+      {
+        "seed": 43,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 847,
+        "valid_candidate_attempts": 316,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3730814639905549,
+        "final_recommendation_coverage": 0.5192307692307693,
+        "no_plan_rate": 0.4807692307692307
+      },
+      {
+        "seed": 44,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 848,
+        "valid_candidate_attempts": 300,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.35377358490566035,
+        "final_recommendation_coverage": 0.47527472527472525,
+        "no_plan_rate": 0.5247252747252747
+      },
+      {
+        "seed": 45,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 910,
+        "valid_candidate_attempts": 368,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.4043956043956044,
+        "final_recommendation_coverage": 0.5054945054945055,
+        "no_plan_rate": 0.4945054945054945
+      },
+      {
+        "seed": 46,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 760,
+        "valid_candidate_attempts": 258,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.3394736842105263,
+        "final_recommendation_coverage": 0.521978021978022,
+        "no_plan_rate": 0.478021978021978
+      },
+      {
+        "seed": 47,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 852,
+        "valid_candidate_attempts": 336,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.39436619718309857,
+        "final_recommendation_coverage": 0.5192307692307693,
+        "no_plan_rate": 0.4807692307692307
+      },
+      {
+        "seed": 48,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 993,
+        "valid_candidate_attempts": 461,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.46424974823766363,
+        "final_recommendation_coverage": 0.5192307692307693,
+        "no_plan_rate": 0.4807692307692307
+      },
+      {
+        "seed": 49,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 897,
+        "valid_candidate_attempts": 392,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.43701226309921964,
+        "final_recommendation_coverage": 0.521978021978022,
+        "no_plan_rate": 0.478021978021978
+      },
+      {
+        "seed": 50,
+        "profiles": 364,
+        "candidate_attempts_before_filter": 868,
+        "valid_candidate_attempts": 342,
+        "validator_errors": 0,
+        "candidate_attempt_validity": 0.39400921658986177,
+        "final_recommendation_coverage": 0.5164835164835165,
+        "no_plan_rate": 0.48351648351648346
+      }
+    ],
+    "candidate_attempt_validity": {
+      "mean": 0.402467,
+      "sd": 0.044179,
+      "ci95_half_width": 0.027383,
+      "n_seeds": 10
+    },
+    "final_recommendation_coverage": {
+      "mean": 0.513736,
+      "sd": 0.014304,
+      "ci95_half_width": 0.008866,
+      "n_seeds": 10
+    },
+    "no_plan_rate": {
+      "mean": 0.486264,
+      "sd": 0.014304,
+      "ci95_half_width": 0.008866,
+      "n_seeds": 10
+    },
+    "validator_errors": 0,
+    "violations_by_rule": {
+      "prerequisite": 0,
+      "corequisite": 0,
+      "curriculum_membership": 0,
+      "semester_offering": 0,
+      "elective_quota": 21111,
+      "credit_limit": 0
+    }
+  }
+}
