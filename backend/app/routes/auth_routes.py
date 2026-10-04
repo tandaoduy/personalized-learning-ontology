@@ -87,7 +87,7 @@ def login():
         }), 403
 
     role = account.get("role")
-    if role not in {"student", "advisor"}:
+    if role not in {"student", "advisor", "training_office"}:
         return jsonify({
             "success": False,
             "error": "Tài khoản chưa được gán vai trò hợp lệ.",
@@ -105,7 +105,7 @@ def login():
             "role": role,
             "username": username,
             "display_name": session["display_name"],
-            "redirect_url": "/student?login=success" if role == "student" else "/advisor?login=success",
+            "redirect_url": "/student?login=success" if role == "student" else ("/advisor?login=success" if role == "advisor" else "/training-office?login=success"),
         },
     })
 
