@@ -1,0 +1,1524 @@
+[
+  {
+    "code": "85065",
+    "name": "Giáo dục thể chất (Chạy)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "85066",
+    "name": "Giáo dục thể chất (Bơi lội)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "85097",
+    "name": "Giáo dục thể chất (Bóng đá)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "85098",
+    "name": "Giáo dục thể chất (Bóng chuyền)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "85105",
+    "name": "Giáo dục thể chất (Cầu lông)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "85108",
+    "name": "Giáo dục thể chất (Taekwondo)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "851111",
+    "name": "Giáo dục thể chất (Aerobic)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "AUE319",
+    "name": "Nhập môn ngành Kỹ thuật ô tô",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "BUA319",
+    "name": "Nhập môn Quản trị học",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "CCN6203",
+    "name": "Nguyên lý máy học",
+    "credits": 3,
+    "prerequisites": [
+      "MAT322",
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "CCN6203",
+        "to": "MAT322"
+      },
+      {
+        "from": "CCN6203",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "COS6200",
+    "name": "Nhập môn ngành Khoa học máy tính",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "EPM320",
+    "name": "Con người và môi trường",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "FLS310",
+    "name": "Tiếng Anh A1",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "FLS312",
+    "name": "Tiếng Anh A2.1",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "FLS313",
+    "name": "Tiếng Anh A2.2",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "FLS314",
+    "name": "Tiếng Anh B1.1",
+    "credits": 4,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "FLS315"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "FLS315",
+    "name": "Tiếng Anh B1.2",
+    "credits": 4,
+    "prerequisites": [
+      "FLS314"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "FLS315",
+        "to": "FLS314"
+      }
+    ]
+  },
+  {
+    "code": "INS304",
+    "name": "Phân tích số liệu và Kinh doanh thông minh",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS305",
+    "name": "Hệ hỗ trợ quyết định",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS325",
+    "name": "Hệ điều hành",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [
+      "NEC321"
+    ],
+    "required_by": [
+      "NEC329"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS326",
+    "name": "Cấu trúc dữ liệu và giải thuật",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [
+      "SOT320"
+    ],
+    "required_by": [
+      "SOT344"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "INS326",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "INS327",
+    "name": "Kiến trúc máy tính và hệ điều hành",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS330",
+    "name": "Cơ sở dữ liệu",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315",
+      "SOT381"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "INS339",
+      "INS360",
+      "INT6211",
+      "SOT366"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "INS330",
+        "to": "SOT315"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "INS335",
+    "name": "Thống kê máy tính",
+    "credits": 3,
+    "prerequisites": [
+      "MAT322"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INS335",
+        "to": "MAT322"
+      }
+    ]
+  },
+  {
+    "code": "INS336",
+    "name": "Hệ thống thông tin địa lý (GIS)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS339",
+    "name": "Hệ quản trị cơ sở dữ liệu",
+    "credits": 3,
+    "prerequisites": [
+      "INS330"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INS339",
+        "to": "INS330"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT315"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "INS360",
+    "name": "Phân tích thiết kế hệ thống thông tin",
+    "credits": 3,
+    "prerequisites": [
+      "INS330"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INS360",
+        "to": "INS330"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT315"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "INS361",
+    "name": "Cơ sở dữ liệu phân tán",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INS362",
+    "name": "Khai phá dữ liệu",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6201",
+    "name": "Học sâu ứng dụng",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6202",
+    "name": "Dữ liệu đa phương tiện",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6204",
+    "name": "Hệ thống hoạch định nguồn lực doanh nghiệp",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6205",
+    "name": "Linux server và quản trị mạng",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6206",
+    "name": "Lý thuyết đồ thị trong Hệ thống mạng",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6207",
+    "name": "IoT và Ứng dụng",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6209",
+    "name": "Các chủ đề nâng cao trong công nghệ phần mềm",
+    "credits": 3,
+    "prerequisites": [
+      "SOT349"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INT6209",
+        "to": "SOT349"
+      }
+    ]
+  },
+  {
+    "code": "INT6210",
+    "name": "Quản lý rủi ro",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6211",
+    "name": "Ứng dụng cơ sở dữ liệu",
+    "credits": 3,
+    "prerequisites": [
+      "INS330"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INT6211",
+        "to": "INS330"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT315"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "INT6212",
+    "name": "Xử lý tín hiệu số",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6213",
+    "name": "Chuyên đề Truyền thông và Mạng máy tính",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6214",
+    "name": "Mạng thế hệ mới",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6215",
+    "name": "Kỹ thuật phát hiện và tấn công mạng",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6220",
+    "name": "Phát triển phần mềm hướng đối tượng",
+    "credits": 3,
+    "prerequisites": [
+      "SOT331"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "INT6220",
+        "to": "SOT331"
+      },
+      {
+        "from": "SOT331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "INT6221",
+    "name": "Lập trình Python cho học máy",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6236",
+    "name": "Nhập môn trí tuệ nhân tạo",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6900",
+    "name": "Thực tập ngành nghề",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6901",
+    "name": "Đồ án tốt nghiệp(CNTT)",
+    "credits": 10,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6902",
+    "name": "Chuyên đề tốt nghiệp (CNTT)",
+    "credits": 5,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "INT6903",
+    "name": "Đồ án cơ sở ngành",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAE3098",
+    "name": "Nhập môn ngành KT Cơ khí động lực",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAE3099",
+    "name": "Nhập môn ngành Khoa học hàng hải",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAE3207",
+    "name": "Khoa học quản lý",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAE331",
+    "name": "Kỹ thuật thủy khí",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAT322",
+    "name": "Xác suất - Thống kê",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "CCN6203",
+      "INS335"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAT327",
+    "name": "Toán 1",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "MAT328"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MAT328",
+    "name": "Toán 2",
+    "credits": 2,
+    "prerequisites": [
+      "MAT327"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "MAT328",
+        "to": "MAT327"
+      }
+    ]
+  },
+  {
+    "code": "MEM340",
+    "name": "Cơ học ứng dụng",
+    "credits": 4,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MEM341",
+    "name": "Đồ họa kỹ thuật (1LT, 1TH)",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MEM342",
+    "name": "Vật liệu học",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MEM347",
+    "name": "Vẽ kỹ thuật (2LT+1TH)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "MKT372",
+    "name": "Nhập môn Marketing",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "NEC311",
+    "name": "Lập trình Python",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315",
+      "SOT331"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC311",
+        "to": "SOT315"
+      },
+      {
+        "from": "NEC311",
+        "to": "SOT331"
+      },
+      {
+        "from": "SOT331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "NEC321",
+    "name": "Kiến trúc máy tính",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "NEC329",
+      "NEC355",
+      "SOT345"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "NEC324",
+    "name": "Mạng không dây và di động",
+    "credits": 3,
+    "prerequisites": [
+      "NEC329"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC324",
+        "to": "NEC329"
+      },
+      {
+        "from": "NEC329",
+        "to": "INS325"
+      },
+      {
+        "from": "NEC329",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC329",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "NEC326",
+    "name": "An toàn và bảo mật thông tin",
+    "credits": 3,
+    "prerequisites": [
+      "NEC329",
+      "SOT320"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC326",
+        "to": "NEC329"
+      },
+      {
+        "from": "NEC326",
+        "to": "SOT320"
+      },
+      {
+        "from": "NEC329",
+        "to": "INS325"
+      },
+      {
+        "from": "NEC329",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC329",
+        "to": "SOT381"
+      },
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "NEC329",
+    "name": "Mạng máy tính",
+    "credits": 3,
+    "prerequisites": [
+      "INS325",
+      "NEC321",
+      "SOT381"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "NEC324",
+      "NEC326",
+      "NEC350",
+      "NEC355"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "NEC329",
+        "to": "INS325"
+      },
+      {
+        "from": "NEC329",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC329",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "NEC331",
+    "name": "Lập trình Java",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "NEC350",
+    "name": "Thiết kế và cài đặt mạng",
+    "credits": 3,
+    "prerequisites": [
+      "NEC329"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC350",
+        "to": "NEC329"
+      },
+      {
+        "from": "NEC329",
+        "to": "INS325"
+      },
+      {
+        "from": "NEC329",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC329",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "NEC355",
+    "name": "An toàn mạng",
+    "credits": 3,
+    "prerequisites": [
+      "NEC321",
+      "NEC329"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "NEC355",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC355",
+        "to": "NEC329"
+      },
+      {
+        "from": "NEC329",
+        "to": "INS325"
+      },
+      {
+        "from": "NEC329",
+        "to": "NEC321"
+      },
+      {
+        "from": "NEC329",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "PHY310",
+    "name": "Vật lý đại cương 1",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "PHY311",
+    "name": "T.Hành Vật lý đại cương 1",
+    "credits": 1,
+    "prerequisites": [],
+    "corequisites": [
+      "PHY310"
+    ],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "POL307",
+    "name": "Triết học Mâc-Lênin",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "POL308",
+      "POL309"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "POL308",
+    "name": "Chủ nghĩa xã hội khoa học",
+    "credits": 2,
+    "prerequisites": [
+      "POL307",
+      "POL309"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "POL310",
+      "POL333"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "POL308",
+        "to": "POL307"
+      },
+      {
+        "from": "POL308",
+        "to": "POL309"
+      },
+      {
+        "from": "POL309",
+        "to": "POL307"
+      }
+    ]
+  },
+  {
+    "code": "POL309",
+    "name": "Kinh tế Chính trị Mác - Lênin",
+    "credits": 2,
+    "prerequisites": [
+      "POL307"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "POL308",
+      "POL310",
+      "POL333"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "POL309",
+        "to": "POL307"
+      }
+    ]
+  },
+  {
+    "code": "POL310",
+    "name": "Lịch sử Đảng Cộng sản Việt Nam",
+    "credits": 2,
+    "prerequisites": [
+      "POL308",
+      "POL309"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "POL310",
+        "to": "POL308"
+      },
+      {
+        "from": "POL310",
+        "to": "POL309"
+      },
+      {
+        "from": "POL308",
+        "to": "POL307"
+      },
+      {
+        "from": "POL308",
+        "to": "POL309"
+      },
+      {
+        "from": "POL309",
+        "to": "POL307"
+      }
+    ]
+  },
+  {
+    "code": "POL333",
+    "name": "Tư tưởng Hồ Chí Minh",
+    "credits": 2,
+    "prerequisites": [
+      "POL308",
+      "POL309"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "POL333",
+        "to": "POL308"
+      },
+      {
+        "from": "POL333",
+        "to": "POL309"
+      },
+      {
+        "from": "POL308",
+        "to": "POL307"
+      },
+      {
+        "from": "POL308",
+        "to": "POL309"
+      },
+      {
+        "from": "POL309",
+        "to": "POL307"
+      }
+    ]
+  },
+  {
+    "code": "QPAD011",
+    "name": "Giáo dục Quốc phòng - An ninh 1 (Đường lối quốc phòng của Đảng Cộng sản Việt Nam)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "QPAD02",
+    "name": "Giáo dục Quốc phòng - An ninh 2 (Công tác quốc phòng và an ninh)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "QPAD033",
+    "name": "Giáo dục Quốc phòng - An ninh 3 (Quân sự chung)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "QPAD044",
+    "name": "Giáo dục Quốc phòng - An ninh 4 (Kỹ thuật chiến đấu bộ binh và chiến thuật)",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SH1",
+    "name": "Sinh hoạt Cuối tuần",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT301",
+    "name": "Nhập môn ngành Công nghệ thông tin",
+    "credits": 0,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT315",
+    "name": "Nhập môn lập trình",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "CCN6203",
+      "INS326",
+      "INS330",
+      "NEC311",
+      "NEC331",
+      "SOT320",
+      "SOT331",
+      "SOT336",
+      "SOT341",
+      "SOT344",
+      "SOT345",
+      "SOT347",
+      "SOT357"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT320",
+    "name": "Kỹ thuật lập trình (2LT + 1LT)",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [
+      "INS326"
+    ],
+    "required_by": [
+      "NEC326",
+      "SOT344",
+      "SOT366",
+      "SOT379",
+      "SOT380"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT331",
+    "name": "Lập trình hướng đối tượng",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "INT6220",
+      "NEC311",
+      "SOT379",
+      "SOT380"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "SOT331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT332",
+    "name": "Toán rời rạc",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT336",
+    "name": "Kỹ thuật đồ họa",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT336",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT341",
+    "name": "Xử lý ảnh",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT341",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT344",
+    "name": "Trí tuệ nhân tạo",
+    "credits": 3,
+    "prerequisites": [
+      "INS326",
+      "SOT315",
+      "SOT320"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT344",
+        "to": "INS326"
+      },
+      {
+        "from": "SOT344",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT344",
+        "to": "SOT320"
+      },
+      {
+        "from": "INS326",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT345",
+    "name": "Lập trình thiết bị nhúng",
+    "credits": 3,
+    "prerequisites": [
+      "NEC321",
+      "SOT315"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT345",
+        "to": "NEC321"
+      },
+      {
+        "from": "SOT345",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT347",
+    "name": "Thiết kế Web",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315",
+      "SOT381"
+    ],
+    "corequisites": [],
+    "required_by": [
+      "SOT366"
+    ],
+    "prerequisite_chain": [
+      {
+        "from": "SOT347",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT347",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "SOT348",
+    "name": "TTập Ngành (6 tuần)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT349",
+    "name": "Công nghệ phần mềm",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "INT6209",
+      "SOT357"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT352",
+    "name": "Quản lý dự án phần mềm",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT355",
+    "name": "Phát triển ứng dụng Web",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT357",
+    "name": "Kiểm thử phần mềm",
+    "credits": 3,
+    "prerequisites": [
+      "SOT315",
+      "SOT349"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT357",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT357",
+        "to": "SOT349"
+      }
+    ]
+  },
+  {
+    "code": "SOT366",
+    "name": "Phát triển phần mềm mã nguồn mở",
+    "credits": 3,
+    "prerequisites": [
+      "INS330",
+      "SOT320",
+      "SOT347"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT366",
+        "to": "INS330"
+      },
+      {
+        "from": "SOT366",
+        "to": "SOT320"
+      },
+      {
+        "from": "SOT366",
+        "to": "SOT347"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT315"
+      },
+      {
+        "from": "INS330",
+        "to": "SOT381"
+      },
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT347",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT347",
+        "to": "SOT381"
+      }
+    ]
+  },
+  {
+    "code": "SOT375",
+    "name": "Tiếng Anh chuyên ngành (CN thông tin)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SOT379",
+    "name": "Lập trình thiết bị di động",
+    "credits": 4,
+    "prerequisites": [
+      "SOT320",
+      "SOT331"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT379",
+        "to": "SOT320"
+      },
+      {
+        "from": "SOT379",
+        "to": "SOT331"
+      },
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT380",
+    "name": "Kiến trúc và thiết kế phần mềm",
+    "credits": 3,
+    "prerequisites": [
+      "SOT320",
+      "SOT331"
+    ],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": [
+      {
+        "from": "SOT380",
+        "to": "SOT320"
+      },
+      {
+        "from": "SOT380",
+        "to": "SOT331"
+      },
+      {
+        "from": "SOT320",
+        "to": "SOT315"
+      },
+      {
+        "from": "SOT331",
+        "to": "SOT315"
+      }
+    ]
+  },
+  {
+    "code": "SOT381",
+    "name": "Tin học đại cương A (LT+TH)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [
+      "INS330",
+      "NEC329",
+      "SOT347"
+    ],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SSH313",
+    "name": "Pháp luật đại cương",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SSH378",
+    "name": "Tư duy phản biện",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SSH379",
+    "name": "Ngôn ngữ học thuật",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SSH380",
+    "name": "Văn hóa Việt Nam",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "SSH381",
+    "name": "Thường thức mỹ thuật",
+    "credits": 2,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  },
+  {
+    "code": "TRE312",
+    "name": "Thương mại điện tử (CNTT)",
+    "credits": 3,
+    "prerequisites": [],
+    "corequisites": [],
+    "required_by": [],
+    "prerequisite_chain": []
+  }
+]

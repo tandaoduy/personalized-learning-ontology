@@ -15,11 +15,23 @@ def relations(): return jsonify(success=True, data=_service().list_relations()) 
 @bp.get("/courses")
 def courses(): return jsonify(success=True, data=_service().list_courses()) if session.get("role") == "training_office" else _deny()
 
+@bp.get("/course-form-options")
+def course_form_options(): return jsonify(success=True, data=_service().course_form_options()) if session.get("role") == "training_office" else _deny()
+
 @bp.get("/courses/<course_code>")
 def course_detail(course_code):
     if session.get("role") != "training_office": return _deny()
     try: return jsonify(success=True, data=_service().course_detail(course_code))
     except ValueError as exc: return jsonify(success=False, error=str(exc)), 404
+
+@bp.post("/courses")
+def create_course():
+    if session.get("role") != "training_office": return _deny()
+    try:
+        body = request.get_json(silent=True) or {}
+        record = _service().create_course(session["username"], body.get("course_code"), body.get("name"), body.get("credits"))
+        _reload(); return jsonify(success=True, data=record), 201
+    except ValueError as exc: return jsonify(success=False, error=str(exc)), 400
 
 @bp.put("/courses/<course_code>")
 def update_course(course_code):

@@ -1,0 +1,35 @@
+/* Horizontal course search: results span the workspace below the search box. */
+.to-course-explorer--modern {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+
+.to-course-picker--modern {
+  border-right: 0;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.to-course-search-wrap {
+  display: flex;
+  justify-content: flex-end;
+  max-width: none;
+}
+.to-course-results--modern {
+  display: none;
+  flex: 0 0 auto;
+  min-height: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  align-content: flex-start;
+  gap: 8px;
+  max-height: none;
+  margin-top: 4px;
+  padding: 4px;
+  overflow: visible;
+}
+
+.to-course-item { width: auto; min-height: 124px; }
+.to-course-detail--modern { border-top: 1px solid #e8edf3; }
+@media(max-width:600px) {
+  .to-course-search-wrap { justify-content: stretch; }
+  .to-course-results--modern { max-height: none; }
+}

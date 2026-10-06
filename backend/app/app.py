@@ -201,7 +201,7 @@ def create_app():
         if session.get("role") != "training_office":
             return redirect(url_for("index"))
         pages = {
-            "relations": ("Quan hệ học phần", "Quản lý các quan hệ tiên quyết và song hành trong ontology."),
+            "relations": ("Quản lý học phần", "Tra cứu, cập nhật tín chỉ và các quan hệ học phần trong ontology."),
             "programs": ("Chương trình đào tạo", "Tạo, cập nhật và lưu trữ chương trình đào tạo."),
             "assignments": ("Phân công cố vấn", "Quản lý cố vấn phụ trách theo lớp hành chính."),
         }
@@ -209,7 +209,9 @@ def create_app():
             abort(404)
         title, description = pages[workspace]
         return render_template("training_office/dashboard.html", workspace=workspace,
-                               workspace_title=title, workspace_description=description)
+                               workspace_title=title, workspace_description=description,
+                               course_catalog=app.training_office_service.list_courses() if workspace == "relations" else [],
+                               course_form_options=app.training_office_service.course_form_options() if workspace == "relations" else {})
 
     @app.route("/components")
     def components_page():

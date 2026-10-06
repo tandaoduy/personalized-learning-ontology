@@ -6,9 +6,10 @@ from hashlib import sha256
 import json
 import os
 from pathlib import Path
+import re
 from tempfile import NamedTemporaryFile
 
-from rdflib import Graph, Literal, Namespace, RDF, URIRef
+from rdflib import Graph, Literal, Namespace, RDF, URIRef, OWL
 
 from backend.app.services.source_lock import exclusive_source_lock
 
@@ -22,6 +23,9 @@ class TrainingOfficeService:
         self.artifact_dir = Path(artifact_dir).resolve() / "ontology_versions"
         self.assignment_path = self.data_dir / "advisor_class_assignments.json"
         self.audit_path = self.data_dir / "training_office_audit.json"
+        self.course_catalog_path = self.data_dir / "course_catalog.json"
+        self._graph_cache = None
+        self._course_cache = None
 
     def _json(self, path: Path, default):
         if not path.exists(): return default
@@ -35,7 +39,11 @@ class TrainingOfficeService:
         return "sha256:" + sha256(self.ontology_path.read_bytes()).hexdigest()
 
     def _graph(self) -> Graph:
-        return Graph().parse(self.ontology_path, format="xml")
+        # The ontology is ~35 MB; parsing it for every click made course lookup unusable.
+        # It is invalidated only after this service publishes an ontology update.
+        if self._graph_cache is None:
+            self._graph_cache = Graph().parse(self.ontology_path, format="xml")
+        return self._graph_cache
 
     def _course(self, graph: Graph, code: str) -> URIRef:
         code = str(code or "").strip().upper()
@@ -43,6 +51,18 @@ class TrainingOfficeService:
         if len(matches) != 1 or not isinstance(matches[0], URIRef):
             raise ValueError(f"COURSE_NOT_FOUND_OR_AMBIGUOUS:{code}")
         return matches[0]
+
+    def _program(self, graph: Graph, program_id: str) -> URIRef:
+        """Resolve both legacy `TrainingProgram_<id>` and ontology-native IDs."""
+        key = str(program_id or "").strip()
+        for node in (BASE[key], BASE["TrainingProgram_" + key]):
+            if (node, RDF.type, BASE.TrainingProgram) in graph:
+                return node
+        matches = [node for node in graph.subjects(BASE.programCode, Literal(key))
+                   if (node, RDF.type, BASE.TrainingProgram) in graph]
+        if len(matches) == 1:
+            return matches[0]
+        raise ValueError("PROGRAM_NOT_FOUND")
 
     def _publish(self, graph: Graph, actor: str, action: str, payload: dict) -> dict:
         before = self._hash()
@@ -58,6 +78,8 @@ class TrainingOfficeService:
                 handle.write(data); temp = Path(handle.name)
             os.replace(temp, self.ontology_path)
         after = self._hash()
+        self._graph_cache = graph
+        self._course_cache = None
         record = {"at": datetime.now(timezone.utc).isoformat(), "actor": actor, "action": action,
                   "before_hash": before, "after_hash": after, "backup": str(backup), "payload": payload}
         audit = self._json(self.audit_path, [])
@@ -75,6 +97,14 @@ class TrainingOfficeService:
         return sorted(rows, key=lambda item: (item["type"], item["course_code"], item["related_course_code"]))
 
     def list_courses(self) -> list[dict]:
+        if self._course_cache is not None:
+            return self._course_cache
+        # This compact catalog avoids parsing the 35 MB RDF/XML document during a search.
+        # It is refreshed whenever a course is saved below.
+        if self.course_catalog_path.exists():
+            self._course_cache = self._json(self.course_catalog_path, [])
+            if self._course_cache:
+                return self._course_cache
         graph = self._graph()
         rows = []
         for course in graph.subjects(BASE.courseCode, None):
@@ -82,9 +112,18 @@ class TrainingOfficeService:
             if code:
                 rows.append({"code": code, "name": str(graph.value(course, BASE.courseName) or "").strip(),
                              "credits": float(graph.value(course, BASE.credit) or 0)})
-        return sorted(rows, key=lambda item: item["code"])
+        self._course_cache = sorted(rows, key=lambda item: item["code"])
+        self._write_json(self.course_catalog_path, self._course_cache)
+        return self._course_cache
 
     def course_detail(self, course_code: str) -> dict:
+        code = str(course_code or "").strip().upper()
+        # Selecting a result must be instant; the prebuilt catalog contains the
+        # relationship view needed by the editor, so avoid RDF parsing here.
+        if self._graph_cache is None and self.course_catalog_path.exists():
+            for row in self._json(self.course_catalog_path, []):
+                if row.get("code") == code:
+                    return dict(row)
         graph = self._graph(); course = self._course(graph, course_code)
         def code_of(node): return str(graph.value(node, BASE.courseCode) or "").strip().upper()
         prerequisites = sorted({code_of(node) for node in graph.objects(course, BASE.hasPrerequisiteCourse) if code_of(node)})
@@ -100,9 +139,66 @@ class TrainingOfficeService:
                 chain.append({"from": source_code, "to": target_code})
                 if str(target) not in visited:
                     visited.add(str(target)); queue.append(target)
+        types = {str(node).split("#")[-1] for node in graph.objects(course, RDF.type)}
+        course_type = next((kind for kind in self.course_form_options()["course_types"] if kind in types), "Course")
+        curriculum = []
+        for predicate, scope in ((BASE.isRequiredForMajor, "required_major"), (BASE.isElectiveForMajor, "elective_major"),
+                                 (BASE.isRequiredForSpecialization, "required_specialization"), (BASE.isElectiveForSpecialization, "elective_specialization")):
+            curriculum.extend({"scope": scope, "target": str(node).split("#")[-1]} for node in graph.objects(course, predicate))
+        semester_node = graph.value(course, BASE.recommendedInSemester)
+        semester_text = str(semester_node).split("#")[-1] if semester_node else ""
         return {"code": code_of(course), "name": str(graph.value(course, BASE.courseName) or "").strip(),
                 "credits": float(graph.value(course, BASE.credit) or 0), "prerequisites": prerequisites,
-                "corequisites": corequisites, "required_by": required_by, "prerequisite_chain": chain}
+                "corequisites": corequisites, "required_by": required_by, "prerequisite_chain": chain,
+                "course_type": course_type, "recommended_semester": semester_text.removeprefix("Semester") or None,
+                "open_semester_type": int(graph.value(course, BASE.openSemesterType) or 0) or None,
+                "curriculum": curriculum}
+
+    def course_form_options(self) -> dict:
+        """Ontology-backed choices required to create a complete Course individual."""
+        graph = self._graph()
+        def codes(kind):
+            return sorted(str(node).split("#")[-1] for node in graph.subjects(RDF.type, kind))
+        return {
+            "course_types": ["CoreCourse", "ElectiveCourse", "FoundationCourse", "GeneralEducationCourse", "GraduationCourse", "PhysicalEducationCourse"],
+            "majors": codes(BASE.Major), "specializations": codes(BASE.Specialization),
+            "semesters": [int(str(node).split("#")[-1].removeprefix("Semester")) for node in graph.subjects(RDF.type, BASE.Semester)],
+            "open_semester_types": [1, 2, 12],
+        }
+
+    def create_course(self, actor: str, course_code: str, name: str, credits) -> dict:
+        """Create the shared course catalog entry; CTĐT owns its semester placement."""
+        course_code = str(course_code or "").strip().upper()
+        name = str(name or "").strip()
+        if not re.fullmatch(r"[A-Z0-9][A-Z0-9_-]{1,63}", course_code):
+            raise ValueError("INVALID_COURSE_CODE")
+        try:
+            credits = float(credits)
+        except (TypeError, ValueError):
+            raise ValueError("INVALID_CREDITS")
+        if not name or credits < 0 or credits > 30:
+            raise ValueError("INVALID_COURSE_DATA")
+
+        graph = self._graph()
+        if list(graph.subjects(BASE.courseCode, Literal(course_code))):
+            raise ValueError("COURSE_ALREADY_EXISTS")
+
+        course = BASE[course_code]
+        graph.add((course, RDF.type, BASE.Course))
+        graph.add((course, RDF.type, OWL.NamedIndividual))
+        graph.add((course, BASE.courseCode, Literal(course_code)))
+        graph.add((course, BASE.courseName, Literal(name)))
+        graph.add((course, BASE.credit, Literal(credits)))
+        self._publish(graph, actor, "course_created", {
+            "course_code": course_code, "name": name, "credits": credits,
+        })
+
+        detail = self.course_detail(course_code)
+        catalog = [row for row in self._json(self.course_catalog_path, []) if row.get("code") != course_code]
+        catalog.append(detail)
+        self._course_cache = sorted(catalog, key=lambda item: item["code"])
+        self._write_json(self.course_catalog_path, self._course_cache)
+        return detail
 
     def update_course(self, actor: str, course_code: str, name: str, credits, prerequisites, corequisites) -> dict:
         graph = self._graph(); course = self._course(graph, course_code)
@@ -131,7 +227,7 @@ class TrainingOfficeService:
         graph.set((course, BASE.courseName, Literal(name)))
         graph.set((course, BASE.credit, Literal(credits)))
         graph.remove((course, BASE.hasPrerequisiteCourse, None))
-        graph.addN((course, BASE.hasPrerequisiteCourse, node) for node in prereq_nodes)
+        for node in prereq_nodes: graph.add((course, BASE.hasPrerequisiteCourse, node))
         # Keep corequisite links symmetric while replacing the selected course's links.
         old_coreqs = list(graph.objects(course, BASE.corequisiteWith))
         graph.remove((course, BASE.corequisiteWith, None))
@@ -141,7 +237,15 @@ class TrainingOfficeService:
         self._publish(graph, actor, "course_updated", {"course_code": course_code.upper(), "name": name,
                       "credits": credits, "prerequisites": [code_of for code_of in (str(graph.value(n, BASE.courseCode)) for n in prereq_nodes)],
                       "corequisites": [code_of for code_of in (str(graph.value(n, BASE.courseCode)) for n in coreq_nodes)]})
-        return self.course_detail(course_code)
+        # Refresh the one changed entry in the lightweight search index.
+        detail = self.course_detail(course_code)
+        catalog = self._json(self.course_catalog_path, [])
+        replacement = detail
+        catalog = [replacement if row.get("code") == course_code.upper() else row for row in catalog]
+        if not any(row.get("code") == course_code.upper() for row in catalog): catalog.append(replacement)
+        self._course_cache = sorted(catalog, key=lambda item: item["code"])
+        self._write_json(self.course_catalog_path, self._course_cache)
+        return detail
 
     def set_relation(self, actor: str, relation: str, course_code: str, related_course_code: str, enabled: bool) -> dict:
         if relation not in {"prerequisite", "corequisite"}: raise ValueError("INVALID_RELATION")
@@ -175,16 +279,14 @@ class TrainingOfficeService:
         return self._publish(graph, actor, "program_created", {"program_id": program_id, "name": name})
 
     def update_program(self, actor: str, program_id: str, name: str) -> dict:
-        program_id, name = str(program_id or "").strip().upper(), str(name or "").strip()
+        program_id, name = str(program_id or "").strip(), str(name or "").strip()
         if not name: raise ValueError("INVALID_PROGRAM_NAME")
-        graph = self._graph(); node = BASE["TrainingProgram_" + program_id]
-        if (node, RDF.type, BASE.TrainingProgram) not in graph: raise ValueError("PROGRAM_NOT_FOUND")
+        graph = self._graph(); node = self._program(graph, program_id)
         graph.set((node, BASE.programName, Literal(name)))
         return self._publish(graph, actor, "program_updated", {"program_id": program_id, "name": name})
 
     def archive_program(self, actor: str, program_id: str) -> dict:
-        graph = self._graph(); node = BASE["TrainingProgram_" + str(program_id).strip().upper()]
-        if (node, RDF.type, BASE.TrainingProgram) not in graph: raise ValueError("PROGRAM_NOT_FOUND")
+        graph = self._graph(); node = self._program(graph, str(program_id).strip())
         graph.set((node, BASE.isArchived, Literal(True)))
         return self._publish(graph, actor, "program_archived", {"program_id": str(program_id).strip().upper()})
 

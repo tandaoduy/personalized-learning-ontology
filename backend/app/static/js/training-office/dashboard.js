@@ -1,13 +1,21 @@
 /**
  * JavaScript Quản trị học vụ - Phòng Đào tạo (Training Office)
- * Cung cấp đầy đủ tính năng: Quan hệ học phần, CTĐT, Phân công cố vấn hiện đại (KPIs, Batch Assign, Interactive Cards, Student Roster)
+ * Cung cấp đầy đủ tính năng: Quan hệ học phần hiện đại (Search, Smart Filter, Chip Tags, Visual Pipeline),
+ * CTĐT, Phân công cố vấn hiện đại (KPIs, Batch Assign, Interactive Cards, Student Roster)
  */
 (() => {
   const api = '/api/training-office';
   const state = {
     relations: [],
     courses: [],
+    courseFormOptions: {},
+    coursesLoaded: false,
     selectedCourse: null,
+    originalSelectedCourse: null,
+    editingPrereqs: [],
+    editingCoreqs: [],
+    relFilter: 'all',
+    courseSearchQuery: '',
     programs: [],
     assignments: [],
     advisors: [],
@@ -17,7 +25,8 @@
     searchQuery: '',
     currentClass: null,
     currentTab: 'assign',
-    rosterQuery: ''
+    rosterQuery: '',
+    pendingRelationAction: null
   };
 
   const $ = (s, r = document) => r.querySelector(s);
@@ -38,6 +47,65 @@
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
     }
+  };
+
+  const confirmRelationChange = (title, description, confirmLabel, action, options = {}) => {
+    const dialog = $('[data-confirm-relation-dialog]');
+    if (!dialog) return;
+    const isRemoval = options.isRemoval !== undefined ? options.isRemoval : title.toLowerCase().startsWith('xóa');
+    const icon = $('[data-confirm-relation-icon]');
+    if (icon) {
+      icon.style.background = isRemoval ? '#fef2f2' : '#eff6ff';
+      icon.style.color = isRemoval ? '#dc2626' : '#2563eb';
+      icon.innerHTML = `<i data-lucide="${isRemoval ? 'trash-2' : 'plus-circle'}"></i>`;
+    }
+    const titleEl = $('[data-confirm-relation-title]');
+    if (titleEl) titleEl.textContent = title;
+
+    const descEl = $('[data-confirm-relation-description]');
+    if (descEl) {
+      let code = options.code;
+      if (!code && typeof description === 'string') {
+        const match = description.match(/(?:xóa|thêm)\s+([A-Z0-9_\-]+)/i) || description.match(/([A-Z0-9_\-]+)/);
+        if (match) code = match[1];
+      }
+      const courseName = options.courseName || (code ? getCourseName(code) : '');
+
+      let formattedHtml = '';
+      if (code) {
+        const actionVerb = isRemoval ? 'xóa' : 'thêm';
+        const targetList = title.toLowerCase().includes('tiên quyết')
+          ? 'học phần tiên quyết'
+          : (title.toLowerCase().includes('song hành') ? 'học phần song hành' : 'danh sách quan hệ');
+        const prep = isRemoval ? 'khỏi' : 'vào';
+
+        formattedHtml = `
+          <p class="to-confirm-msg">
+            Bạn có chắc chắn muốn ${actionVerb} học phần <span class="to-confirm-code">${esc(code)}</span>${courseName ? ` <strong style="color:#0f172a;font-weight:600;">(${esc(courseName)})</strong>` : ''} ${prep} danh sách ${targetList}?
+          </p>
+          <div class="to-confirm-subtext ${isRemoval ? 'to-confirm-subtext--danger' : 'to-confirm-subtext--info'}">
+            <i data-lucide="${isRemoval ? 'alert-triangle' : 'info'}"></i>
+            <span>${isRemoval ? 'Ràng buộc này sẽ được gỡ bỏ khỏi mô hình tri thức (Ontology).' : 'Ràng buộc mới sẽ được cập nhật và kiểm tra vòng lặp phụ thuộc.'}</span>
+          </div>
+        `;
+      } else {
+        formattedHtml = `<p class="to-confirm-msg">${esc(description)}</p>`;
+      }
+      descEl.innerHTML = formattedHtml;
+    }
+
+    const submitBtn = $('[data-confirm-relation-submit]');
+    if (submitBtn) {
+      submitBtn.className = isRemoval ? 'to-btn to-btn--danger' : 'to-btn to-btn--primary';
+      submitBtn.innerHTML = `
+        <i data-lucide="${isRemoval ? 'trash-2' : 'check'}" style="width:16px;height:16px;"></i>
+        <span>${esc(confirmLabel)}</span>
+      `;
+    }
+
+    state.pendingRelationAction = action;
+    dialog.showModal();
+    refreshIcons();
   };
 
   // Helper tạo avatar initials
@@ -70,6 +138,576 @@
       throw new Error(payload.error || 'Không thể xử lý yêu cầu.');
     }
     return payload.data;
+  }
+
+  const getCourseName = (code) => {
+    const found = state.courses.find(c => c.code === code);
+    return found ? (found.name || '') : '';
+  };
+
+  // =========================================================================
+  // LOGIC WORKSPACE QUAN HỆ HỌC PHẦN (RELATIONS)
+  // =========================================================================
+
+  // 1. Cập nhật KPIs cho Relations workspace
+  function updateRelationsKPIs() {
+    if (!$('[data-relations-workspace]')) return;
+    const totalCourses = state.courses.length;
+    const prereqEdges = state.relations.filter(r => r.type === 'prerequisite');
+    const coreqEdges = state.relations.filter(r => r.type === 'corequisite');
+
+    const elTotal = $('[data-stat="rel-total-courses"]');
+    const elPrereqs = $('[data-stat="rel-total-prereqs"]');
+    const elCoreqs = $('[data-stat="rel-total-coreqs"]');
+    const elPill = $('[data-stat="rel-courses-count-pill"]');
+
+    if (elTotal) elTotal.textContent = totalCourses || '--';
+    if (elPrereqs) elPrereqs.textContent = prereqEdges.length;
+    if (elCoreqs) elCoreqs.textContent = coreqEdges.length;
+    if (elPill) elPill.textContent = `${totalCourses} học phần`;
+
+    // Tính toán số lượng cho từng filter pill
+    const prereqCourseCodes = new Set(prereqEdges.map(r => r.course_code));
+    const coreqCourseCodes = new Set(coreqEdges.map(r => r.course_code));
+
+    let hasPrereqCount = 0;
+    let hasCoreqCount = 0;
+    let independentCount = 0;
+
+    state.courses.forEach(c => {
+      const hp = prereqCourseCodes.has(c.code);
+      const hc = coreqCourseCodes.has(c.code);
+      if (hp) hasPrereqCount++;
+      if (hc) hasCoreqCount++;
+      if (!hp && !hc) independentCount++;
+    });
+
+    const cAll = $('[data-rel-count="all"]');
+    const cPre = $('[data-rel-count="has_prereq"]');
+    const cCo = $('[data-rel-count="has_coreq"]');
+    const cInd = $('[data-rel-count="independent"]');
+
+    if (cAll) cAll.textContent = totalCourses;
+    if (cPre) cPre.textContent = hasPrereqCount;
+    if (cCo) cCo.textContent = hasCoreqCount;
+    if (cInd) cInd.textContent = independentCount;
+  }
+
+  // 2. Render danh sách học phần ở sidebar bên trái
+  function renderCourseResults() {
+    const root = $('[data-course-results]');
+    if (!root) return;
+
+    if (!state.coursesLoaded && !state.courses.length) {
+      root.innerHTML = '<div class="to-loading">Đang nạp danh sách học phần...</div>';
+      return;
+    }
+
+    const query = (state.courseSearchQuery || '').trim().toLowerCase();
+
+    if (!query) {
+      root.style.display = 'none';
+      root.innerHTML = '';
+      return;
+    }
+    root.style.display = 'grid';
+
+    // Xây dựng chỉ mục quan hệ
+    const prereqCounts = {};
+    const coreqCounts = {};
+    const unlockCounts = {};
+
+    state.relations.forEach(r => {
+      if (r.type === 'prerequisite') {
+        prereqCounts[r.course_code] = (prereqCounts[r.course_code] || 0) + 1;
+        unlockCounts[r.related_course_code] = (unlockCounts[r.related_course_code] || 0) + 1;
+      } else if (r.type === 'corequisite') {
+        coreqCounts[r.course_code] = (coreqCounts[r.course_code] || 0) + 1;
+      }
+    });
+
+    // Lọc danh sách
+    const filtered = state.courses.filter(course => {
+      const code = course.code;
+      const pCount = prereqCounts[code] || 0;
+      const cCount = coreqCounts[code] || 0;
+
+      const str = `${course.code} ${course.name}`.toLowerCase();
+      if (!str.includes(query)) return false;
+
+      return true;
+    });
+
+    // Toggle nút xóa tìm kiếm
+    const clearBtn = $('[data-action="clear-course-search"]');
+    if (clearBtn) {
+      clearBtn.style.display = query ? 'grid' : 'none';
+    }
+
+    if (!filtered.length) {
+      root.innerHTML = `
+        <div class="to-loading" style="padding:32px 16px;text-align:center;">
+          <p style="color:#0f172a;font-weight:700;margin-bottom:4px;">Không tìm thấy học phần</p>
+          <span style="font-size:0.75rem;color:#64748b;">Thử thay đổi từ khóa hoặc bộ lọc.</span>
+        </div>`;
+      return;
+    }
+
+    root.innerHTML = filtered.map(course => {
+      const isActive = state.selectedCourse?.code === course.code;
+      const pCount = prereqCounts[course.code] || 0;
+      const cCount = coreqCounts[course.code] || 0;
+      const uCount = unlockCounts[course.code] || 0;
+
+      return `
+        <button type="button" class="to-course-item ${isActive ? 'is-active' : ''}" data-select-course="${esc(course.code)}">
+          <div class="to-course-item__top">
+            <span class="to-course-item__code">${esc(course.code)}</span>
+            <span class="to-course-item__credits">${Number(course.credits || 0)} TC</span>
+          </div>
+          <div class="to-course-item__name" title="${esc(course.name)}">${esc(course.name || 'Chưa đặt tên')}</div>
+          <div class="to-course-item__badges">
+            ${pCount > 0 ? `<span class="to-micro-badge to-micro-badge--prereq" title="${pCount} môn tiên quyết"><i data-lucide="arrow-left"></i> ${pCount} TQ</span>` : ''}
+            ${uCount > 0 ? `<span class="to-micro-badge to-micro-badge--unlock" title="Mở khóa cho ${uCount} môn sau"><i data-lucide="arrow-right"></i> Mở ${uCount} môn</span>` : ''}
+            ${cCount > 0 ? `<span class="to-micro-badge to-micro-badge--coreq" title="Có môn song hành"><i data-lucide="repeat"></i> Song hành</span>` : ''}
+          </div>
+        </button>
+      `;
+    }).join('');
+
+    refreshIcons();
+  }
+
+  // 3. Render các chips Tiên quyết (Prerequisites)
+  function renderPrereqChips() {
+    const container = $('[data-prereq-chips]');
+    if (!container) return;
+
+    if (!state.editingPrereqs.length) {
+      container.innerHTML = '<span class="to-tag-chips-empty">Chưa có môn tiên quyết nào (Học phần cơ sở / độc lập).</span>';
+      return;
+    }
+
+    container.innerHTML = state.editingPrereqs.map(code => {
+      const name = getCourseName(code);
+      return `
+        <span class="to-tag-chip">
+          <strong>${esc(code)}</strong>
+          ${name ? `<span style="font-weight:500;opacity:0.85;">${esc(name)}</span>` : ''}
+          <button type="button" class="to-tag-chip__remove-btn" data-remove-prereq="${esc(code)}" title="Xóa ${esc(code)} khỏi danh sách tiên quyết">
+            <i data-lucide="x"></i>
+          </button>
+        </span>
+      `;
+    }).join('');
+
+    refreshIcons();
+  }
+
+  // 4. Render các chips Song hành (Corequisites)
+  function renderCoreqChips() {
+    const container = $('[data-coreq-chips]');
+    if (!container) return;
+
+    if (!state.editingCoreqs.length) {
+      container.innerHTML = '<span class="to-tag-chips-empty">Không có học phần song hành nào.</span>';
+      return;
+    }
+
+    container.innerHTML = state.editingCoreqs.map(code => {
+      const name = getCourseName(code);
+      return `
+        <span class="to-tag-chip">
+          <strong>${esc(code)}</strong>
+          ${name ? `<span style="font-weight:500;opacity:0.85;">${esc(name)}</span>` : ''}
+          <button type="button" class="to-tag-chip__remove-btn" data-remove-coreq="${esc(code)}" title="Xóa ${esc(code)} khỏi danh sách song hành">
+            <i data-lucide="x"></i>
+          </button>
+        </span>
+      `;
+    }).join('');
+
+    refreshIcons();
+  }
+
+  // 5. Cập nhật các select box để thêm nhanh tiên quyết/song hành
+  function updateQuickAddDropdowns() {
+    const pSelect = $('[data-add-prereq-select]');
+    const cSelect = $('[data-add-coreq-select]');
+    const pOptions = $('[data-add-prereq-options]');
+    const cOptions = $('[data-add-coreq-options]');
+    if (!state.selectedCourse || !state.courses.length) return;
+
+    const curCode = state.selectedCourse.code;
+    const availablePrereqs = state.courses.filter(c => c.code !== curCode && !state.editingPrereqs.includes(c.code));
+    const availableCoreqs = state.courses.filter(c => c.code !== curCode && !state.editingCoreqs.includes(c.code));
+
+    if (pSelect && pOptions) {
+      pSelect.value = '';
+      pOptions.innerHTML = availablePrereqs.map(c =>
+        `<option value="${esc(c.code)}" label="${esc(c.name)} (${c.credits} TC)"></option>`
+      ).join('');
+    }
+
+    if (cSelect && cOptions) {
+      cSelect.value = '';
+      cOptions.innerHTML = availableCoreqs.map(c =>
+        `<option value="${esc(c.code)}" label="${esc(c.name)} (${c.credits} TC)"></option>`
+      ).join('');
+    }
+  }
+
+  // 6. Render sơ đồ luồng điều kiện học tập (Visual Dependency Pipeline)
+  function renderDependencyFlow() {
+    const container = $('[data-dependency-flow-container]');
+    if (!container || !state.selectedCourse) return;
+
+    const course = state.selectedCourse;
+    const prereqs = state.editingPrereqs;
+    const requiredBy = course.required_by || [];
+    const chain = course.prerequisite_chain || [];
+
+    let prereqHtml = '';
+    if (prereqs.length > 0) {
+      prereqHtml = `
+        <div class="to-pipeline-stage">
+          <span class="to-pipeline-stage__label"><i data-lucide="arrow-left-circle" style="color:#2563eb;"></i> Cần học trước (${prereqs.length})</span>
+          <div class="to-pipeline-stage__nodes">
+            ${prereqs.map(p => `
+              <div class="to-flow-node to-flow-node--prereq">
+                <span class="to-flow-node__code">${esc(p)}</span>
+                <span style="font-size:0.72rem;color:#475569;">${esc(getCourseName(p))}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    } else {
+      prereqHtml = `
+        <div class="to-pipeline-stage">
+          <span class="to-pipeline-stage__label"><i data-lucide="sparkles" style="color:#10b981;"></i> Điều kiện ban đầu</span>
+          <div class="to-independent-notice">
+            <i data-lucide="check-circle-2"></i>
+            <div>
+              <strong>Học phần cơ sở / độc lập</strong>
+              <div style="font-size:0.75rem;margin-top:2px;">Sinh viên có thể đăng ký ngay từ kỳ 1 mà không phụ thuộc môn trước.</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const currentHtml = `
+      <div class="to-pipeline-stage">
+        <span class="to-pipeline-stage__label"><i data-lucide="crosshair" style="color:#0f172a;"></i> Học phần đang chọn</span>
+        <div class="to-flow-node to-flow-node--current">
+          <div>
+            <div class="to-flow-node__code">${esc(course.code)}</div>
+            <div style="font-size:0.75rem;opacity:0.9;">${esc(course.name)}</div>
+          </div>
+          <span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:6px;font-size:0.72rem;">${Number(course.credits || 0)} TC</span>
+        </div>
+      </div>
+    `;
+
+    let unlockHtml = '';
+    if (requiredBy.length > 0) {
+      unlockHtml = `
+        <div class="to-pipeline-stage">
+          <span class="to-pipeline-stage__label"><i data-lucide="arrow-right-circle" style="color:#059669;"></i> Mở khóa các môn (${requiredBy.length})</span>
+          <div class="to-pipeline-stage__nodes">
+            ${requiredBy.map(u => `
+              <button type="button" class="to-flow-node to-flow-node--unlock" data-jump-to="${esc(u)}" style="cursor:pointer;" title="Nhấp để xem môn ${esc(u)}">
+                <span class="to-flow-node__code">${esc(u)}</span>
+                <span style="font-size:0.72rem;color:#065f46;">${esc(getCourseName(u))}</span>
+                <i data-lucide="arrow-up-right" style="width:12px;height:12px;margin-left:auto;"></i>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    } else {
+      unlockHtml = `
+        <div class="to-pipeline-stage">
+          <span class="to-pipeline-stage__label"><i data-lucide="flag" style="color:#64748b;"></i> Điểm đến của chuỗi</span>
+          <div class="to-independent-notice" style="border-color:#e2e8f0;">
+            <i data-lucide="info" style="color:#64748b;"></i>
+            <div>
+              <strong>Học phần chuyên đề / cuối chuỗi</strong>
+              <div style="font-size:0.75rem;margin-top:2px;">Chưa làm điều kiện tiên quyết cho môn học nào tiếp theo.</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    let chainHtml = '';
+    if (chain.length > 0) {
+      chainHtml = `
+        <div class="to-chain-list-wrap">
+          <h5><i data-lucide="network" style="width:13px;height:13px;display:inline-block;vertical-align:-1px;"></i> Các nhánh quan hệ truyền tiếp (Transitive Chains):</h5>
+          <div class="to-chain-steps">
+            ${chain.map(edge => `
+              <div class="to-chain-step-row">
+                <button type="button" class="to-jump-chip" data-jump-to="${esc(edge.from)}" style="padding:2px 8px;">${esc(edge.from)}</button>
+                <i data-lucide="arrow-right"></i>
+                <button type="button" class="to-jump-chip" data-jump-to="${esc(edge.to)}" style="padding:2px 8px;">${esc(edge.to)}</button>
+                <span style="color:#64748b;font-size:0.75rem;margin-left:auto;">
+                  ${esc(getCourseName(edge.from))} ➔ ${esc(getCourseName(edge.to))}
+                </span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="to-pipeline-container">
+        ${prereqHtml}
+        <div class="to-pipeline-arrow"><i data-lucide="arrow-right"></i></div>
+        ${currentHtml}
+        <div class="to-pipeline-arrow"><i data-lucide="arrow-right"></i></div>
+        ${unlockHtml}
+      </div>
+      ${chainHtml}
+    `;
+
+    refreshIcons();
+  }
+
+  // 7. Render chi tiết học phần được chọn ở màn hình chính
+  function renderCourseDetail(course) {
+    const root = $('[data-course-detail]');
+    if (!root) return;
+
+    state.selectedCourse = course;
+    state.originalSelectedCourse = JSON.parse(JSON.stringify(course));
+    state.editingPrereqs = [...(course.prerequisites || [])];
+    state.editingCoreqs = [...(course.corequisites || [])];
+
+    const requiredBy = course.required_by || [];
+    const credits = Number(course.credits || 0);
+
+    let unlocksContent = '';
+    if (requiredBy.length > 0) {
+      unlocksContent = `
+        <section class="to-unlocks-compact">
+          <h5><i data-lucide="unlock"></i> Học phần được mở khóa (${requiredBy.length})</h5>
+          <div class="to-unlocks-compact__chips">
+              ${requiredBy.map(code => {
+                const name = getCourseName(code);
+                return `
+                  <button type="button" class="to-jump-chip" data-jump-to="${esc(code)}" title="Nhấp để chuyển sang xem ${esc(code)}">
+                    <strong>${esc(code)}</strong>
+                    ${name ? `<span>• ${esc(name)}</span>` : ''}
+                  </button>
+                `;
+              }).join('')}
+          </div>
+        </section>
+      `;
+    } else {
+      unlocksContent = `
+        <section class="to-unlocks-compact">
+          <h5><i data-lucide="info"></i> Học phần được mở khóa</h5>
+          <span class="to-unlocks-none">Chưa có học phần tiếp theo.</span>
+        </section>
+      `;
+    }
+
+    root.innerHTML = `
+      <!-- BANNER TIÊU ĐỀ HỌC PHẦN -->
+      <div class="to-course-header-banner">
+        <div class="to-course-header-banner__left">
+          <div class="to-course-header-banner__tags">
+            <span class="to-course-code-pill">
+              <span>${esc(course.code)}</span>
+              <button type="button" class="to-course-code-copy-btn" data-copy-course-code="${esc(course.code)}" title="Sao chép mã môn">
+                <i data-lucide="copy"></i>
+              </button>
+            </span>
+            <span class="to-course-credits-badge">
+              <i data-lucide="award" style="width:13px;height:13px;"></i>
+              <span data-course-credits-label>${credits} Tín chỉ</span>
+            </span>
+            <span class="to-micro-badge" style="background:#f1f5f9;color:#475569;font-size:0.74rem;padding:3px 8px;">
+              Khoa Công nghệ Thông tin
+            </span>
+          </div>
+          <h2>${esc(course.name || 'Chưa đặt tên')}</h2>
+        </div>
+
+        <div class="to-course-header-banner__right">
+          <span class="to-ontology-pill">
+            <span class="to-pulse-dot"></span>
+            Ontology Node
+          </span>
+        </div>
+      </div>
+
+      <!-- UNLOCKS BANNER -->
+      ${unlocksContent}
+
+      <!-- FORM BIÊN TẬP HỌC PHẦN -->
+      <form class="to-course-form" data-course-form>
+        <!-- BASIC INFO (TÊN & TÍN CHỈ) -->
+        <div class="to-course-info-grid">
+          <div class="to-field-block">
+            <label>Tên học phần chính thức</label>
+            <div class="to-field-input-wrap">
+              <input type="text" name="name" required value="${esc(course.name)}" placeholder="Nhập tên học phần..." autocomplete="off">
+            </div>
+          </div>
+
+          <div class="to-field-block">
+            <label>Số tín chỉ (TC)</label>
+            <div class="to-field-input-wrap">
+              <input type="number" name="credits" data-input-credits min="0" max="30" step="0.5" required value="${credits}">
+            </div>
+            <div class="to-credits-quick-pills">
+              <button type="button" class="to-credit-pill-btn ${credits === 1 ? 'is-selected' : ''}" data-quick-credit="1">1 TC</button>
+              <button type="button" class="to-credit-pill-btn ${credits === 2 ? 'is-selected' : ''}" data-quick-credit="2">2 TC</button>
+              <button type="button" class="to-credit-pill-btn ${credits === 3 ? 'is-selected' : ''}" data-quick-credit="3">3 TC</button>
+              <button type="button" class="to-credit-pill-btn ${credits === 4 ? 'is-selected' : ''}" data-quick-credit="4">4 TC</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RELATIONS EDITOR GRID (PREREQUISITES & COREQUISITES) -->
+        <div class="to-relations-editor-grid">
+          <!-- CARD 1: TIÊN QUYẾT -->
+          <section class="to-relation-card">
+            <div class="to-relation-card__head">
+              <div class="to-relation-card__title-box">
+                <div class="to-relation-card__icon">
+                  <i data-lucide="shield-alert"></i>
+                </div>
+                <div>
+                  <h4>Học phần Tiên quyết</h4>
+                  <p>Phải hoàn thành và đạt trước khi đăng ký môn này.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="to-tag-chips-container" data-prereq-chips>
+              <!-- Populated by renderPrereqChips() -->
+            </div>
+
+            <div class="to-relation-quick-add">
+              <input class="to-relation-select" type="search" list="prereq-course-options"
+                data-add-prereq-select placeholder="Nhập mã môn tiên quyết..." autocomplete="off">
+              <datalist id="prereq-course-options" data-add-prereq-options></datalist>
+              <button type="button" class="to-relation-add-btn" data-action="add-prereq">
+                <i data-lucide="plus"></i> Thêm
+              </button>
+            </div>
+          </section>
+
+          <!-- CARD 2: SONG HÀNH -->
+          <section class="to-relation-card to-relation-card--coreq">
+            <div class="to-relation-card__head">
+              <div class="to-relation-card__title-box">
+                <div class="to-relation-card__icon">
+                  <i data-lucide="repeat"></i>
+                </div>
+                <div>
+                  <h4>Học phần Song hành</h4>
+                  <p>Học cùng kỳ hoặc hoàn thành trước.</p>
+                </div>
+              </div>
+              <span class="to-symmetric-badge" title="Tự động đồng bộ 2 chiều">
+                <i data-lucide="arrow-left-right" style="width:11px;height:11px;"></i> Đối xứng
+              </span>
+            </div>
+
+            <div class="to-tag-chips-container" data-coreq-chips>
+              <!-- Populated by renderCoreqChips() -->
+            </div>
+
+            <div class="to-relation-quick-add">
+              <input class="to-relation-select" type="search" list="coreq-course-options"
+                data-add-coreq-select placeholder="Nhập mã môn song hành..." autocomplete="off">
+              <datalist id="coreq-course-options" data-add-coreq-options></datalist>
+              <button type="button" class="to-relation-add-btn" data-action="add-coreq">
+                <i data-lucide="plus"></i> Thêm
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- FOOTER ACTIONS BAR (CLEAN, WHITE & ELEVATED) -->
+        <div class="to-course-detail__footer">
+          <div class="to-save-hint">
+            <i data-lucide="info"></i>
+            <span>Thay đổi được ghi trực tiếp vào Ontology RDF và phiên bản hóa.</span>
+          </div>
+
+          <div class="to-footer-actions">
+            <button type="button" class="to-btn-revert" data-action="revert-course">
+              <i data-lucide="rotate-ccw"></i> Hoàn tác
+            </button>
+            <button type="submit" class="to-btn-save" data-btn-save-course>
+              <i data-lucide="save"></i> Lưu vào ontology
+            </button>
+          </div>
+        </div>
+      </form>
+    `;
+
+    renderPrereqChips();
+    renderCoreqChips();
+    updateQuickAddDropdowns();
+    renderDependencyFlow();
+    refreshIcons();
+  }
+
+  // 8. Chọn học phần theo mã
+  async function selectCourse(code) {
+    try {
+      state.selectedCourse = await request(`/courses/${encodeURIComponent(code)}`);
+      renderCourseResults();
+      renderCourseDetail(state.selectedCourse);
+    } catch (err) {
+      const local = state.courses.find(course => course.code === code);
+      if (local) {
+        state.selectedCourse = local;
+        renderCourseResults();
+        renderCourseDetail(local);
+      } else {
+        message(err.message, 'error');
+      }
+    }
+  }
+
+  // 9. Nạp danh sách môn học vào modal Thêm quan hệ
+  function populateRelationModalCourses() {
+    const sourceSelect = $('[data-relation-select="source"]');
+    const targetSelect = $('[data-relation-select="target"]');
+    if (!sourceSelect || !targetSelect || !state.courses.length) return;
+
+    const options = '<option value="">-- Chọn môn học --</option>' +
+      state.courses.map(c => `<option value="${esc(c.code)}">${esc(c.code)} — ${esc(c.name)} (${c.credits} TC)</option>`).join('');
+
+    sourceSelect.innerHTML = options;
+    targetSelect.innerHTML = options;
+  }
+
+  function updateCurriculumTargets() {
+    const scope = $('[data-curriculum-scope]')?.value || 'common';
+    const target = $('[data-curriculum-targets]');
+    const wrap = $('[data-curriculum-target-wrap]');
+    if (!target || !wrap) return;
+    const items = scope.endsWith('major') ? (state.courseFormOptions.majors || []) : (state.courseFormOptions.specializations || []);
+    target.innerHTML = items.map(item => `<option value="${esc(item)}">${esc(item)}</option>`).join('');
+    target.required = scope !== 'common';
+    wrap.hidden = scope === 'common';
+  }
+
+  function populateCourseForm() {
+    const options = state.courses.map(c => `<option value="${esc(c.code)}">${esc(c.code)} — ${esc(c.name)}</option>`).join('');
+    $$('[data-course-prerequisites], [data-course-corequisites]').forEach(select => { select.innerHTML = options; });
+    updateCurriculumTargets();
   }
 
   // =========================================================================
@@ -569,35 +1207,6 @@
     }
   }
 
-  function renderCourseResults() {
-    const root = $('[data-course-results]');
-    if (!root) return;
-    const query = ($('[data-course-search]')?.value || '').trim().toLowerCase();
-    const rows = state.courses.filter(course => !query || `${course.code} ${course.name}`.toLowerCase().includes(query)).slice(0, 80);
-    const count = $('[data-course-count]');
-    if (count) count.textContent = `${rows.length}${query ? ` / ${state.courses.length}` : ''} học phần`;
-    root.innerHTML = rows.length ? rows.map(course => `<button type="button" class="to-course-result ${state.selectedCourse?.code === course.code ? 'is-active' : ''}" data-select-course="${esc(course.code)}"><strong>${esc(course.code)} · ${Number(course.credits || 0)} TC</strong><span>${esc(course.name || 'Chưa có tên')}</span></button>`).join('') : '<p class="to-loading">Không tìm thấy học phần.</p>';
-  }
-
-  function renderCourseDetail(course) {
-    const root = $('[data-course-detail]');
-    if (!root) return;
-    const chain = course.prerequisite_chain || [];
-    root.innerHTML = `<div class="to-course-detail__head"><div><h3>${esc(course.code)} — ${esc(course.name)}</h3><p>${course.required_by?.length ? `Là tiên quyết của: ${esc(course.required_by.join(', '))}` : 'Chưa là điều kiện tiên quyết của học phần nào.'}</p></div><span class="to-badge to-badge--blue">Ontology</span></div>
-      <form class="to-course-form" data-course-form>
-        <div class="to-course-fields"><label>Tên học phần<input name="name" required value="${esc(course.name)}"></label><label>Số tín chỉ<input name="credits" type="number" min="0" max="30" step="0.5" required value="${esc(course.credits)}"></label></div>
-        <div class="to-course-relation-grid"><section class="to-course-relation"><h4>Tiên quyết</h4><p>Nhập mã môn, cách nhau bằng dấu phẩy.</p><textarea name="prerequisites" placeholder="Ví dụ: INT6001, MAT101">${esc((course.prerequisites || []).join(', '))}</textarea></section><section class="to-course-relation"><h4>Song hành</h4><p>Liên kết được tự động đồng bộ hai chiều.</p><textarea name="corequisites" placeholder="Ví dụ: INT6002">${esc((course.corequisites || []).join(', '))}</textarea></section></div>
-        <section class="to-course-chain"><h4>Chuỗi tiên quyết</h4>${chain.length ? `<ol>${chain.map(edge => `<li><strong>${esc(edge.from)}</strong> <i data-lucide="arrow-right"></i> ${esc(edge.to)}</li>`).join('')}</ol>` : '<p class="to-course-related">Học phần này chưa có môn tiên quyết.</p>'}</section>
-        <footer><button class="to-button to-button--primary" type="submit"><i data-lucide="save"></i> Lưu vào ontology</button></footer>
-      </form>`;
-    refreshIcons();
-  }
-
-  async function selectCourse(code) {
-    state.selectedCourse = await request(`/courses/${encodeURIComponent(code)}`);
-    renderCourseResults(); renderCourseDetail(state.selectedCourse);
-  }
-
   async function loadAll() {
     try {
       // Tải danh sách cố vấn trước để có thông tin workload và tên
@@ -605,12 +1214,29 @@
         .then(res => { state.advisors = res; })
         .catch(() => { state.advisors = []; });
 
+      const coursesPromise = (state.coursesLoaded ? Promise.resolve(state.courses) : request('/courses'))
+        .then(rows => {
+          state.courses = rows;
+          state.coursesLoaded = true;
+        })
+        .catch(() => {
+          state.courses = [];
+        });
+
       await Promise.all([
         load('relations', '/relations'),
         load('programs', '/programs'),
-        request('/courses').then(rows => { state.courses = rows; renderCourseResults(); }),
-        advisorsPromise
+        advisorsPromise,
+        coursesPromise
       ]);
+
+      // Cập nhật giao diện nếu đang ở workspace relations
+      if ($('[data-relations-workspace]')) {
+        updateRelationsKPIs();
+        renderCourseResults();
+        populateRelationModalCourses();
+
+      }
 
       // Sau khi có advisors thì nạp academic-classes
       await load('assignments', '/academic-classes');
@@ -624,8 +1250,56 @@
   // =========================================================================
 
   document.addEventListener('DOMContentLoaded', () => {
-    $('[data-course-search]')?.addEventListener('input', renderCourseResults);
+    // Đọc danh mục học phần nhúng sẵn nếu có
+    const courseCatalog = $('[data-course-catalog]');
+    const courseFormOptions = $('[data-course-form-options]');
+    if (courseFormOptions) {
+      try { state.courseFormOptions = JSON.parse(courseFormOptions.textContent || '{}'); }
+      catch (err) { console.error('Không thể đọc tùy chọn tạo học phần:', err); }
+    }
+    if (courseCatalog) {
+      try {
+        state.courses = JSON.parse(courseCatalog.textContent || '[]');
+        state.coursesLoaded = true;
+        updateRelationsKPIs();
+        renderCourseResults();
 
+      } catch (err) {
+        console.error('Không thể đọc danh mục học phần nhúng sẵn:', err);
+      }
+    }
+
+    // Tìm kiếm học phần (Relations Workspace)
+    $('[data-course-search]')?.addEventListener('input', (e) => {
+      state.courseSearchQuery = e.target.value;
+      renderCourseResults();
+    });
+
+    $('[data-curriculum-scope]')?.addEventListener('change', updateCurriculumTargets);
+
+    // Xóa tìm kiếm
+    $('[data-action="clear-course-search"]')?.addEventListener('click', () => {
+      state.courseSearchQuery = '';
+      const input = $('[data-course-search]');
+      if (input) input.value = '';
+      renderCourseResults();
+    });
+
+    // Nút làm mới quan hệ học phần
+    $('[data-action="refresh-relations"]')?.addEventListener('click', async () => {
+      const btn = $('[data-action="refresh-relations"]');
+      if (btn) btn.disabled = true;
+      try {
+        await loadAll();
+        message('Đã làm mới dữ liệu học phần.');
+      } catch (err) {
+        message(err.message, 'error');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
+
+    // Chọn học phần từ sidebar kết quả
     document.addEventListener('click', async (e) => {
       const button = e.target.closest('[data-select-course]');
       if (!button) return;
@@ -633,24 +1307,197 @@
       catch (err) { message(err.message, 'error'); }
     });
 
+    // Chuyển sang môn học khác từ chip hoặc đồ thị
+    document.addEventListener('click', async (e) => {
+      const jumpBtn = e.target.closest('[data-jump-to]');
+      if (!jumpBtn) return;
+      const code = jumpBtn.dataset.jumpTo;
+      if (code) {
+        await selectCourse(code);
+      }
+    });
+
+    // Sao chép mã môn học
+    document.addEventListener('click', (e) => {
+      const copyBtn = e.target.closest('[data-copy-course-code]');
+      if (!copyBtn) return;
+      const code = copyBtn.dataset.copyCourseCode;
+      if (navigator.clipboard && code) {
+        navigator.clipboard.writeText(code).then(() => {
+          message(`Đã sao chép mã học phần: ${code}`);
+        });
+      }
+    });
+
+    // Chọn nhanh số tín chỉ từ pill
+    document.addEventListener('click', (e) => {
+      const pillBtn = e.target.closest('[data-quick-credit]');
+      if (!pillBtn) return;
+      const credits = Number(pillBtn.dataset.quickCredit);
+      const input = $('[data-input-credits]');
+      if (input) {
+        input.value = credits;
+        $$('[data-quick-credit]').forEach(b => b.classList.remove('is-selected'));
+        pillBtn.classList.add('is-selected');
+        const label = $('[data-course-credits-label]');
+        if (label) label.textContent = `${credits} Tín chỉ`;
+      }
+    });
+
+    // Thêm môn tiên quyết
+    document.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('[data-action="add-prereq"]');
+      if (!addBtn) return;
+      const select = $('[data-add-prereq-select]');
+      if (!select || !select.value) return;
+
+      const code = select.value.trim().toUpperCase();
+      if (!state.courses.some(course => course.code === code)) {
+        message('Vui lòng chọn mã học phần hợp lệ từ danh sách gợi ý.', 'error');
+        return;
+      }
+      if (!state.editingPrereqs.includes(code)) {
+        confirmRelationChange('Thêm học phần tiên quyết', `Thêm ${code} vào danh sách học phần tiên quyết?`, 'Xác nhận thêm', () => {
+          state.editingPrereqs.push(code);
+          renderPrereqChips();
+          updateQuickAddDropdowns();
+          renderDependencyFlow();
+        }, { isRemoval: false, code, courseName: getCourseName(code) });
+      }
+    });
+
+    // Xóa môn tiên quyết
+    document.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('[data-remove-prereq]');
+      if (!removeBtn) return;
+      const code = removeBtn.dataset.removePrereq;
+      confirmRelationChange('Xóa học phần tiên quyết', `Xóa ${code} khỏi danh sách học phần tiên quyết?`, 'Xác nhận xóa', () => {
+        state.editingPrereqs = state.editingPrereqs.filter(c => c !== code);
+        renderPrereqChips();
+        updateQuickAddDropdowns();
+        renderDependencyFlow();
+      }, { isRemoval: true, code, courseName: getCourseName(code) });
+    });
+
+    // Thêm môn song hành
+    document.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('[data-action="add-coreq"]');
+      if (!addBtn) return;
+      const select = $('[data-add-coreq-select]');
+      if (!select || !select.value) return;
+
+      const code = select.value.trim().toUpperCase();
+      if (!state.courses.some(course => course.code === code)) {
+        message('Vui lòng chọn mã học phần hợp lệ từ danh sách gợi ý.', 'error');
+        return;
+      }
+      if (!state.editingCoreqs.includes(code)) {
+        confirmRelationChange('Thêm học phần song hành', `Thêm ${code} vào danh sách học phần song hành?`, 'Xác nhận thêm', () => {
+          state.editingCoreqs.push(code);
+          renderCoreqChips();
+          updateQuickAddDropdowns();
+          renderDependencyFlow();
+        }, { isRemoval: false, code, courseName: getCourseName(code) });
+      }
+    });
+
+    // Xóa môn song hành
+    document.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('[data-remove-coreq]');
+      if (!removeBtn) return;
+      const code = removeBtn.dataset.removeCoreq;
+      confirmRelationChange('Xóa học phần song hành', `Xóa ${code} khỏi danh sách học phần song hành?`, 'Xác nhận xóa', () => {
+        state.editingCoreqs = state.editingCoreqs.filter(c => c !== code);
+        renderCoreqChips();
+        updateQuickAddDropdowns();
+        renderDependencyFlow();
+      }, { isRemoval: true, code, courseName: getCourseName(code) });
+    });
+
+    // Nút Hoàn tác (Revert course edits)
+    document.addEventListener('click', (e) => {
+      const revertBtn = e.target.closest('[data-action="revert-course"]');
+      if (!revertBtn || !state.originalSelectedCourse) return;
+      renderCourseDetail(state.originalSelectedCourse);
+      message('Đã hoàn tác các thay đổi chưa lưu.');
+    });
+
+    // Submit form chi tiết học phần (Save to Ontology)
+    document.addEventListener('submit', async (e) => {
+      const form = e.target.closest('[data-form="course"]');
+      if (!form) return;
+      e.preventDefault();
+
+      const submit = form.querySelector('[type="submit"]');
+      const courseCode = form.course_code.value.trim().toUpperCase();
+      try {
+        if (submit) submit.disabled = true;
+        const data = await request('/courses', {
+          method: 'POST',
+          body: JSON.stringify({
+            course_code: courseCode,
+            name: form.name.value.trim(),
+            credits: Number(form.credits.value)
+          })
+        });
+        state.courses.push(data);
+        state.courses.sort((a, b) => a.code.localeCompare(b.code));
+        updateRelationsKPIs();
+        renderCourseResults();
+        populateRelationModalCourses();
+        form.closest('dialog')?.close();
+        await selectCourse(data.code);
+        message(`Đã thêm học phần ${data.code} vào ontology.`);
+      } catch (err) {
+        message(err.message, 'error');
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    });
+
     document.addEventListener('submit', async (e) => {
       const form = e.target.closest('[data-course-form]');
       if (!form || !state.selectedCourse) return;
       e.preventDefault();
+
       const submit = form.querySelector('[type="submit"]');
-      const parseCodes = value => String(value || '').split(',').map(code => code.trim().toUpperCase()).filter(Boolean);
+      const courseCode = state.selectedCourse.code;
+      const name = form.name.value.trim();
+      const credits = parseFloat(form.credits.value) || 0;
+
       try {
         if (submit) submit.disabled = true;
-        const data = await request(`/courses/${encodeURIComponent(state.selectedCourse.code)}`, { method: 'PUT', body: JSON.stringify({
-          name: form.name.value, credits: form.credits.value,
-          prerequisites: parseCodes(form.prerequisites.value), corequisites: parseCodes(form.corequisites.value)
-        }) });
+        const data = await request(`/courses/${encodeURIComponent(courseCode)}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            name,
+            credits,
+            prerequisites: state.editingPrereqs,
+            corequisites: state.editingCoreqs
+          })
+        });
+
         state.selectedCourse = data;
-        await Promise.all([request('/courses').then(rows => { state.courses = rows; }), load('relations', '/relations')]);
-        renderCourseResults(); renderCourseDetail(data);
-        message('Đã lưu học phần và các quan hệ vào ontology.');
-      } catch (err) { message(err.message, 'error'); }
-      finally { if (submit) submit.disabled = false; }
+        state.originalSelectedCourse = JSON.parse(JSON.stringify(data));
+
+        // Cập nhật lại trong mảng courses
+        const idx = state.courses.findIndex(c => c.code === courseCode);
+        if (idx !== -1) {
+          state.courses[idx] = { ...state.courses[idx], name, credits };
+        }
+
+        // Tải lại quan hệ toàn hệ thống để cập nhật đồ thị
+        await load('relations', '/relations');
+        updateRelationsKPIs();
+        renderCourseResults();
+        renderCourseDetail(data);
+
+        message(`Đã lưu học phần ${courseCode} và các ràng buộc vào ontology.`);
+      } catch (err) {
+        message(err.message, 'error');
+      } finally {
+        if (submit) submit.disabled = false;
+      }
     });
 
     // 1. Mở modal thêm quan hệ / CTĐT
@@ -664,14 +1511,59 @@
         $('[data-program-dialog-title]').textContent = 'Tạo chương trình đào tạo';
         $('[data-program-submit]').textContent = 'Tạo chương trình';
       }
+      if (b.dataset.dialogOpen === 'relation') {
+        populateRelationModalCourses();
+      }
+      if (b.dataset.dialogOpen === 'course') {
+        const form = $('[data-form="course"]');
+        form?.reset();
+        populateCourseForm();
+      }
       if (dialog) dialog.showModal();
     }));
 
     // 2. Đóng modals khi click nút data-modal-close
-    $$('[data-modal-close]').forEach(btn => {
-      btn.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-modal-close]');
+      if (btn) {
         const dialog = btn.closest('dialog');
         if (dialog) dialog.close();
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const cancel = e.target.closest('[data-confirm-relation-cancel]');
+      if (cancel) {
+        state.pendingRelationAction = null;
+        $('[data-confirm-relation-dialog]')?.close();
+        return;
+      }
+      const accept = e.target.closest('[data-confirm-relation-submit]');
+      if (!accept || !state.pendingRelationAction) return;
+      const action = state.pendingRelationAction;
+      state.pendingRelationAction = null;
+      $('[data-confirm-relation-dialog]')?.close();
+      action();
+    });
+
+    // Backdrop click đóng modal & Cancel cleanup
+    const confirmDialog = $('[data-confirm-relation-dialog]');
+    if (confirmDialog) {
+      confirmDialog.addEventListener('click', (e) => {
+        if (e.target === confirmDialog) {
+          state.pendingRelationAction = null;
+          confirmDialog.close();
+        }
+      });
+      confirmDialog.addEventListener('cancel', () => {
+        state.pendingRelationAction = null;
+      });
+    }
+
+    // Generic backdrop click for all modals
+    document.querySelectorAll('dialog.to-modal-dialog, dialog.to-dialog').forEach(d => {
+      d.addEventListener('click', (e) => {
+        if (e.target === d) d.close();
       });
     });
 
@@ -729,7 +1621,7 @@
       renderAssignments();
     });
 
-    // Lọc cho relations và programs
+    // Lọc cho programs
     $$('[data-filter]:not([data-filter="assignments"])').forEach(i => {
       i.addEventListener('input', () => render(i.dataset.filter));
     });
@@ -769,7 +1661,7 @@
       openBatchModal();
     });
 
-    // 14. Nút Làm mới (Refresh)
+    // 14. Nút Làm mới (Refresh Assignments)
     $('[data-action="refresh-assignments"]')?.addEventListener('click', async () => {
       const btn = $('[data-action="refresh-assignments"]');
       if (btn) btn.disabled = true;
@@ -834,7 +1726,6 @@
       if (submitBtn) submitBtn.disabled = true;
 
       try {
-        // Thực thi phân công lần lượt cho các lớp được chọn
         const promises = classes.map(cls => request('/advisor-assignments', {
           method: 'POST',
           body: JSON.stringify({ advisor_username: advisorUsername, academic_class: cls })
@@ -853,7 +1744,7 @@
     });
 
     // 17. Submit các form khác (relation, program)
-    $$('[data-form]:not([data-form="assignment"]):not([data-form="batch-assignment"])').forEach(form => {
+    $$('[data-form]:not([data-form="assignment"]):not([data-form="batch-assignment"]):not([data-form="course"]):not([data-course-form])').forEach(form => {
       form.addEventListener('submit', async e => {
         e.preventDefault();
         const d = Object.fromEntries(new FormData(form));
