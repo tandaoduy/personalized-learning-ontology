@@ -1,0 +1,385 @@
+{
+  "protocol": "confirmation-freshness-v1",
+  "cases": [
+    {
+      "case_id": "C-01",
+      "anonymous_student_id": "PSEUDO-EB3BE230BB",
+      "stratum": "accelerated_or_high_load",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.011998,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-02",
+      "anonymous_student_id": "PSEUDO-38B2D03F32",
+      "stratum": "on_track",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.733281,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-03",
+      "anonymous_student_id": "PSEUDO-A1DD6837F2",
+      "stratum": "retake_or_debt",
+      "condition": "unchanged",
+      "initial_status": "replanning",
+      "confirmation_attempted": false,
+      "confirmed": false,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": false,
+      "elapsed_seconds": 0.103903,
+      "outcome": "no_feedback_ready_plan"
+    },
+    {
+      "case_id": "C-04",
+      "anonymous_student_id": "PSEUDO-7A3E6B16CB",
+      "stratum": "specialization",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.407691,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-05",
+      "anonymous_student_id": "PSEUDO-B4BBE448FD",
+      "stratum": "accelerated_or_high_load",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.412446,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-06",
+      "anonymous_student_id": "PSEUDO-7045D16AE7",
+      "stratum": "on_track",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.516744,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-07",
+      "anonymous_student_id": "PSEUDO-88C0413BFE",
+      "stratum": "retake_or_debt",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.313294,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-08",
+      "anonymous_student_id": "PSEUDO-5A96ACC64C",
+      "stratum": "specialization",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.352013,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-09",
+      "anonymous_student_id": "PSEUDO-D29D53701D",
+      "stratum": "accelerated_or_high_load",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.809877,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-10",
+      "anonymous_student_id": "PSEUDO-F8809AFF4D",
+      "stratum": "on_track",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.591591,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-11",
+      "anonymous_student_id": "PSEUDO-9C1850FCAA",
+      "stratum": "retake_or_debt",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.243763,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-12",
+      "anonymous_student_id": "PSEUDO-C0F890F2FD",
+      "stratum": "specialization",
+      "condition": "unchanged",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": true,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": "valid",
+      "parent_run_id_present": false,
+      "elapsed_seconds": 1.458555,
+      "outcome": "confirmed",
+      "stale_injected": {
+        "student": false,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-13",
+      "anonymous_student_id": "PSEUDO-802B906A18",
+      "stratum": "accelerated_or_high_load",
+      "condition": "student_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 0.789619,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": true,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-14",
+      "anonymous_student_id": "PSEUDO-16BADFC620",
+      "stratum": "on_track",
+      "condition": "student_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 1.311903,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": true,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-15",
+      "anonymous_student_id": "PSEUDO-629F4CF933",
+      "stratum": "retake_or_debt",
+      "condition": "student_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 1.451132,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": true,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-16",
+      "anonymous_student_id": "PSEUDO-CC1AF790B8",
+      "stratum": "specialization",
+      "condition": "student_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 1.323848,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": true,
+        "knowledge": false
+      }
+    },
+    {
+      "case_id": "C-17",
+      "anonymous_student_id": "PSEUDO-36790ECD55",
+      "stratum": "accelerated_or_high_load",
+      "condition": "knowledge_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 1.287355,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": false,
+        "knowledge": true
+      }
+    },
+    {
+      "case_id": "C-18",
+      "anonymous_student_id": "PSEUDO-79BF08685D",
+      "stratum": "on_track",
+      "condition": "knowledge_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 2.024667,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": false,
+        "knowledge": true
+      }
+    },
+    {
+      "case_id": "C-19",
+      "anonymous_student_id": "PSEUDO-5371E1A064",
+      "stratum": "retake_or_debt",
+      "condition": "knowledge_stale",
+      "initial_status": "awaiting_feedback",
+      "confirmation_attempted": true,
+      "confirmed": false,
+      "confirmation_refresh_required": true,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": true,
+      "elapsed_seconds": 1.26558,
+      "outcome": "awaiting_feedback",
+      "stale_injected": {
+        "student": false,
+        "knowledge": true
+      }
+    },
+    {
+      "case_id": "C-20",
+      "anonymous_student_id": "PSEUDO-B16D9E2BB4",
+      "stratum": "specialization",
+      "condition": "knowledge_stale",
+      "initial_status": "replanning",
+      "confirmation_attempted": false,
+      "confirmed": false,
+      "confirmation_refresh_required": false,
+      "unsafe_confirmation": false,
+      "final_validation_status": null,
+      "parent_run_id_present": false,
+      "elapsed_seconds": 0.617667,
+      "outcome": "no_feedback_ready_plan"
+    }
+  ],
+  "metrics": {
+    "feedback_ready_coverage": 0.9,
+    "confirmation_success_rate": 1.0,
+    "final_validation_pass_rate": 1.0,
+    "stale_detection_rate": 1.0,
+    "unsafe_confirmation_rate": 0.0,
+    "refresh_lineage_rate": 1.0
+  }
+}

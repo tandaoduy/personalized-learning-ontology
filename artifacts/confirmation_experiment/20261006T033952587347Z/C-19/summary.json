@@ -1,0 +1,19 @@
+{
+  "case_id": "C-19",
+  "anonymous_student_id": "PSEUDO-5371E1A064",
+  "stratum": "retake_or_debt",
+  "condition": "knowledge_stale",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": false,
+  "confirmation_refresh_required": true,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": true,
+  "elapsed_seconds": 1.26558,
+  "outcome": "awaiting_feedback",
+  "stale_injected": {
+    "student": false,
+    "knowledge": true
+  }
+}

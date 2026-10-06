@@ -1,0 +1,19 @@
+{
+  "case_id": "TRY-022",
+  "anonymous_student_id": "PSEUDO-749FC650CA",
+  "stratum": "on_track",
+  "condition": "knowledge_stale",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": false,
+  "confirmation_refresh_required": true,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": true,
+  "elapsed_seconds": 1.311284,
+  "outcome": "awaiting_feedback",
+  "stale_injected": {
+    "student": false,
+    "knowledge": true
+  }
+}

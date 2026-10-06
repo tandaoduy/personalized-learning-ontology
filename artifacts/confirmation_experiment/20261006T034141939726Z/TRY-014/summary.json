@@ -1,0 +1,19 @@
+{
+  "case_id": "TRY-014",
+  "anonymous_student_id": "PSEUDO-16BADFC620",
+  "stratum": "on_track",
+  "condition": "student_stale",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": false,
+  "confirmation_refresh_required": true,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": true,
+  "elapsed_seconds": 1.306414,
+  "outcome": "awaiting_feedback",
+  "stale_injected": {
+    "student": true,
+    "knowledge": false
+  }
+}

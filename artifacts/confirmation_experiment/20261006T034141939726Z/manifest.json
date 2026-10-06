@@ -1,0 +1,12 @@
+{
+  "protocol": "confirmation-freshness-v1",
+  "created_at": "2026-10-06T03:41:42.089771+00:00",
+  "profile_target": 20,
+  "conditions": {
+    "unchanged": 12,
+    "student_stale": 4,
+    "knowledge_stale": 4
+  },
+  "source_mutated": false,
+  "selection": "deterministic round-robin stratification; non-feedback-ready profiles are replaced"
+}

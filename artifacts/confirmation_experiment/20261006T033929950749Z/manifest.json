@@ -1,0 +1,10 @@
+{
+  "protocol": "confirmation-freshness-v1",
+  "created_at": "2026-10-06T03:39:30.053769+00:00",
+  "profile_count": 1,
+  "conditions": {
+    "unchanged": 1
+  },
+  "source_mutated": false,
+  "selection": "deterministic round-robin stratification"
+}

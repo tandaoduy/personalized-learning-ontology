@@ -1,0 +1,13 @@
+{
+  "feedback_id": "confirmation-C-11-accept",
+  "run_id": "RUN_confirmation-C-11",
+  "displayed_result_hash": "sha256:afb88fec7dc763628a1b9e349d40f5b0330296a22a9aedd47b47171bda0ff433",
+  "actor_pseudonym": "experiment-advisor",
+  "actor_role": "advisor",
+  "action": "confirm",
+  "selected_plan_id": "RUN_confirmation-C-11-plan-1",
+  "ordered_plan_ids": [],
+  "operations": [],
+  "reason": null,
+  "created_at": "2026-10-06T03:40:14.236857Z"
+}

@@ -1,0 +1,19 @@
+{
+  "case_id": "TRY-015",
+  "anonymous_student_id": "PSEUDO-629F4CF933",
+  "stratum": "retake_or_debt",
+  "condition": "student_stale",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": false,
+  "confirmation_refresh_required": true,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": true,
+  "elapsed_seconds": 1.453018,
+  "outcome": "awaiting_feedback",
+  "stale_injected": {
+    "student": true,
+    "knowledge": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "TRY-020",
+  "anonymous_student_id": "PSEUDO-B16D9E2BB4",
+  "stratum": "specialization",
+  "condition": "knowledge_stale",
+  "initial_status": "replanning",
+  "confirmation_attempted": false,
+  "confirmed": false,
+  "confirmation_refresh_required": false,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": false,
+  "elapsed_seconds": 0.601703,
+  "outcome": "no_feedback_ready_plan"
+}

@@ -1,0 +1,13 @@
+{
+  "feedback_id": "confirmation-TRY-021-accept",
+  "run_id": "RUN_confirmation-TRY-021",
+  "displayed_result_hash": "sha256:eca608fd845c650ca78f039b7db0824b278750da6674c5fb4302f12018a31d52",
+  "actor_pseudonym": "experiment-advisor",
+  "actor_role": "advisor",
+  "action": "confirm",
+  "selected_plan_id": "RUN_confirmation-TRY-021-plan-1",
+  "ordered_plan_ids": [],
+  "operations": [],
+  "reason": null,
+  "created_at": "2026-10-06T03:42:16.108552Z"
+}

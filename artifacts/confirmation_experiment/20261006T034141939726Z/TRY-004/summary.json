@@ -1,0 +1,19 @@
+{
+  "case_id": "TRY-004",
+  "anonymous_student_id": "PSEUDO-7A3E6B16CB",
+  "stratum": "specialization",
+  "condition": "unchanged",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": true,
+  "confirmation_refresh_required": false,
+  "unsafe_confirmation": false,
+  "final_validation_status": "valid",
+  "parent_run_id_present": false,
+  "elapsed_seconds": 1.42517,
+  "outcome": "confirmed",
+  "stale_injected": {
+    "student": false,
+    "knowledge": false
+  }
+}

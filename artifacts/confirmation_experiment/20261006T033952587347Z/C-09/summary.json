@@ -1,0 +1,19 @@
+{
+  "case_id": "C-09",
+  "anonymous_student_id": "PSEUDO-D29D53701D",
+  "stratum": "accelerated_or_high_load",
+  "condition": "unchanged",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": true,
+  "confirmation_refresh_required": false,
+  "unsafe_confirmation": false,
+  "final_validation_status": "valid",
+  "parent_run_id_present": false,
+  "elapsed_seconds": 1.809877,
+  "outcome": "confirmed",
+  "stale_injected": {
+    "student": false,
+    "knowledge": false
+  }
+}

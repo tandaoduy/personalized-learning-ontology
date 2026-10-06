@@ -1,0 +1,19 @@
+{
+  "case_id": "C-13",
+  "anonymous_student_id": "PSEUDO-802B906A18",
+  "stratum": "accelerated_or_high_load",
+  "condition": "student_stale",
+  "initial_status": "awaiting_feedback",
+  "confirmation_attempted": true,
+  "confirmed": false,
+  "confirmation_refresh_required": true,
+  "unsafe_confirmation": false,
+  "final_validation_status": null,
+  "parent_run_id_present": true,
+  "elapsed_seconds": 0.789619,
+  "outcome": "awaiting_feedback",
+  "stale_injected": {
+    "student": true,
+    "knowledge": false
+  }
+}
