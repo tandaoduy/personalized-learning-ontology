@@ -1,0 +1,167 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "profile_id": "H13",
+  "profile_pseudonym": "PSEUDO-0C08340630",
+  "stratum": "G3_specialization_on_track",
+  "run_id": "RUN_human-eval-H13",
+  "source_manifest_hash": "sha256:5349a4e7d3604bf525660525a5c06eea58f6c8bc32e30a999361d2c87fdab636",
+  "ranking_config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 6,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": true,
+    "study_goal": "on_time",
+    "accumulated_credits": null,
+    "completed_course_count": 50,
+    "failed_courses": []
+  },
+  "plans": [
+    {
+      "plan_id": "RUN_human-eval-H13-plan-1",
+      "total_credits": 15.0,
+      "courses": [
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "NEC326",
+          "course_name": "An toàn và bảo mật thông tin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT344",
+          "course_name": "Trí tuệ nhân tạo",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INT6220",
+          "course_name": "Phát triển phần mềm hướng đối tượng",
+          "credits": 3.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "NEC326 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT344 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6220 (3 tín chỉ) là học phần tự chọn chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.1176 (low); độ an toàn là 88.24%.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.9706.",
+          "evidence_count": 5
+        }
+      ]
+    },
+    {
+      "plan_id": "RUN_human-eval-H13-plan-2",
+      "total_credits": 15.0,
+      "courses": [
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "NEC326",
+          "course_name": "An toàn và bảo mật thông tin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT344",
+          "course_name": "Trí tuệ nhân tạo",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT366",
+          "course_name": "Phát triển phần mềm mã nguồn mở",
+          "credits": 3.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "NEC326 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT344 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT366 (3 tín chỉ) là học phần tự chọn chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.1176 (low); độ an toàn là 88.24%.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược balanced với điểm 0.9882.",
+          "evidence_count": 5
+        }
+      ]
+    }
+  ],
+  "ranking_metrics_eligible": false
+}

@@ -1,0 +1,124 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "profile_id": "H05",
+  "profile_pseudonym": "PSEUDO-27D719C754",
+  "stratum": "G1_early_on_time",
+  "run_id": "RUN_human-eval-H05",
+  "source_manifest_hash": "sha256:19e6131d377366ebdbbc8921342fe77702f7f7def45b882f5e4e35fb332304d9",
+  "ranking_config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 2,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": false,
+    "study_goal": "on_time",
+    "accumulated_credits": null,
+    "completed_course_count": 20,
+    "failed_courses": []
+  },
+  "plans": [
+    {
+      "plan_id": "RUN_human-eval-H05-plan-2",
+      "total_credits": 19.0,
+      "courses": [
+        {
+          "course_code": "INS326",
+          "course_name": "Cấu trúc dữ liệu và giải thuật",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INS330",
+          "course_name": "Cơ sở dữ liệu",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT320",
+          "course_name": "Kỹ thuật lập trình (2LT + 1LT)",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY310",
+          "course_name": "Vật lý đại cương 1",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY311",
+          "course_name": "T.Hành Vật lý đại cương 1",
+          "credits": 1.0
+        },
+        {
+          "course_code": "POL308",
+          "course_name": "Chủ nghĩa xã hội khoa học",
+          "credits": 2.0
+        },
+        {
+          "course_code": "SSH379",
+          "course_name": "Ngôn ngữ học thuật",
+          "credits": 2.0
+        },
+        {
+          "course_code": "MKT372",
+          "course_name": "Nhập môn Marketing",
+          "credits": 2.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INS326 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INS330 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT320 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY310 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY311 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL308 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH379 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "MKT372 (2 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 8
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.2118 (low); độ an toàn là 78.82%.",
+          "evidence_count": 8
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.8471.",
+          "evidence_count": 8
+        }
+      ]
+    }
+  ],
+  "ranking_metrics_eligible": false
+}

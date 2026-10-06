@@ -1,0 +1,1592 @@
+[
+  {
+    "anonymous_student_id": "PSEUDO-377ADEB4CD",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-38B2D03F32",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-396F804443",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3C15285C04",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4C15F47AFE",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-524B2D27A1",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6D976934BE",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7045D16AE7",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-71A1C003A2",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-749FC650CA",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-79BF08685D",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7CB676D571",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8ACC23987B",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8EDE6B2634",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8EFBBE9BC1",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9CFD3C755B",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9E11C362BC",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D7CDAA5CA0",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DA70DFA4D9",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E0850A775C",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EFD96AEDF3",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F747870AE6",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F8809AFF4D",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FC95CE1766",
+    "stratum": "G1_early_on_time",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-226F76B55A",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-23C657F2EF",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2452984F72",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-36790ECD55",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5426D2CA50",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5D8F6CCE53",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6AF1F692E9",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6DB6EB4AF1",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7104741A92",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-748064BE03",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-76EBDB6D45",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-802B906A18",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-835D5E8314",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8F1F64DB81",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9644294AC4",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9A049B03F6",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9D693EEEE1",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-AAE0212936",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B4BBE448FD",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D29D53701D",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D8D1790737",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EA5B27556F",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EAA0689A09",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EB3BE230BB",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EE62DE25CC",
+    "stratum": "G2_early_accelerated",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1DD68A2D27",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-210E3B160C",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-23C86FE0B8",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-23F9194BAE",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-26D9F77AA7",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2AC878B0E2",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2BA3F4781C",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2BF64FD8AC",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3346F2BBF6",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-343CACD382",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3500318F75",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-35E1D1AEED",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-37834F2F25",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-37FF4D2021",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-38D66D9692",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3C241D2674",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3F9807CB9A",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-406B783F72",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4536BCA8D8",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-45DD9586F2",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-48A212A91E",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-495E31529A",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5A96ACC64C",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-65A699905C",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-66A3C6DB23",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6A353C281B",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-721574DD15",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-78B4C871B9",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7A3E6B16CB",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7ED8F0F3B7",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-80C3CD40FA",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-82AD926122",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-89AA1E5800",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8DAEA4D2B0",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8EBA3DED9F",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-922C795421",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9309F67FD6",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9537F32EC7",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9C60FF0165",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9E767C1DF8",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A512DB2741",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A665A45920",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B16D9E2BB4",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B86E34F45B",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BC7D001B72",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BE47ADDBCB",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C0F890F2FD",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-CC1AF790B8",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D6A4031733",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DBAE772DB2",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DCFC099D43",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E1981523BC",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EC2E990B93",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EECA91FD43",
+    "stratum": "G3_specialization_on_track",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-090D3859FF",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-093434A3EE",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-09895DE040",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-0A2D643BFD",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-0E65238108",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-0F4121D0EF",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1038E0B72D",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-138D9E809E",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-156091EE08",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1C6C0BB2C7",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1DFACB2EA5",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2289B221B3",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2397346B45",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-27BADC983D",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-27E1615212",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2811745D7B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2CFC8CCBD7",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-303C8BD558",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-308831041E",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-314F04B30F",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3351200784",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-37C20F19F3",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-38B83CAEFA",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3949AC1596",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-39BB88F40D",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3A1DFB05D7",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-43974ED740",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-43C727EE4F",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4621C1D55F",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-48A1706ECA",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4BE84111A6",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4C970004B0",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-51E8EA280B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-556D7DC3A1",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-56F4DA26ED",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5966ABD0CB",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5A39CADD1B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5CF4E26BD3",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-61A229BAE1",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-67E9C3ACEB",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-684FE39F03",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6AAC0CF87A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-70260742C2",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-718127812C",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-72440A20F5",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7559CA4A95",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-766CB53C75",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-768B84EF05",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7A20311CF7",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7ACC684A84",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7C252AB334",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7F0A22117F",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-82C01CE15B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-83F814F7A9",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-84A5092E4A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-865736A1C3",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8882046218",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8AE4C23B80",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8B496BF96B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8BCBB4C131",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8BD9C0D453",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8D1EDE4F88",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8D23CF6C86",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8DF66F64B5",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9512D95D00",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9556B82499",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-968076BE2E",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-983BD614BB",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9B87151232",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9E6A72557A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9F484139A2",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A0D177B496",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A0EAEC5A55",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A0F8B2C4CB",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A30F4EF421",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A4E00D7E6A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A4E987D175",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-AF180E4359",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BBA58959C3",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C0509A487A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C17EDAAE86",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C3EA99F86B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C75D3F1F5B",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C76B405781",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D48FF4B2F6",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D6061BBEE6",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D6E5A20B30",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D86580A57F",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D874E4E4A5",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DFE62E836A",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E7866FDC66",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E888A676E1",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F0BC318FB8",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F10D91A759",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F32828ACEC",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FA2B7AF0A8",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FC56DBC6D4",
+    "stratum": "G4_early_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-0F8EF3377B",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-115C85C54E",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-13671077B6",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-13715F6C8B",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-16DC368A89",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-16E5CB3212",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-19158C4A72",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1977D36003",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1BE0034108",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1D0EBEA552",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-1D28C12056",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2747B7C718",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-284DE502C9",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-28A14B90B4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-28DAE7C8BD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2ABACA4911",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2C7D5490E6",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-2D54AB3658",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3038BFB575",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3068430DA9",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-32CD1ACB86",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-33DE253288",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-36094ED4FB",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-36EBE205BC",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-3D3286F7CD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4071E750B4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-41A8C9A10C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-41E521ADF8",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-454F63AC30",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-482D9673CF",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4A8596A779",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-4F46578A5C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-515CA6EF25",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5261A1516C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-52F11620E3",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5371E1A064",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-580811FA95",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-58EC1B25C4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5AFBD86ADC",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5D389F5E2E",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5E18D34A87",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5E7F2276A9",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5EC1A0C99D",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-5EF6FDF325",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6138545581",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-620C9C3321",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-629F4CF933",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6566230E3A",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-68519A9ECA",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6AFFDAE3B3",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6C658EE83F",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-6D4D381FAD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-72ABDFCD75",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-734D0759CD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-73D3F1BA06",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-76A00ED73F",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-79D6EAA267",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-79F9180292",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7A87473435",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-7B69759630",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-81AAC7F5AE",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-842D0B270C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8449C20ED6",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-85DAAF6F70",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-879CE2257A",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-88C0413BFE",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-891A3E6BC9",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8A080CEA80",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8CD2510271",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8D27BA37C5",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8E612BD1F5",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-8EBCED2641",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9AE2BDD7BE",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9B23C0760F",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9BDB2AF679",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9C1850FCAA",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9C8A49E5CD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-9F1F9DCE31",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A1DD6837F2",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A585004EF4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-A7A8DDD54B",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-ACA8D347D8",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-AD57366865",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B1556DEA32",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B2D084AE2B",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B301D8E98A",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B64706E7A2",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-B8AED072D2",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BB668CA955",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BC52DD6342",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BF6AAAAB7C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-BFA7634640",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C75DE23D89",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-C75F53BDCC",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-CAD02AF28A",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-CBA28B89EB",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-CFBCA725FF",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D2F483672C",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D2F4EB77FF",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D4EE9F58E5",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D6F0C71EF0",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D80EAE6E96",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D86C993D11",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-D970990220",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DAC53C17C2",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-DBB1DED63B",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E0F05DA93A",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E5B861A6D8",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E648935393",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-E650739E99",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-EB95621B20",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F135E17990",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F57E5CB1F4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F6E0A1E2AC",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-F8C0A071F3",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FF2CCB6BA4",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FFC3FB0BDD",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  },
+  {
+    "anonymous_student_id": "PSEUDO-FFDB47B70F",
+    "stratum": "G5_specialization_debt",
+    "reason": "not_selected_after_deterministic_quota"
+  }
+]

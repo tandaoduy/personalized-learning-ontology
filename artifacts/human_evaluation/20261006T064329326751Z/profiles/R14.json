@@ -1,0 +1,171 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "profile_id": "R14",
+  "profile_pseudonym": "PSEUDO-060823F51B",
+  "stratum": "G5_specialization_debt",
+  "run_id": "RUN_human-eval-R14",
+  "source_manifest_hash": "sha256:b0b1dd551163f58c71b5b4e77cf666b0f5a5b34554b16514b6991d7bcf107b5c",
+  "ranking_config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 6,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": true,
+    "study_goal": "on_time",
+    "accumulated_credits": null,
+    "completed_course_count": 45,
+    "failed_courses": [
+      "NEC321",
+      "SOT320",
+      "SOT331"
+    ]
+  },
+  "plans": [
+    {
+      "plan_id": "RUN_human-eval-R14-plan-1",
+      "total_credits": 13.0,
+      "courses": [
+        {
+          "course_code": "FLS315",
+          "course_name": "Tiếng Anh B1.2",
+          "credits": 4.0
+        },
+        {
+          "course_code": "POL309",
+          "course_name": "Kinh tế Chính trị Mác - Lênin",
+          "credits": 2.0
+        },
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "85105",
+          "course_name": "Giáo dục thể chất (Cầu lông)",
+          "credits": 1.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "FLS315 (4 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL309 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "85105 (1 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.2206 (low); độ an toàn là 77.94%.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.8949.",
+          "evidence_count": 5
+        }
+      ]
+    },
+    {
+      "plan_id": "RUN_human-eval-R14-plan-2",
+      "total_credits": 13.0,
+      "courses": [
+        {
+          "course_code": "FLS315",
+          "course_name": "Tiếng Anh B1.2",
+          "credits": 4.0
+        },
+        {
+          "course_code": "POL309",
+          "course_name": "Kinh tế Chính trị Mác - Lênin",
+          "credits": 2.0
+        },
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "85108",
+          "course_name": "Giáo dục thể chất (Taekwondo)",
+          "credits": 1.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "FLS315 (4 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL309 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "85108 (1 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.2206 (low); độ an toàn là 77.94%.",
+          "evidence_count": 5
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược balanced với điểm 0.9196.",
+          "evidence_count": 5
+        }
+      ]
+    }
+  ],
+  "ranking_metrics_eligible": false
+}

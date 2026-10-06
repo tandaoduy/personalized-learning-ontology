@@ -118,6 +118,38 @@ def render_plan(plan_id: str, result: dict) -> dict:
                                     "evidence_count": len(claim["evidence_ids"])} for claim in claims]}
 
 
+def survey_form(labels: list[str], ranking_metrics_eligible: bool) -> list[dict]:
+    """A complete, machine-readable form embedded in every advisor package."""
+    return [
+        {"id": "F0", "label": "Tôi đồng ý tham gia đánh giá độc lập cho mục đích nghiên cứu.",
+         "type": "single_choice", "required": True, "options": ["yes", "no"], "stop_if": "no"},
+        {"id": "F1", "label": "Đánh giá mức phù hợp của từng phương án với hồ sơ sinh viên.",
+         "type": "likert_by_plan", "required": True, "plans": labels,
+         "scale": {"min": 1, "max": 5, "anchors": {"1": "Rất không phù hợp", "3": "Trung bình", "5": "Rất phù hợp"}}},
+        {"id": "F2", "label": "Xếp hạng các phương án từ phù hợp nhất đến ít phù hợp nhất.",
+         "type": "ranking", "required": len(labels) > 1, "plans": labels,
+         "instruction": "Mỗi phương án chỉ xuất hiện một lần; bỏ qua nếu chỉ có một phương án."},
+        {"id": "F3", "label": "Phương án phù hợp nhất.", "type": "single_choice", "required": True,
+         "options": labels + ["none"], "instruction": "Chọn none nếu không phương án nào phù hợp."},
+        {"id": "F4", "label": "Mức chấp nhận của phương án đã chọn.", "type": "single_choice", "required_when": "F3 != none",
+         "options": ["accept", "minor_edit", "major_edit", "reject"],
+         "definitions": {"accept": "Có thể dùng không cần sửa", "minor_edit": "Cần đúng 1 thao tác sửa",
+                         "major_edit": "Cần từ 2 thao tác sửa", "reject": "Không thể dùng kế hoạch"}},
+        {"id": "F5", "label": "Các chỉnh sửa cần thiết.", "type": "repeatable_operation", "required_when": "F4 in [minor_edit, major_edit, reject]",
+         "fields": ["kind:add|remove|replace", "course_code", "replacement_course_code (chỉ replace)", "reason"],
+         "instruction": "Mỗi add/remove/replace được tính là một operation."},
+        {"id": "F6", "label": "Giải thích của phương án được chọn rõ ràng, dễ hiểu.", "type": "likert", "required_when": "F3 != none", "scale": [1, 2, 3, 4, 5]},
+        {"id": "F7", "label": "Giải thích giúp ích cho việc kiểm tra/tư vấn kế hoạch.", "type": "likert", "required_when": "F3 != none", "scale": [1, 2, 3, 4, 5]},
+        {"id": "F8", "label": "Tôi tin tưởng giải thích được đưa ra cho phương án đã chọn.", "type": "likert", "required_when": "F3 != none", "scale": [1, 2, 3, 4, 5]},
+        {"id": "F9", "label": "Bằng chứng/ràng buộc hiển thị đủ để tôi kiểm tra giải thích.", "type": "likert", "required_when": "F3 != none", "scale": [1, 2, 3, 4, 5]},
+        {"id": "F10", "label": "Nhận xét thêm (không bắt buộc, tối đa 500 ký tự).", "type": "text", "required": False, "max_length": 500},
+        {"id": "F11", "label": "Tôi xác nhận đã đánh giá độc lập, không xem lựa chọn của cố vấn khác.",
+         "type": "single_choice", "required": True, "options": ["yes", "no"], "must_equal": "yes"},
+        {"id": "analysis_note", "label": "Điều kiện tính ranking metric", "type": "note",
+         "value": "eligible_for_ndcg_mrr" if ranking_metrics_eligible else "not_eligible_fewer_than_3_distinct_plans"},
+    ]
+
+
 def selected_plan_ids(result: dict) -> list[str]:
     return [item["plan_id"] for item in result["ranking"]["selected_plans"]]
 
@@ -137,10 +169,26 @@ def render_markdown(package: dict) -> str:
         lines.extend(["", "**Giải thích có căn cứ**"])
         lines.extend(f"- {claim['text']}" for claim in plan["explanation_claims"])
         lines.append("")
+    lines.extend(["## Phiếu đánh giá của cố vấn", "",
+                  "**F0. Đồng ý tham gia:** ☐ Có  ☐ Không (chọn Không thì dừng phiếu)", "",
+                  "**F1. Mức phù hợp của từng phương án** (1 = rất không phù hợp; 5 = rất phù hợp):"])
+    lines.extend(f"- Phương án {label}: ☐1 ☐2 ☐3 ☐4 ☐5" for label in package["displayed_order"])
+    if len(package["displayed_order"]) > 1:
+        lines.extend(["", "**F2. Xếp hạng phương án:** 1. ____  2. ____" + ("  3. ____" if len(package["displayed_order"]) == 3 else "")])
+    lines.extend(["", "**F3. Phương án phù hợp nhất:** " + "  ".join(f"☐ {label}" for label in package["displayed_order"]) + "  ☐ Không có phương án phù hợp",
+                  "", "**F4. Mức chấp nhận:** ☐ Chấp nhận nguyên trạng  ☐ Sửa nhỏ (1 thao tác)  ☐ Sửa lớn (từ 2 thao tác)  ☐ Từ chối",
+                  "", "**F5. Chỉnh sửa cần thiết** (nếu có): thao tác add/remove/replace, mã học phần và lý do.",
+                  "", "| Thao tác | Mã học phần | Môn thay thế (nếu có) | Lý do |", "|---|---|---|---|", "|  |  |  |  |", "|  |  |  |  |",
+                  "", "**F6. Giải thích rõ ràng, dễ hiểu:** ☐1 ☐2 ☐3 ☐4 ☐5",
+                  "", "**F7. Giải thích hữu ích khi tư vấn:** ☐1 ☐2 ☐3 ☐4 ☐5",
+                  "", "**F8. Mức độ tin tưởng giải thích:** ☐1 ☐2 ☐3 ☐4 ☐5",
+                  "", "**F9. Bằng chứng/ràng buộc đủ để kiểm tra:** ☐1 ☐2 ☐3 ☐4 ☐5",
+                  "", "**F10. Nhận xét thêm** (không bắt buộc, tối đa 500 ký tự):", "", "................................................................................", "",
+                  "**F11. Xác nhận đánh giá độc lập:** ☐ Có  ☐ Không"])
     if package["ranking_metrics_eligible"]:
-        lines.append("Có đủ ba phương án để xếp hạng Top-3.")
+        lines.append("\nHồ sơ này có đủ ba phương án khác biệt và có thể dùng để tính NDCG@3/MRR.")
     else:
-        lines.append("Lưu ý: hệ thống hiện chỉ tạo được ít hơn ba phương án khác biệt, vì vậy hồ sơ này không dùng để tính NDCG@3/MRR.")
+        lines.append("\nLưu ý: hệ thống hiện chỉ tạo được ít hơn ba phương án khác biệt; hồ sơ này không dùng để tính NDCG@3/MRR.")
     return "\n".join(lines) + "\n"
 
 
@@ -208,7 +256,8 @@ def main() -> int:
                        "student_context": artifact["student_context"], "displayed_order": labels,
                        "displayed_to_plan_id": {label: plan["plan_id"] for label, plan in zip(labels, plans)},
                        "displayed_plans": {label: plan for label, plan in zip(labels, plans)},
-                       "ranking_metrics_eligible": artifact["ranking_metrics_eligible"]}
+                       "ranking_metrics_eligible": artifact["ranking_metrics_eligible"],
+                       "survey_form": survey_form(labels, artifact["ranking_metrics_eligible"])}
             write_json(advisor_dir / f"{profile_id}.json", package)
             (advisor_dir / f"{profile_id}.md").write_text(render_markdown(package), encoding="utf-8")
             package_rows.append({"evaluation_id": package["evaluation_id"], "advisor_pseudonym": advisor,

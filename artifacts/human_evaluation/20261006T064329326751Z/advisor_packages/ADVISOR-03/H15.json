@@ -1,0 +1,320 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "form_version": "human-eval-advisor-v1",
+  "evaluation_id": "HEV-ADVISOR-03-H15",
+  "advisor_pseudonym": "ADVISOR-03",
+  "profile_id": "H15",
+  "profile_pseudonym": "PSEUDO-0FECF9247F",
+  "stratum": "G3_specialization_on_track",
+  "run_id": "RUN_human-eval-H15",
+  "source_manifest_hash": "sha256:c4d57e7cd647adb14aab8a305e29825a8b4103ae15b69dab10a5ca86abb19a2b",
+  "config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 6,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": true,
+    "study_goal": "accelerated",
+    "accumulated_credits": null,
+    "completed_course_count": 51,
+    "failed_courses": []
+  },
+  "displayed_order": [
+    "A",
+    "B"
+  ],
+  "displayed_to_plan_id": {
+    "A": "RUN_human-eval-H15-plan-2",
+    "B": "RUN_human-eval-H15-plan-1"
+  },
+  "displayed_plans": {
+    "A": {
+      "plan_id": "RUN_human-eval-H15-plan-2",
+      "total_credits": 12.0,
+      "courses": [
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "NEC326",
+          "course_name": "An toàn và bảo mật thông tin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT366",
+          "course_name": "Phát triển phần mềm mã nguồn mở",
+          "credits": 3.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "NEC326 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT366 (3 tín chỉ) là học phần tự chọn chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 4
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.0471 (low); độ an toàn là 95.29%.",
+          "evidence_count": 4
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược balanced với điểm 0.8245.",
+          "evidence_count": 4
+        }
+      ]
+    },
+    "B": {
+      "plan_id": "RUN_human-eval-H15-plan-1",
+      "total_credits": 12.0,
+      "courses": [
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "NEC326",
+          "course_name": "An toàn và bảo mật thông tin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT357",
+          "course_name": "Kiểm thử phần mềm",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INT6209",
+          "course_name": "Các chủ đề nâng cao trong công nghệ phần mềm",
+          "credits": 3.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "NEC326 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT357 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6209 (3 tín chỉ) là học phần tự chọn chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 4
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.0471 (low); độ an toàn là 95.29%.",
+          "evidence_count": 4
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.8507.",
+          "evidence_count": 4
+        }
+      ]
+    }
+  },
+  "ranking_metrics_eligible": false,
+  "survey_form": [
+    {
+      "id": "F0",
+      "label": "Tôi đồng ý tham gia đánh giá độc lập cho mục đích nghiên cứu.",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        "yes",
+        "no"
+      ],
+      "stop_if": "no"
+    },
+    {
+      "id": "F1",
+      "label": "Đánh giá mức phù hợp của từng phương án với hồ sơ sinh viên.",
+      "type": "likert_by_plan",
+      "required": true,
+      "plans": [
+        "A",
+        "B"
+      ],
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "anchors": {
+          "1": "Rất không phù hợp",
+          "3": "Trung bình",
+          "5": "Rất phù hợp"
+        }
+      }
+    },
+    {
+      "id": "F2",
+      "label": "Xếp hạng các phương án từ phù hợp nhất đến ít phù hợp nhất.",
+      "type": "ranking",
+      "required": true,
+      "plans": [
+        "A",
+        "B"
+      ],
+      "instruction": "Mỗi phương án chỉ xuất hiện một lần; bỏ qua nếu chỉ có một phương án."
+    },
+    {
+      "id": "F3",
+      "label": "Phương án phù hợp nhất.",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        "A",
+        "B",
+        "none"
+      ],
+      "instruction": "Chọn none nếu không phương án nào phù hợp."
+    },
+    {
+      "id": "F4",
+      "label": "Mức chấp nhận của phương án đã chọn.",
+      "type": "single_choice",
+      "required_when": "F3 != none",
+      "options": [
+        "accept",
+        "minor_edit",
+        "major_edit",
+        "reject"
+      ],
+      "definitions": {
+        "accept": "Có thể dùng không cần sửa",
+        "minor_edit": "Cần đúng 1 thao tác sửa",
+        "major_edit": "Cần từ 2 thao tác sửa",
+        "reject": "Không thể dùng kế hoạch"
+      }
+    },
+    {
+      "id": "F5",
+      "label": "Các chỉnh sửa cần thiết.",
+      "type": "repeatable_operation",
+      "required_when": "F4 in [minor_edit, major_edit, reject]",
+      "fields": [
+        "kind:add|remove|replace",
+        "course_code",
+        "replacement_course_code (chỉ replace)",
+        "reason"
+      ],
+      "instruction": "Mỗi add/remove/replace được tính là một operation."
+    },
+    {
+      "id": "F6",
+      "label": "Giải thích của phương án được chọn rõ ràng, dễ hiểu.",
+      "type": "likert",
+      "required_when": "F3 != none",
+      "scale": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "F7",
+      "label": "Giải thích giúp ích cho việc kiểm tra/tư vấn kế hoạch.",
+      "type": "likert",
+      "required_when": "F3 != none",
+      "scale": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "F8",
+      "label": "Tôi tin tưởng giải thích được đưa ra cho phương án đã chọn.",
+      "type": "likert",
+      "required_when": "F3 != none",
+      "scale": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "F9",
+      "label": "Bằng chứng/ràng buộc hiển thị đủ để tôi kiểm tra giải thích.",
+      "type": "likert",
+      "required_when": "F3 != none",
+      "scale": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "F10",
+      "label": "Nhận xét thêm (không bắt buộc, tối đa 500 ký tự).",
+      "type": "text",
+      "required": false,
+      "max_length": 500
+    },
+    {
+      "id": "F11",
+      "label": "Tôi xác nhận đã đánh giá độc lập, không xem lựa chọn của cố vấn khác.",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        "yes",
+        "no"
+      ],
+      "must_equal": "yes"
+    },
+    {
+      "id": "analysis_note",
+      "label": "Điều kiện tính ranking metric",
+      "type": "note",
+      "value": "not_eligible_fewer_than_3_distinct_plans"
+    }
+  ]
+}
