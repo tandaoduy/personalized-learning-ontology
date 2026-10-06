@@ -1,0 +1,187 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "form_version": "human-eval-advisor-v1",
+  "evaluation_id": "HEV-ADVISOR-03-R13",
+  "advisor_pseudonym": "ADVISOR-03",
+  "profile_id": "R13",
+  "profile_pseudonym": "PSEUDO-05ADA863A4",
+  "stratum": "G5_specialization_debt",
+  "run_id": "RUN_human-eval-R13",
+  "source_manifest_hash": "sha256:b243fd563ba39b593d638d21698df4efe3bf714128a7d7480875a425da2f8720",
+  "config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 6,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": true,
+    "study_goal": "on_time",
+    "accumulated_credits": null,
+    "completed_course_count": 4,
+    "failed_courses": [
+      "FLS314",
+      "MAT327",
+      "SOT381"
+    ]
+  },
+  "displayed_order": [
+    "A"
+  ],
+  "displayed_to_plan_id": {
+    "A": "RUN_human-eval-R13-plan-3"
+  },
+  "displayed_plans": {
+    "A": {
+      "plan_id": "RUN_human-eval-R13-plan-3",
+      "total_credits": 27.0,
+      "courses": [
+        {
+          "course_code": "SOT301",
+          "course_name": "Nhập môn ngành Công nghệ thông tin",
+          "credits": 1.0
+        },
+        {
+          "course_code": "INT6903",
+          "course_name": "Đồ án cơ sở ngành",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT355",
+          "course_name": "Phát triển ứng dụng Web",
+          "credits": 3.0
+        },
+        {
+          "course_code": "85065",
+          "course_name": "Giáo dục thể chất (Chạy)",
+          "credits": 1.0
+        },
+        {
+          "course_code": "POL307",
+          "course_name": "Triết học Mâc-Lênin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SSH313",
+          "course_name": "Pháp luật đại cương",
+          "credits": 2.0
+        },
+        {
+          "course_code": "PHY310",
+          "course_name": "Vật lý đại cương 1",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY311",
+          "course_name": "T.Hành Vật lý đại cương 1",
+          "credits": 1.0
+        },
+        {
+          "course_code": "SSH379",
+          "course_name": "Ngôn ngữ học thuật",
+          "credits": 2.0
+        },
+        {
+          "course_code": "MAT322",
+          "course_name": "Xác suất - Thống kê",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "85098",
+          "course_name": "Giáo dục thể chất (Bóng chuyền)",
+          "credits": 1.0
+        },
+        {
+          "course_code": "85097",
+          "course_name": "Giáo dục thể chất (Bóng đá)",
+          "credits": 1.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "SOT301 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6903 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT355 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "85065 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL307 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH313 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY310 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY311 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH379 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "MAT322 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "85098 (1 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "85097 (1 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 13
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.7000 (high); độ an toàn là 30.00%.",
+          "evidence_count": 13
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.5250.",
+          "evidence_count": 13
+        }
+      ]
+    }
+  },
+  "ranking_metrics_eligible": false
+}

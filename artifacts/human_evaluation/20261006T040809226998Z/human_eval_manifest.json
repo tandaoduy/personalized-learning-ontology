@@ -1,0 +1,624 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "form_version": "human-eval-advisor-v1",
+  "selection_seed": 20261006,
+  "created_at": "2026-10-06T04:08:41.286623+00:00",
+  "profile_count": 30,
+  "assignment_count": 60,
+  "source_mutated": false,
+  "stratum_definitions": {
+    "G1_early_on_time": "HK<=2, không nợ, đúng hạn",
+    "G2_early_accelerated": "HK<=2, không nợ, học vượt",
+    "G3_specialization_on_track": "HK>=5, đã chọn chuyên ngành, không nợ",
+    "G4_early_debt": "HK<=2, có học phần chưa đạt",
+    "G5_specialization_debt": "HK>=5, đã chọn chuyên ngành, có học phần chưa đạt"
+  },
+  "profiles": [
+    {
+      "profile_id": "H01",
+      "profile_pseudonym": "PSEUDO-0791963CA2",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H01",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H02",
+      "profile_pseudonym": "PSEUDO-0BBA869D7F",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H02",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H03",
+      "profile_pseudonym": "PSEUDO-16BADFC620",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H03",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H04",
+      "profile_pseudonym": "PSEUDO-20E9C64C05",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H04",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H05",
+      "profile_pseudonym": "PSEUDO-27D719C754",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H05",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H06",
+      "profile_pseudonym": "PSEUDO-3635A91E3D",
+      "stratum": "G1_early_on_time",
+      "run_id": "RUN_human-eval-H06",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H07",
+      "profile_pseudonym": "PSEUDO-02E6295D8F",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H07",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H08",
+      "profile_pseudonym": "PSEUDO-058D5D43BF",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H08",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H09",
+      "profile_pseudonym": "PSEUDO-114BD151F8",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H09",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H10",
+      "profile_pseudonym": "PSEUDO-1406369760",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H10",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H11",
+      "profile_pseudonym": "PSEUDO-1E472B39B1",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H11",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H12",
+      "profile_pseudonym": "PSEUDO-1E68ED4E3D",
+      "stratum": "G2_early_accelerated",
+      "run_id": "RUN_human-eval-H12",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H13",
+      "profile_pseudonym": "PSEUDO-0C08340630",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-H13",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H14",
+      "profile_pseudonym": "PSEUDO-0FD42B3F73",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-H14",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "H15",
+      "profile_pseudonym": "PSEUDO-0FECF9247F",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-H15",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R01",
+      "profile_pseudonym": "PSEUDO-1253E9373E",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-R01",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R02",
+      "profile_pseudonym": "PSEUDO-168167B979",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-R02",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R03",
+      "profile_pseudonym": "PSEUDO-18873905AC",
+      "stratum": "G3_specialization_on_track",
+      "run_id": "RUN_human-eval-R03",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R04",
+      "profile_pseudonym": "PSEUDO-00328CE57B",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R04",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R05",
+      "profile_pseudonym": "PSEUDO-011AF72A91",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R05",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R06",
+      "profile_pseudonym": "PSEUDO-023849C389",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R06",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R07",
+      "profile_pseudonym": "PSEUDO-02CCA3803B",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R07",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R08",
+      "profile_pseudonym": "PSEUDO-06B2D82840",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R08",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R09",
+      "profile_pseudonym": "PSEUDO-0849029548",
+      "stratum": "G4_early_debt",
+      "run_id": "RUN_human-eval-R09",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R10",
+      "profile_pseudonym": "PSEUDO-01D54579DA",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R10",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R11",
+      "profile_pseudonym": "PSEUDO-0230A7F0E3",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R11",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R12",
+      "profile_pseudonym": "PSEUDO-043066DAF2",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R12",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R13",
+      "profile_pseudonym": "PSEUDO-05ADA863A4",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R13",
+      "plan_count": 1,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R14",
+      "profile_pseudonym": "PSEUDO-060823F51B",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R14",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    },
+    {
+      "profile_id": "R15",
+      "profile_pseudonym": "PSEUDO-0A5B046D07",
+      "stratum": "G5_specialization_debt",
+      "run_id": "RUN_human-eval-R15",
+      "plan_count": 2,
+      "ranking_metrics_eligible": false
+    }
+  ],
+  "assignments": [
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H01",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H01",
+      "profile_pseudonym": "PSEUDO-0791963CA2"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H02",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H02",
+      "profile_pseudonym": "PSEUDO-0BBA869D7F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H03",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H03",
+      "profile_pseudonym": "PSEUDO-16BADFC620"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H04",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H04",
+      "profile_pseudonym": "PSEUDO-20E9C64C05"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H05",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H05",
+      "profile_pseudonym": "PSEUDO-27D719C754"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H06",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H06",
+      "profile_pseudonym": "PSEUDO-3635A91E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H07",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H07",
+      "profile_pseudonym": "PSEUDO-02E6295D8F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H08",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H08",
+      "profile_pseudonym": "PSEUDO-058D5D43BF"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H09",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H09",
+      "profile_pseudonym": "PSEUDO-114BD151F8"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H10",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H10",
+      "profile_pseudonym": "PSEUDO-1406369760"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H11",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H11",
+      "profile_pseudonym": "PSEUDO-1E472B39B1"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H12",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H12",
+      "profile_pseudonym": "PSEUDO-1E68ED4E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H13",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H13",
+      "profile_pseudonym": "PSEUDO-0C08340630"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H14",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H14",
+      "profile_pseudonym": "PSEUDO-0FD42B3F73"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-H15",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "H15",
+      "profile_pseudonym": "PSEUDO-0FECF9247F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-R01",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "R01",
+      "profile_pseudonym": "PSEUDO-1253E9373E"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-R02",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "R02",
+      "profile_pseudonym": "PSEUDO-168167B979"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-R03",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "R03",
+      "profile_pseudonym": "PSEUDO-18873905AC"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-R04",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "R04",
+      "profile_pseudonym": "PSEUDO-00328CE57B"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-01-R05",
+      "advisor_pseudonym": "ADVISOR-01",
+      "profile_id": "R05",
+      "profile_pseudonym": "PSEUDO-011AF72A91"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H01",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H01",
+      "profile_pseudonym": "PSEUDO-0791963CA2"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H02",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H02",
+      "profile_pseudonym": "PSEUDO-0BBA869D7F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H03",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H03",
+      "profile_pseudonym": "PSEUDO-16BADFC620"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H04",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H04",
+      "profile_pseudonym": "PSEUDO-20E9C64C05"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H05",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H05",
+      "profile_pseudonym": "PSEUDO-27D719C754"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H06",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H06",
+      "profile_pseudonym": "PSEUDO-3635A91E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H07",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H07",
+      "profile_pseudonym": "PSEUDO-02E6295D8F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H08",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H08",
+      "profile_pseudonym": "PSEUDO-058D5D43BF"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H09",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H09",
+      "profile_pseudonym": "PSEUDO-114BD151F8"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H10",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H10",
+      "profile_pseudonym": "PSEUDO-1406369760"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H11",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H11",
+      "profile_pseudonym": "PSEUDO-1E472B39B1"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H12",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H12",
+      "profile_pseudonym": "PSEUDO-1E68ED4E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H13",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H13",
+      "profile_pseudonym": "PSEUDO-0C08340630"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H14",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H14",
+      "profile_pseudonym": "PSEUDO-0FD42B3F73"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-H15",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "H15",
+      "profile_pseudonym": "PSEUDO-0FECF9247F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-R06",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "R06",
+      "profile_pseudonym": "PSEUDO-023849C389"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-R07",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "R07",
+      "profile_pseudonym": "PSEUDO-02CCA3803B"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-R08",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "R08",
+      "profile_pseudonym": "PSEUDO-06B2D82840"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-R09",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "R09",
+      "profile_pseudonym": "PSEUDO-0849029548"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-02-R10",
+      "advisor_pseudonym": "ADVISOR-02",
+      "profile_id": "R10",
+      "profile_pseudonym": "PSEUDO-01D54579DA"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H01",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H01",
+      "profile_pseudonym": "PSEUDO-0791963CA2"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H02",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H02",
+      "profile_pseudonym": "PSEUDO-0BBA869D7F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H03",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H03",
+      "profile_pseudonym": "PSEUDO-16BADFC620"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H04",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H04",
+      "profile_pseudonym": "PSEUDO-20E9C64C05"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H05",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H05",
+      "profile_pseudonym": "PSEUDO-27D719C754"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H06",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H06",
+      "profile_pseudonym": "PSEUDO-3635A91E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H07",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H07",
+      "profile_pseudonym": "PSEUDO-02E6295D8F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H08",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H08",
+      "profile_pseudonym": "PSEUDO-058D5D43BF"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H09",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H09",
+      "profile_pseudonym": "PSEUDO-114BD151F8"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H10",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H10",
+      "profile_pseudonym": "PSEUDO-1406369760"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H11",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H11",
+      "profile_pseudonym": "PSEUDO-1E472B39B1"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H12",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H12",
+      "profile_pseudonym": "PSEUDO-1E68ED4E3D"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H13",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H13",
+      "profile_pseudonym": "PSEUDO-0C08340630"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H14",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H14",
+      "profile_pseudonym": "PSEUDO-0FD42B3F73"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-H15",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "H15",
+      "profile_pseudonym": "PSEUDO-0FECF9247F"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-R11",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "R11",
+      "profile_pseudonym": "PSEUDO-0230A7F0E3"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-R12",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "R12",
+      "profile_pseudonym": "PSEUDO-043066DAF2"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-R13",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "R13",
+      "profile_pseudonym": "PSEUDO-05ADA863A4"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-R14",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "R14",
+      "profile_pseudonym": "PSEUDO-060823F51B"
+    },
+    {
+      "evaluation_id": "HEV-ADVISOR-03-R15",
+      "advisor_pseudonym": "ADVISOR-03",
+      "profile_id": "R15",
+      "profile_pseudonym": "PSEUDO-0A5B046D07"
+    }
+  ],
+  "limitations": [
+    "Tập dữ liệu hiện không có hồ sơ học kỳ 7–8; G5 được vận hành là nhóm chuyên ngành có nợ.",
+    "NDCG@3/MRR chỉ tính trên hồ sơ có đủ ba phương án khác biệt."
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "form_version": "human-eval-advisor-v1",
+  "evaluation_id": "HEV-ADVISOR-01-H09",
+  "advisor_pseudonym": "ADVISOR-01",
+  "profile_id": "H09",
+  "profile_pseudonym": "PSEUDO-114BD151F8",
+  "stratum": "G2_early_accelerated",
+  "run_id": "RUN_human-eval-H09",
+  "source_manifest_hash": "sha256:8776c899fada7f4747cc155a53bc7f5bb1c7667f80b0a7ba9bdb9db345e92665",
+  "config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 2,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": false,
+    "study_goal": "accelerated",
+    "accumulated_credits": null,
+    "completed_course_count": 17,
+    "failed_courses": []
+  },
+  "displayed_order": [
+    "A"
+  ],
+  "displayed_to_plan_id": {
+    "A": "RUN_human-eval-H09-plan-1"
+  },
+  "displayed_plans": {
+    "A": {
+      "plan_id": "RUN_human-eval-H09-plan-1",
+      "total_credits": 27.0,
+      "courses": [
+        {
+          "course_code": "FLS314",
+          "course_name": "Tiếng Anh B1.1",
+          "credits": 4.0
+        },
+        {
+          "course_code": "INS326",
+          "course_name": "Cấu trúc dữ liệu và giải thuật",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INS330",
+          "course_name": "Cơ sở dữ liệu",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT320",
+          "course_name": "Kỹ thuật lập trình (2LT + 1LT)",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY310",
+          "course_name": "Vật lý đại cương 1",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY311",
+          "course_name": "T.Hành Vật lý đại cương 1",
+          "credits": 1.0
+        },
+        {
+          "course_code": "POL308",
+          "course_name": "Chủ nghĩa xã hội khoa học",
+          "credits": 2.0
+        },
+        {
+          "course_code": "SSH379",
+          "course_name": "Ngôn ngữ học thuật",
+          "credits": 2.0
+        },
+        {
+          "course_code": "INT6903",
+          "course_name": "Đồ án cơ sở ngành",
+          "credits": 3.0
+        },
+        {
+          "course_code": "NEC329",
+          "course_name": "Mạng máy tính",
+          "credits": 3.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "FLS314 (4 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INS326 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INS330 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT320 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY310 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY311 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL308 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH379 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6903 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "NEC329 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 10
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.4000 (medium); độ an toàn là 60.00%.",
+          "evidence_count": 10
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.5850.",
+          "evidence_count": 10
+        }
+      ]
+    }
+  },
+  "ranking_metrics_eligible": false
+}

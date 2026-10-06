@@ -1,0 +1,156 @@
+{
+  "protocol": "human-eval-pack-v1",
+  "profile_id": "R10",
+  "profile_pseudonym": "PSEUDO-01D54579DA",
+  "stratum": "G5_specialization_debt",
+  "run_id": "RUN_human-eval-R10",
+  "source_manifest_hash": "sha256:a21116c6ae52acf7a51b3a7141493d72b20b8376ab71634e7397d87b0c43c3e9",
+  "ranking_config_hash": "sha256:255681549974b899af56fbf1f7eb8a8525b531fc76230393c544f505c4732903",
+  "student_context": {
+    "current_semester": 6,
+    "major_id": "http://www.semanticweb.org/henrydao/ontologies/2025/7/TrainingProgramOntology#CNTT",
+    "specialization_present": true,
+    "study_goal": "accelerated",
+    "accumulated_credits": null,
+    "completed_course_count": 7,
+    "failed_courses": [
+      "FLS313"
+    ]
+  },
+  "plans": [
+    {
+      "plan_id": "RUN_human-eval-R10-plan-1",
+      "total_credits": 27.0,
+      "courses": [
+        {
+          "course_code": "INT6903",
+          "course_name": "Đồ án cơ sở ngành",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SOT355",
+          "course_name": "Phát triển ứng dụng Web",
+          "credits": 3.0
+        },
+        {
+          "course_code": "POL307",
+          "course_name": "Triết học Mâc-Lênin",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SSH313",
+          "course_name": "Pháp luật đại cương",
+          "credits": 2.0
+        },
+        {
+          "course_code": "MAT328",
+          "course_name": "Toán 2",
+          "credits": 2.0
+        },
+        {
+          "course_code": "PHY310",
+          "course_name": "Vật lý đại cương 1",
+          "credits": 3.0
+        },
+        {
+          "course_code": "PHY311",
+          "course_name": "T.Hành Vật lý đại cương 1",
+          "credits": 1.0
+        },
+        {
+          "course_code": "SSH379",
+          "course_name": "Ngôn ngữ học thuật",
+          "credits": 2.0
+        },
+        {
+          "course_code": "MAT322",
+          "course_name": "Xác suất - Thống kê",
+          "credits": 3.0
+        },
+        {
+          "course_code": "INT6900",
+          "course_name": "Thực tập ngành nghề",
+          "credits": 3.0
+        },
+        {
+          "course_code": "SSH381",
+          "course_name": "Thường thức mỹ thuật",
+          "credits": 2.0
+        }
+      ],
+      "explanation_claims": [
+        {
+          "kind": "course_classification",
+          "text": "INT6903 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SOT355 (3 tín chỉ) là học phần bắt buộc chuyên ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "POL307 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH313 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "MAT328 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY310 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "PHY311 (1 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH379 (2 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "MAT322 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "INT6900 (3 tín chỉ) là học phần bắt buộc ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "course_classification",
+          "text": "SSH381 (2 tín chỉ) là học phần tự chọn ngành.",
+          "evidence_count": 1
+        },
+        {
+          "kind": "validation",
+          "text": "Phương án hợp lệ theo toàn bộ các ràng buộc học vụ đã được kiểm tra.",
+          "evidence_count": 11
+        },
+        {
+          "kind": "risk",
+          "text": "Rủi ro của phương án là 0.7000 (high); độ an toàn là 30.00%.",
+          "evidence_count": 11
+        },
+        {
+          "kind": "ranking",
+          "text": "Phương án được chọn cho chiến lược safe với điểm 0.3886.",
+          "evidence_count": 11
+        }
+      ]
+    }
+  ],
+  "ranking_metrics_eligible": false
+}

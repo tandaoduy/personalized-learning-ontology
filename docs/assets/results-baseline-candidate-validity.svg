@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="354" viewBox="0 0 900 354">
+<style>text{font-family:Arial,sans-serif;fill:#1e293b}.title{font-size:20px;font-weight:700}.label{font-size:14px}.value{font-size:14px;font-weight:700}</style>
+<text x="24" y="34" class="title">Candidate Attempt Validity theo baseline</text>
+<text x="280" y="56" class="label">0%</text><text x="792" y="56" class="label">100%</text>
+<text x="24" y="92" class="label">BL-01 Rule-based</text>
+<rect x="280" y="72" width="540" height="24" rx="4" fill="#e2e8f0"/>
+<rect x="280" y="72" width="494.0" height="24" rx="4" fill="#2563eb"/>
+<text x="834" y="91" class="value">91.48%</text>
+<text x="24" y="140" class="label">BL-02 Greedy</text>
+<rect x="280" y="120" width="540" height="24" rx="4" fill="#e2e8f0"/>
+<rect x="280" y="120" width="494.0" height="24" rx="4" fill="#2563eb"/>
+<text x="834" y="139" class="value">91.48%</text>
+<text x="24" y="188" class="label">BL-03 Beam Search</text>
+<rect x="280" y="168" width="540" height="24" rx="4" fill="#e2e8f0"/>
+<rect x="280" y="168" width="494.0" height="24" rx="4" fill="#2563eb"/>
+<text x="834" y="187" class="value">91.48%</text>
+<text x="24" y="236" class="label">BL-04 Agent không Ontology</text>
+<rect x="280" y="216" width="540" height="24" rx="4" fill="#e2e8f0"/>
+<rect x="280" y="216" width="2.0" height="24" rx="4" fill="#2563eb"/>
+<text x="834" y="235" class="value">0.38%</text>
+<text x="24" y="284" class="label">BL-05 Agent có Ontology</text>
+<rect x="280" y="264" width="540" height="24" rx="4" fill="#e2e8f0"/>
+<rect x="280" y="264" width="339.5" height="24" rx="4" fill="#2563eb"/>
+<text x="834" y="283" class="value">62.87%</text>
+</svg>
