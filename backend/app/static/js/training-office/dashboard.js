@@ -17,6 +17,12 @@
     relFilter: 'all',
     courseSearchQuery: '',
     programs: [],
+    progFilter: 'all',
+    progView: 'grid',
+    progSearchQuery: '',
+    selectedProgramDetail: null,
+    selectedSemesterPick: 'all',
+    selectedCurriculumTab: 'roadmap',
     assignments: [],
     advisors: [],
     selectedClasses: new Set(),
@@ -1149,6 +1155,409 @@
   }
 
   // =========================================================================
+  // LOGIC WORKSPACE CHƯƠNG TRÌNH ĐÀO TẠO (PROGRAMS)
+  // =========================================================================
+
+  function renderPrograms() {
+    const gridWrap = $('[data-programs-grid]');
+    const tableWrap = $('[data-programs-table-wrap]');
+    const tableBody = $('[data-rows="programs"]');
+    const emptyWrap = $('[data-programs-empty]');
+    if (!gridWrap && !tableBody) return;
+
+    const all = state.programs || [];
+    const activeCount = all.filter(p => !p.archived).length;
+    const archivedCount = all.filter(p => p.archived).length;
+
+    // Cập nhật thẻ KPI
+    const totalStat = $('[data-prog-stat="total"]');
+    const activeStat = $('[data-prog-stat="active"]');
+    const creditsStat = $('[data-prog-stat="credits"]');
+    const coursesStat = $('[data-prog-stat="courses"]');
+    const classesStat = $('[data-prog-stat="classes"]');
+    const studentsStat = $('[data-prog-stat="students"]');
+    const totalPill = $('[data-stat="total-programs-pill"]');
+
+    if (totalStat) totalStat.textContent = all.length;
+    if (activeStat) activeStat.textContent = activeCount;
+    if (totalPill) totalPill.textContent = `${all.length} CTĐT`;
+
+    // Pill counts
+    const countAll = $('[data-prog-count="all"]');
+    const countActive = $('[data-prog-count="active"]');
+    const countArchived = $('[data-prog-count="archived"]');
+    if (countAll) countAll.textContent = all.length;
+    if (countActive) countActive.textContent = activeCount;
+    if (countArchived) countArchived.textContent = archivedCount;
+
+    // Metrics tổng quan từ chương trình chính
+    const primaryProg = all.find(p => !p.archived) || all[0];
+    if (primaryProg) {
+      if (creditsStat) creditsStat.textContent = `${primaryProg.total_credits || 256} TC`;
+      if (coursesStat) coursesStat.textContent = primaryProg.course_count || 107;
+      if (classesStat) classesStat.textContent = primaryProg.classes_count || 16;
+      if (studentsStat) studentsStat.textContent = `${primaryProg.students_count || 364} SV`;
+    }
+
+    // Lọc dữ liệu theo tab và tìm kiếm
+    const query = (state.progSearchQuery || '').trim().toLowerCase();
+    const filtered = all.filter(p => {
+      if (state.progFilter === 'active' && p.archived) return false;
+      if (state.progFilter === 'archived' && !p.archived) return false;
+      if (query) {
+        const idMatch = (p.program_id || '').toLowerCase().includes(query);
+        const nameMatch = (p.name || '').toLowerCase().includes(query);
+        if (!idMatch && !nameMatch) return false;
+      }
+      return true;
+    });
+
+    // Trạng thái trống
+    if (filtered.length === 0) {
+      if (gridWrap) gridWrap.style.display = 'none';
+      if (tableWrap) tableWrap.style.display = 'none';
+      if (emptyWrap) emptyWrap.style.display = 'block';
+      refreshIcons();
+      return;
+    }
+
+    if (emptyWrap) emptyWrap.style.display = 'none';
+    if (state.progView === 'grid') {
+      if (gridWrap) gridWrap.style.display = 'grid';
+      if (tableWrap) tableWrap.style.display = 'none';
+    } else {
+      if (gridWrap) gridWrap.style.display = 'none';
+      if (tableWrap) tableWrap.style.display = 'block';
+    }
+
+    // 1. Render Grid Cards View
+    if (gridWrap) {
+      gridWrap.innerHTML = filtered.map(p => {
+        const isArchived = Boolean(p.archived);
+        const statusHtml = isArchived
+          ? `<span class="to-prog-card__status to-prog-card__status--archived"><span class="to-dot-gray"></span> Đã lưu trữ</span>`
+          : `<span class="to-prog-card__status to-prog-card__status--active"><span class="to-pulse-dot"></span> Đang áp dụng</span>`;
+
+        return `
+          <div class="to-prog-card ${isArchived ? 'to-prog-card--archived' : ''}" data-prog-id="${esc(p.program_id)}">
+            <div>
+              <div class="to-prog-card__head">
+                <span class="to-prog-card__code-badge">
+                  <i data-lucide="graduation-cap" style="width:13px;height:13px;color:#7c3aed;"></i>
+                  ${esc(p.program_id)}
+                </span>
+                ${statusHtml}
+              </div>
+
+              <h3 class="to-prog-card__title">${esc(p.name)}</h3>
+              <div class="to-prog-card__subtitle">
+                <i data-lucide="award" style="width:13px;height:13px;color:#64748b;"></i>
+                Hệ Chính quy • Chuẩn CDIO • 8 Học kỳ (4.5 năm)
+              </div>
+
+              <div class="to-prog-card__metrics">
+                <div class="to-prog-metric">
+                  <span class="to-prog-metric__value">${p.semesters_count || 8}</span>
+                  <span class="to-prog-metric__label">Học kỳ</span>
+                </div>
+                <div class="to-prog-metric">
+                  <span class="to-prog-metric__value">${p.course_count || 107}</span>
+                  <span class="to-prog-metric__label">Môn học</span>
+                </div>
+                <div class="to-prog-metric">
+                  <span class="to-prog-metric__value">${p.total_credits || 256}</span>
+                  <span class="to-prog-metric__label">Tín chỉ</span>
+                </div>
+                <div class="to-prog-metric">
+                  <span class="to-prog-metric__value">${p.classes_count || 16}</span>
+                  <span class="to-prog-metric__label">Lớp học</span>
+                </div>
+              </div>
+
+              <div class="to-prog-card__dist">
+                <div class="to-prog-card__dist-label">
+                  <span>Cơ cấu khối kiến thức</span>
+                  <span>100% CDIO</span>
+                </div>
+                <div class="to-prog-dist-bar">
+                  <div class="to-prog-dist-segment to-prog-dist-segment--foundation" style="width: 25%;" title="Cơ sở ngành (25%)"></div>
+                  <div class="to-prog-dist-segment to-prog-dist-segment--core" style="width: 45%;" title="Chuyên ngành bắt buộc (45%)"></div>
+                  <div class="to-prog-dist-segment to-prog-dist-segment--elective" style="width: 30%;" title="Chuyên ngành tự chọn (30%)"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="to-prog-card__actions">
+              <button type="button" class="to-btn-explore" data-explore-program="${esc(p.program_id)}" title="Khám phá lộ trình 8 học kỳ và học phần">
+                <i data-lucide="layers"></i>
+                <span>Xem khung CTĐT</span>
+              </button>
+              <div class="to-prog-card__secondary-actions">
+                ${!isArchived ? `
+                  <button type="button" class="to-btn-icon-action" data-edit-program="${esc(p.program_id)}" data-program-name="${esc(p.name)}" title="Cập nhật tên chương trình">
+                    <i data-lucide="edit-3"></i>
+                  </button>
+                  <button type="button" class="to-btn-icon-action to-btn-icon-action--danger" data-archive-program="${esc(p.program_id)}" title="Lưu trữ chương trình">
+                    <i data-lucide="archive"></i>
+                  </button>
+                ` : `
+                  <button type="button" class="to-btn-icon-action to-btn-icon-action--restore" data-restore-program="${esc(p.program_id)}" title="Kích hoạt / Khôi phục chương trình">
+                    <i data-lucide="rotate-ccw"></i>
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. Render Table View
+    if (tableBody) {
+      tableBody.innerHTML = filtered.map(p => {
+        const isArchived = Boolean(p.archived);
+        return `
+          <tr>
+            <td>
+              <span class="to-prog-card__code-badge">${esc(p.program_id)}</span>
+            </td>
+            <td>
+              <strong style="color:#0f172a;display:block;">${esc(p.name)}</strong>
+              <small style="color:#64748b;">Hệ Chính quy • Chuẩn CDIO</small>
+            </td>
+            <td style="text-align:center;">
+              <span class="to-badge to-badge--blue">${p.semesters_count || 8} Học kỳ</span>
+            </td>
+            <td style="text-align:center;">
+              <strong style="color:#1e293b;">${p.course_count || 107} môn</strong>
+              <div style="font-size:0.75rem;color:#64748b;">${p.total_credits || 256} tín chỉ</div>
+            </td>
+            <td style="text-align:center;">
+              <strong style="color:#1e293b;">${p.classes_count || 16} lớp</strong>
+              <div style="font-size:0.75rem;color:#64748b;">${p.students_count || 364} SV</div>
+            </td>
+            <td style="text-align:center;">
+              <span class="to-badge ${isArchived ? 'to-badge--gray' : 'to-badge--green'}">
+                ${isArchived ? 'Đã lưu trữ' : 'Đang áp dụng'}
+              </span>
+            </td>
+            <td style="text-align:right;">
+              <div style="display:inline-flex;align-items:center;gap:6px;">
+                <button type="button" class="to-btn to-btn--ghost" style="height:32px;padding:0 10px;font-size:0.78rem;" data-explore-program="${esc(p.program_id)}">
+                  <i data-lucide="layers" style="width:14px;height:14px;"></i> Xem khung
+                </button>
+                ${!isArchived ? `
+                  <button type="button" class="to-btn-icon-action" style="width:32px;height:32px;" data-edit-program="${esc(p.program_id)}" data-program-name="${esc(p.name)}" title="Cập nhật">
+                    <i data-lucide="edit-3" style="width:14px;height:14px;"></i>
+                  </button>
+                  <button type="button" class="to-btn-icon-action to-btn-icon-action--danger" style="width:32px;height:32px;" data-archive-program="${esc(p.program_id)}" title="Lưu trữ">
+                    <i data-lucide="archive" style="width:14px;height:14px;"></i>
+                  </button>
+                ` : `
+                  <button type="button" class="to-btn-icon-action to-btn-icon-action--restore" style="width:32px;height:32px;" data-restore-program="${esc(p.program_id)}" title="Khôi phục">
+                    <i data-lucide="rotate-ccw" style="width:14px;height:14px;"></i>
+                  </button>
+                `}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    refreshIcons();
+  }
+
+  async function openCurriculumExplorer(programId) {
+    const dialog = $('[data-dialog="curriculum-explorer"]');
+    if (!dialog) return;
+
+    try {
+      const res = await request(`/programs/${encodeURIComponent(programId)}`);
+      state.selectedProgramDetail = res;
+
+      const titleEl = $('[data-curriculum-title]');
+      const codeEl = $('[data-curriculum-code]');
+      if (titleEl) titleEl.textContent = res.name || 'Chi tiết chương trình đào tạo';
+      if (codeEl) codeEl.textContent = res.program_id || programId;
+
+      const statusBadge = $('[data-curriculum-status]');
+      if (statusBadge) {
+        statusBadge.className = `to-prog-card__status ${res.archived ? 'to-prog-card__status--archived' : 'to-prog-card__status--active'}`;
+        statusBadge.innerHTML = res.archived
+          ? '<span class="to-dot-gray"></span> Đã lưu trữ'
+          : '<span class="to-pulse-dot"></span> Đang áp dụng';
+      }
+
+      const semEl = $('[data-curriculum-semesters]');
+      const courseEl = $('[data-curriculum-courses]');
+      const creditEl = $('[data-curriculum-credits]');
+      const classEl = $('[data-curriculum-classes]');
+      const studEl = $('[data-curriculum-students]');
+      const tabCount = $('[data-tab-classes-count]');
+
+      if (semEl) semEl.textContent = `${res.semesters_count || 8} Kỳ`;
+      if (courseEl) courseEl.textContent = `${res.total_courses || 0} Môn`;
+      if (creditEl) creditEl.textContent = `${res.total_credits || 0} TC`;
+      if (classEl) classEl.textContent = `${res.classes_count || 0} Lớp`;
+      if (studEl) studEl.textContent = `${res.students_count || 0} SV`;
+      if (tabCount) tabCount.textContent = res.classes_count || 0;
+
+      state.selectedCurriculumTab = 'roadmap';
+      state.selectedSemesterPick = 'all';
+
+      renderCurriculumContent();
+      dialog.showModal();
+      refreshIcons();
+    } catch (err) {
+      message('Không thể tải chi tiết chương trình: ' + err.message, 'error');
+    }
+  }
+
+  function renderCurriculumContent() {
+    const data = state.selectedProgramDetail;
+    if (!data) return;
+
+    // Tabs
+    $$('[data-curriculum-tab]').forEach(btn => {
+      const tabName = btn.dataset.curriculumTab;
+      btn.classList.toggle('active', tabName === state.selectedCurriculumTab);
+      const pane = $(`[data-tab-pane="${tabName}"]`);
+      if (pane) pane.style.display = tabName === state.selectedCurriculumTab ? 'block' : 'none';
+    });
+
+    // Tab 1: Roadmap 8 học kỳ
+    if (state.selectedCurriculumTab === 'roadmap') {
+      const container = $('[data-semesters-container]');
+      const pick = state.selectedSemesterPick;
+
+      $$('[data-sem-pick]').forEach(b => {
+        b.classList.toggle('active', b.dataset.semPick === pick);
+      });
+
+      const sems = (data.semesters || []).filter(s => {
+        if (pick === 'all') return true;
+        return String(s.semester) === String(pick);
+      });
+
+      if (container) {
+        if (sems.length === 0) {
+          container.innerHTML = '<div style="text-align:center;padding:30px;color:#64748b;">Không có dữ liệu học kỳ này.</div>';
+        } else {
+          container.innerHTML = sems.map(s => `
+            <div class="to-sem-card">
+              <div class="to-sem-card__head">
+                <div class="to-sem-card__head-title">
+                  <i data-lucide="calendar" style="width:16px;height:16px;color:#7c3aed;"></i>
+                  <span>${esc(s.title || 'Học kỳ ' + s.semester)}</span>
+                </div>
+                <div class="to-sem-card__head-badges">
+                  <span class="to-badge to-badge--blue">${s.course_count || (s.courses || []).length} học phần</span>
+                  <span class="to-badge to-badge--green">${s.total_credits} tín chỉ</span>
+                </div>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="to-sem-course-table">
+                  <thead>
+                    <tr>
+                      <th style="width:110px;">Mã môn</th>
+                      <th>Tên học phần</th>
+                      <th style="width:90px;text-align:center;">Số TC</th>
+                      <th style="width:170px;">Khối kiến thức</th>
+                      <th>Điều kiện tiên quyết</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${(s.courses || []).map(c => `
+                      <tr>
+                        <td>
+                          <span class="to-prog-card__code-badge" style="font-size:0.75rem;">${esc(c.code)}</span>
+                        </td>
+                        <td>
+                          <strong style="color:#0f172a;">${esc(c.name)}</strong>
+                        </td>
+                        <td style="text-align:center;">
+                          <span style="font-weight:800;color:#2563eb;">${c.credits} TC</span>
+                        </td>
+                        <td>
+                          <span class="to-badge ${c.type === 'FoundationCourse' ? 'to-badge--blue' : c.type === 'CoreCourse' ? 'to-badge--green' : 'to-badge--gray'}">
+                            ${esc(c.type_label || c.type)}
+                          </span>
+                        </td>
+                        <td>
+                          ${(c.prerequisites && c.prerequisites.length > 0)
+                            ? c.prerequisites.map(p => `<span class="to-badge to-badge--blue" style="font-size:0.7rem;margin-right:4px;">${esc(p)}</span>`).join('')
+                            : '<span style="color:#94a3b8;font-size:0.75rem;">Không</span>'}
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    // Tab 2: Enrolled classes
+    if (state.selectedCurriculumTab === 'classes') {
+      const classGrid = $('[data-enrolled-classes-grid]');
+      if (classGrid) {
+        const classes = data.classes || [];
+        if (classes.length === 0) {
+          classGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:#64748b;">Chưa có lớp hành chính nào được gán vào chương trình này.</div>';
+        } else {
+          classGrid.innerHTML = classes.map(c => {
+            const raw = c.code || '';
+            const matchCohort = raw.match(/6[567]/);
+            const cohortLabel = matchCohort ? `Khóa K${matchCohort[0]}` : 'Chính quy';
+            return `
+              <div class="to-enrolled-class-card">
+                <div class="to-class-avatar-badge">
+                  <i data-lucide="users" style="width:18px;height:18px;"></i>
+                </div>
+                <div class="to-enrolled-class-info">
+                  <strong>${esc(c.name || c.code)}</strong>
+                  <small>${cohortLabel} • CNTT</small>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    // Tab 3: Knowledge structure
+    if (state.selectedCurriculumTab === 'structure') {
+      const breakdownWrap = $('[data-knowledge-breakdown]');
+      if (breakdownWrap) {
+        const dist = data.credit_by_type || [];
+        if (dist.length === 0) {
+          breakdownWrap.innerHTML = '<div style="text-align:center;padding:30px;color:#64748b;">Chưa có dữ liệu cơ cấu.</div>';
+        } else {
+          breakdownWrap.innerHTML = dist.map(item => `
+            <div class="to-knowledge-card">
+              <div class="to-knowledge-card__head">
+                <div>
+                  <strong>${esc(item.label || item.type)}</strong>
+                  <div style="font-size:0.75rem;color:#64748b;margin-top:2px;">Chiếm ${item.percentage}% tổng khối lượng CTĐT</div>
+                </div>
+                <span style="font-size:0.95rem;font-weight:800;color:#7c3aed;">${item.credits} Tín chỉ</span>
+              </div>
+              <div class="to-knowledge-progress">
+                <div class="to-knowledge-progress-bar" style="width: ${item.percentage}%;"></div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    refreshIcons();
+  }
+
+  // =========================================================================
   // LOGIC CHUNG & KHỞI TẠO TẤT CẢ WORKSPACES
   // =========================================================================
 
@@ -1156,6 +1565,11 @@
     if (kind === 'assignments') {
       updateKPIs();
       renderAssignments();
+      return;
+    }
+
+    if (kind === 'programs') {
+      renderPrograms();
       return;
     }
 
@@ -1178,17 +1592,6 @@
           <td><strong>${esc(x.course_code)}</strong></td>
           <td>${esc(x.related_course_code)}</td>
           <td><button class="to-action" data-remove-relation data-type="${x.type}" data-course="${esc(x.course_code)}" data-related="${esc(x.related_course_code)}">Xóa</button></td>
-        </tr>
-      `).join('');
-    }
-
-    if (kind === 'programs') {
-      body.innerHTML = rows.map(x => `
-        <tr>
-          <td><strong>${esc(x.program_id)}</strong></td>
-          <td>${esc(x.name)}</td>
-          <td><span class="to-badge ${x.archived ? 'to-badge--gray' : 'to-badge--green'}">${x.archived ? 'Đã lưu trữ' : 'Đang hoạt động'}</span></td>
-          <td>${x.archived ? '' : `<button class="to-action to-edit" data-edit-program="${esc(x.program_id)}" data-program-name="${esc(x.name)}">Cập nhật</button><button class="to-action" data-archive-program="${esc(x.program_id)}">Lưu trữ</button>`}</td>
         </tr>
       `).join('');
     }
@@ -1235,7 +1638,10 @@
         updateRelationsKPIs();
         renderCourseResults();
         populateRelationModalCourses();
+      }
 
+      if ($('[data-programs-workspace]')) {
+        renderPrograms();
       }
 
       // Sau khi có advisors thì nạp academic-classes
@@ -1621,8 +2027,75 @@
       renderAssignments();
     });
 
-    // Lọc cho programs
-    $$('[data-filter]:not([data-filter="assignments"])').forEach(i => {
+    // Lọc & công cụ cho Programs Workspace
+    const progSearchInput = $('[data-filter="programs"]');
+    const progSearchClear = $('[data-action="clear-prog-search"]');
+    if (progSearchInput) {
+      progSearchInput.addEventListener('input', (e) => {
+        state.progSearchQuery = e.target.value;
+        if (progSearchClear) progSearchClear.style.display = e.target.value ? 'inline-flex' : 'none';
+        renderPrograms();
+      });
+    }
+    if (progSearchClear) {
+      progSearchClear.addEventListener('click', () => {
+        if (progSearchInput) {
+          progSearchInput.value = '';
+          state.progSearchQuery = '';
+          progSearchClear.style.display = 'none';
+          renderPrograms();
+        }
+      });
+    }
+
+    // Filter pills cho programs
+    $$('[data-prog-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('[data-prog-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.progFilter = btn.dataset.progFilter;
+        renderPrograms();
+      });
+    });
+
+    // View mode switcher cho programs (Grid vs Table)
+    $$('[data-prog-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('[data-prog-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.progView = btn.dataset.progView;
+        renderPrograms();
+      });
+    });
+
+    // Nút làm mới cho programs
+    $('[data-action="refresh-programs"]')?.addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      const icon = btn.querySelector('svg') || btn.querySelector('i');
+      if (icon) icon.classList.add('animate-spin');
+      btn.disabled = true;
+      try {
+        await load('programs', '/programs');
+        message('Đã làm mới danh mục chương trình đào tạo.');
+      } catch (err) {
+        message('Lỗi khi làm mới: ' + err.message, 'error');
+      } finally {
+        if (icon) icon.classList.remove('animate-spin');
+        btn.disabled = false;
+      }
+    });
+
+    // Reset filter
+    $('[data-action="reset-prog-filter"]')?.addEventListener('click', () => {
+      state.progFilter = 'all';
+      state.progSearchQuery = '';
+      if (progSearchInput) progSearchInput.value = '';
+      if (progSearchClear) progSearchClear.style.display = 'none';
+      $$('[data-prog-filter]').forEach(b => b.classList.toggle('active', b.dataset.progFilter === 'all'));
+      renderPrograms();
+    });
+
+    $$('[data-filter]:not([data-filter="assignments"]):not([data-filter="programs"])').forEach(i => {
       i.addEventListener('input', () => render(i.dataset.filter));
     });
 
@@ -1795,8 +2268,47 @@
         f.program_id.readOnly = true;
         f.name.value = editProgram.dataset.programName;
         $('[data-program-dialog-title]').textContent = 'Cập nhật chương trình đào tạo';
-        $('[data-program-submit]').textContent = 'Lưu cập nhật';
+        const submitSpan = $('[data-program-submit] span') || $('[data-program-submit]');
+        submitSpan.textContent = 'Lưu cập nhật';
         $('[data-dialog="program"]').showModal();
+        return;
+      }
+
+      // Khám phá chi tiết khung CTĐT
+      const exploreProg = e.target.closest('[data-explore-program]');
+      if (exploreProg) {
+        openCurriculumExplorer(exploreProg.dataset.exploreProgram);
+        return;
+      }
+
+      // Khôi phục / Kích hoạt lại CTĐT đã lưu trữ
+      const restoreProg = e.target.closest('[data-restore-program]');
+      if (restoreProg) {
+        const progId = restoreProg.dataset.restoreProgram;
+        if (!confirm(`Kích hoạt lại chương trình đào tạo ${progId}?`)) return;
+        try {
+          await request(`/programs/${encodeURIComponent(progId)}/restore`, { method: 'POST' });
+          await loadAll();
+          message('Đã kích hoạt lại chương trình đào tạo.');
+        } catch (err) {
+          message(err.message, 'error');
+        }
+        return;
+      }
+
+      // Chuyển tab trong modal Khám phá CTĐT
+      const curTab = e.target.closest('[data-curriculum-tab]');
+      if (curTab) {
+        state.selectedCurriculumTab = curTab.dataset.curriculumTab;
+        renderCurriculumContent();
+        return;
+      }
+
+      // Chọn học kỳ trong tab Roadmap
+      const semPick = e.target.closest('[data-sem-pick]');
+      if (semPick) {
+        state.selectedSemesterPick = semPick.dataset.semPick;
+        renderCurriculumContent();
         return;
       }
 
@@ -1809,6 +2321,8 @@
 
       const confirmMsg = revokeAdv
         ? `Gỡ cố vấn ${revokeAdv.dataset.revokeAdvisor} khỏi lớp ${revokeAdv.dataset.academicClass}?`
+        : archiveProg
+        ? `Lưu trữ chương trình đào tạo ${archiveProg.dataset.archiveProgram}?`
         : 'Bạn có chắc chắn muốn thực hiện thao tác này?';
 
       if (!confirm(confirmMsg)) return;

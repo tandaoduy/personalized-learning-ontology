@@ -263,11 +263,111 @@ class TrainingOfficeService:
 
     def list_programs(self) -> list[dict]:
         graph = self._graph(); rows = []
+        catalog = self.list_courses()
+        default_courses_count = len(catalog)
+        default_credits_count = sum(float(c.get("credits", 0)) for c in catalog)
         for subject in graph.subjects(RDF.type, BASE.TrainingProgram):
-            rows.append({"program_id": str(graph.value(subject, BASE.programCode) or subject).split("#")[-1],
-                         "name": str(graph.value(subject, BASE.programName) or ""),
-                         "archived": str(graph.value(subject, BASE.isArchived) or "false").lower() == "true"})
+            prog_id = str(graph.value(subject, BASE.programCode) or subject).split("#")[-1]
+            followers = list(graph.subjects(BASE.followsTrainingProgram, subject))
+            classes_count = len([s for s in followers if not str(s).split("#")[-1].startswith("SV_")])
+            students_count = len([s for s in followers if str(s).split("#")[-1].startswith("SV_")])
+            rows.append({
+                "program_id": prog_id,
+                "name": str(graph.value(subject, BASE.programName) or ""),
+                "archived": str(graph.value(subject, BASE.isArchived) or "false").lower() == "true",
+                "course_count": default_courses_count,
+                "total_credits": default_credits_count,
+                "semesters_count": 8,
+                "classes_count": classes_count,
+                "students_count": students_count
+            })
         return sorted(rows, key=lambda item: item["program_id"])
+
+    def program_detail(self, program_id: str) -> dict:
+        graph = self._graph()
+        node = self._program(graph, program_id)
+        name = str(graph.value(node, BASE.programName) or "")
+        archived = str(graph.value(node, BASE.isArchived) or "false").lower() == "true"
+        prog_code = str(graph.value(node, BASE.programCode) or program_id).split("#")[-1]
+
+        followers = list(graph.subjects(BASE.followsTrainingProgram, node))
+        raw_classes = [str(s).split("#")[-1] for s in followers if not str(s).split("#")[-1].startswith("SV_")]
+        students_count = len([s for s in followers if str(s).split("#")[-1].startswith("SV_")])
+        
+        classes = []
+        for c_code in sorted(raw_classes):
+            display = c_code.replace("Class_", "").replace("_", ".")
+            classes.append({"code": c_code, "name": display})
+
+        semesters = []
+        all_courses = []
+        credit_by_type = {}
+        type_labels = {
+            "FoundationCourse": "Cơ sở ngành",
+            "CoreCourse": "Chuyên ngành bắt buộc",
+            "ElectiveCourse": "Chuyên ngành tự chọn",
+            "GeneralEducationCourse": "Đại cương",
+            "GraduationCourse": "Tốt nghiệp",
+            "PhysicalEducationCourse": "Giáo dục thể chất"
+        }
+
+        for sem_i in range(1, 9):
+            sem_node = BASE[f"Semester{sem_i}"]
+            sem_courses = []
+            for c in graph.subjects(BASE.recommendedInSemester, sem_node):
+                code = str(graph.value(c, BASE.courseCode) or "").strip().upper()
+                c_name = str(graph.value(c, BASE.courseName) or "").strip()
+                creds = float(graph.value(c, BASE.credit) or 0)
+                types = [str(t).split("#")[-1] for t in graph.objects(c, RDF.type)]
+                c_type = next((t for t in ["CoreCourse", "FoundationCourse", "GeneralEducationCourse", "ElectiveCourse", "GraduationCourse", "PhysicalEducationCourse"] if t in types), "Course")
+                prereqs = sorted([str(graph.value(p, BASE.courseCode) or "").strip().upper() for p in graph.objects(c, BASE.hasPrerequisiteCourse)])
+                coreqs = sorted([str(graph.value(p, BASE.courseCode) or "").strip().upper() for p in graph.objects(c, BASE.corequisiteWith)])
+                
+                credit_by_type[c_type] = credit_by_type.get(c_type, 0.0) + creds
+
+                item = {
+                    "code": code,
+                    "name": c_name,
+                    "credits": creds,
+                    "type": c_type,
+                    "type_label": type_labels.get(c_type, "Học phần"),
+                    "prerequisites": prereqs,
+                    "corequisites": coreqs,
+                    "semester": sem_i
+                }
+                sem_courses.append(item)
+                all_courses.append(item)
+
+            sem_courses.sort(key=lambda x: x["code"])
+            sem_creds = sum(x["credits"] for x in sem_courses)
+            semesters.append({
+                "semester": sem_i,
+                "title": f"Học kỳ {sem_i}",
+                "course_count": len(sem_courses),
+                "total_credits": sem_creds,
+                "courses": sem_courses
+            })
+
+        total_credits = sum(s["total_credits"] for s in semesters)
+
+        formatted_type_distribution = [
+            {"type": k, "label": type_labels.get(k, k), "credits": v, "percentage": round((v / total_credits) * 100, 1) if total_credits > 0 else 0}
+            for k, v in sorted(credit_by_type.items(), key=lambda x: x[1], reverse=True) if v > 0
+        ]
+
+        return {
+            "program_id": prog_code,
+            "name": name,
+            "archived": archived,
+            "total_courses": len(all_courses),
+            "total_credits": total_credits,
+            "semesters_count": len(semesters),
+            "semesters": semesters,
+            "classes_count": len(classes),
+            "students_count": students_count,
+            "classes": classes,
+            "credit_by_type": formatted_type_distribution
+        }
 
     def create_program(self, actor: str, program_id: str, name: str) -> dict:
         program_id = str(program_id or "").strip().upper(); name = str(name or "").strip()
@@ -276,6 +376,7 @@ class TrainingOfficeService:
         if (node, RDF.type, BASE.TrainingProgram) in graph: raise ValueError("PROGRAM_ALREADY_EXISTS")
         graph.add((node, RDF.type, BASE.TrainingProgram)); graph.add((node, BASE.programCode, Literal(program_id)))
         graph.add((node, BASE.programName, Literal(name))); graph.add((node, BASE.isArchived, Literal(False)))
+        graph.add((node, BASE.hasCurriculum, BASE.Curriculum_IT))
         return self._publish(graph, actor, "program_created", {"program_id": program_id, "name": name})
 
     def update_program(self, actor: str, program_id: str, name: str) -> dict:
@@ -289,6 +390,11 @@ class TrainingOfficeService:
         graph = self._graph(); node = self._program(graph, str(program_id).strip())
         graph.set((node, BASE.isArchived, Literal(True)))
         return self._publish(graph, actor, "program_archived", {"program_id": str(program_id).strip().upper()})
+
+    def restore_program(self, actor: str, program_id: str) -> dict:
+        graph = self._graph(); node = self._program(graph, str(program_id).strip())
+        graph.set((node, BASE.isArchived, Literal(False)))
+        return self._publish(graph, actor, "program_restored", {"program_id": str(program_id).strip().upper()})
 
     def assignments(self) -> list[dict]: return self._json(self.assignment_path, [])
 

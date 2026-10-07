@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-assignments.css', v='13') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-relations.css', v='24') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-relations-horizontal.css', v='7') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/training-office-programs.css', v='1') }}">
 {% endblock %}
 {% block content %}
 <section class="to-dashboard" data-training-office-dashboard>
@@ -111,44 +112,176 @@
     {% endif %}
 
     {% if workspace == 'programs' %}
-    <section class="to-panel" id="programs">
-      <div class="to-panel__head">
-        <div>
-          <span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span>
+    <!-- KHU VỰC QUẢN LÝ CHƯƠNG TRÌNH ĐÀO TẠO CAO CẤP -->
+    <div class="to-programs-workspace" data-programs-workspace>
+      <!-- KPI STATS CARDS -->
+      <div class="to-stats-grid">
+        <div class="to-stat-card">
+          <div class="to-stat-card__top">
+            <div class="to-stat-card__icon to-stat-card__icon--violet">
+              <i data-lucide="graduation-cap"></i>
+            </div>
+            <span class="to-stat-card__badge to-stat-card__badge--violet">Ontology RDF</span>
+          </div>
           <div>
-            <h2>Chương trình đào tạo</h2>
-            <p>Tạo mới, cập nhật hoặc lưu trữ chương trình đào tạo.</p>
+            <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Tổng số chương trình</div>
+            <div style="font-size:1.85rem;font-weight:800;color:#0f172a;line-height:1.2;margin:4px 0;" data-prog-stat="total">--</div>
+            <div style="font-size:0.78rem;color:#64748b;">Chương trình đào tạo chính quy</div>
           </div>
         </div>
-        <button class="to-button to-button--primary" data-dialog-open="program">
-          <i data-lucide="plus"></i> Tạo CTĐT
-        </button>
-      </div>
-      <div class="to-toolbar">
-        <div class="to-search">
-          <i data-lucide="search"></i>
-          <input type="search" placeholder="Tìm mã hoặc tên chương trình" data-filter="programs">
+
+        <div class="to-stat-card">
+          <div class="to-stat-card__top">
+            <div class="to-stat-card__icon to-stat-card__icon--emerald">
+              <i data-lucide="check-circle-2"></i>
+            </div>
+            <span class="to-stat-card__badge to-stat-card__badge--emerald">Hiệu lực</span>
+          </div>
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Đang áp dụng</div>
+            <div style="font-size:1.85rem;font-weight:800;color:#059669;line-height:1.2;margin:4px 0;" data-prog-stat="active">--</div>
+            <div style="font-size:0.78rem;color:#64748b;">Sẵn sàng xếp lớp & đăng ký môn</div>
+          </div>
         </div>
-        <span class="to-count" data-count="programs">Đang tải...</span>
+
+        <div class="to-stat-card">
+          <div class="to-stat-card__top">
+            <div class="to-stat-card__icon to-stat-card__icon--blue">
+              <i data-lucide="layers"></i>
+            </div>
+            <span class="to-stat-card__badge to-stat-card__badge--blue">Khung 8 học kỳ</span>
+          </div>
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Khối lượng đào tạo</div>
+            <div style="font-size:1.85rem;font-weight:800;color:#2563eb;line-height:1.2;margin:4px 0;" data-prog-stat="credits">256 TC</div>
+            <div style="font-size:0.78rem;color:#64748b;"><span data-prog-stat="courses">107</span> học phần tích lũy</div>
+          </div>
+        </div>
+
+        <div class="to-stat-card">
+          <div class="to-stat-card__top">
+            <div class="to-stat-card__icon to-stat-card__icon--amber">
+              <i data-lucide="users"></i>
+            </div>
+            <span class="to-stat-card__badge to-stat-card__badge--amber">Chính quy</span>
+          </div>
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;">Quy mô sinh viên</div>
+            <div style="font-size:1.85rem;font-weight:800;color:#d97706;line-height:1.2;margin:4px 0;" data-prog-stat="students">364 SV</div>
+            <div style="font-size:0.78rem;color:#64748b;"><span data-prog-stat="classes">16</span> lớp hành chính theo học</div>
+          </div>
+        </div>
       </div>
-      <div class="to-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Mã CTĐT</th>
-              <th>Tên chương trình</th>
-              <th>Trạng thái</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody data-rows="programs">
-            <tr>
-              <td colspan="4" class="to-loading">Đang nạp dữ liệu ontology...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+
+      <!-- MAIN PANEL -->
+      <section class="to-panel to-panel--programs" id="programs">
+        <div class="to-panel__head to-panel__head--modern">
+          <div class="to-panel__title-wrapper">
+            <span class="to-panel__icon to-panel__icon--modern violet">
+              <i data-lucide="graduation-cap"></i>
+            </span>
+            <div>
+              <div class="to-panel__title-row" style="display:flex;align-items:center;gap:10px;">
+                <h2 style="font-size:1.15rem;font-weight:800;color:#0f172a;">Chương trình Đào tạo & Khung Học phần</h2>
+                <span class="to-title-count-chip" data-stat="total-programs-pill">-- CTĐT</span>
+              </div>
+              <p style="color:#64748b;font-size:0.83rem;margin-top:2px;">Quản lý danh mục CTĐT, lộ trình đào tạo 8 học kỳ chuẩn CDIO và đồng bộ tri thức Ontology.</p>
+            </div>
+          </div>
+          <div class="to-panel__head-actions" style="display:flex;align-items:center;gap:10px;">
+            <div class="to-view-switcher" role="group" aria-label="Chế độ hiển thị">
+              <button type="button" class="to-view-btn active" data-prog-view="grid" title="Xem dạng thẻ trực quan">
+                <i data-lucide="layout-grid"></i>
+              </button>
+              <button type="button" class="to-view-btn" data-prog-view="table" title="Xem dạng bảng chi tiết">
+                <i data-lucide="list"></i>
+              </button>
+            </div>
+            <button type="button" class="to-btn-refresh-modern" data-action="refresh-programs" title="Làm mới dữ liệu từ hệ thống">
+              <i data-lucide="refresh-cw"></i>
+              <span>Làm mới</span>
+            </button>
+            <button type="button" class="to-btn-primary-violet" data-dialog-open="program" title="Tạo chương trình đào tạo mới">
+              <i data-lucide="plus-circle"></i>
+              <span>Tạo CTĐT mới</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SMART FILTER BAR -->
+        <div class="to-filter-bar--programs">
+          <div class="to-filter-pills--programs" role="tablist">
+            <button class="to-filter-pill--programs active" data-prog-filter="all">
+              <span>Tất cả</span>
+              <span class="to-filter-pill__count" data-prog-count="all">0</span>
+            </button>
+            <button class="to-filter-pill--programs" data-prog-filter="active">
+              <span class="to-pulse-dot"></span>
+              <span>Đang áp dụng</span>
+              <span class="to-filter-pill__count" data-prog-count="active">0</span>
+            </button>
+            <button class="to-filter-pill--programs" data-prog-filter="archived">
+              <span class="to-dot-gray"></span>
+              <span>Đã lưu trữ</span>
+              <span class="to-filter-pill__count" data-prog-count="archived">0</span>
+            </button>
+          </div>
+
+          <div class="to-search-box to-search-box--modern">
+            <i data-lucide="search"></i>
+            <input type="search" placeholder="Tìm theo mã hoặc tên chương trình..." data-filter="programs" autocomplete="off">
+            <button type="button" class="to-search-clear" data-action="clear-prog-search" title="Xóa tìm kiếm" style="display:none;">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="to-programs-content">
+          <!-- GRID VIEW -->
+          <div class="to-programs-grid" data-programs-grid>
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #64748b;">
+              <i data-lucide="loader-2" class="animate-spin" style="width: 24px; height: 24px; display: inline-block; margin-bottom: 8px;"></i>
+              <div>Đang nạp dữ liệu chương trình đào tạo từ Ontology...</div>
+            </div>
+          </div>
+
+          <!-- TABLE VIEW -->
+          <div class="to-programs-table-container" data-programs-table-wrap style="display:none;">
+            <table class="to-programs-table">
+              <thead>
+                <tr>
+                  <th>Mã CTĐT</th>
+                  <th>Tên chương trình</th>
+                  <th style="text-align:center;">Lộ trình</th>
+                  <th style="text-align:center;">Học phần & Tín chỉ</th>
+                  <th style="text-align:center;">Lớp áp dụng</th>
+                  <th style="text-align:center;">Trạng thái</th>
+                  <th style="text-align:right;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody data-rows="programs">
+                <tr>
+                  <td colspan="7" class="to-loading">Đang nạp dữ liệu ontology...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- EMPTY STATE -->
+          <div class="to-programs-empty" data-programs-empty style="display:none;">
+            <div class="to-programs-empty__icon">
+              <i data-lucide="folder-search"></i>
+            </div>
+            <h3>Không tìm thấy chương trình phù hợp</h3>
+            <p>Không có CTĐT nào khớp với từ khóa tìm kiếm hoặc bộ lọc hiện tại. Thử thay đổi từ khóa hoặc bộ lọc.</p>
+            <button type="button" class="to-btn to-btn--ghost" data-action="reset-prog-filter">
+              Đặt lại bộ lọc
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
     {% endif %}
 
     {% if workspace == 'assignments' %}
@@ -379,25 +512,161 @@
   </div>
 </dialog>
 
-<!-- DIALOG TẠO/CẬP NHẬT CTĐT -->
-<dialog class="to-dialog" data-dialog="program">
-  <form method="dialog" class="to-form" data-form="program">
-    <header>
-      <div><span class="to-panel__icon violet"><i data-lucide="graduation-cap"></i></span>
-        <h2 data-program-dialog-title>Tạo chương trình đào tạo</h2>
+<!-- DIALOG TẠO/CẬP NHẬT CTĐT (MODERN MODAL) -->
+<dialog class="to-modal-dialog" data-dialog="program">
+  <div class="to-modal-container">
+    <div class="to-modal-header">
+      <div class="to-modal-header__title-box">
+        <div class="to-modal-header__icon" style="background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); color: #7c3aed;">
+          <i data-lucide="graduation-cap"></i>
+        </div>
+        <div>
+          <h2 data-program-dialog-title>Tạo chương trình đào tạo</h2>
+          <div class="to-modal-header__badges">
+            <span class="to-stat-card__badge to-stat-card__badge--violet">Ontology RDF</span>
+            <span class="to-stat-card__badge to-stat-card__badge--gray">Chuẩn CDIO</span>
+          </div>
+        </div>
       </div>
-      <button class="to-icon-button" value="cancel" aria-label="Đóng"><i data-lucide="x"></i></button>
-    </header>
-    <p>Nhập mã duy nhất và tên hiển thị của chương trình.</p>
-    <input type="hidden" name="mode" value="create">
-    <label>Mã chương trình<input name="program_id" required maxlength="64" placeholder="Ví dụ: CNTT_2026"></label>
-    <label>Tên chương trình<input name="name" required maxlength="200"
-        placeholder="Ví dụ: Công nghệ thông tin 2026"></label>
-    <footer>
-      <button class="to-button to-button--ghost" value="cancel">Hủy</button>
-      <button class="to-button to-button--primary" type="submit" data-program-submit>Tạo chương trình</button>
-    </footer>
-  </form>
+      <button type="button" class="to-modal-close-btn" data-modal-close aria-label="Đóng"><i data-lucide="x"></i></button>
+    </div>
+
+    <form class="to-modal-body" data-form="program">
+      <input type="hidden" name="mode" value="create">
+      <p style="margin-bottom:16px;font-size:0.84rem;color:#64748b;line-height:1.5;">
+        Chương trình đào tạo quản lý cấu trúc học phần 8 học kỳ và liên kết với các lớp sinh viên chính quy trong Ontology.
+      </p>
+
+      <div style="display:grid;gap:14px;">
+        <div>
+          <label style="font-size:0.78rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:6px;">Mã chương trình (Duy nhất)</label>
+          <input class="to-select-course" type="text" name="program_id" required maxlength="64" pattern="[A-Za-z0-9_-]{2,64}" placeholder="Ví dụ: CNTT_2026, KHMT_2026" autocomplete="off">
+          <small style="color:#94a3b8;font-size:0.74rem;margin-top:4px;display:block;">Viết liền không dấu, có thể dùng dấu gạch dưới (VD: IT_TrainingProgram)</small>
+        </div>
+
+        <div>
+          <label style="font-size:0.78rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:6px;">Tên chương trình đào tạo</label>
+          <input class="to-select-course" type="text" name="name" required maxlength="200" placeholder="Ví dụ: Chương trình đào tạo Kỹ sư Công nghệ thông tin 2026" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="to-modal-footer" style="margin:24px -24px -20px;padding:16px 24px;">
+        <button type="button" class="to-btn to-btn--ghost" data-modal-close>Hủy</button>
+        <button type="submit" class="to-btn-primary-violet" data-program-submit>
+          <i data-lucide="check" style="width:16px;height:16px;"></i> <span>Tạo chương trình</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- DIALOG KHÁM PHÁ CHI TIẾT KHUNG CTĐT (CURRICULUM EXPLORER MODAL) -->
+<dialog class="to-curriculum-modal" data-dialog="curriculum-explorer">
+  <div class="to-curriculum-modal__header">
+    <div class="to-curriculum-modal__title-box">
+      <div class="to-curriculum-modal__icon">
+        <i data-lucide="layers"></i>
+      </div>
+      <div>
+        <h2 data-curriculum-title>Chi tiết Khung Chương trình đào tạo</h2>
+        <div class="to-curriculum-modal__badges">
+          <span class="to-prog-card__code-badge" data-curriculum-code>--</span>
+          <span class="to-prog-card__status" data-curriculum-status>--</span>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="to-modal-close-btn" data-modal-close aria-label="Đóng">
+      <i data-lucide="x"></i>
+    </button>
+  </div>
+
+  <!-- MODAL KPI BANNER -->
+  <div class="to-modal-kpi-banner">
+    <div class="to-modal-kpi-item">
+      <div class="to-modal-kpi-icon to-modal-kpi-icon--violet"><i data-lucide="calendar"></i></div>
+      <div class="to-modal-kpi-text">
+        <strong data-curriculum-semesters>8 Kỳ</strong>
+        <small>Khung thời gian</small>
+      </div>
+    </div>
+    <div class="to-modal-kpi-item">
+      <div class="to-modal-kpi-icon to-modal-kpi-icon--blue"><i data-lucide="book-open"></i></div>
+      <div class="to-modal-kpi-text">
+        <strong data-curriculum-courses>107</strong>
+        <small>Học phần trong khung</small>
+      </div>
+    </div>
+    <div class="to-modal-kpi-item">
+      <div class="to-modal-kpi-icon to-modal-kpi-icon--emerald"><i data-lucide="award"></i></div>
+      <div class="to-modal-kpi-text">
+        <strong data-curriculum-credits>256 TC</strong>
+        <small>Khối lượng tích lũy</small>
+      </div>
+    </div>
+    <div class="to-modal-kpi-item">
+      <div class="to-modal-kpi-icon to-modal-kpi-icon--amber"><i data-lucide="school"></i></div>
+      <div class="to-modal-kpi-text">
+        <strong data-curriculum-classes>16 Lớp</strong>
+        <small>Lớp áp dụng</small>
+      </div>
+    </div>
+    <div class="to-modal-kpi-item">
+      <div class="to-modal-kpi-icon to-modal-kpi-icon--violet"><i data-lucide="users"></i></div>
+      <div class="to-modal-kpi-text">
+        <strong data-curriculum-students>364 SV</strong>
+        <small>Sinh viên theo học</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="to-modal-nav-tabs">
+    <button type="button" class="to-modal-tab-btn active" data-curriculum-tab="roadmap">
+      <i data-lucide="milestone"></i> Lộ trình 8 học kỳ
+    </button>
+    <button type="button" class="to-modal-tab-btn" data-curriculum-tab="classes">
+      <i data-lucide="users"></i> Lớp hành chính áp dụng (<span data-tab-classes-count>0</span>)
+    </button>
+    <button type="button" class="to-modal-tab-btn" data-curriculum-tab="structure">
+      <i data-lucide="pie-chart"></i> Khối lượng & Cơ cấu kiến thức
+    </button>
+  </div>
+
+  <!-- MODAL BODY -->
+  <div class="to-curriculum-modal__body">
+    <!-- TAB 1: ROADMAP 8 HỌC KỲ -->
+    <div data-tab-pane="roadmap">
+      <div class="to-sem-selector" data-sem-selector>
+        <button type="button" class="to-sem-btn active" data-sem-pick="all">Tất cả 8 kỳ</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="1">Học kỳ 1</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="2">Học kỳ 2</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="3">Học kỳ 3</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="4">Học kỳ 4</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="5">Học kỳ 5</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="6">Học kỳ 6</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="7">Học kỳ 7</button>
+        <button type="button" class="to-sem-btn" data-sem-pick="8">Học kỳ 8</button>
+      </div>
+
+      <div class="to-semesters-container" data-semesters-container>
+        <!-- Semesters dynamically rendered here -->
+      </div>
+    </div>
+
+    <!-- TAB 2: ENROLLED CLASSES -->
+    <div data-tab-pane="classes" style="display:none;">
+      <div class="to-enrolled-classes-grid" data-enrolled-classes-grid>
+        <!-- Classes dynamically rendered here -->
+      </div>
+    </div>
+
+    <!-- TAB 3: STRUCTURE -->
+    <div data-tab-pane="structure" style="display:none;">
+      <div class="to-knowledge-breakdown" data-knowledge-breakdown>
+        <!-- Knowledge breakdown dynamically rendered here -->
+      </div>
+    </div>
+  </div>
 </dialog>
 
 <!-- DIALOG PHÂN CÔNG CỐ VẤN HỌC TẬP (CHUYÊN BIỆT, NHANH & GỌN) -->

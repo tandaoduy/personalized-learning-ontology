@@ -55,6 +55,12 @@ def relation(relation):
 @bp.get("/programs")
 def programs(): return jsonify(success=True, data=_service().list_programs()) if session.get("role") == "training_office" else _deny()
 
+@bp.get("/programs/<program_id>")
+def program_detail(program_id):
+    if session.get("role") != "training_office": return _deny()
+    try: return jsonify(success=True, data=_service().program_detail(program_id))
+    except ValueError as exc: return jsonify(success=False, error=str(exc)), 404
+
 @bp.post("/programs")
 def create_program():
     if session.get("role") != "training_office": return _deny()
@@ -77,6 +83,13 @@ def archive_program(program_id):
     if session.get("role") != "training_office": return _deny()
     try:
         record = _service().archive_program(session["username"], program_id); _reload(); return jsonify(success=True, data=record)
+    except ValueError as exc: return jsonify(success=False, error=str(exc)), 404
+
+@bp.post("/programs/<program_id>/restore")
+def restore_program(program_id):
+    if session.get("role") != "training_office": return _deny()
+    try:
+        record = _service().restore_program(session["username"], program_id); _reload(); return jsonify(success=True, data=record)
     except ValueError as exc: return jsonify(success=False, error=str(exc)), 404
 
 @bp.get("/advisor-assignments")
