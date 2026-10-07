@@ -1,13 +1,11 @@
 """Build paper-ready results tables and dependency-free SVG figures from frozen artifacts."""
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / "artifacts/stage6_baselines/20260930T034342Z/summary.json"
-BASELINE_NO_ONTOLOGY = ROOT / "artifacts/stage6_baselines/20261001T004802Z/summary.json"
-ABLATION = ROOT / "artifacts/ontology_ablation/20261002T151313261133Z/summary.json"
 E2E = ROOT / "artifacts/e2e_scenarios/20260916T115000Z/summary.json"
 CONFIRMATION = ROOT / "artifacts/confirmation_experiment/20261006T034141939726Z/summary.json"
 OUT_DOC = ROOT / "docs/EXPERIMENTAL_RESULTS.md"
@@ -16,6 +14,17 @@ OUT_ASSETS = ROOT / "docs/assets"
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def latest_run(directory: Path, protocol: str) -> Path:
+    matches = []
+    for manifest_path in directory.glob("*/manifest.json"):
+        manifest = load(manifest_path)
+        if manifest.get("protocol") == protocol and (manifest_path.parent / "summary.json").exists():
+            matches.append(manifest_path.parent)
+    if not matches:
+        raise FileNotFoundError(f"No completed {protocol} artifact found in {directory}")
+    return max(matches, key=lambda path: path.name)
 
 
 def pct(value: float | None) -> str:
@@ -47,30 +56,35 @@ def bar_svg(path: Path, title: str, rows: list[tuple[str, float]], *, color: str
 
 
 def main() -> int:
-    baseline, without_ontology = load(BASELINE), load(BASELINE_NO_ONTOLOGY)
-    ablation, e2e, confirmation = load(ABLATION), load(E2E), load(CONFIRMATION)
+    parser = argparse.ArgumentParser(description="Build results only from harmonised v4/v2 artifacts")
+    parser.add_argument("--baseline-dir", type=Path, default=None)
+    parser.add_argument("--ablation-dir", type=Path, default=None)
+    args = parser.parse_args()
+    baseline_dir = args.baseline_dir or latest_run(ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v4")
+    ablation_dir = args.ablation_dir or latest_run(ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v2")
+    baseline = load(baseline_dir / "summary.json")
+    ablation, e2e, confirmation = load(ablation_dir / "summary.json"), load(E2E), load(CONFIRMATION)
     combined = dict(baseline)
-    combined["BL-04-agent-without-ontology"] = without_ontology["BL-04-agent-without-ontology"]
     order = ["BL-01-rule-based", "BL-02-greedy", "BL-03-beam-search", "BL-04-agent-without-ontology", "BL-05-agent-with-ontology"]
     labels = {"BL-01-rule-based": "BL-01 Rule-based", "BL-02-greedy": "BL-02 Greedy", "BL-03-beam-search": "BL-03 Beam Search", "BL-04-agent-without-ontology": "BL-04 Agent không Ontology", "BL-05-agent-with-ontology": "BL-05 Agent có Ontology"}
     OUT_ASSETS.mkdir(parents=True, exist_ok=True)
-    bar_svg(OUT_ASSETS / "results-baseline-candidate-validity.svg", "Candidate Attempt Validity theo baseline", [(labels[k], combined[k]["candidate_attempt_validity"]["mean"]) for k in order], color="#2563eb")
+    bar_svg(OUT_ASSETS / "results-baseline-emitted-candidate-validity.svg", "Emitted Candidate Validity theo baseline", [(labels[k], combined[k]["emitted_candidate_validity"]["mean"]) for k in order], color="#2563eb")
     ablation_order = ["full_ontology", "without_prerequisite", "without_corequisite", "without_curriculum_relation", "without_semester_offering", "without_elective_quota"]
     ablation_labels = {"full_ontology": "Ontology đầy đủ", "without_prerequisite": "Bỏ tiên quyết", "without_corequisite": "Bỏ song hành", "without_curriculum_relation": "Bỏ quan hệ CTĐT", "without_semester_offering": "Bỏ kỳ mở", "without_elective_quota": "Bỏ quota tự chọn"}
-    bar_svg(OUT_ASSETS / "results-ontology-ablation.svg", "Ablation ontology — Candidate Attempt Validity", [(ablation_labels[k], ablation[k]["candidate_attempt_validity"]["mean"]) for k in ablation_order], color="#7c3aed")
+    bar_svg(OUT_ASSETS / "results-ontology-ablation.svg", "Ablation ontology — Emitted Candidate Validity", [(ablation_labels[k], ablation[k]["emitted_candidate_validity"]["mean"]) for k in ablation_order], color="#7c3aed")
 
     baseline_rows = []
     for key in order:
         item = combined[key]
-        baseline_rows.append(f"| {labels[key]} | {pm(item['candidate_attempt_validity'])} | {pct(item['final_recommendation_validity']['mean'])} | {pm(item['final_recommendation_coverage'])} | {pct(item['no_plan_rate']['mean'])} | {item['mean_latency_seconds']:.3f} |")
-    full = ablation["full_ontology"]["candidate_attempt_validity"]["mean"]
+        baseline_rows.append(f"| {labels[key]} | {pm(item['internal_generation_yield'])} | {pm(item['emitted_candidate_validity'])} | {pm(item['final_recommendation_coverage'])} | {pct(item['no_plan_rate']['mean'])} | {item['mean_latency_seconds']:.3f} |")
+    full = ablation["full_ontology"]["emitted_candidate_validity"]["mean"]
     rule_for = {"without_prerequisite": "prerequisite", "without_corequisite": "corequisite", "without_curriculum_relation": "curriculum_membership", "without_semester_offering": "semester_offering", "without_elective_quota": "elective_quota"}
     ablation_rows = []
     for key in ablation_order:
         item = ablation[key]
         violations = "0" if key == "full_ontology" else str(item["violations_by_rule"][rule_for[key]])
-        delta = 0 if key == "full_ontology" else (item["candidate_attempt_validity"]["mean"] - full) * 100
-        ablation_rows.append(f"| {ablation_labels[key]} | {pm(item['candidate_attempt_validity'])} | {pct(item['final_recommendation_coverage']['mean'])} | {delta:+.2f} pp | {violations} |")
+        delta = 0 if key == "full_ontology" else (item["emitted_candidate_validity"]["mean"] - full) * 100
+        ablation_rows.append(f"| {ablation_labels[key]} | {pm(item['internal_generation_yield'])} | {pm(item['emitted_candidate_validity'])} | {pm(item['final_recommendation_coverage'])} | {delta:+.2f} pp | {violations} |")
     metrics = confirmation["metrics"]
     text = f"""# Experimental Results
 
@@ -82,29 +96,29 @@ All baseline and ontology-component ablation runs use 364 pseudonymised profiles
 
 ## Metric interpretation
 
-`Candidate Attempt Validity` is the proportion of **all attempts before filtering** that pass the deterministic validator. It measures search efficiency and **must not** be called system accuracy.
+`Internal Generation Yield` is emitted candidates divided by all internal generation attempts. `Emitted Candidate Validity` is validator-valid emitted candidates divided by candidates emitted for validation. The two quantities must not be merged because duplicate/empty/rejected internal search attempts do not reach validation.
 
-`Final Recommendation Validity` is the proportion of plans actually released to users that are valid after the validator gate. It must always be read with `Final Recommendation Coverage`, the proportion of requests for which a final recommendation was delivered. A method can have 100% final validity while being ineffective if it rarely delivers a plan.
+`Final Recommendation Coverage` is the proportion of requests for which at least one validator-valid plan is available. None of these metrics is system accuracy.
 
 ## Baseline comparison
 
-| Method | Candidate Attempt Validity | Final Recommendation Validity | Final Recommendation Coverage | No-plan Rate | Mean latency (s) |
+| Method | Internal Generation Yield | Emitted Candidate Validity | Final Recommendation Coverage | No-plan Rate | Mean latency (s) |
 |---|---:|---:|---:|---:|---:|
 {"\n".join(baseline_rows)}
 
-![Candidate Attempt Validity by baseline](assets/results-baseline-candidate-validity.svg)
+![Emitted Candidate Validity by baseline](assets/results-baseline-emitted-candidate-validity.svg)
 
-All final recommendations are validator-gated. Thus the 100% Final Recommendation Validity for methods that deliver plans is a safety property, not a claim that the generator itself is equally effective. The central ontology comparison is BL-04 versus BL-05: removing ontology guidance reduces Candidate Attempt Validity from 62.87% to 0.38% and Coverage from 91.48% to 1.13% under the frozen Stage 6 protocol.
+All final recommendations are validator-gated. Therefore, the central ontology comparison is BL-04 versus BL-05, reported with the three harmonised metrics after both experiments are rerun. Do not reuse pre-v4 values because their denominators are not comparable with the ablation run.
 
 ## RQ1 — Ontology component ablation
 
-| Generator configuration | Candidate Attempt Validity | Final Recommendation Coverage | Change from full | Violations of removed rule |
-|---|---:|---:|---:|---:|
+| Generator configuration | Internal Generation Yield | Emitted Candidate Validity | Final Recommendation Coverage | Change from full | Violations of removed rule |
+|---|---:|---:|---:|---:|---:|
 {"\n".join(ablation_rows)}
 
 ![Ontology component ablation](assets/results-ontology-ablation.svg)
 
-The full ontology configuration has the highest Candidate Attempt Validity (92.75% ± 0.34%). Removing prerequisite knowledge has the largest decrease (−57.95 percentage points) and yields 10,179 prerequisite violations. Removing curriculum relation, semester offering, or elective quota also causes substantial reductions and activates the expected violation family. The full ontology evaluator remains active in every ablation; therefore the table measures the contribution of each relation family to **generating valid candidates**, rather than weakening the evaluator.
+The full ontology evaluator remains active in every ablation; therefore the table measures the contribution of each relation family to **generating valid candidates**, rather than weakening the evaluator. Numerical claims must be regenerated under the harmonised metric contract.
 
 ## End-to-end contract evidence
 
@@ -133,8 +147,8 @@ No stale probe was committed as confirmed. This supports transaction freshness o
 
 ## Artifact provenance
 
-- Baselines: `artifacts/stage6_baselines/20260930T034342Z` and controlled BL-04 rerun `artifacts/stage6_baselines/20261001T004802Z`.
-- Ablation: `artifacts/ontology_ablation/20261002T151313261133Z`.
+- Baselines: `{baseline_dir.relative_to(ROOT)}`.
+- Ablation: `{ablation_dir.relative_to(ROOT)}`.
 - E2E: `artifacts/e2e_scenarios/20260916T115000Z`.
 - Confirmation: `artifacts/confirmation_experiment/20261006T034141939726Z`.
 """

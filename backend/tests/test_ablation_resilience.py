@@ -45,16 +45,38 @@ def test_structured_validator_error_preserved():
     assert validation_outcome(result) == ("error", [], "RULE_ERROR: rule failed")
 
 
-def test_empty_generation_is_in_coverage_but_not_candidate_denominator():
-    rows = [dict(configuration="full_ontology", seed=41, attempt=attempt,
-                 validation_status=status, released=status == "valid",
-                 request_marker=True, violations=[])
-            for attempt, status in [(1, "valid"), (0, "no_candidates"), (1, "error")]]
-    summary = summarize(rows, (41,))["full_ontology"]
+def test_empty_generation_is_in_coverage_but_not_emitted_candidate_denominator():
+    requests = [
+        dict(configuration="full_ontology", seed=41, internal_attempt_count=2,
+             emitted_candidate_count=1, valid_emitted_candidate_count=1,
+             request_has_valid_final_plan=True, validator_error_count=0),
+        dict(configuration="full_ontology", seed=41, internal_attempt_count=1,
+             emitted_candidate_count=0, valid_emitted_candidate_count=0,
+             request_has_valid_final_plan=False, validator_error_count=0),
+        dict(configuration="full_ontology", seed=41, internal_attempt_count=1,
+             emitted_candidate_count=1, valid_emitted_candidate_count=0,
+             request_has_valid_final_plan=False, validator_error_count=1),
+    ]
+    candidates = [
+        dict(configuration="full_ontology", seed=41, validation_status="valid", violations=[]),
+        dict(configuration="full_ontology", seed=41, validation_status="error", violations=[]),
+    ]
+    summary = summarize(candidates, requests, (41,))["full_ontology"]
     seed = summary["per_seed"][0]
     assert seed["profiles"] == 3
-    assert seed["candidate_attempts_before_filter"] == 2
-    assert seed["candidate_attempt_validity"] == 0.5
+    assert seed["internal_attempt_count"] == 4
+    assert seed["emitted_candidate_count"] == 2
+    assert seed["valid_emitted_candidate_count"] == 1
+    assert seed["internal_generation_yield"] == 0.5
+    assert seed["emitted_candidate_validity"] == 0.5
     assert seed["final_recommendation_coverage"] == 1 / 3
     assert summary["validator_errors"] == 1
     assert not any(summary["violations_by_rule"].values())
+
+
+def test_metric_accounting_rejects_impossible_counts():
+    requests = [dict(configuration="full_ontology", seed=41, internal_attempt_count=1,
+                     emitted_candidate_count=2, valid_emitted_candidate_count=1,
+                     request_has_valid_final_plan=True, validator_error_count=0)]
+    with pytest.raises(ValueError, match="INVALID_GENERATION_METRIC_COUNTS"):
+        summarize([], requests, (41,))

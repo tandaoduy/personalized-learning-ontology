@@ -28,7 +28,7 @@ from backend.app.services.ontology_evidence_service import OntologyEvidenceServi
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
 
-PROTOCOL = "stage7-ontology-component-ablation-v1"
+PROTOCOL = "stage7-ontology-component-ablation-v2"
 SEEDS = tuple(range(41, 51))
 RULES = ("prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")
 CONFIGS = (
@@ -110,26 +110,61 @@ def metric(values: list[float]) -> dict:
     return {"mean": round(mean(values), 6), "sd": round(sd, 6), "ci95_half_width": round(1.96 * sd / sqrt(len(values)), 6), "n_seeds": len(values)}
 
 
-def summarize(rows: list[dict], seeds: tuple[int, ...]) -> dict:
-    grouped: dict[tuple[str, int], list[dict]] = defaultdict(list)
-    for row in rows: grouped[(row["configuration"], row["seed"])].append(row)
+def request_row(configuration: str, disabled: str | None, pseudo: str, seed: int, generation, validations) -> dict:
+    """Build the same request-level accounting record used by Stage 6."""
+    internal_attempts = len(generation.attempt_records)
+    emitted = len(generation.candidates)
+    valid = sum(status == "valid" for status, _, _ in validations)
+    if emitted > internal_attempts or valid > emitted or len(validations) != emitted:
+        raise ValueError("INVALID_GENERATION_METRIC_COUNTS")
+    return {
+        "configuration": configuration,
+        "disabled_relation": disabled or "none",
+        "student": pseudo,
+        "seed": seed,
+        "internal_attempt_count": internal_attempts,
+        "emitted_candidate_count": emitted,
+        "valid_emitted_candidate_count": valid,
+        "request_has_valid_final_plan": valid > 0,
+        "validator_error_count": sum(status == "error" for status, _, _ in validations),
+    }
+
+
+def summarize(candidate_rows: list[dict], request_rows: list[dict], seeds: tuple[int, ...]) -> dict:
+    grouped_requests: dict[tuple[str, int], list[dict]] = defaultdict(list)
+    grouped_candidates: dict[tuple[str, int], list[dict]] = defaultdict(list)
+    for row in request_rows: grouped_requests[(row["configuration"], row["seed"])].append(row)
+    for row in candidate_rows: grouped_candidates[(row["configuration"], row["seed"])].append(row)
     output = {}
     for configuration, _ in CONFIGS:
-        per_seed, rates, coverage, violations = [], [], [], Counter()
+        per_seed, yields, validities, coverage, violations = [], [], [], [], Counter()
         for seed in seeds:
-            items = grouped[(configuration, seed)]
-            attempts = sum(item["attempt"] > 0 for item in items)
-            valid = sum(item["validation_status"] == "valid" for item in items)
-            delivered = sum(item["released"] for item in items if item["request_marker"])
-            profile_count = sum(item["request_marker"] for item in items)
-            rate = valid / attempts if attempts else 0.0
+            requests = grouped_requests[(configuration, seed)]
+            candidates = grouped_candidates[(configuration, seed)]
+            attempts = sum(item["internal_attempt_count"] for item in requests)
+            emitted = sum(item["emitted_candidate_count"] for item in requests)
+            valid = sum(item["valid_emitted_candidate_count"] for item in requests)
+            delivered = sum(item["request_has_valid_final_plan"] for item in requests)
+            profile_count = len(requests)
+            if emitted > attempts or valid > emitted:
+                raise ValueError("INVALID_GENERATION_METRIC_COUNTS")
+            generation_yield = emitted / attempts if attempts else None
+            emitted_validity = valid / emitted if emitted else None
             cover = delivered / profile_count if profile_count else 0.0
-            per_seed.append({"seed": seed, "profiles": profile_count, "candidate_attempts_before_filter": attempts,
-                "valid_candidate_attempts": valid, "validator_errors": sum(item["validation_status"] == "error" for item in items), "candidate_attempt_validity": rate,
+            per_seed.append({"seed": seed, "profiles": profile_count,
+                "internal_attempt_count": attempts, "emitted_candidate_count": emitted,
+                "valid_emitted_candidate_count": valid, "requests_with_valid_final_plan": delivered,
+                "validator_errors": sum(item["validator_error_count"] for item in requests),
+                "internal_generation_yield": generation_yield,
+                "emitted_candidate_validity": emitted_validity,
                 "final_recommendation_coverage": cover, "no_plan_rate": 1 - cover})
-            rates.append(rate); coverage.append(cover)
-            for item in items: violations.update(item["violations"])
-        output[configuration] = {"per_seed": per_seed, "candidate_attempt_validity": metric(rates),
+            if generation_yield is not None: yields.append(generation_yield)
+            if emitted_validity is not None: validities.append(emitted_validity)
+            coverage.append(cover)
+            for item in candidates: violations.update(item["violations"])
+        output[configuration] = {"per_seed": per_seed,
+            "internal_generation_yield": metric(yields),
+            "emitted_candidate_validity": metric(validities),
             "final_recommendation_coverage": metric(coverage), "no_plan_rate": metric([1 - value for value in coverage]),
             "validator_errors": sum(item["validator_errors"] for item in per_seed),
             "violations_by_rule": {rule: violations[rule] for rule in RULES}}
@@ -155,7 +190,7 @@ def main() -> int:
     run_dir = ROOT / "artifacts" / "ontology_ablation" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir.mkdir(parents=True)
     print(f"[ablation] artifacts: {run_dir}", flush=True)
-    rows = []
+    candidate_rows, request_rows = [], []
     for name, disabled in CONFIGS:
         for seed in args.seeds:
             started = perf_counter()
@@ -171,37 +206,44 @@ def main() -> int:
                 knowledge = require_output(knowledge_result).knowledge_snapshot
                 generated = generate_candidates(context(run_id, "generate", request.model_dump()), request, student, knowledge,
                     profile, generation_engines[name], candidate_limit=3, seed=seed)
+                generation = require_output(generated)
                 validations = []
-                for attempt, plan in enumerate(require_output(generated).candidates, 1):
+                profile_candidate_rows = []
+                for attempt, plan in enumerate(generation.candidates, 1):
                     checked = validate_candidate(context(run_id, f"validate-{attempt}", plan.model_dump()), plan, student, knowledge, evidence,
                         min_credits=full_engine.min_credits, max_credits=full_engine.max_credits)
                     validations.append(validation_outcome(checked))
                     if validations[-1][0] == "error":
                         print(f"[ablation] {run_id}, attempt {attempt}: {validations[-1][2]}", file=sys.stderr, flush=True)
-                released = any(status == "valid" for status, _, _ in validations)
-                profile_rows = []
-                if not validations:
-                    validations.append(("no_candidates", [], None))
                 for attempt, (validation_status, violations, validator_error) in enumerate(validations):
-                    profile_rows.append({"configuration": name, "disabled_relation": disabled or "none", "seed": seed,
-                        "student": f"B{number:04d}", "attempt": 0 if validation_status == "no_candidates" else attempt + 1, "validation_status": validation_status,
+                    profile_candidate_rows.append({"configuration": name, "disabled_relation": disabled or "none", "seed": seed,
+                        "student": f"B{number:04d}", "emitted_candidate_index": attempt + 1,
+                        "validation_status": validation_status,
                         "violations": violations, "validator_error": validator_error,
-                        "released": released, "request_marker": attempt == 0})
+                        "released": any(status == "valid" for status, _, _ in validations)})
+                profile_request_row = request_row(name, disabled, f"B{number:04d}", seed, generation, validations)
                 # One complete profile per line, preserved even if a later call fails.
                 with (run_dir / "completed_profiles.jsonl").open("a", encoding="utf-8") as journal:
-                    journal.write(json.dumps(profile_rows, ensure_ascii=False) + "\n")
-                rows.extend(profile_rows)
+                    journal.write(json.dumps({"request": profile_request_row, "candidates": profile_candidate_rows}, ensure_ascii=False) + "\n")
+                candidate_rows.extend(profile_candidate_rows)
+                request_rows.append(profile_request_row)
                 if args.progress_every and (number % args.progress_every == 0 or number == len(profiles)):
                     elapsed = perf_counter() - started
                     print(f"[ablation] {name}, seed {seed}: {number}/{len(profiles)}; elapsed {elapsed:.0f}s", flush=True)
-    summary = summarize(rows, args.seeds)
+    summary = summarize(candidate_rows, request_rows, args.seeds)
     manifest = {"protocol": PROTOCOL, "profiles": len(profiles), "seeds": list(args.seeds), "target_credits": args.target_credits,
         "candidate_output_cap": 3, "generator_ablation": "One relation family removed only from generation; full ontology StandardValidator remains the evaluator.",
+        "metric_definitions": {
+            "internal_generation_yield": "emitted candidates / internal generation attempts",
+            "emitted_candidate_validity": "validator-valid emitted candidates / emitted candidates",
+            "final_recommendation_coverage": "requests with at least one validator-valid final plan / all requests",
+        },
         "configurations": [{"name": name, "disabled_relation": disabled} for name, disabled in CONFIGS],
         "source_profile_data_sha256": "sha256:" + sha256(Path(Config.STUDENT_DATA_JSON).read_bytes()).hexdigest()}
-    write_json(run_dir / "manifest.json", manifest); write_json(run_dir / "candidate_results.json", rows); write_json(run_dir / "summary.json", summary)
+    write_json(run_dir / "manifest.json", manifest); write_json(run_dir / "candidate_results.json", candidate_rows)
+    write_json(run_dir / "request_results.json", request_rows); write_json(run_dir / "summary.json", summary)
     print(run_dir)
-    error_count = sum(item["validation_status"] == "error" for item in rows)
+    error_count = sum(item["validation_status"] == "error" for item in candidate_rows)
     if error_count:
         print(f"[ablation] WARNING: {error_count} validator errors; inspect results before reporting metrics.", file=sys.stderr)
     return 1 if error_count else 0

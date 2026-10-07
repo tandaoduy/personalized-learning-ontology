@@ -1,8 +1,9 @@
 """Run the frozen Stage-6 baseline protocol without exporting student IDs.
 
-Candidate Attempt Validity measures all generation attempts before filtering.
-Final Recommendation Validity measures only plans actually released after the
-StandardValidator gate. Read it with recommendation coverage.
+Every method emits the same request-level accounting fields.  This keeps the
+baseline denominator identical to the ontology-ablation experiment:
+internal attempts, candidates emitted for validation, and valid emitted
+candidates are distinct quantities.
 """
 from __future__ import annotations
 
@@ -31,7 +32,7 @@ from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
 from experiments.benchmark_algorithms import beam_search_plan, greedy_plan, rule_based_plan
 
-PROTOCOL = "stage6-baselines-frozen-v3"
+PROTOCOL = "stage6-baselines-frozen-v4"
 CANDIDATE_CAP = 3
 DEFAULT_SEEDS = (41, 42, 43, 44, 45, 46, 47, 48, 49, 50)
 RULE_GROUPS = ("prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")
@@ -122,13 +123,18 @@ def candidate_row(method, pseudo, seed, plan, validation, elapsed, diversity=(),
         "timeout_budget_seconds": timeout_seconds, "over_timeout_budget": elapsed > timeout_seconds}
 
 
-def request_row(method, pseudo, seed, attempts, validations) -> dict:
-    """One outcome per request, preserving pre-filter and released-plan measures."""
+def request_row(method, pseudo, seed, internal_attempts, validations) -> dict:
+    """One request-level row using the shared metric-accounting contract."""
+    emitted = len(validations)
     valid = sum(item.status == "valid" for item in validations)
+    if internal_attempts < emitted or valid > emitted:
+        raise ValueError("INVALID_GENERATION_METRIC_COUNTS")
     released = valid > 0  # Only a validator-valid plan may reach a user.
     return {"method": method, "student": pseudo, "seed": seed,
-        "candidate_attempts_before_filter": attempts, "valid_candidate_attempts": valid,
-        "final_recommendation_delivered": released, "final_recommendation_valid": released,
+        "internal_attempt_count": internal_attempts,
+        "emitted_candidate_count": emitted,
+        "valid_emitted_candidate_count": valid,
+        "request_has_valid_final_plan": released,
         "final_recommendation_reason": "validator_valid_plan_available" if released else "no_validator_valid_plan"}
 
 
@@ -150,32 +156,38 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
     for item in candidate_rows: by_candidate[(item["method"], item["seed"])].append(item)
     result = {}
     for method in sorted({item["method"] for item in request_rows}):
-        per_seed, c_rates, f_rates, coverage, no_plan_rates = [], [], [], [], []
+        per_seed, yields, emitted_validities, coverage, no_plan_rates = [], [], [], [], []
         violations, checks, evidenced, latency, diversity, over_timeout = Counter(), 0, 0, [], [], 0
         for seed in seeds:
             requests, candidates = by_request[(method, seed)], by_candidate[(method, seed)]
-            attempts = sum(item["candidate_attempts_before_filter"] for item in requests)
-            valid_attempts = sum(item["valid_candidate_attempts"] for item in requests)
-            delivered = sum(item["final_recommendation_delivered"] for item in requests)
-            valid_final = sum(item["final_recommendation_valid"] for item in requests)
-            candidate_rate = valid_attempts / attempts if attempts else 0.0
-            final_rate = valid_final / delivered if delivered else None
+            attempts = sum(item["internal_attempt_count"] for item in requests)
+            emitted = sum(item["emitted_candidate_count"] for item in requests)
+            valid_emitted = sum(item["valid_emitted_candidate_count"] for item in requests)
+            delivered = sum(item["request_has_valid_final_plan"] for item in requests)
+            if emitted > attempts or valid_emitted > emitted:
+                raise ValueError("INVALID_GENERATION_METRIC_COUNTS")
+            generation_yield = emitted / attempts if attempts else None
+            emitted_validity = valid_emitted / emitted if emitted else None
             coverage_rate = delivered / len(requests) if requests else 0.0
             no_plan_rate = 1 - coverage_rate
-            per_seed.append({"seed": seed, "profiles": len(requests), "candidate_attempts_before_filter": attempts,
-                "valid_candidate_attempts": valid_attempts, "candidate_attempt_validity": candidate_rate,
-                "final_recommendations_delivered": delivered, "final_recommendations_valid": valid_final,
-                "final_recommendation_validity": final_rate, "final_recommendation_coverage": coverage_rate,
+            per_seed.append({"seed": seed, "profiles": len(requests), "internal_attempt_count": attempts,
+                "emitted_candidate_count": emitted, "valid_emitted_candidate_count": valid_emitted,
+                "requests_with_valid_final_plan": delivered,
+                "internal_generation_yield": generation_yield,
+                "emitted_candidate_validity": emitted_validity,
+                "final_recommendation_coverage": coverage_rate,
                 "no_plan_rate": no_plan_rate})
-            c_rates.append(candidate_rate); coverage.append(coverage_rate); no_plan_rates.append(no_plan_rate)
-            if final_rate is not None: f_rates.append(final_rate)
+            if generation_yield is not None: yields.append(generation_yield)
+            if emitted_validity is not None: emitted_validities.append(emitted_validity)
+            coverage.append(coverage_rate); no_plan_rates.append(no_plan_rate)
             for item in candidates:
                 violations.update(item["violations"]); checks += item["evidence_checks"]; evidenced += item["evidenced_checks"]
                 latency.append(item["latency_seconds"]); diversity.extend(item["diversity"])
                 over_timeout += bool(item["over_timeout_budget"])
         stochastic = method in STOCHASTIC_METHODS
-        result[method] = {"stochastic": stochastic, "per_seed": per_seed, "candidate_attempt_validity": rate_summary(c_rates, stochastic=stochastic),
-            "final_recommendation_validity": rate_summary(f_rates, stochastic=stochastic),
+        result[method] = {"stochastic": stochastic, "per_seed": per_seed,
+            "internal_generation_yield": rate_summary(yields, stochastic=stochastic),
+            "emitted_candidate_validity": rate_summary(emitted_validities, stochastic=stochastic),
             "final_recommendation_coverage": rate_summary(coverage, stochastic=stochastic),
             "no_plan_rate": rate_summary(no_plan_rates, stochastic=stochastic),
             "violations_by_rule": {rule: violations[rule] for rule in RULE_GROUPS},
@@ -295,9 +307,11 @@ def main() -> int:
         "source_profile_data_sha256": file_digest(source_data_path),
         "source_profile_data_path": source_data_path.name,
         "standard_validator": "backend.app.validation.validator.StandardValidator",
-        "metric_definitions": {"candidate_attempt_validity": "valid candidate attempts / all candidate attempts before filtering",
-            "final_recommendation_validity": "valid final recommendations / final recommendations delivered after StandardValidator",
-            "final_recommendation_coverage": "requests with a final recommendation delivered / all requests"},
+        "metric_definitions": {
+            "internal_generation_yield": "emitted candidates / internal generation attempts",
+            "emitted_candidate_validity": "validator-valid emitted candidates / emitted candidates",
+            "final_recommendation_coverage": "requests with at least one validator-valid final plan / all requests",
+        },
         "methods": list(selected_methods), "baseline_knowledge_scope": {
             "BL-01-rule-based": "Uses the shared production eligibility filter, then deterministic recommended-semester ordering.",
             "BL-02-greedy": "Uses the shared production eligibility filter, then deterministic priority ordering.",
@@ -310,7 +324,7 @@ def main() -> int:
         "source_student_ids_exported": False}
     write_json(run_dir / "manifest.json", manifest); write_json(run_dir / "candidate_results.json", candidates)
     write_json(run_dir / "request_results.json", requests); write_json(run_dir / "summary.json", summary)
-    report = ["# Frozen Stage 6 baseline report", "", "Candidate Attempt Validity and Final Recommendation Validity are distinct metrics.", ""]
+    report = ["# Frozen Stage 6 baseline report", "", "Internal Generation Yield, Emitted Candidate Validity, and Final Recommendation Coverage use the shared metric contract.", ""]
     for method, value in summary.items(): report.extend([f"## {method}", "", "```json", json.dumps(value, ensure_ascii=False, indent=2), "```", ""])
     (run_dir / "REPORT.md").write_text("\n".join(report), encoding="utf-8")
     print(f"Stage 6 complete: {len(profiles)} profiles x {len(seeds)} seeds, {len(candidates)} validated candidates")

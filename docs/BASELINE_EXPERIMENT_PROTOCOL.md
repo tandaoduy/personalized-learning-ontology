@@ -2,7 +2,7 @@
 
 Mỗi baseline phải chạy trên cùng danh sách pseudonymised profiles, cùng target term, target credits, seed, candidate/search budget và cùng `StandardValidator` hậu kiểm. Artifact mỗi lần chạy phải lưu source-manifest hash, config hash, runtime và candidate attempts trước lọc.
 
-`candidate_output_cap` là 3 cho mọi baseline. Baseline xác định có thể chỉ sinh một candidate; đây không phải candidate bị sao chép để đủ ba. Báo cáo phải giữ `candidate_attempts_before_filter` thực tế làm mẫu số validity rate, không được diễn giải số candidate sinh ra là bằng nhau.
+`candidate_output_cap` là 3 cho mọi baseline. Baseline xác định có thể chỉ sinh một candidate; đây không phải candidate bị sao chép để đủ ba. Mỗi request phải ghi riêng `internal_attempt_count`, `emitted_candidate_count`, `valid_emitted_candidate_count` và `request_has_valid_final_plan`; không được gộp internal attempts với emitted candidates thành một mẫu số validity.
 
 | ID | Generation/ranking | Ontology trong generation/ranking | Validator |
 |---|---|---|---|
@@ -14,4 +14,4 @@ Mỗi baseline phải chạy trên cùng danh sách pseudonymised profiles, cùn
 
 Không được dùng `get_eligible_courses()` hoặc bất kỳ output của `StandardValidator` để chọn/rank candidate trong BL-04. Catalog snapshot dùng chung chỉ là universe học phần; mọi violation của BL-04 phải do Standard Validator hậu kiểm phát hiện.
 
-Chỉ số: candidate-attempt valid rate, violation theo prerequisite/corequisite/curriculum membership/offering/quota/credit, pairwise diversity, latency và evidence coverage. So sánh BL-04/BL-05 là analysis chính cho đóng góp ontology; không báo cáo superiority nếu cấu hình/budget/source manifest khác nhau.
+Chỉ số chính: Internal Generation Yield, Emitted Candidate Validity và Final Recommendation Coverage; chỉ số phụ: violation theo prerequisite/corequisite/curriculum membership/offering/quota/credit, pairwise diversity, latency và evidence coverage. So sánh BL-04/BL-05 là analysis chính cho đóng góp ontology; không báo cáo superiority nếu cấu hình/budget/source manifest khác nhau.
