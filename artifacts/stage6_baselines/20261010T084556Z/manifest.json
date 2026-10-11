@@ -1,0 +1,63 @@
+{
+  "protocol": "stage6-baselines-frozen-v4",
+  "protocol_document": "docs/STAGE6_FROZEN_PROTOCOL.md",
+  "created_at": "2026-10-11T08:06:02.890335+00:00",
+  "profiles": 364,
+  "seeds": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "target_term_id": "next-term",
+  "target_credits": 18.0,
+  "shared_search_budget": {
+    "beam_width": 8,
+    "candidate_attempt_limit": 60,
+    "expanded_state_limit": 5000,
+    "max_active_seconds": 120,
+    "target_credits": 18.0,
+    "experimental_credit_bounds": [
+      10,
+      18.0
+    ],
+    "configured_policy_credit_bounds": [
+      10,
+      27
+    ],
+    "candidate_output_cap": 3
+  },
+  "config_hash": "sha256:f6f77370401e6c0f627a642f13cdcd029eca0850ff5deb1876126855abeabbe7",
+  "source_manifest_hash": "sha256:8f7bccd48c23901a708938ccc7734f121a13f5cfaff8c66f49f905c72f033650",
+  "source_profile_data_sha256": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae",
+  "source_profile_data_path": "DanhSachSinhVien.json",
+  "standard_validator": "backend.app.validation.validator.StandardValidator",
+  "metric_definitions": {
+    "internal_generation_yield": "emitted candidates / internal generation attempts",
+    "emitted_candidate_validity": "validator-valid emitted candidates / emitted candidates",
+    "final_recommendation_coverage": "requests with at least one validator-valid final plan / all requests"
+  },
+  "methods": [
+    "BL-01-rule-based",
+    "BL-02-greedy",
+    "BL-03-beam-search",
+    "BL-04-agent-without-ontology",
+    "BL-05-agent-with-ontology"
+  ],
+  "baseline_knowledge_scope": {
+    "BL-01-rule-based": "Uses the shared production eligibility filter, then deterministic recommended-semester ordering.",
+    "BL-02-greedy": "Uses the shared production eligibility filter, then deterministic priority ordering.",
+    "BL-03-beam-search": "Uses the shared production eligibility filter and beam-search heuristic.",
+    "BL-04-agent-without-ontology": "Uses flat catalog code/credit/recommended-semester metadata and seeded diversification only; no ontology eligibility, constraint relation evidence, or validator feedback.",
+    "BL-05-agent-with-ontology": "Uses ontology-backed eligibility/evidence and in-pipeline deterministic validation."
+  },
+  "bl04_constraint": "Catalog-only generation; validator executes post hoc and never feeds BL-04 generation or ranking.",
+  "timeout_accounting": "Agent enforces max_active_seconds internally. Classical baselines are synchronous and their elapsed time is recorded; any timing comparison must flag an over-budget run rather than claim preemptive termination.",
+  "source_student_ids_exported": false
+}
