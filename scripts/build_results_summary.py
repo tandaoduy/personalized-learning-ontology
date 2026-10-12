@@ -60,8 +60,10 @@ def main() -> int:
     parser.add_argument("--baseline-dir", type=Path, default=None)
     parser.add_argument("--ablation-dir", type=Path, default=None)
     args = parser.parse_args()
-    baseline_dir = args.baseline_dir or latest_run(ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v4")
-    ablation_dir = args.ablation_dir or latest_run(ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v2")
+    baseline_dir = (args.baseline_dir or latest_run(
+        ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v4")).resolve()
+    ablation_dir = (args.ablation_dir or latest_run(
+        ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v2")).resolve()
     baseline = load(baseline_dir / "summary.json")
     ablation, e2e, confirmation = load(ablation_dir / "summary.json"), load(E2E), load(CONFIRMATION)
     combined = dict(baseline)
