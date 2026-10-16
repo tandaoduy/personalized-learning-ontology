@@ -134,6 +134,13 @@ def candidate_row(method, pseudo, seed, plan, status, validation, validator_erro
 
 def request_row(method, pseudo, seed, internal_attempts, validations) -> dict:
     """One request-level row using the shared metric-accounting contract."""
+    # Keep this public accounting helper compatible with older callers that
+    # pass ValidationResult-like objects; runners pass explicit outcome tuples
+    # so validator execution errors can be retained in the emitted denominator.
+    validations = [
+        item if isinstance(item, tuple) else (item.status, item, None)
+        for item in validations
+    ]
     emitted = len(validations)
     valid = sum(status == "valid" for status, _, _ in validations)
     if internal_attempts < emitted or valid > emitted:
@@ -183,7 +190,7 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
             per_seed.append({"seed": seed, "profiles": len(requests), "internal_attempt_count": attempts,
                 "emitted_candidate_count": emitted, "valid_emitted_candidate_count": valid_emitted,
                 "requests_with_valid_final_plan": delivered,
-                "validator_errors": sum(item["validator_error_count"] for item in requests),
+                "validator_errors": sum(item.get("validator_error_count", 0) for item in requests),
                 "internal_generation_yield": generation_yield,
                 "emitted_candidate_validity": emitted_validity,
                 "final_recommendation_coverage": coverage_rate,
