@@ -31,8 +31,9 @@ from backend.app.services.ontology_evidence_service import OntologyEvidenceServi
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
 from experiments.benchmark_algorithms import beam_search_plan, greedy_plan, rule_based_plan
+from experiments.frozen_provenance import frozen_source_provenance
 
-PROTOCOL = "stage6-baselines-frozen-v4"
+PROTOCOL = "stage6-baselines-frozen-v5"
 CANDIDATE_CAP = 3
 DEFAULT_SEEDS = (41, 42, 43, 44, 45, 46, 47, 48, 49, 50)
 RULE_GROUPS = ("prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")
@@ -113,11 +114,19 @@ def no_ontology_plans(engine: RecommendationEngine, profile, target_credits: flo
     return plans
 
 
-def candidate_row(method, pseudo, seed, plan, validation, elapsed, diversity=(), *, timeout_seconds: int) -> dict:
-    checks = list(validation.rule_checks)
+def validation_outcome(checked):
+    if checked.status == "error":
+        return "error", None, f"{checked.error.code}: {checked.error.message}"
+    validation = checked.output.validation if hasattr(checked.output, "validation") else checked.output
+    errors = "; ".join(f"{item.code}: {item.message}" for item in validation.errors)
+    return validation.status, validation, errors or None
+
+
+def candidate_row(method, pseudo, seed, plan, status, validation, validator_error, elapsed, diversity=(), *, timeout_seconds: int) -> dict:
+    checks = list(validation.rule_checks) if validation else []
     return {"method": method, "student": pseudo, "seed": seed, "plan_id": plan.plan_id,
-        "status": validation.status, "total_credits": plan.total_credits,
-        "violations": [item.constraint_id for item in validation.violations],
+        "status": status, "validator_error": validator_error, "total_credits": plan.total_credits,
+        "violations": [item.constraint_id for item in validation.violations] if validation else [],
         "evidence_checks": len(checks), "evidenced_checks": sum(bool(item.evidence_ids) for item in checks),
         "latency_seconds": elapsed, "diversity": list(diversity),
         "timeout_budget_seconds": timeout_seconds, "over_timeout_budget": elapsed > timeout_seconds}
@@ -126,7 +135,7 @@ def candidate_row(method, pseudo, seed, plan, validation, elapsed, diversity=(),
 def request_row(method, pseudo, seed, internal_attempts, validations) -> dict:
     """One request-level row using the shared metric-accounting contract."""
     emitted = len(validations)
-    valid = sum(item.status == "valid" for item in validations)
+    valid = sum(status == "valid" for status, _, _ in validations)
     if internal_attempts < emitted or valid > emitted:
         raise ValueError("INVALID_GENERATION_METRIC_COUNTS")
     released = valid > 0  # Only a validator-valid plan may reach a user.
@@ -135,6 +144,7 @@ def request_row(method, pseudo, seed, internal_attempts, validations) -> dict:
         "emitted_candidate_count": emitted,
         "valid_emitted_candidate_count": valid,
         "request_has_valid_final_plan": released,
+        "validator_error_count": sum(status == "error" for status, _, _ in validations),
         "final_recommendation_reason": "validator_valid_plan_available" if released else "no_validator_valid_plan"}
 
 
@@ -157,7 +167,7 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
     result = {}
     for method in sorted({item["method"] for item in request_rows}):
         per_seed, yields, emitted_validities, coverage, no_plan_rates = [], [], [], [], []
-        violations, checks, evidenced, latency, diversity, over_timeout = Counter(), 0, 0, [], [], 0
+        violations, checks, evidenced, latency, diversity, over_timeout, validator_errors = Counter(), 0, 0, [], [], 0, 0
         for seed in seeds:
             requests, candidates = by_request[(method, seed)], by_candidate[(method, seed)]
             attempts = sum(item["internal_attempt_count"] for item in requests)
@@ -173,6 +183,7 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
             per_seed.append({"seed": seed, "profiles": len(requests), "internal_attempt_count": attempts,
                 "emitted_candidate_count": emitted, "valid_emitted_candidate_count": valid_emitted,
                 "requests_with_valid_final_plan": delivered,
+                "validator_errors": sum(item["validator_error_count"] for item in requests),
                 "internal_generation_yield": generation_yield,
                 "emitted_candidate_validity": emitted_validity,
                 "final_recommendation_coverage": coverage_rate,
@@ -180,6 +191,7 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
             if generation_yield is not None: yields.append(generation_yield)
             if emitted_validity is not None: emitted_validities.append(emitted_validity)
             coverage.append(coverage_rate); no_plan_rates.append(no_plan_rate)
+            validator_errors += per_seed[-1]["validator_errors"]
             for item in candidates:
                 violations.update(item["violations"]); checks += item["evidence_checks"]; evidenced += item["evidenced_checks"]
                 latency.append(item["latency_seconds"]); diversity.extend(item["diversity"])
@@ -190,6 +202,7 @@ def summarize(candidate_rows, request_rows, seeds) -> dict:
             "emitted_candidate_validity": rate_summary(emitted_validities, stochastic=stochastic),
             "final_recommendation_coverage": rate_summary(coverage, stochastic=stochastic),
             "no_plan_rate": rate_summary(no_plan_rates, stochastic=stochastic),
+            "validator_errors": validator_errors,
             "violations_by_rule": {rule: violations[rule] for rule in RULE_GROUPS},
             "mean_latency_seconds": round(mean(latency), 6) if latency else None,
             "over_timeout_candidate_count": over_timeout,
@@ -212,6 +225,7 @@ def main() -> int:
         help="Print progress after this many profiles per seed (0 disables progress output).")
     parser.add_argument("--methods", default=",".join(METHOD_IDS),
         help="Comma-separated method IDs; use BL-04-agent-without-ontology to rerun only the ablation.")
+    parser.add_argument("--allow-dirty", action="store_true", help="Allow an uncommitted source tree for a smoke test only.")
     args = parser.parse_args()
     if (args.limit < 0 or args.target_credits <= 0 or args.candidate_attempt_limit < 1
             or args.expanded_state_limit < 1 or args.max_active_seconds < 1 or args.progress_every < 0):
@@ -221,6 +235,10 @@ def main() -> int:
     unknown_methods = set(selected_methods) - set(METHOD_IDS)
     if not selected_methods or unknown_methods:
         parser.error(f"--methods must be a non-empty subset of: {', '.join(METHOD_IDS)}")
+    try:
+        source_provenance = frozen_source_provenance(ROOT, allow_dirty=args.allow_dirty)
+    except RuntimeError as exc:
+        parser.error(str(exc))
     students = StudentDataService(Config.STUDENT_DATA_JSON, Config.STUDENT_DATA_CSV)
     profiles = sorted(students.get_all_students(force_reload=True), key=lambda item: item.student_id)
     if args.limit: profiles = profiles[:args.limit]
@@ -269,20 +287,25 @@ def main() -> int:
                     if plan:
                         checked = validate_candidate(context(run_id, f"CALL_{method}_{number}_{attempt}", plan.model_dump()), plan, student, knowledge, evidence,
                             min_credits=engine.min_credits, max_credits=engine.max_credits)
-                        if checked.status == "ok":
-                            validation = checked.output.validation if hasattr(checked.output, "validation") else checked.output
-                            validations.append(validation); candidates.append(candidate_row(
-                                method, pseudo, seed, plan, validation, perf_counter() - started,
+                        status, validation, validator_error = validation_outcome(checked)
+                        validations.append((status, validation, validator_error)); candidates.append(candidate_row(
+                                method, pseudo, seed, plan, status, validation, validator_error, perf_counter() - started,
                                 timeout_seconds=args.max_active_seconds))
                 requests.append(request_row(method, pseudo, seed, len(generated), validations))
             if "BL-05-agent-with-ontology" in selected_methods:
                 started = perf_counter(); agent = pipeline.run_planning_flow(request); elapsed = perf_counter() - started
                 diversity = [float(item["distance"]) for item in (agent.get("ranking") or {}).get("pairwise_diversity") or []]
-                validations = [ValidationResult.model_validate(value) for value in agent.get("validations") or []]
-                for plan_data, validation in zip(agent.get("candidates") or [], validations):
+                plan_records = agent.get("candidates") or []
+                validations = []
+                for value in agent.get("validations") or []:
+                    validation = ValidationResult.model_validate(value)
+                    validations.append((validation.status, validation, None))
+                if len(plan_records) != len(validations):
+                    raise RuntimeError("AGENT_VALIDATION_COUNT_MISMATCH")
+                for plan_data, (status, validation, validator_error) in zip(plan_records, validations):
                     candidates.append(candidate_row(
                         "BL-05-agent-with-ontology", pseudo, seed, CandidatePlan.model_validate(plan_data),
-                        validation, elapsed, diversity, timeout_seconds=args.max_active_seconds))
+                        status, validation, validator_error, elapsed, diversity, timeout_seconds=args.max_active_seconds))
                 requests.append(request_row("BL-05-agent-with-ontology", pseudo, seed, len((agent.get("generation") or {}).get("attempt_records") or []), validations))
             if args.progress_every and (number % args.progress_every == 0 or number == len(profiles)):
                 elapsed = perf_counter() - seed_started
@@ -306,6 +329,7 @@ def main() -> int:
         "shared_search_budget": config, "config_hash": digest(config), "source_manifest_hash": source_manifest_hash,
         "source_profile_data_sha256": file_digest(source_data_path),
         "source_profile_data_path": source_data_path.name,
+        "source_provenance": source_provenance,
         "standard_validator": "backend.app.validation.validator.StandardValidator",
         "metric_definitions": {
             "internal_generation_yield": "emitted candidates / internal generation attempts",

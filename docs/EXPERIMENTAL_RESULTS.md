@@ -1,5 +1,7 @@
 # Experimental Results
 
+> **Legacy artifact notice:** this table was generated under the v4/v2 protocol. It is retained for traceability only and must not be used as final Results. Regenerate it after completing the clean-source v5/v3 runs.
+
 This document is generated from frozen experiment artifacts by `scripts/build_results_summary.py`. It is a paper-ready Results draft, not a claim that proxy academic policies are official NTU regulations.
 
 ## Experimental setting
@@ -68,7 +70,7 @@ No stale probe was committed as confirmed. This supports transaction freshness o
 
 ## Artifact provenance
 
-- Baselines: `artifacts\stage6_baselines\20261010T084556Z`.
-- Ablation: `artifacts\ontology_ablation\20261011T095123803860Z`.
+- Baselines: `artifacts/stage6_baselines/20261010T084556Z`.
+- Ablation: `artifacts/ontology_ablation/20261011T095123803860Z`.
 - E2E: `artifacts/e2e_scenarios/20260916T115000Z`.
 - Confirmation: `artifacts/confirmation_experiment/20261006T034141939726Z`.

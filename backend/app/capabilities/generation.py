@@ -30,7 +30,10 @@ def generate_candidates(context: ToolCallContext, request: PlanningRequest, stud
             rng = random.Random(seed + offset)
             # Legacy ranking adds noise in place; isolate each attempt.
             ranked = engine._random_select_electives(deepcopy(eligible), engine.elective_quotas, goal, rng, seed + offset)
-            selected, _ = engine._beam_search_optimize(profile, ranked[:24], completed_counts, goal, rng, passed)
+            selected, _ = engine._beam_search_optimize(
+                profile, ranked[:24], completed_counts, goal, rng, passed,
+                request.target_credits,
+            )
             courses = tuple(CandidateCourse(course_code=item.code, credits=float(item.credits)) for item in selected)
             if not courses:
                 attempts.append(GenerationAttemptRecord(attempt_id=f"attempt-{offset + 1}", state_count=0, reason="empty_beam_result"))

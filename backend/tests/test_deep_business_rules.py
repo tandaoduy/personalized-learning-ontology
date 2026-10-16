@@ -222,6 +222,29 @@ def test_beam_search_accepts_exact_max_credits_and_rejects_excess(recommendation
     assert any(item.code == "OVER" and item.failed_rules == ["max_credits"] for item in excluded)
 
 
+# UT-FEEDBACK-LOAD-01: Giảm tải từ feedback giới hạn riêng lượt re-planning, không sửa policy chung.
+def test_beam_search_honours_request_scoped_credit_cap(recommendation_engine, student):
+    recommendation_engine.max_credits = 27
+    recommendation_engine.beam_width = 4
+    recommendation_engine.course_data = {
+        "A": {"corequisites": [], "elective_category": None},
+        "B": {"corequisites": [], "elective_category": None},
+        "C": {"corequisites": [], "elective_category": None},
+    }
+    candidates = [
+        RecommendedCourse("A", "A", 3, total_priority_score=30),
+        RecommendedCourse("B", "B", 3, total_priority_score=20),
+        RecommendedCourse("C", "C", 3, total_priority_score=10),
+    ]
+
+    selected, _ = recommendation_engine._beam_search_optimize(
+        student, candidates, {}, "đúng hạn", random.Random(6), set(), 6
+    )
+
+    assert sum(course.credits for course in selected) == 6
+    assert recommendation_engine.max_credits == 27
+
+
 # UT-PROGRESS-01: Sinh viên gần tốt nghiệp còn một môn vẫn có thể hoàn thành đúng hạn.
 def test_near_graduation_student_with_one_remaining_course_can_finish_on_time(student):
     from backend.app.services.progress_risk_analyzer import ProgressRiskAnalyzer

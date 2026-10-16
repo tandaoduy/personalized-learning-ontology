@@ -1,6 +1,6 @@
 # Frozen protocol — Stage 6 baselines
 
-**Protocol ID:** `stage6-baselines-frozen-v4`
+**Protocol ID:** `stage6-baselines-frozen-v5`
 **Frozen on:** 2026-10-07
 
 Every method uses the same sorted pseudonymised profiles, `target_term_id=next-term`, target-credit cap 18, output cap 3, 60 candidate attempts, 5,000 expanded states, 120-second active budget, frozen config, and post-hoc `StandardValidator`. The target-credit cap is applied equally to every generator and validator; the configured 10–27-credit proxy-policy range is retained in the manifest for provenance. Default seeds are 41–50. Artifacts record source-manifest/config hashes and no source student IDs.
@@ -11,11 +11,11 @@ Every method uses the same sorted pseudonymised profiles, `target_term_id=next-t
 | Emitted Candidate Validity | Validator-valid emitted candidates | Candidates emitted for validation | Quality of candidates that reached validation. |
 | Final Recommendation Coverage | Requests with at least one validator-valid final plan | All requests | Request-level ability to return a safe plan. |
 
-Every request artifact must record `internal_attempt_count`, `emitted_candidate_count`, `valid_emitted_candidate_count`, and `request_has_valid_final_plan`. The runner rejects an artifact where emitted candidates exceed internal attempts or valid emitted candidates exceed emitted candidates. This contract is shared by Stage 6 and ontology-component ablation.
+Every request artifact must record `internal_attempt_count`, `emitted_candidate_count`, `valid_emitted_candidate_count`, `request_has_valid_final_plan`, and `validator_error_count`. A candidate sent to the validator is emitted even when the validator returns an execution error; it remains in the emitted denominator, is never valid, and is reported separately. The runner rejects an artifact where emitted candidates exceed internal attempts or valid emitted candidates exceed emitted candidates. This contract is shared by Stage 6 and ontology-component ablation.
 
 For stochastic methods, report seed-level values plus mean, sample SD, and 95% CI half-width. Deterministic methods are still executed under every listed seed for an identical artifact layout, but report one point estimate and `SD/CI = N/A`; duplicate deterministic executions are not independent samples.
 
-`BL-04` uses only flat catalog code/credit/recommended-semester metadata and receives no ontology eligibility, constraint relation evidence, or validator feedback while generating/ranking. It generates up to three seed-diversified plans per request. Secondary metrics are violation groups, latency, diversity, evidence coverage, and no-plan rate. Agent timeouts are enforced by its active budget; the synchronous classic baselines record elapsed time and must be flagged if they exceed the same budget, rather than being described as preemptively stopped. Any change to data, seed list, budget, configuration, or metrics requires a new protocol version.
+`BL-04` uses only flat catalog code/credit/recommended-semester metadata and receives no ontology eligibility, constraint relation evidence, or validator feedback while generating/ranking. It generates up to three seed-diversified plans per request. Secondary metrics are violation groups, latency, diversity, evidence coverage, and no-plan rate. Agent timeouts are enforced by its active budget; the synchronous classic baselines record elapsed time and must be flagged if they exceed the same budget, rather than being described as preemptively stopped. An official run requires a clean, committed Git worktree. Its manifest records the Git commit and tree hashes; `--allow-dirty` is limited to smoke tests. Any change to data, seed list, budget, configuration, or metrics requires a new protocol version.
 
 BL-01–BL-03 call the shared production eligibility filter before their respective ordering/search strategy. They must therefore be labelled **ontology-aware heuristic baselines**, not ontology-free baselines. The ontology ablation comparison is BL-04 versus BL-05; the run manifest records this knowledge scope for every method.
 

@@ -10,6 +10,8 @@ E2E = ROOT / "artifacts/e2e_scenarios/20260916T115000Z/summary.json"
 CONFIRMATION = ROOT / "artifacts/confirmation_experiment/20261006T034141939726Z/summary.json"
 OUT_DOC = ROOT / "docs/EXPERIMENTAL_RESULTS.md"
 OUT_ASSETS = ROOT / "docs/assets"
+FULL_PROFILE_COUNT = 364
+FULL_SEEDS = list(range(41, 51))
 
 
 def load(path: Path) -> dict:
@@ -17,10 +19,16 @@ def load(path: Path) -> dict:
 
 
 def latest_run(directory: Path, protocol: str) -> Path:
+    """Return only a complete frozen run, never a smoke-test artifact."""
     matches = []
     for manifest_path in directory.glob("*/manifest.json"):
         manifest = load(manifest_path)
-        if manifest.get("protocol") == protocol and (manifest_path.parent / "summary.json").exists():
+        if (
+            manifest.get("protocol") == protocol
+            and manifest.get("profiles") == FULL_PROFILE_COUNT
+            and manifest.get("seeds") == FULL_SEEDS
+            and (manifest_path.parent / "summary.json").exists()
+        ):
             matches.append(manifest_path.parent)
     if not matches:
         raise FileNotFoundError(f"No completed {protocol} artifact found in {directory}")
@@ -56,14 +64,14 @@ def bar_svg(path: Path, title: str, rows: list[tuple[str, float]], *, color: str
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build results only from harmonised v4/v2 artifacts")
+    parser = argparse.ArgumentParser(description="Build results only from frozen, harmonised v5/v3 artifacts")
     parser.add_argument("--baseline-dir", type=Path, default=None)
     parser.add_argument("--ablation-dir", type=Path, default=None)
     args = parser.parse_args()
     baseline_dir = (args.baseline_dir or latest_run(
-        ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v4")).resolve()
+        ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v5")).resolve()
     ablation_dir = (args.ablation_dir or latest_run(
-        ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v2")).resolve()
+        ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v3")).resolve()
     baseline = load(baseline_dir / "summary.json")
     ablation, e2e, confirmation = load(ablation_dir / "summary.json"), load(E2E), load(CONFIRMATION)
     combined = dict(baseline)
@@ -110,7 +118,7 @@ All baseline and ontology-component ablation runs use 364 pseudonymised profiles
 
 ![Emitted Candidate Validity by baseline](assets/results-baseline-emitted-candidate-validity.svg)
 
-All final recommendations are validator-gated. Therefore, the central ontology comparison is BL-04 versus BL-05, reported with the three harmonised metrics after both experiments are rerun. Do not reuse pre-v4 values because their denominators are not comparable with the ablation run.
+All final recommendations are validator-gated. Therefore, the central ontology comparison is BL-04 versus BL-05, reported with the three harmonised metrics after both experiments are rerun. The BL-05 baseline and `full_ontology` ablation are distinct experimental pipelines and must be reported in their own tables, never pooled as one observation. Do not reuse pre-v5 values because their denominators or validator-error accounting are not comparable with the frozen protocol.
 
 ## RQ1 — Ontology component ablation
 

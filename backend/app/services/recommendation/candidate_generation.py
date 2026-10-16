@@ -12,13 +12,15 @@ from .constants import (
 class CandidateGenerationMixin:
     """Internal extraction boundary, not an independent Agent capability."""
 
-    def _random_select_electives(self,
-                                courses: List[RecommendedCourse],
-                                remaining_quotas: Dict[str, int],
-                                study_goal: str,
-                                rng: random.Random,
-                                seed_offset: int = 0) -> List[RecommendedCourse]:
-        """Giữ toàn bộ ứng viên cho beam search, thêm nhiễu mạnh cho môn tự chọn để tạo đa dạng khi có seed_offset."""
+    def _random_select_electives(
+        self,
+        courses: List[RecommendedCourse],
+        _remaining_quotas: Dict[str, int],
+        _study_goal: str,
+        rng: random.Random,
+        seed_offset: int = 0,
+    ) -> List[RecommendedCourse]:
+        """Giữ ứng viên cho beam search và thêm nhiễu khi có ``seed_offset``."""
         candidates = list(courses)
 
         if seed_offset != 0:
@@ -36,15 +38,25 @@ class CandidateGenerationMixin:
         ))
         return candidates
 
-    def _beam_search_optimize(self,
-                             student: StudentProfile,
-                             candidates: List[RecommendedCourse],
-                             completed_counts: Dict[str, int],
-                             study_goal: str,
-                             rng: random.Random,
-                             passed_courses: Set[str]) -> Tuple[List[RecommendedCourse], List[ExcludedCourse]]:
+    def _beam_search_optimize(
+        self,
+        _student: StudentProfile,
+        candidates: List[RecommendedCourse],
+        completed_counts: Dict[str, int],
+        study_goal: str,
+        rng: random.Random,
+        passed_courses: Set[str],
+        max_credits: float | None = None,
+    ) -> Tuple[List[RecommendedCourse], List[ExcludedCourse]]:
         """Tìm kiếm chùm thật sự, có kiểm tra song hành, quota và tín chỉ."""
-        effective_max_credits = self.max_credits
+        # A planning request may ask for a lower load than the institutional
+        # maximum.  This is a generation constraint for that request only;
+        # it never mutates the shared engine policy.
+        effective_max_credits = (
+            min(self.max_credits, max_credits)
+            if max_credits is not None
+            else self.max_credits
+        )
 
         excluded: Dict[Tuple[str, str], ExcludedCourse] = {}
         eligible_codes = {c.code for c in candidates}
@@ -80,13 +92,18 @@ class CandidateGenerationMixin:
                 reasons=[reason],
                 failed_rules=[rule],
                 stage="beam_search",
-                is_specialization_course=bool(self.course_data.get(course_.code, {}).get('specializations')),
+                is_specialization_course=bool(
+                    self.course_data.get(course_.code, {}).get('specializations')
+                ),
             )
 
         def quota_fill_score(counts: Dict[str, int]) -> int:
             score = 0
             for cat in ELECTIVE_QUOTA_KEYS:
-                remaining_quota = max(0, self.elective_quotas.get(cat, 0) - completed_counts.get(cat, 0))
+                remaining_quota = max(
+                    0,
+                    self.elective_quotas.get(cat, 0) - completed_counts.get(cat, 0),
+                )
                 score += min(counts.get(cat, 0), remaining_quota)
             return score
 
@@ -129,7 +146,8 @@ class CandidateGenerationMixin:
                         remember_excluded(
                             course,
                             "max_credits",
-                            f"thêm học phần/bundle sẽ vượt giới hạn {effective_max_credits} tín chỉ (mục tiêu: {study_goal})",
+                            "thêm học phần/bundle sẽ vượt giới hạn "
+                            f"{effective_max_credits} tín chỉ (mục tiêu: {study_goal})",
                         )
                         continue
 
@@ -138,8 +156,14 @@ class CandidateGenerationMixin:
                     for bc in bundle_codes:
                         cat = self.course_data.get(bc, {}).get('elective_category')
                         if cat in ELECTIVE_QUOTA_KEYS:
-                            next_elective_counts[cat] = next_elective_counts.get(cat, 0) + 1
-                            remaining_quota = max(0, self.elective_quotas.get(cat, 0) - completed_counts.get(cat, 0))
+                            next_elective_counts[cat] = (
+                                next_elective_counts.get(cat, 0) + 1
+                            )
+                            remaining_quota = max(
+                                0,
+                                self.elective_quotas.get(cat, 0)
+                                - completed_counts.get(cat, 0),
+                            )
                             if next_elective_counts[cat] > remaining_quota:
                                 quota_ok = False
                                 break
@@ -157,19 +181,26 @@ class CandidateGenerationMixin:
                         if bc not in state.selected_codes:
                             next_courses.append(course_index[bc])
 
-                    new_states.append(BeamSearchState(
-                        selected_codes=set(state.selected_codes) | set(bundle_codes),
-                        selected_courses=next_courses,
-                        credit=state.credit + bundle_credit,
-                        priority_score=state.priority_score + sum(c.total_priority_score for c in bundle_courses),
-                        elective_counts=next_elective_counts,
-                        tie_break_random=rng.random(),
-                    ))
+                    new_states.append(
+                        BeamSearchState(
+                            selected_codes=set(state.selected_codes) | set(bundle_codes),
+                            selected_courses=next_courses,
+                            credit=state.credit + bundle_credit,
+                            priority_score=(
+                                state.priority_score
+                                + sum(c.total_priority_score for c in bundle_courses)
+                            ),
+                            elective_counts=next_elective_counts,
+                            tie_break_random=rng.random(),
+                        )
+                    )
 
             if not new_states:
                 break
 
-            beam = sorted(beam + new_states, key=state_key, reverse=True)[:self.beam_width]
+            beam = sorted(beam + new_states, key=state_key, reverse=True)[
+                :self.beam_width
+            ]
             if state_key(beam[0]) > state_key(best_state):
                 best_state = beam[0]
 

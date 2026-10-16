@@ -27,8 +27,9 @@ from backend.app.schemas import PlanningRequest, ToolCallContext
 from backend.app.services.ontology_evidence_service import OntologyEvidenceService
 from backend.app.services.recommendation_engine import RecommendationEngine
 from backend.app.services.student_data_service import StudentDataService
+from experiments.frozen_provenance import frozen_source_provenance
 
-PROTOCOL = "stage7-ontology-component-ablation-v2"
+PROTOCOL = "stage7-ontology-component-ablation-v3"
 SEEDS = tuple(range(41, 51))
 RULES = ("prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")
 CONFIGS = (
@@ -177,9 +178,14 @@ def main() -> int:
     parser.add_argument("--seeds", type=parse_seeds, default=SEEDS)
     parser.add_argument("--target-credits", type=float, default=18.0)
     parser.add_argument("--progress-every", type=int, default=10)
+    parser.add_argument("--allow-dirty", action="store_true", help="Allow an uncommitted source tree for a smoke test only.")
     args = parser.parse_args()
     if args.limit < 0 or args.progress_every < 0 or not Config.REGISTER_MIN_CREDITS <= args.target_credits <= Config.REGISTER_MAX_CREDITS:
         parser.error("invalid limit/progress/target credits")
+    try:
+        source_provenance = frozen_source_provenance(ROOT, allow_dirty=args.allow_dirty)
+    except RuntimeError as exc:
+        parser.error(str(exc))
     service = StudentDataService(Config.STUDENT_DATA_JSON, Config.STUDENT_DATA_CSV)
     profiles = sorted(service.get_all_students(force_reload=True), key=lambda item: item.student_id)
     if args.limit: profiles = profiles[:args.limit]
@@ -239,6 +245,7 @@ def main() -> int:
             "final_recommendation_coverage": "requests with at least one validator-valid final plan / all requests",
         },
         "configurations": [{"name": name, "disabled_relation": disabled} for name, disabled in CONFIGS],
+        "source_provenance": source_provenance,
         "source_profile_data_sha256": "sha256:" + sha256(Path(Config.STUDENT_DATA_JSON).read_bytes()).hexdigest()}
     write_json(run_dir / "manifest.json", manifest); write_json(run_dir / "candidate_results.json", candidate_rows)
     write_json(run_dir / "request_results.json", request_rows); write_json(run_dir / "summary.json", summary)

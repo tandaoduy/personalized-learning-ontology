@@ -4,6 +4,7 @@ from __future__ import annotations
 from hashlib import sha256
 import json
 import logging
+from dataclasses import replace as replace_dataclass
 from time import perf_counter
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
@@ -148,6 +149,13 @@ class AgentPipeline:
         # Step 3: Build Course Space (Eligibility)
         logger.info("\n--- [3/5] BUILD COURSE SPACE (ELIGIBILITY) ---")
         profile = self.student_service.get_student(request.student_id)
+        # PlanningRequest is the authoritative request-scoped preference.  Do
+        # not persist it to the student record: feedback changes only this
+        # re-planning run, while the stored profile remains untouched.
+        profile = replace_dataclass(
+            profile,
+            study_goal="học vượt" if request.goal == "accelerated" else "đúng hạn",
+        )
         context = self.orchestrator.create_call_context(
             state, "build_course_space", digest({"student": student.model_dump(), "knowledge": knowledge.model_dump()})
         )
