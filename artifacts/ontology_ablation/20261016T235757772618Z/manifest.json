@@ -1,0 +1,57 @@
+{
+  "protocol": "stage7-ontology-component-ablation-v3",
+  "profiles": 364,
+  "seeds": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "target_credits": 18.0,
+  "candidate_output_cap": 3,
+  "generator_ablation": "One relation family removed only from generation; full ontology StandardValidator remains the evaluator.",
+  "metric_definitions": {
+    "internal_generation_yield": "emitted candidates / internal generation attempts",
+    "emitted_candidate_validity": "validator-valid emitted candidates / emitted candidates",
+    "final_recommendation_coverage": "requests with at least one validator-valid final plan / all requests"
+  },
+  "configurations": [
+    {
+      "name": "full_ontology",
+      "disabled_relation": null
+    },
+    {
+      "name": "without_prerequisite",
+      "disabled_relation": "prerequisite"
+    },
+    {
+      "name": "without_corequisite",
+      "disabled_relation": "corequisite"
+    },
+    {
+      "name": "without_curriculum_relation",
+      "disabled_relation": "curriculum"
+    },
+    {
+      "name": "without_semester_offering",
+      "disabled_relation": "offering"
+    },
+    {
+      "name": "without_elective_quota",
+      "disabled_relation": "quota"
+    }
+  ],
+  "source_provenance": {
+    "git_commit": "c454a6eb8b0c94ac091e7585a1ff0c3bedcd1eb2",
+    "git_tree": "63fec80049a975d74c4ab9f6e23b12e349f48724",
+    "working_tree_clean": true,
+    "working_tree_status_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_profile_data_sha256": "sha256:e15f814759468e73988a1515b5cc4351ccad33817dab1eb1f0625c709a9583ae"
+}

@@ -1,7 +1,5 @@
 # Experimental Results
 
-> **Legacy artifact notice:** this table was generated under the v4/v2 protocol. It is retained for traceability only and must not be used as final Results. Regenerate it after completing the clean-source v5/v3 runs.
-
 This document is generated from frozen experiment artifacts by `scripts/build_results_summary.py`. It is a paper-ready Results draft, not a claim that proxy academic policies are official NTU regulations.
 
 ## Experimental setting
@@ -18,15 +16,15 @@ All baseline and ontology-component ablation runs use 364 pseudonymised profiles
 
 | Method | Internal Generation Yield | Emitted Candidate Validity | Final Recommendation Coverage | No-plan Rate | Mean latency (s) |
 |---|---:|---:|---:|---:|---:|
-| BL-01 Rule-based | 100.00% | 91.48% | 91.48% | 8.52% | 1.243 |
-| BL-02 Greedy | 100.00% | 91.48% | 91.48% | 8.52% | 0.919 |
-| BL-03 Beam Search | 100.00% ± 0.00% | 91.48% ± 0.00% | 91.48% ± 0.00% | 8.52% | 1.060 |
-| BL-04 Agent không Ontology | 100.00% ± 0.00% | 0.38% ± 0.14% | 1.13% ± 0.42% | 98.87% | 12.230 |
-| BL-05 Agent có Ontology | 67.79% ± 9.74% | 92.75% ± 0.34% | 91.43% ± 0.17% | 8.57% | 2.406 |
+| BL-01 Rule-based | 100.00% | 91.48% | 91.48% | 8.52% | 1.046 |
+| BL-02 Greedy | 100.00% | 91.48% | 91.48% | 8.52% | 0.776 |
+| BL-03 Beam Search | 100.00% ± 0.00% | 91.48% ± 0.00% | 91.48% ± 0.00% | 8.52% | 0.784 |
+| BL-04 Agent không Ontology | 100.00% ± 0.00% | 0.38% ± 0.14% | 1.13% ± 0.42% | 98.87% | 3.014 |
+| BL-05 Agent có Ontology | 67.80% ± 9.74% | 92.75% ± 0.34% | 91.48% ± 0.00% | 8.52% | 0.789 |
 
 ![Emitted Candidate Validity by baseline](assets/results-baseline-emitted-candidate-validity.svg)
 
-All final recommendations are validator-gated. Therefore, the central ontology comparison is BL-04 versus BL-05, reported with the three harmonised metrics after both experiments are rerun. Do not reuse pre-v4 values because their denominators are not comparable with the ablation run.
+All final recommendations are validator-gated. Therefore, the central ontology comparison is BL-04 versus BL-05, reported with the three harmonised metrics after both experiments are rerun. The BL-05 baseline and `full_ontology` ablation are distinct experimental pipelines and must be reported in their own tables, never pooled as one observation. Do not reuse pre-v5 values because their denominators or validator-error accounting are not comparable with the frozen protocol.
 
 ## RQ1 — Ontology component ablation
 
@@ -70,7 +68,7 @@ No stale probe was committed as confirmed. This supports transaction freshness o
 
 ## Artifact provenance
 
-- Baselines: `artifacts/stage6_baselines/20261010T084556Z`.
-- Ablation: `artifacts/ontology_ablation/20261011T095123803860Z`.
+- Baselines: `artifacts\stage6_baselines\20261016T150129Z`.
+- Ablation: `artifacts\ontology_ablation\20261016T235757772618Z`.
 - E2E: `artifacts/e2e_scenarios/20260916T115000Z`.
 - Confirmation: `artifacts/confirmation_experiment/20261006T034141939726Z`.
