@@ -69,14 +69,14 @@ def main() -> int:
     parser.add_argument("--ablation-dir", type=Path, default=None)
     args = parser.parse_args()
     baseline_dir = (args.baseline_dir or latest_run(
-        ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v5")).resolve()
+        ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v6")).resolve()
     ablation_dir = (args.ablation_dir or latest_run(
         ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v3")).resolve()
     baseline = load(baseline_dir / "summary.json")
     ablation, e2e, confirmation = load(ablation_dir / "summary.json"), load(E2E), load(CONFIRMATION)
     combined = dict(baseline)
     order = ["BL-01-rule-based", "BL-02-greedy", "BL-03-beam-search", "BL-04-agent-without-ontology", "BL-05-agent-with-ontology"]
-    labels = {"BL-01-rule-based": "BL-01 Rule-based", "BL-02-greedy": "BL-02 Greedy", "BL-03-beam-search": "BL-03 Beam Search", "BL-04-agent-without-ontology": "BL-04 Agent không Ontology", "BL-05-agent-with-ontology": "BL-05 Agent có Ontology"}
+    labels = {"BL-01-rule-based": "BL-01 Rule-based", "BL-02-greedy": "BL-02 Greedy", "BL-03-beam-search": "BL-03 Beam Search", "BL-04-agent-without-ontology": "BL-04 Agent without Ontology Guidance + Full Validator", "BL-05-agent-with-ontology": "BL-05 Agent có Ontology"}
     OUT_ASSETS.mkdir(parents=True, exist_ok=True)
     bar_svg(OUT_ASSETS / "results-baseline-emitted-candidate-validity.svg", "Emitted Candidate Validity theo baseline", [(labels[k], combined[k]["emitted_candidate_validity"]["mean"]) for k in order], color="#2563eb")
     ablation_order = ["full_ontology", "without_prerequisite", "without_corequisite", "without_curriculum_relation", "without_semester_offering", "without_elective_quota"]

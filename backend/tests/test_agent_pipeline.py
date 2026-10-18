@@ -266,8 +266,15 @@ def test_unsatisfied_adjustment_returns_structured_diagnostic(pipeline, monkeypa
 
     assert result["success"] is False
     assert result["error"]["code"] == "ADJUSTMENT_UNSATISFIED"
+    assert result["status"] == "no_plan_found"
+    assert result["state"]["status"] == "no_plan_found"
+    assert result["errors"][-1]["code"] == "ADJUSTMENT_UNSATISFIED"
     assert result["adjustment"]["must_include"] == ["SOT366"]
     assert result["generation"]["candidates"] == []
+    assert result["budget"]["candidate_attempts_used"] == (
+        initial["budget"]["candidate_attempts_used"] + len(result["generation"]["attempt_records"])
+    )
+    assert result["tool_provenance"][-1]["tool_name"] == "generate_candidates"
 
 
 def test_confirm_refreshes_changed_sources_and_requires_new_selection(pipeline, monkeypatch):

@@ -1,7 +1,7 @@
 # Frozen protocol — Stage 6 baselines
 
-**Protocol ID:** `stage6-baselines-frozen-v5`
-**Frozen on:** 2026-10-07
+**Protocol ID:** `stage6-baselines-frozen-v6`
+**Frozen on:** 2026-10-18
 
 Every method uses the same sorted pseudonymised profiles, `target_term_id=next-term`, target-credit cap 18, output cap 3, 60 candidate attempts, 5,000 expanded states, 120-second active budget, frozen config, and post-hoc `StandardValidator`. The target-credit cap is applied equally to every generator and validator; the configured 10–27-credit proxy-policy range is retained in the manifest for provenance. Default seeds are 41–50. Artifacts record source-manifest/config hashes and no source student IDs.
 
@@ -15,7 +15,7 @@ Every request artifact must record `internal_attempt_count`, `emitted_candidate_
 
 For stochastic methods, report seed-level values plus mean, sample SD, and 95% CI half-width. Deterministic methods are still executed under every listed seed for an identical artifact layout, but report one point estimate and `SD/CI = N/A`; duplicate deterministic executions are not independent samples.
 
-`BL-04` uses only flat catalog code/credit/recommended-semester metadata and receives no ontology eligibility, constraint relation evidence, or validator feedback while generating/ranking. It generates up to three seed-diversified plans per request. Secondary metrics are violation groups, latency, diversity, evidence coverage, and no-plan rate. Agent timeouts are enforced by its active budget; the synchronous classic baselines record elapsed time and must be flagged if they exceed the same budget, rather than being described as preemptively stopped. An official run requires a clean, committed Git worktree. Its manifest records the Git commit and tree hashes; `--allow-dirty` is limited to smoke tests. Any change to data, seed list, budget, configuration, or metrics requires a new protocol version.
+`BL-04` is reported as **Agent without Ontology Guidance + Full Validator**. It uses only flat catalog code/credit/recommended-semester metadata and receives no ontology eligibility, constraint relation evidence, or validator feedback while generating/ranking. Its emitted candidates are nevertheless post-hoc checked by the shared full `StandardValidator`; it is therefore not a no-validator condition. It generates up to three seed-diversified plans per request. Secondary metrics are violation groups, latency, diversity, evidence coverage, and no-plan rate. Agent timeouts are enforced by its active budget; the synchronous classic baselines record elapsed time and must be flagged if they exceed the same budget, rather than being described as preemptively stopped. An official run requires a clean, committed Git worktree. The manifest records `git_commit`, `git_tree`, `working_tree_clean`, and the working-tree-status hash at top level; `--allow-dirty` is limited to smoke tests. Any change to data, seed list, budget, configuration, artifact contract, or metrics requires a new protocol version.
 
 BL-01–BL-03 call the shared production eligibility filter before their respective ordering/search strategy. They must therefore be labelled **ontology-aware heuristic baselines**, not ontology-free baselines. The ontology ablation comparison is BL-04 versus BL-05; the run manifest records this knowledge scope for every method.
 

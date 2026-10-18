@@ -33,7 +33,7 @@ from backend.app.services.student_data_service import StudentDataService
 from experiments.benchmark_algorithms import beam_search_plan, greedy_plan, rule_based_plan
 from experiments.frozen_provenance import frozen_source_provenance
 
-PROTOCOL = "stage6-baselines-frozen-v5"
+PROTOCOL = "stage6-baselines-frozen-v6"
 CANDIDATE_CAP = 3
 DEFAULT_SEEDS = (41, 42, 43, 44, 45, 46, 47, 48, 49, 50)
 RULE_GROUPS = ("prerequisite", "corequisite", "curriculum_membership", "semester_offering", "elective_quota", "credit_limit")
@@ -336,6 +336,12 @@ def main() -> int:
         "shared_search_budget": config, "config_hash": digest(config), "source_manifest_hash": source_manifest_hash,
         "source_profile_data_sha256": file_digest(source_data_path),
         "source_profile_data_path": source_data_path.name,
+        # Duplicated at top level so a frozen artifact can be audited without
+        # relying on a nested provenance convention.
+        "git_commit": source_provenance["git_commit"],
+        "git_tree": source_provenance["git_tree"],
+        "working_tree_clean": source_provenance["working_tree_clean"],
+        "working_tree_status_sha256": source_provenance["working_tree_status_sha256"],
         "source_provenance": source_provenance,
         "standard_validator": "backend.app.validation.validator.StandardValidator",
         "metric_definitions": {

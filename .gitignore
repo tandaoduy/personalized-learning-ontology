@@ -25,6 +25,7 @@ legacy/reports/
 /artifacts/**/pytest-tmp/
 /artifacts/anonymized_batch/**/B*/
 /artifacts/stage6_baselines/
+/artifacts/agentic_replanning/
 /artifacts/preference_dataset_check/
 
 # Frontend dependencies

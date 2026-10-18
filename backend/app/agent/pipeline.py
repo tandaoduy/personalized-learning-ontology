@@ -188,9 +188,12 @@ class AgentPipeline:
         generation = generate_candidates(context, request, student, knowledge, profile, self.engine,
             candidate_limit=3, seed=state.seed, course_space=eligibility_result.output, adjustment=adjustment)
         logger.info("Status: %s", generation.status)
+        tool_provenance.append(generation.provenance)
         if generation.status == "error" or not generation.output or not generation.output.candidates:
             if generation.status == "error" or generation.output is None:
                 error = generation.error or ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
+                state = self.orchestrator.apply_generation_result(state, context, generation, (), 0, 0)
+                return self._error_response(state, error)
             elif adjustment is not None:
                 reasons = sorted({item.reason for item in generation.output.attempt_records if item.reason})
                 error = ToolError(
@@ -201,10 +204,20 @@ class AgentPipeline:
             else:
                 error = ToolError(code="NO_CANDIDATES", message="Beam Search returned no candidates")
             logger.error("Generation failed: %s", error.message)
-            response = self._error_response(state, error)
-            if adjustment is not None and generation.output is not None:
+            state = self.orchestrator.conclude_no_plan_from_generation(
+                state, context, generation,
+                candidate_attempts=len(generation.output.attempt_records),
+                expanded_states=generation.output.expanded_states,
+                error=error,
+            )
+            response = self._result(
+                state, request, student, knowledge_result, eligibility_result,
+                generation, [], tool_provenance, run_started,
+                ranking_context=None, risk_batch=None, ranking_result=None, explanations=None,
+            )
+            response.update({"success": False, "error": error.model_dump(mode="json")})
+            if adjustment is not None:
                 response["adjustment"] = adjustment.model_dump(mode="json")
-                response["generation"] = generation.output.model_dump(mode="json")
             return response
 
         hashes = tuple("sha256:" + sha256(plan.model_dump_json().encode()).hexdigest() for plan in generation.output.candidates)
@@ -216,7 +229,6 @@ class AgentPipeline:
             len(generation.output.attempt_records),
             generation.output.expanded_states,
         )
-        tool_provenance.append(generation.provenance)
         if state.status != "validating":
             return self._error_response(state, state.errors[-1])
         logger.info("Candidates generated: %d plans, attempts=%d, expanded_states=%d, duplicates=%d",

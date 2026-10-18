@@ -149,6 +149,38 @@ class AgentOrchestrator:
             expanded_states_used=state.expanded_states_used + expanded_states,
         )
 
+    def conclude_no_plan_from_generation(self, state: AgentState, context: ToolCallContext,
+                                         result: ToolResult[object], *, candidate_attempts: int,
+                                         expanded_states: int, error: ToolError) -> AgentState:
+        """Record an exhausted generation round as a terminal, auditable outcome.
+
+        A generator can complete successfully while returning no usable plans
+        (for example, when a hard feedback adjustment cannot be satisfied).
+        That is not a tool failure, but it must still consume the recorded
+        search budget and leave ``generating`` behind.
+        """
+        action = "generate_candidates"
+        self._require_status(state, self._expected(action), action)
+        contract_error = self._contract_error(state, action, context, result)
+        if contract_error:
+            return self._stop_with_error(state, action, context, result, contract_error)
+        if result.status == "error":
+            return self._handle_tool_error(state, action, context, result)
+        if candidate_attempts < 0 or expanded_states < 0:
+            raise AgentTransitionError("Generation usage cannot be negative")
+        if state.candidate_attempts_used + candidate_attempts > state.max_candidate_attempts:
+            return self.fail_for_missing_data(state, ToolError(
+                code="CANDIDATE_BUDGET_EXCEEDED", message="Candidate attempt budget exceeded"))
+        if state.expanded_states_used + expanded_states > state.max_expanded_states:
+            return self.fail_for_missing_data(state, ToolError(
+                code="STATE_BUDGET_EXCEEDED", message="Expanded-state budget exceeded"))
+        return self._replace_with_trace(
+            state, action, context, result, status="no_plan_found",
+            candidate_attempts_used=state.candidate_attempts_used + candidate_attempts,
+            expanded_states_used=state.expanded_states_used + expanded_states,
+            errors=state.errors + (error,),
+        )
+
     def apply_validations(self, state: AgentState, results: tuple[ValidationResult, ...],
                           context: ToolCallContext, result: ToolResult[object]) -> AgentState:
         action = "validate_candidates"
