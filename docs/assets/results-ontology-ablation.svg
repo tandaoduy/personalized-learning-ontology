@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="402" viewBox="0 0 900 402">
 <style>text{font-family:Arial,sans-serif;fill:#1e293b}.title{font-size:20px;font-weight:700}.label{font-size:14px}.value{font-size:14px;font-weight:700}</style>
-<text x="24" y="34" class="title">Ablation ontology — Emitted Candidate Validity</text>
+<text x="24" y="34" class="title">Ontology ablation - Emitted Candidate Validity</text>
 <text x="280" y="56" class="label">0%</text><text x="792" y="56" class="label">100%</text>
 <text x="24" y="92" class="label">Ontology đầy đủ</text>
 <rect x="280" y="72" width="540" height="24" rx="4" fill="#e2e8f0"/>

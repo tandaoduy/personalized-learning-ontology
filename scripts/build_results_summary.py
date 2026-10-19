@@ -40,6 +40,8 @@ def pct(value: float | None) -> str:
 
 
 def pm(metric: dict) -> str:
+    if metric["sd"] is not None:
+        return f"{pct(metric['mean'])} +/- {metric['sd'] * 100:.2f}%"
     if metric["sd"] is None:
         return pct(metric["mean"])
     return f"{pct(metric['mean'])} ± {metric['sd'] * 100:.2f}%"
@@ -64,7 +66,7 @@ def bar_svg(path: Path, title: str, rows: list[tuple[str, float]], *, color: str
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build results only from frozen, harmonised v5/v3 artifacts")
+    parser = argparse.ArgumentParser(description="Build results only from frozen, harmonised v6/v3 artifacts")
     parser.add_argument("--baseline-dir", type=Path, default=None)
     parser.add_argument("--ablation-dir", type=Path, default=None)
     args = parser.parse_args()
@@ -72,17 +74,30 @@ def main() -> int:
         ROOT / "artifacts/stage6_baselines", "stage6-baselines-frozen-v6")).resolve()
     ablation_dir = (args.ablation_dir or latest_run(
         ROOT / "artifacts/ontology_ablation", "stage7-ontology-component-ablation-v3")).resolve()
+    baseline_manifest = load(baseline_dir / "manifest.json")
+    ablation_manifest = load(ablation_dir / "manifest.json")
     baseline = load(baseline_dir / "summary.json")
     ablation, e2e, confirmation = load(ablation_dir / "summary.json"), load(E2E), load(CONFIRMATION)
     combined = dict(baseline)
     order = ["BL-01-rule-based", "BL-02-greedy", "BL-03-beam-search", "BL-04-agent-without-ontology", "BL-05-agent-with-ontology"]
     labels = {"BL-01-rule-based": "BL-01 Rule-based", "BL-02-greedy": "BL-02 Greedy", "BL-03-beam-search": "BL-03 Beam Search", "BL-04-agent-without-ontology": "BL-04 Agent without Ontology Guidance + Full Validator", "BL-05-agent-with-ontology": "BL-05 Agent có Ontology"}
     OUT_ASSETS.mkdir(parents=True, exist_ok=True)
+    labels["BL-05-agent-with-ontology"] = "BL-05 Agent c" + chr(0x00F3) + " Ontology"
     bar_svg(OUT_ASSETS / "results-baseline-emitted-candidate-validity.svg", "Emitted Candidate Validity theo baseline", [(labels[k], combined[k]["emitted_candidate_validity"]["mean"]) for k in order], color="#2563eb")
     ablation_order = ["full_ontology", "without_prerequisite", "without_corequisite", "without_curriculum_relation", "without_semester_offering", "without_elective_quota"]
     ablation_labels = {"full_ontology": "Ontology đầy đủ", "without_prerequisite": "Bỏ tiên quyết", "without_corequisite": "Bỏ song hành", "without_curriculum_relation": "Bỏ quan hệ CTĐT", "without_semester_offering": "Bỏ kỳ mở", "without_elective_quota": "Bỏ quota tự chọn"}
     bar_svg(OUT_ASSETS / "results-ontology-ablation.svg", "Ablation ontology — Emitted Candidate Validity", [(ablation_labels[k], ablation[k]["emitted_candidate_validity"]["mean"]) for k in ablation_order], color="#7c3aed")
 
+    ablation_labels = {
+        "full_ontology": "Ontology " + chr(0x0111) + chr(0x1EA7) + "y " + chr(0x0111) + chr(0x1EE7),
+        "without_prerequisite": "B" + chr(0x1ECF) + " ti" + chr(0x00EA) + "n quy" + chr(0x1EBF) + "t",
+        "without_corequisite": "B" + chr(0x1ECF) + " song h" + chr(0x00E0) + "nh",
+        "without_curriculum_relation": "B" + chr(0x1ECF) + " quan h" + chr(0x1EC7) + " CT" + chr(0x0110) + "T",
+        "without_semester_offering": "B" + chr(0x1ECF) + " k" + chr(0x1EF3) + " m" + chr(0x1EDF),
+        "without_elective_quota": "B" + chr(0x1ECF) + " quota t" + chr(0x1EF1) + " ch" + chr(0x1ECD) + "n",
+    }
+    bar_svg(OUT_ASSETS / "results-ontology-ablation.svg", "Ontology ablation — Emitted Candidate Validity", [(ablation_labels[k], ablation[k]["emitted_candidate_validity"]["mean"]) for k in ablation_order], color="#7c3aed")
+    bar_svg(OUT_ASSETS / "results-ontology-ablation.svg", "Ontology ablation - Emitted Candidate Validity", [(ablation_labels[k], ablation[k]["emitted_candidate_validity"]["mean"]) for k in ablation_order], color="#7c3aed")
     baseline_rows = []
     for key in order:
         item = combined[key]
@@ -96,6 +111,15 @@ def main() -> int:
         delta = 0 if key == "full_ontology" else (item["emitted_candidate_validity"]["mean"] - full) * 100
         ablation_rows.append(f"| {ablation_labels[key]} | {pm(item['internal_generation_yield'])} | {pm(item['emitted_candidate_validity'])} | {pm(item['final_recommendation_coverage'])} | {delta:+.2f} pp | {violations} |")
     metrics = confirmation["metrics"]
+    same_source_revision = (
+        baseline_manifest["source_provenance"]["git_commit"] == ablation_manifest["source_provenance"]["git_commit"]
+        and baseline_manifest["source_provenance"]["git_tree"] == ablation_manifest["source_provenance"]["git_tree"]
+    )
+    provenance_note = (
+        "Baseline and ablation use the same frozen source revision."
+        if same_source_revision else
+        "Baseline and ablation have different frozen source revisions; report their tables separately and rerun the ablation at the baseline revision before making a paired comparative claim."
+    )
     text = f"""# Experimental Results
 
 This document is generated from frozen experiment artifacts by `scripts/build_results_summary.py`. It is a paper-ready Results draft, not a claim that proxy academic policies are official NTU regulations.
@@ -149,6 +173,8 @@ The confirmation experiment contains 20 feedback-ready, pseudonymised profiles: 
 
 No stale probe was committed as confirmed. This supports transaction freshness of the human-in-the-loop confirmation workflow; it is not a human acceptance study.
 
+{provenance_note}
+
 ## Scope and limitations
 
 - Curriculum, prerequisite/corequisite, quota, offering and calendar sources remain provisional/proxy/unavailable until mapped to versioned official NTU documents.
@@ -159,6 +185,8 @@ No stale probe was committed as confirmed. This supports transaction freshness o
 
 - Baselines: `{baseline_dir.relative_to(ROOT)}`.
 - Ablation: `{ablation_dir.relative_to(ROOT)}`.
+- Baseline provenance: `{baseline_manifest['source_provenance']['git_commit']}` / tree `{baseline_manifest['source_provenance']['git_tree']}`.
+- Ablation provenance: `{ablation_manifest['source_provenance']['git_commit']}` / tree `{ablation_manifest['source_provenance']['git_tree']}`.
 - E2E: `artifacts/e2e_scenarios/20260916T115000Z`.
 - Confirmation: `artifacts/confirmation_experiment/20261006T034141939726Z`.
 """

@@ -16,11 +16,11 @@ All baseline and ontology-component ablation runs use 364 pseudonymised profiles
 
 | Method | Internal Generation Yield | Emitted Candidate Validity | Final Recommendation Coverage | No-plan Rate | Mean latency (s) |
 |---|---:|---:|---:|---:|---:|
-| BL-01 Rule-based | 100.00% | 91.48% | 91.48% | 8.52% | 1.046 |
-| BL-02 Greedy | 100.00% | 91.48% | 91.48% | 8.52% | 0.776 |
-| BL-03 Beam Search | 100.00% ± 0.00% | 91.48% ± 0.00% | 91.48% ± 0.00% | 8.52% | 0.784 |
-| BL-04 Agent không Ontology | 100.00% ± 0.00% | 0.38% ± 0.14% | 1.13% ± 0.42% | 98.87% | 3.014 |
-| BL-05 Agent có Ontology | 67.80% ± 9.74% | 92.75% ± 0.34% | 91.48% ± 0.00% | 8.52% | 0.789 |
+| BL-01 Rule-based | 100.00% | 91.48% | 91.48% | 8.52% | 1.204 |
+| BL-02 Greedy | 100.00% | 91.48% | 91.48% | 8.52% | 0.892 |
+| BL-03 Beam Search | 100.00% +/- 0.00% | 91.48% +/- 0.00% | 91.48% +/- 0.00% | 8.52% | 0.906 |
+| BL-04 Agent without Ontology Guidance + Full Validator | 100.00% +/- 0.00% | 0.38% +/- 0.14% | 1.13% +/- 0.42% | 98.87% | 3.482 |
+| BL-05 Agent có Ontology | 67.80% +/- 9.74% | 92.75% +/- 0.34% | 91.48% +/- 0.00% | 8.52% | 0.905 |
 
 ![Emitted Candidate Validity by baseline](assets/results-baseline-emitted-candidate-validity.svg)
 
@@ -30,12 +30,12 @@ All final recommendations are validator-gated. Therefore, the central ontology c
 
 | Generator configuration | Internal Generation Yield | Emitted Candidate Validity | Final Recommendation Coverage | Change from full | Violations of removed rule |
 |---|---:|---:|---:|---:|---:|
-| Ontology đầy đủ | 67.80% ± 9.74% | 92.75% ± 0.34% | 91.48% ± 0.00% | +0.00 pp | 0 |
-| Bỏ tiên quyết | 59.65% ± 7.08% | 34.80% ± 3.77% | 33.79% ± 0.29% | -57.95 pp | 10179 |
-| Bỏ song hành | 64.62% ± 7.42% | 87.73% ± 0.38% | 86.81% ± 0.00% | -5.02 pp | 381 |
-| Bỏ quan hệ CTĐT | 82.34% ± 5.27% | 49.33% ± 3.31% | 60.03% ± 1.44% | -43.42 pp | 12492 |
-| Bỏ kỳ mở | 69.93% ± 8.53% | 55.90% ± 2.37% | 60.33% ± 0.60% | -36.85 pp | 4736 |
-| Bỏ quota tự chọn | 80.19% ± 5.98% | 40.25% ± 4.42% | 51.37% ± 1.43% | -52.50 pp | 21111 |
+| Ontology đầy đủ | 67.80% +/- 9.74% | 92.75% +/- 0.34% | 91.48% +/- 0.00% | +0.00 pp | 0 |
+| Bỏ tiên quyết | 59.65% +/- 7.08% | 34.80% +/- 3.77% | 33.79% +/- 0.29% | -57.95 pp | 10179 |
+| Bỏ song hành | 64.62% +/- 7.42% | 87.73% +/- 0.38% | 86.81% +/- 0.00% | -5.02 pp | 381 |
+| Bỏ quan hệ CTĐT | 82.34% +/- 5.27% | 49.33% +/- 3.31% | 60.03% +/- 1.44% | -43.42 pp | 12492 |
+| Bỏ kỳ mở | 69.93% +/- 8.53% | 55.90% +/- 2.37% | 60.33% +/- 0.60% | -36.85 pp | 4736 |
+| Bỏ quota tự chọn | 80.19% +/- 5.98% | 40.25% +/- 4.42% | 51.37% +/- 1.43% | -52.50 pp | 21111 |
 
 ![Ontology component ablation](assets/results-ontology-ablation.svg)
 
@@ -60,6 +60,8 @@ The confirmation experiment contains 20 feedback-ready, pseudonymised profiles: 
 
 No stale probe was committed as confirmed. This supports transaction freshness of the human-in-the-loop confirmation workflow; it is not a human acceptance study.
 
+Baseline and ablation have different frozen source revisions; report their tables separately and rerun the ablation at the baseline revision before making a paired comparative claim.
+
 ## Scope and limitations
 
 - Curriculum, prerequisite/corequisite, quota, offering and calendar sources remain provisional/proxy/unavailable until mapped to versioned official NTU documents.
@@ -68,7 +70,9 @@ No stale probe was committed as confirmed. This supports transaction freshness o
 
 ## Artifact provenance
 
-- Baselines: `artifacts\stage6_baselines\20261016T150129Z`.
+- Baselines: `artifacts\stage6_baselines\20261018T084636Z`.
 - Ablation: `artifacts\ontology_ablation\20261016T235757772618Z`.
+- Baseline provenance: `0b7a67364a6de3eaebc40559123a392b23eec3eb` / tree `1ca61b9fc4310072f9d80b87cd9d45739d111335`.
+- Ablation provenance: `c454a6eb8b0c94ac091e7585a1ff0c3bedcd1eb2` / tree `63fec80049a975d74c4ab9f6e23b12e349f48724`.
 - E2E: `artifacts/e2e_scenarios/20260916T115000Z`.
 - Confirmation: `artifacts/confirmation_experiment/20261006T034141939726Z`.
